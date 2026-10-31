@@ -11,3 +11,4 @@ Consumer disputes under Bangladeshi laws (such as the Consumer Rights Protection
 ## Consequences
 - 100% reproducible decision traces.
 - Elimination of hallucinated legal requirements or fabricated statutory deadlines.
+

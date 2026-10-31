@@ -16,3 +16,4 @@ FastAPI modular application powering ClaimCraft BD.
 - `artifacts`: Complaint document AST, templating, PDF export.
 - `activity`: Case timeline, living case updates, decision diffs.
 - `operations`: Outbox dispatcher, job leases, telemetry, deletion sweep.
+

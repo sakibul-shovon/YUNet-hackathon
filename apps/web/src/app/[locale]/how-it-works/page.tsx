@@ -127,3 +127,4 @@ export default async function HowItWorksPage({ params }: { params: Promise<{ loc
     </div>
   );
 }
+

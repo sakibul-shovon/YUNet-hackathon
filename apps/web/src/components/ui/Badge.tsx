@@ -30,3 +30,4 @@ export function Badge({ className, variant = 'neutral', children, ...props }: Ba
     </span>
   );
 }
+

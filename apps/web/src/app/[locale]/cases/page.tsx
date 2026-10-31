@@ -1,10 +1,27 @@
 import { getTranslations } from 'next-intl/server';
 import Link from 'next/link';
-import { ArrowLeft, Plus, FolderOpen, ArrowRight } from 'lucide-react';
+import { Plus, ArrowRight, FolderOpen } from 'lucide-react';
 import { Header } from '@/components/layout/Header';
-import { Button } from '@/components/ui/Button';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/Card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
+import { CaseOut } from '@claimcraft/contracts';
+
+const BACKEND_API_URL = process.env.BACKEND_API_URL || 'http://127.0.0.1:8000';
+
+async function fetchCases(): Promise<CaseOut[]> {
+  try {
+    const res = await fetch(`${BACKEND_API_URL}/v1/cases?limit=20`, {
+      cache: 'no-store',
+    });
+    if (res.ok) {
+      const data = await res.json();
+      return data.items || [];
+    }
+  } catch {
+    // Offline or server component without bearer header
+  }
+  return [];
+}
 
 export default async function CasesListPage({
   params,
@@ -16,6 +33,7 @@ export default async function CasesListPage({
   const tNav = await getTranslations({ locale, namespace: 'nav' });
 
   const isBangla = locale === 'bn';
+  const cases = await fetchCases();
 
   return (
     <div className="min-h-screen flex flex-col bg-canvas text-foreground">
@@ -44,8 +62,34 @@ export default async function CasesListPage({
           </Link>
         </div>
 
-        {/* Existing Active Case Item */}
+        {/* Dynamic & Demo Cases */}
         <div className="space-y-4">
+          {cases.map((c) => (
+            <Link key={c.id} href={`/${locale}/cases/${c.id}`} className="block group">
+              <Card className="hover:border-primary/50 transition-colors">
+                <CardHeader className="flex flex-row items-start justify-between pb-2">
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2">
+                      <span className="font-mono text-xs font-bold text-muted-foreground">
+                        {c.display_reference}
+                      </span>
+                      <Badge variant="brand">{c.lifecycle_status}</Badge>
+                    </div>
+                    <CardTitle className="text-base font-bold group-hover:text-primary transition-colors">
+                      {c.title}
+                    </CardTitle>
+                  </div>
+                  <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                </CardHeader>
+                <CardContent className="pt-2 text-xs text-muted-foreground flex items-center justify-between">
+                  <span>{String(c.merchant_name || 'Retail Seller')} • {String(c.jurisdiction || 'BD')}</span>
+                  <span>{new Date(c.created_at).toLocaleDateString()}</span>
+                </CardContent>
+              </Card>
+            </Link>
+          ))}
+
+          {/* Seed Demo Case */}
           <Link href={`/${locale}/cases/case_demo_phone`} className="block group">
             <Card className="hover:border-primary/50 transition-colors">
               <CardHeader className="flex flex-row items-start justify-between pb-2">

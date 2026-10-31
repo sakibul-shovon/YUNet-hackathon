@@ -11,3 +11,4 @@ Legal provisions and regulatory procedures change over time. If a user prepares 
 ## Consequences
 - Guaranteed consistency between retrieved text, citation spans, and policy rules.
 - Instant rollback capability without database reindexing downtime.
+

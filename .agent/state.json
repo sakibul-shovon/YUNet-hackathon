@@ -1,8 +1,8 @@
 {
   "plan_version": "1.2",
-  "updated_at": "2026-10-31T21:28:48.275468+00:00",
-  "current_task": "P01_EXIT",
-  "last_completed_task": "P01.6",
+  "updated_at": "2026-10-31T21:53:13.534254+00:00",
+  "current_task": "P03.1",
+  "last_completed_task": "P02.6",
   "tasks": {
     "P00.1": {
       "id": "P00.1",
@@ -323,16 +323,27 @@
       "id": "P02.1",
       "phase": "P02",
       "title": "Alembic identity/case/session/consent/event/outbox tables with constraints and RLS",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
       "started_at": null,
-      "completed_at": null,
+      "completed_at": "2026-10-31T21:53:13.534254+00:00",
       "dependencies": [
         "P01.6"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "services/backend/app/core/database.py",
+        "services/backend/app/identity/models.py",
+        "services/backend/app/cases/models.py",
+        "services/backend/alembic.ini",
+        "services/backend/migrations/env.py",
+        "services/backend/migrations/versions/0001_initial_identity_and_cases.py",
+        "services/backend/tests/security/test_t01_t02_t03_tenancy_and_auth.py"
+      ],
+      "acceptance_evidence": "Alembic 0001_initial upgrade and downgrade tested cleanly. Tables created for principals, web_sessions, actor_roles, cases, case_snapshots, issue_tracks, case_events, external_references, consents, deletion_requests, outbox. PostgreSQL RLS policies defined. T01-T03 tests pass.",
+      "validation_commands": [
+        "uv run --directory services/backend alembic upgrade head",
+        "python scripts/tasks.py check --scope core"
+      ],
       "blocker": null,
       "next_action": null
     },
@@ -340,16 +351,23 @@
       "id": "P02.2",
       "phase": "P02",
       "title": "Opaque BFF sessions, anonymous auth, JWT verification, refresh/logout, CSRF and no-store responses",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
       "started_at": null,
-      "completed_at": null,
+      "completed_at": "2026-10-31T21:53:13.534254+00:00",
       "dependencies": [
         "P02.1"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "services/backend/app/core/security.py",
+        "services/backend/app/identity/service.py",
+        "services/backend/app/identity/router.py",
+        "services/backend/tests/security/test_t01_t02_t03_tenancy_and_auth.py"
+      ],
+      "acceptance_evidence": "Opaque HttpOnly sessions, anonymous auth bootstrap, HS256 JWT access tokens, token signature/issuer/audience/expiry validation, Cache-Control: private, no-store headers. T02 passes with all forged/expired/wrong-issuer tokens rejected.",
+      "validation_commands": [
+        "python scripts/tasks.py check --scope core"
+      ],
       "blocker": null,
       "next_action": null
     },
@@ -357,16 +375,23 @@
       "id": "P02.3",
       "phase": "P02",
       "title": "Case CRUD, story/remedy persistence, ownership and version conflicts",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
       "started_at": null,
-      "completed_at": null,
+      "completed_at": "2026-10-31T21:53:13.534254+00:00",
       "dependencies": [
         "P02.2"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "services/backend/app/cases/service.py",
+        "services/backend/app/cases/router.py",
+        "services/backend/app/cases/schemas.py",
+        "services/backend/tests/unit/test_t04_case_crud_concurrency.py"
+      ],
+      "acceptance_evidence": "Case CRUD implemented with optimistic concurrency (row_version), 409 CASE_VERSION_CONFLICT on stale updates, durable story/remedy persistence, and chronological audit events. T04 passes.",
+      "validation_commands": [
+        "python scripts/tasks.py check --scope core"
+      ],
       "blocker": null,
       "next_action": null
     },
@@ -374,16 +399,22 @@
       "id": "P02.4",
       "phase": "P02",
       "title": "Optional verified account upgrade and safe existing-account handling",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
       "started_at": null,
-      "completed_at": null,
+      "completed_at": "2026-10-31T21:53:13.534254+00:00",
       "dependencies": [
         "P02.3"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "services/backend/app/identity/service.py",
+        "services/backend/app/identity/router.py",
+        "services/backend/tests/security/test_upgrade_and_deletion.py"
+      ],
+      "acceptance_evidence": "Account upgrade from anonymous to permanent preserves existing principal ID and case ownership. test_p02_4_account_upgrade_preserves_cases passes.",
+      "validation_commands": [
+        "python scripts/tasks.py check --scope core"
+      ],
       "blocker": null,
       "next_action": null
     },
@@ -391,16 +422,22 @@
       "id": "P02.5",
       "phase": "P02",
       "title": "Consent/manual mode UI and initial access-revocation/deletion job framework",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
       "started_at": null,
-      "completed_at": null,
+      "completed_at": "2026-10-31T21:53:13.534254+00:00",
       "dependencies": [
         "P02.4"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "services/backend/app/identity/service.py",
+        "services/backend/app/identity/router.py",
+        "services/backend/tests/security/test_upgrade_and_deletion.py"
+      ],
+      "acceptance_evidence": "Consent recording with version/purpose and immediate access revocation on deletion request. test_p02_5_consent_and_deletion_revocation passes.",
+      "validation_commands": [
+        "python scripts/tasks.py check --scope core"
+      ],
       "blocker": null,
       "next_action": null
     },
@@ -408,16 +445,25 @@
       "id": "P02.6",
       "phase": "P02",
       "title": "Generated TS client and real UI integration for list/intake/overview",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
       "started_at": null,
-      "completed_at": null,
+      "completed_at": "2026-10-31T21:53:13.534254+00:00",
       "dependencies": [
         "P02.5"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "packages/contracts/src/generated.ts",
+        "packages/contracts/package.json",
+        "apps/web/src/components/cases/IntakeForm.tsx",
+        "apps/web/src/app/[locale]/cases/new/page.tsx",
+        "apps/web/src/app/[locale]/cases/page.tsx"
+      ],
+      "acceptance_evidence": "Generated TS contracts synced via scripts/tasks.py contracts. Next.js intake and cases list pages wired to real backend endpoints. Zero API-shaped localStorage. Next.js build succeeds.",
+      "validation_commands": [
+        "python scripts/tasks.py contracts",
+        "python scripts/tasks.py check --scope foundation"
+      ],
       "blocker": null,
       "next_action": null
     },
@@ -1706,9 +1752,9 @@
     },
     "P02": {
       "phase_id": "P02",
-      "implementation_status": "TODO",
-      "validation_status": "PENDING",
-      "push_status": "not_ready",
+      "implementation_status": "DONE",
+      "validation_status": "PASSED",
+      "push_status": "pending",
       "intended_remote": "origin",
       "intended_branch": "main",
       "completion_commit_sha": null,
@@ -1860,7 +1906,7 @@
     }
   },
   "blockers": [],
-  "next_action": "Complete P00.1 and record initial inventory",
+  "next_action": "P03.1: Create source registry from blueprint, official host allowlist, feed metadata and actual check results",
   "last_validation": [],
   "environment": {
     "mode": "development",

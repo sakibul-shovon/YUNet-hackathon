@@ -119,3 +119,4 @@ export default async function HelpPage({ params }: { params: Promise<{ locale: s
     </div>
   );
 }
+

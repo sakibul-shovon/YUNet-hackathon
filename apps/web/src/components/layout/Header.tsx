@@ -70,3 +70,4 @@ export function Header({ locale, labels }: HeaderProps) {
     </header>
   );
 }
+

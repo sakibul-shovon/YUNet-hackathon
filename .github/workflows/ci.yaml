@@ -47,3 +47,4 @@ jobs:
 
       - name: Build Web Application
         run: pnpm --filter @claimcraft/web build
+

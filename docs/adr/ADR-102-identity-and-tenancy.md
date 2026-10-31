@@ -14,3 +14,4 @@ Consumers in Bangladesh experiencing retail or service disputes need immediate a
 
 ## Replacement Conditions
 If federated authentication (e.g. Google OAuth or Gov SSO) is integrated, the principal model cleanly binds external identities to the existing `principals` table.
+

@@ -28,3 +28,4 @@ All primary color combinations meet or exceed WCAG 2.2 AA thresholds (minimum 4.
 - Loading indicators include `role="status"` and `aria-live="polite"`.
 - Error banners include `role="alert"`.
 - Buttons and interactive inputs maintain logical DOM tab sequence.
+

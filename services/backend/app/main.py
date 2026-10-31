@@ -4,7 +4,10 @@ import uuid
 from fastapi import FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.cases.router import router as cases_router
 from app.core.config import settings
+from app.core.public_router import router as public_router
+from app.identity.router import router as identity_router
 
 app = FastAPI(
     title="ClaimCraft BD API",
@@ -67,3 +70,13 @@ async def health_ready():
 @app.get("/api/v1/ping", tags=["System"])
 async def api_ping():
     return {"message": "ClaimCraft BD API v1 is operational"}
+
+
+# Include domain routers with canonical /v1 and BFF /api/v1 support
+app.include_router(public_router)
+app.include_router(identity_router)
+app.include_router(cases_router)
+
+app.include_router(public_router, prefix="/api")
+app.include_router(identity_router, prefix="/api")
+app.include_router(cases_router, prefix="/api")

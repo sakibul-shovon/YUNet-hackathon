@@ -12,3 +12,4 @@ Handling consumer receipts, transaction logs, and dispute narratives involves pe
 ## Consequences
 - Data protection compliance under emerging personal data regulations.
 - Bounded token spend and low latency.
+

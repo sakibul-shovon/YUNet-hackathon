@@ -50,3 +50,4 @@ export function LanguageToggle({ currentLocale }: { currentLocale: string }) {
     </div>
   );
 }
+

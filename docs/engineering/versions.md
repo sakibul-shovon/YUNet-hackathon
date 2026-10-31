@@ -33,3 +33,4 @@ Prepared as required by plan.md Section 7 & Section 8.
 - **Speech-to-Text:** Google Cloud STT V2 (`bn-BD` with `chirp_2` model in `asia-southeast1`).
 - **Dense Embeddings:** `intfloat/multilingual-e5-small` (384-dimensional).
 - **Lexical Search:** `bm25s` with Bengali-aware tokenization.
+

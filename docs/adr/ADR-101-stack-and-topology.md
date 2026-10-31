@@ -17,3 +17,4 @@ We select a modular monolithic topology:
 
 ## Replacement Conditions
 If worker throughput requires specialized scaling, individual queues can be deployed as independent worker groups without altering core service interfaces.
+

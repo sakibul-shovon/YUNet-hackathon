@@ -30,3 +30,4 @@ Prepared in compliance with plan.md Section 7.1, Section 15.3, and P00.4.
 - **Dense Embeddings:** Local `intfloat/multilingual-e5-small` (384-dimension vector, running on CPU/GPU without third-party network exfiltration).
 - **Lexical BM25:** `bm25s` persisted release snapshots with custom Bengali Unicode tokenization.
 - **Database:** PostgreSQL with `pgvector` extension for approved official statute/regulation chunks.
+

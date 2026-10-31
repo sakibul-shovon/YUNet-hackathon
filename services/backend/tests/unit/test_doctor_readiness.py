@@ -19,3 +19,4 @@ def test_doctor_readiness_no_secret_leak():
     empty_settings = Settings(GEMINI_API_KEY=None)
     empty_status = "gemini" if empty_settings.GEMINI_API_KEY else "synthetic_development"
     assert empty_status == "synthetic_development"
+

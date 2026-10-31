@@ -14,3 +14,4 @@ AI multimodal extraction (OCR, ASR, vision) is inherently probabilistic and may 
 ## Consequences
 - High transparency: user has complete veto and correction power.
 - Model proposals are never confused with verified statutory facts.
+

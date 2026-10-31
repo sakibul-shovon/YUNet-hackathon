@@ -13,6 +13,16 @@ class Settings(BaseSettings):
         "http://127.0.0.1:3000",
     ]
 
+    # Auth & Sessions
+    JWT_SECRET_KEY: str = "claimcraft-bd-jwt-secret-key-at-least-32-chars"
+    JWT_ALGORITHM: str = "HS256"
+    JWT_ISSUER: str = "claimcraft-bd"
+    JWT_AUDIENCE: str = "claimcraft-bd-api"
+    SESSION_COOKIE_NAME: str = "cc_session"
+    SESSION_MAX_AGE_SECONDS: int = 7 * 24 * 3600  # 7 days
+    SUPABASE_URL: str | None = None
+    SUPABASE_JWKS_URL: str | None = None
+
     # AI Models
     GEMINI_API_KEY: str | None = None
     GEMINI_MODEL_FLASH: str = "gemini-3.8-flash"

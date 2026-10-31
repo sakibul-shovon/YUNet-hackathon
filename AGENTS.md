@@ -28,3 +28,4 @@ python scripts/tasks.py contracts              # Regenerate OpenAPI & TypeScript
    - Commit with a standard descriptive commit message (`feat(PXX): ...`).
    - Push to the designated GitHub branch and verify remote receipt.
    - Update `.agent/state.json` and `.agent/handoff.md`.
+

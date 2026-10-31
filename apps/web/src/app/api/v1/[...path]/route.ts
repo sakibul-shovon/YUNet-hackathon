@@ -5,7 +5,8 @@ const BACKEND_API_URL = process.env.BACKEND_API_URL || 'http://127.0.0.1:8000';
 async function handleProxy(req: NextRequest, { params }: { params: Promise<{ path: string[] }> }) {
   const { path } = await params;
   const targetPath = path.join('/');
-  const targetUrl = new URL(`/api/v1/${targetPath}${req.nextUrl.search}`, BACKEND_API_URL);
+  // Forward to /v1/... or /api/v1/...
+  const targetUrl = new URL(`/v1/${targetPath}${req.nextUrl.search}`, BACKEND_API_URL);
 
   const headers = new Headers(req.headers);
   headers.set('host', new URL(BACKEND_API_URL).host);
@@ -54,3 +55,4 @@ export const POST = handleProxy;
 export const PUT = handleProxy;
 export const PATCH = handleProxy;
 export const DELETE = handleProxy;
+

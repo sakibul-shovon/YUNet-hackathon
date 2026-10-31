@@ -103,3 +103,4 @@ export default async function TechnologyPage({ params }: { params: Promise<{ loc
     </div>
   );
 }
+

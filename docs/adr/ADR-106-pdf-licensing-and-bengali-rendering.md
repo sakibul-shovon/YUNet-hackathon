@@ -14,3 +14,4 @@ PDF processing involves two distinct challenges:
 ## Consequences
 - Compliant software licensing without AGPL encumbrance.
 - Proper HarfBuzz-backed Bengali font rendering in output complaint documents.
+

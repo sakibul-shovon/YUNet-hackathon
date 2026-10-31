@@ -28,3 +28,4 @@ To preserve legal accuracy under Bangladeshi law, official institution names rem
 ## 3. Legal Notice & Independence Copy
 - **English:** "ClaimCraft BD is an independent consumer dispute preparation copilot. It is not an official government agency, dispute tribunal, or court. All prepared complaints and formal notices must be reviewed and confirmed by the consumer before external submission."
 - **Bangla:** "ক্লেইমক্রাফট বিডি একটি স্বাধীন ভোক্তা সহায়তাকারী ডিজিটাল প্ল্যাটফর্ম; এটি কোনো সরকারি সংস্থা, আদালত বা ট্রাইব্যুনাল নয়। প্রস্তুতকৃত সকল অভিযোগপত্র পোর্টালে জমা দেওয়ার পূর্বে ভোক্তা নিজে পর্যালোচনা ও নিশ্চিত করবেন।"
+

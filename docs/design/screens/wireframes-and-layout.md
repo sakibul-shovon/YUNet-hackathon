@@ -30,3 +30,4 @@ MAIN AREA (66% Width)                         CONTEXT SIDEBAR (33% Width)
 - **Main & Context Stacking:** The 2/3 Main View displays first; Context Sidebar stacks below to prioritize user action.
 - **Minimum Touch Targets:** Buttons, radio options, and tab pills enforce at least 44px height and width for accessibility.
 - **Evidence Canvas:** Panning and zooming are bounded within the evidence container to prevent horizontal page overflow at 360px width.
+
