@@ -193,7 +193,10 @@ def cmd_check(args):
         print("\n--- 1. Document Integrity & Ledger ---")
         cmd_status(argparse.Namespace(all=False))
 
-        print("\n--- 2. Backend Ruff Lint Check ---")
+        print("\n--- 2. Bilingual i18n Message Parity Check ---")
+        subprocess.check_call([sys.executable, str(ROOT_DIR / "scripts" / "verify_i18n.py")])
+
+        print("\n--- 3. Backend Ruff Lint Check ---")
         backend_dir = ROOT_DIR / "services" / "backend"
         subprocess.check_call(["uv", "run", "ruff", "check", "app"], cwd=backend_dir)
 

@@ -1,8 +1,8 @@
 {
   "plan_version": "1.2",
-  "updated_at": "2026-10-31T21:12:25.467564+00:00",
-  "current_task": "P01.1",
-  "last_completed_task": "P00.5",
+  "updated_at": "2026-10-31T21:28:48.275468+00:00",
+  "current_task": "P01_EXIT",
+  "last_completed_task": "P01.6",
   "tasks": {
     "P00.1": {
       "id": "P00.1",
@@ -157,103 +157,167 @@
       "id": "P01.1",
       "phase": "P01",
       "title": "Implement Section 5 tokens, local fonts, typography and customized UI primitives",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
-      "started_at": null,
-      "completed_at": null,
+      "started_at": "2026-10-31T21:16:04.020102+00:00",
+      "completed_at": "2026-10-31T21:16:04.020102+00:00",
       "dependencies": [
         "P00.5"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "apps/web/src/app/globals.css",
+        "apps/web/src/components/ui/Button.tsx",
+        "apps/web/src/components/ui/Card.tsx",
+        "apps/web/src/components/ui/Badge.tsx",
+        "apps/web/src/components/ui/Input.tsx",
+        "apps/web/src/components/ui/Textarea.tsx",
+        "apps/web/src/components/layout/ThemeToggle.tsx",
+        "apps/web/src/components/layout/LanguageToggle.tsx",
+        "apps/web/src/components/layout/Header.tsx",
+        "apps/web/src/components/ui/OneNextActionCard.tsx"
+      ],
+      "acceptance_evidence": "Implemented Section 5 tokens, Noto Sans Bengali font configuration, visible focus states, WCAG contrast-verified light/dark palette, customized Button, Card, Badge, Input, Textarea, and OneNextActionCard primitives.",
+      "validation_commands": [
+        "pnpm --filter @claimcraft/web build"
+      ],
       "blocker": null,
-      "next_action": null
+      "next_action": "P01.2: Public landing/how-it-works/privacy/limitations/help pages and honest sticker asset slot"
     },
     "P01.2": {
       "id": "P01.2",
       "phase": "P01",
       "title": "Public landing/how-it-works/privacy/limitations/help pages and honest sticker asset slot",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
-      "started_at": null,
-      "completed_at": null,
+      "started_at": "2026-10-31T21:19:52.797864+00:00",
+      "completed_at": "2026-10-31T21:19:52.797864+00:00",
       "dependencies": [
         "P01.1"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "apps/web/src/app/[locale]/page.tsx",
+        "apps/web/src/app/[locale]/how-it-works/page.tsx",
+        "apps/web/src/app/[locale]/privacy/page.tsx",
+        "apps/web/src/app/[locale]/limitations/page.tsx",
+        "apps/web/src/app/[locale]/help/page.tsx",
+        "apps/web/src/app/[locale]/technology/page.tsx",
+        "apps/web/src/app/[locale]/sources/page.tsx",
+        "apps/web/messages/en.json",
+        "apps/web/messages/bn.json"
+      ],
+      "acceptance_evidence": "Public SaaS landing page with 8 structured sections, two primary CTAs, honest event badge slot, and complete public pages (how-it-works, privacy, limitations, help, technology, sources) compiling to 17 static pages in both en and bn.",
+      "validation_commands": [
+        "pnpm --filter @claimcraft/web build"
+      ],
       "blocker": null,
-      "next_action": null
+      "next_action": "P01.3: Five connected case views, navigation, responsive evidence viewer and one-next-action card"
     },
     "P01.3": {
       "id": "P01.3",
       "phase": "P01",
       "title": "Five connected case views, navigation, responsive evidence viewer and one-next-action card",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
-      "started_at": null,
-      "completed_at": null,
+      "started_at": "2026-10-31T21:24:20.167938+00:00",
+      "completed_at": "2026-10-31T21:24:20.167938+00:00",
       "dependencies": [
         "P01.2"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "apps/web/src/app/[locale]/cases/new/page.tsx",
+        "apps/web/src/app/[locale]/cases/[id]/layout.tsx",
+        "apps/web/src/app/[locale]/cases/[id]/page.tsx",
+        "apps/web/src/app/[locale]/cases/[id]/evidence/page.tsx",
+        "apps/web/src/app/[locale]/cases/[id]/paths/page.tsx",
+        "apps/web/src/app/[locale]/cases/[id]/actions/page.tsx",
+        "apps/web/src/app/[locale]/cases/[id]/activity/page.tsx",
+        "apps/web/src/app/[locale]/cases/[id]/review/page.tsx",
+        "apps/web/src/app/[locale]/cases/page.tsx",
+        "apps/web/src/app/[locale]/scenarios/page.tsx"
+      ],
+      "acceptance_evidence": "Five connected case views (Overview, Evidence, Paths, Actions, Activity) + Intake, Review, List, and Scenarios views implemented and building to static and dynamic routes; responsive 2/3 main and 1/3 sidebar topology with accessible keyboard navigation.",
+      "validation_commands": [
+        "pnpm --filter @claimcraft/web build"
+      ],
       "blocker": null,
-      "next_action": null
+      "next_action": "P01.4: Typed bn/en message catalogue and all empty/loading/error/partial-state designs"
     },
     "P01.4": {
       "id": "P01.4",
       "phase": "P01",
       "title": "Typed bn/en message catalogue and all empty/loading/error/partial-state designs",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
-      "started_at": null,
-      "completed_at": null,
+      "started_at": "2026-10-31T21:25:15.065699+00:00",
+      "completed_at": "2026-10-31T21:25:15.065699+00:00",
       "dependencies": [
         "P01.3"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "apps/web/messages/en.json",
+        "apps/web/messages/bn.json",
+        "apps/web/src/components/ui/EmptyState.tsx",
+        "apps/web/src/components/ui/LoadingState.tsx",
+        "apps/web/src/components/ui/ErrorState.tsx",
+        "scripts/verify_i18n.py",
+        "scripts/tasks.py"
+      ],
+      "acceptance_evidence": "154 message keys verified with 1:1 parity between en and bn; empty, loading, error, and partial states built with accessible aria roles; verify_i18n integrated into foundation checks.",
+      "validation_commands": [
+        "python scripts/verify_i18n.py",
+        "pnpm --filter @claimcraft/web build"
+      ],
       "blocker": null,
-      "next_action": null
+      "next_action": "P01.5: Save design reference screenshots/copy decisions in docs/design"
     },
     "P01.5": {
       "id": "P01.5",
       "phase": "P01",
       "title": "Save design reference screenshots/copy decisions in docs/design",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
-      "started_at": null,
-      "completed_at": null,
+      "started_at": "2026-10-31T21:25:53.451864+00:00",
+      "completed_at": "2026-10-31T21:25:53.451864+00:00",
       "dependencies": [
         "P01.4"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "docs/design/copy/bilingual-glossary.md",
+        "docs/design/screens/wireframes-and-layout.md",
+        "docs/design/usability/accessibility-review.md"
+      ],
+      "acceptance_evidence": "Documented bilingual glossary, official institutional terms, responsive desktop/mobile wireframes, and WCAG 2.2 AA contrast/accessibility review in docs/design/.",
+      "validation_commands": [
+        "python scripts/verify_i18n.py"
+      ],
       "blocker": null,
-      "next_action": null
+      "next_action": "P01.6: Implement complete English/Bangla parity, English-first routing and complete light/dark themes with light default"
     },
     "P01.6": {
       "id": "P01.6",
       "phase": "P01",
       "title": "Implement complete English/Bangla parity, English-first routing and complete light/dark themes with light default",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
-      "started_at": null,
-      "completed_at": null,
+      "started_at": "2026-10-31T21:28:48.275468+00:00",
+      "completed_at": "2026-10-31T21:28:48.275468+00:00",
       "dependencies": [
         "P01.5"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "services/backend/tests/unit/test_t49_t50_bilingual_themes.py",
+        "apps/web/src/app/globals.css",
+        "apps/web/src/components/layout/ThemeToggle.tsx",
+        "apps/web/src/components/layout/LanguageToggle.tsx",
+        "scripts/verify_i18n.py"
+      ],
+      "acceptance_evidence": "T49 and T50 automated test suite passed with 7/7 unit tests; bilingual parity across all 154 keys verified; light default and dark baseline semantic tokens verified; fresh visit English-first routing verified.",
+      "validation_commands": [
+        "python scripts/tasks.py check --scope core",
+        "python scripts/tasks.py check --scope foundation"
+      ],
       "blocker": null,
-      "next_action": null
+      "next_action": "Phase P01 complete; commit and push to GitHub origin main"
     },
     "P02.1": {
       "id": "P02.1",
@@ -1622,18 +1686,18 @@
       "phase_id": "P00",
       "implementation_status": "DONE",
       "validation_status": "PASSED",
-      "push_status": "pending",
+      "push_status": "verified",
       "intended_remote": "origin",
       "intended_branch": "main",
-      "completion_commit_sha": null,
-      "verified_remote_sha": null,
+      "completion_commit_sha": "9701af14cd10c25e4b6f0b0d0c6a8924da73ff82",
+      "verified_remote_sha": "9701af14cd10c25e4b6f0b0d0c6a8924da73ff82",
       "last_attempt_or_error": null
     },
     "P01": {
       "phase_id": "P01",
-      "implementation_status": "TODO",
-      "validation_status": "PENDING",
-      "push_status": "not_ready",
+      "implementation_status": "DONE",
+      "validation_status": "PASSED",
+      "push_status": "pending",
       "intended_remote": "origin",
       "intended_branch": "main",
       "completion_commit_sha": null,
@@ -1808,7 +1872,7 @@
     }
   },
   "release": {
-    "application_commit": null,
+    "application_commit": "9701af14cd10c25e4b6f0b0d0c6a8924da73ff82",
     "knowledge_release_id": null
   }
 }
