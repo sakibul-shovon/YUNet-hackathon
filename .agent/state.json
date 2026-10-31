@@ -1,0 +1,1814 @@
+{
+  "plan_version": "1.2",
+  "updated_at": "2026-10-31T21:12:25.467564+00:00",
+  "current_task": "P01.1",
+  "last_completed_task": "P00.5",
+  "tasks": {
+    "P00.1": {
+      "id": "P00.1",
+      "phase": "P00",
+      "title": "Inventory repository, preserve source documents, initialize state ledger, handoff and AGENTS.md, inspect git/remote",
+      "status": "DONE",
+      "is_optional": false,
+      "started_at": "2026-10-31T20:57:12.501608+00:00",
+      "completed_at": "2026-10-31T20:58:18.800324+00:00",
+      "dependencies": [],
+      "changed_paths": [
+        ".gitignore",
+        "AGENTS.md",
+        ".agent/state.json",
+        ".agent/handoff.md",
+        "scripts/tasks.py"
+      ],
+      "acceptance_evidence": "tasks.py status lists all 86 required tasks, verifies source document hashes without modification, inspects git remote origin (https://github.com/sakibul-shovon/YUNet-hackathon.git) and working branch main.",
+      "validation_commands": [
+        "python scripts/tasks.py status",
+        "python scripts/tasks.py doctor"
+      ],
+      "blocker": null,
+      "next_action": "P00.2: Scaffold apps/web, services/backend, pnpm/uv workspace, local environment examples"
+    },
+    "P00.2": {
+      "id": "P00.2",
+      "phase": "P00",
+      "title": "Scaffold apps/web, services/backend, pnpm/uv workspace, local environment examples",
+      "status": "DONE",
+      "is_optional": false,
+      "started_at": "2026-10-31T20:58:18.800324+00:00",
+      "completed_at": "2026-10-31T21:06:36.968321+00:00",
+      "dependencies": [
+        "P00.1"
+      ],
+      "changed_paths": [
+        "pnpm-workspace.yaml",
+        "package.json",
+        ".env.example",
+        "services/backend/pyproject.toml",
+        "services/backend/app/main.py",
+        "services/backend/app/core/config.py",
+        "services/backend/tests/unit/test_health.py",
+        "apps/web/package.json",
+        "apps/web/tsconfig.json",
+        "apps/web/next.config.mjs",
+        "apps/web/tailwind.config.ts",
+        "apps/web/postcss.config.mjs",
+        "apps/web/src/app/globals.css",
+        "apps/web/src/app/[locale]/layout.tsx",
+        "apps/web/src/app/[locale]/page.tsx",
+        "apps/web/src/app/api/v1/[...path]/route.ts",
+        "apps/web/messages/en.json",
+        "apps/web/messages/bn.json"
+      ],
+      "acceptance_evidence": "Web production build passed with Next.js 15 static & dynamic routes; FastAPI backend started and live endpoint http://127.0.0.1:8000/health/live verified; pytest test_health.py passed with 3 tests; .env.example created with placeholders.",
+      "validation_commands": [
+        "pnpm --filter @claimcraft/web build",
+        "uv run pytest in services/backend",
+        "live /health/live check"
+      ],
+      "blocker": null,
+      "next_action": "P00.3: Pin runtime/packages/images; create task runner, lint/type/build checks and CI skeleton"
+    },
+    "P00.3": {
+      "id": "P00.3",
+      "phase": "P00",
+      "title": "Pin runtime/packages/images; create task runner, lint/type/build checks and CI skeleton",
+      "status": "DONE",
+      "is_optional": false,
+      "started_at": "2026-10-31T21:06:36.968321+00:00",
+      "completed_at": "2026-10-31T21:09:03.254381+00:00",
+      "dependencies": [
+        "P00.2"
+      ],
+      "changed_paths": [
+        "pnpm-lock.yaml",
+        "services/backend/uv.lock",
+        "docs/engineering/versions.md",
+        "infra/docker/Dockerfile.backend",
+        "infra/docker/Dockerfile.web",
+        "infra/compose.yaml",
+        ".github/workflows/ci.yaml",
+        "scripts/tasks.py"
+      ],
+      "acceptance_evidence": "Lockfiles pinned for both uv and pnpm; versions registered in docs/engineering/versions.md; Dockerfiles and compose created; CI skeleton added; python scripts/tasks.py check --scope foundation passed.",
+      "validation_commands": [
+        "python scripts/tasks.py check --scope foundation"
+      ],
+      "blocker": null,
+      "next_action": "P00.4: Record current model/SDK/STT/auth/storage capabilities and terms; implement doctor readiness flags"
+    },
+    "P00.4": {
+      "id": "P00.4",
+      "phase": "P00",
+      "title": "Record current model/SDK/STT/auth/storage capabilities and terms; implement doctor readiness flags",
+      "status": "DONE",
+      "is_optional": false,
+      "started_at": "2026-10-31T21:09:03.254381+00:00",
+      "completed_at": "2026-10-31T21:09:40.586722+00:00",
+      "dependencies": [
+        "P00.3"
+      ],
+      "changed_paths": [
+        "docs/engineering/providers.md",
+        "scripts/tasks.py",
+        "services/backend/tests/unit/test_doctor_readiness.py"
+      ],
+      "acceptance_evidence": "Provider capabilities and terms documented in docs/engineering/providers.md; doctor checks verify runtimes and report absent credentials truthfully without secret leakage or fake simulations; pytest unit tests verified.",
+      "validation_commands": [
+        "python scripts/tasks.py doctor",
+        "python scripts/tasks.py check --scope core"
+      ],
+      "blocker": null,
+      "next_action": "P00.5: ADR-100+ baseline, modular boundaries, environment modes and OpenAPI generation skeleton"
+    },
+    "P00.5": {
+      "id": "P00.5",
+      "phase": "P00",
+      "title": "ADR-100+ baseline, modular boundaries, environment modes and OpenAPI generation skeleton",
+      "status": "DONE",
+      "is_optional": false,
+      "started_at": "2026-10-31T21:09:40.586722+00:00",
+      "completed_at": "2026-10-31T21:11:34.533586+00:00",
+      "dependencies": [
+        "P00.4"
+      ],
+      "changed_paths": [
+        "docs/adr/ADR-101-stack-and-topology.md",
+        "docs/adr/ADR-102-identity-and-tenancy.md",
+        "docs/adr/ADR-103-orthogonal-fact-model.md",
+        "docs/adr/ADR-104-policy-dsl-and-ast.md",
+        "docs/adr/ADR-105-release-and-index-atomicity.md",
+        "docs/adr/ADR-106-pdf-licensing-and-bengali-rendering.md",
+        "docs/adr/ADR-107-model-and-privacy-selection.md",
+        "docs/adr/ADR-108-scenario-lab-isolation.md",
+        "docs/adr/ADR-109-deletion-and-backup-strategy.md",
+        "packages/contracts/openapi.json",
+        "packages/contracts/src/generated.ts",
+        "scripts/contracts.py",
+        "scripts/tasks.py"
+      ],
+      "acceptance_evidence": "ADR-101 to ADR-109 explain architectural choices; OpenAPI contract exported and TypeScript client generated reproducibly via python scripts/tasks.py contracts.",
+      "validation_commands": [
+        "python scripts/tasks.py contracts"
+      ],
+      "blocker": null,
+      "next_action": "P00 exit verification and GitHub phase commit/push"
+    },
+    "P01.1": {
+      "id": "P01.1",
+      "phase": "P01",
+      "title": "Implement Section 5 tokens, local fonts, typography and customized UI primitives",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P00.5"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P01.2": {
+      "id": "P01.2",
+      "phase": "P01",
+      "title": "Public landing/how-it-works/privacy/limitations/help pages and honest sticker asset slot",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P01.1"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P01.3": {
+      "id": "P01.3",
+      "phase": "P01",
+      "title": "Five connected case views, navigation, responsive evidence viewer and one-next-action card",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P01.2"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P01.4": {
+      "id": "P01.4",
+      "phase": "P01",
+      "title": "Typed bn/en message catalogue and all empty/loading/error/partial-state designs",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P01.3"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P01.5": {
+      "id": "P01.5",
+      "phase": "P01",
+      "title": "Save design reference screenshots/copy decisions in docs/design",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P01.4"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P01.6": {
+      "id": "P01.6",
+      "phase": "P01",
+      "title": "Implement complete English/Bangla parity, English-first routing and complete light/dark themes with light default",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P01.5"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P02.1": {
+      "id": "P02.1",
+      "phase": "P02",
+      "title": "Alembic identity/case/session/consent/event/outbox tables with constraints and RLS",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P01.6"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P02.2": {
+      "id": "P02.2",
+      "phase": "P02",
+      "title": "Opaque BFF sessions, anonymous auth, JWT verification, refresh/logout, CSRF and no-store responses",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P02.1"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P02.3": {
+      "id": "P02.3",
+      "phase": "P02",
+      "title": "Case CRUD, story/remedy persistence, ownership and version conflicts",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P02.2"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P02.4": {
+      "id": "P02.4",
+      "phase": "P02",
+      "title": "Optional verified account upgrade and safe existing-account handling",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P02.3"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P02.5": {
+      "id": "P02.5",
+      "phase": "P02",
+      "title": "Consent/manual mode UI and initial access-revocation/deletion job framework",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P02.4"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P02.6": {
+      "id": "P02.6",
+      "phase": "P02",
+      "title": "Generated TS client and real UI integration for list/intake/overview",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P02.5"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P03.1": {
+      "id": "P03.1",
+      "phase": "P03",
+      "title": "Create source registry from blueprint, official host allowlist, feed metadata and actual check results",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P02.6"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P03.2": {
+      "id": "P03.2",
+      "phase": "P03",
+      "title": "Source/version/provision/approval/release migrations plus immutable snapshot storage",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P03.1"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P03.3": {
+      "id": "P03.3",
+      "phase": "P03",
+      "title": "Implement typed policy AST, three-valued evaluator and reason templates",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P03.2"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P03.4": {
+      "id": "P03.4",
+      "phase": "P03",
+      "title": "Review CLI/admin skeleton with explicit named actor/scope and release-manifest build",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P03.3"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P03.5": {
+      "id": "P03.5",
+      "phase": "P03",
+      "title": "Prepare shopping/finance/safety starter candidates, exact dependencies and source cards",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P03.4"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P04.1": {
+      "id": "P04.1",
+      "phase": "P04",
+      "title": "Fact/assertion/review/issue/snapshot tables and typed normalization",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P03.5"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P04.2": {
+      "id": "P04.2",
+      "phase": "P04",
+      "title": "Real text extraction adapter with bounded schema validation and manual fallback",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P04.1"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P04.3": {
+      "id": "P04.3",
+      "phase": "P04",
+      "title": "Review UI accept/correct/reject/unsure plus desired-remedy selector",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P04.2"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P04.4": {
+      "id": "P04.4",
+      "phase": "P04",
+      "title": "Exact-source procedural assessment, merchant/provider distinction, initial NBQ/action selection",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P04.3"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P04.5": {
+      "id": "P04.5",
+      "phase": "P04",
+      "title": "Simple safe reviewed request draft and copy interaction with unsubmitted state",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P04.4"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P04.6": {
+      "id": "P04.6",
+      "phase": "P04",
+      "title": "Wire saved case UI to actual backend jobs, failure/resume and initial sandbox text case",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P04.5"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P05.1": {
+      "id": "P05.1",
+      "phase": "P05",
+      "title": "Direct upload intent, quota reservation, quarantine and accepted-copy storage flow",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P02.6",
+        "P04.1",
+        "P04.3",
+        "P04.5"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P05.2": {
+      "id": "P05.2",
+      "phase": "P05",
+      "title": "Malware/decoder sandbox, limits, parser probe and nonretryable rejection UX",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P05.1"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P05.3": {
+      "id": "P05.3",
+      "phase": "P05",
+      "title": "Native/scanned/mixed PDF parsing and Tesseract bn/en OCR with normalized boxes",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P05.2"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P05.4": {
+      "id": "P05.4",
+      "phase": "P05",
+      "title": "Evidence viewer/list, processing stage, span-to-fact links and owner-scoped previews",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P05.3"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P05.5": {
+      "id": "P05.5",
+      "phase": "P05",
+      "title": "Deterministic conflict/grouping/linkage logic, duplicate and multi-payment handling",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P05.4"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P05.6": {
+      "id": "P05.6",
+      "phase": "P05",
+      "title": "Evidence removal and cascading invalidation/deletion, orphan cleanup",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P05.5"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P06.1": {
+      "id": "P06.1",
+      "phase": "P06",
+      "title": "Browser recording, safe codec handling, consent and STT adapter",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P05.6"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P06.2": {
+      "id": "P06.2",
+      "phase": "P06",
+      "title": "Editable transcript, replay/delete, uncertain/critical-field review",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P06.1"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P06.3": {
+      "id": "P06.3",
+      "phase": "P06",
+      "title": "VLM screenshot layout adapter and OCR disagreement reconciliation",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P06.2"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P06.4": {
+      "id": "P06.4",
+      "phase": "P06",
+      "title": "Integrate voice/text/image facts into one case and issue review",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P06.3"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P06.5": {
+      "id": "P06.5",
+      "phase": "P06",
+      "title": "Versioned mini-benchmark, actual provider selection report and privacy cleanup tests",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P06.4"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P06.6": {
+      "id": "P06.6",
+      "phase": "P06",
+      "title": "Execute every supported modality alone and in combination against downstream case pipeline",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P06.5",
+        "P09.7",
+        "P10.5"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P07.1": {
+      "id": "P07.1",
+      "phase": "P07",
+      "title": "Hierarchical provision chunks, definitions/exceptions and stable citation spans",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P03.5",
+        "P05.3",
+        "P05.4"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P07.2": {
+      "id": "P07.2",
+      "phase": "P07",
+      "title": "Pinned E5 embedding adapter, pgvector storage and date/scope filtering",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P07.1"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P07.3": {
+      "id": "P07.3",
+      "phase": "P07",
+      "title": "Bengali-aware bm25s tokenizer/snapshot save-load and allowed-ID scoring",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P07.2"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P07.4": {
+      "id": "P07.4",
+      "phase": "P07",
+      "title": "Parallel dense/lexical retrieval, exact-ID lookup, RRF and deterministic context assembly",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P07.3"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P07.5": {
+      "id": "P07.5",
+      "phase": "P07",
+      "title": "Statement/citation validator, reviewed legal/procedure templates and source drawer",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P07.4"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P07.6": {
+      "id": "P07.6",
+      "phase": "P07",
+      "title": "Retrieval ablations and labeled query report; integrate full pipeline in workspace",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P07.5"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P08.1": {
+      "id": "P08.1",
+      "phase": "P08",
+      "title": "Complete shopping/finance/safety rule packs with explicit unknown/exclusion/date handling",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P07.6",
+        "P04.4",
+        "P05.5"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P08.2": {
+      "id": "P08.2",
+      "phase": "P08",
+      "title": "User-reviewed issue split/merge and distinct remedy/stage action dependencies",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P08.1"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P08.3": {
+      "id": "P08.3",
+      "phase": "P08",
+      "title": "Why/why-not Paths UI using actual condition traces",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P08.2"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P08.4": {
+      "id": "P08.4",
+      "phase": "P08",
+      "title": "What-if drawer/service with allowed fact overrides, comparison and explicit apply workflow",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P08.3"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P08.5": {
+      "id": "P08.5",
+      "phase": "P08",
+      "title": "NBQ selection, safety priority, uncertain deadline warnings and skip semantics",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P08.4"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P08.6": {
+      "id": "P08.6",
+      "phase": "P08",
+      "title": "Build owner-scoped Processing details view plus public Technology explanation",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P08.5"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P09.1": {
+      "id": "P09.1",
+      "phase": "P09",
+      "title": "Remedy/stage-aware action DAG and one primary next action UI",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P08.6"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P09.2": {
+      "id": "P09.2",
+      "phase": "P09",
+      "title": "Editable bn/en request/complaint document AST, sentence source mapping and review",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P09.1"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P09.3": {
+      "id": "P09.3",
+      "phase": "P09",
+      "title": "Versioned portal field maps, per-field copy and stale-map fallback",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P09.2"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P09.4": {
+      "id": "P09.4",
+      "phase": "P09",
+      "title": "PDF/Markdown/HTML/optional ZIP export worker and private downloads",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P09.3"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P09.5": {
+      "id": "P09.5",
+      "phase": "P09",
+      "title": "Attachment privacy review, true raster redaction and metadata-safe derivatives",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P09.4"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P09.6": {
+      "id": "P09.6",
+      "phase": "P09",
+      "title": "Full prepare/export -> open official portal -> manually record reference journey",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P09.5"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P09.7": {
+      "id": "P09.7",
+      "phase": "P09",
+      "title": "Implement official complaint destination cards, direct public references and link-health fallback",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P09.6"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P10.1": {
+      "id": "P10.1",
+      "phase": "P10",
+      "title": "User-reported response/submission/outcome update UI and private references",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P09.7"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P10.2": {
+      "id": "P10.2",
+      "phase": "P10",
+      "title": "Dependency-based reassessment, prior/new snapshots and semantic decision diff",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P10.1"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P10.3": {
+      "id": "P10.3",
+      "phase": "P10",
+      "title": "Superseded document/assessment warnings and artifact version history",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P10.2"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P10.4": {
+      "id": "P10.4",
+      "phase": "P10",
+      "title": "In-app reminders, user-selected follow-up times and cancellation",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P10.3"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P10.5": {
+      "id": "P10.5",
+      "phase": "P10",
+      "title": "Resume stale tab, race cancellation and returning guest upgrade experience",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P10.4"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P11.1": {
+      "id": "P11.1",
+      "phase": "P11",
+      "title": "Tested watchers for official listing/direct sources, permissions/cadence and manual-import fallback",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P03.5",
+        "P07.6",
+        "P10.2"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P11.2": {
+      "id": "P11.2",
+      "phase": "P11",
+      "title": "Section-aware diff, candidate impact proposal, publication/commencement/conflict fields",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P11.1"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P11.3": {
+      "id": "P11.3",
+      "phase": "P11",
+      "title": "Reviewer source/original/diff/quality view and auditable scoped approval",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P11.2"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P11.4": {
+      "id": "P11.4",
+      "phase": "P11",
+      "title": "Immutable release builder, preload/checksum readiness, pointer promotion/rollback and disable overlays",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P11.3"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P11.5": {
+      "id": "P11.5",
+      "phase": "P11",
+      "title": "Impacted-case reassessment queue and source-health/correction notices",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P11.4"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P12.1": {
+      "id": "P12.1",
+      "phase": "P12",
+      "title": "Telecom/ISP taxonomy, reviewed sources/procedure, conditions, form map and templates",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P08.5",
+        "P09.3",
+        "P11.3"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P12.2": {
+      "id": "P12.2",
+      "phase": "P12",
+      "title": "Insurance taxonomy, reviewed current procedure and remedy-aware request/escalation guidance",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P12.1"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P12.3": {
+      "id": "P12.3",
+      "phase": "P12",
+      "title": "Secondary public-service GRS pack and explicit exclusions",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P12.2"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P12.4": {
+      "id": "P12.4",
+      "phase": "P12",
+      "title": "Domain capability catalogue, disclosure and unsupported-jurisdiction fallback",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P12.3"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P12.5": {
+      "id": "P12.5",
+      "phase": "P12",
+      "title": "Cross-domain regression and multi-issue coherence suite",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P12.4"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P13.1": {
+      "id": "P13.1",
+      "phase": "P13",
+      "title": "Build adjudicated datasets/splits and annotation source/version records",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P12.5"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P13.2": {
+      "id": "P13.2",
+      "phase": "P13",
+      "title": "Run baselines/ablations/full system with recorded model/rule/release IDs",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P13.1"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P13.3": {
+      "id": "P13.3",
+      "phase": "P13",
+      "title": "Security/red-team/privacy suite and parser/export/deletion abuse tests",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P13.2"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P13.4": {
+      "id": "P13.4",
+      "phase": "P13",
+      "title": "Moderated tasks with 5-8 prospective users, including varied language/device comfort",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P13.3"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P13.5": {
+      "id": "P13.5",
+      "phase": "P13",
+      "title": "Mobile/keyboard/screen-reader/contrast/visual regression fixes across both languages and themes",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P13.4"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P13.6": {
+      "id": "P13.6",
+      "phase": "P13",
+      "title": "Performance/cost load tests, provider outage/rate limit/recovery drill and gate report",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P13.5"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P14.1": {
+      "id": "P14.1",
+      "phase": "P14",
+      "title": "Provision configured production/staging services, TLS, migrations, session/storage policies and secrets",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P00.5",
+        "P02.6",
+        "P03.5",
+        "P05.6"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P14.2": {
+      "id": "P14.2",
+      "phase": "P14",
+      "title": "Eight real-pipeline synthetic scenarios, three featured quick starts, interactive checkpoints/branches, reset/isolation/quota and failure notices",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P14.1"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P14.3": {
+      "id": "P14.3",
+      "phase": "P14",
+      "title": "Backup/restore/deletion-suppression/source rollback/worker-restart drills",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P14.2"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P14.4": {
+      "id": "P14.4",
+      "phase": "P14",
+      "title": "Actual source-review sign-off, processor/privacy configuration, real provider verification and release manifest approval",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P14.3",
+        "P13.6"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P14.5": {
+      "id": "P14.5",
+      "phase": "P14",
+      "title": "Obtain genuine official sticker, add prominently, verify real solo-builder details and prepare <=5-slide deck",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P14.4"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P14.6": {
+      "id": "P14.6",
+      "phase": "P14",
+      "title": "Public incognito/mobile/judge smoke across all eight scenarios, languages/themes, English demo script/video if chosen, Devpost fields and evidence",
+      "status": "TODO",
+      "is_optional": false,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P14.5"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P15.1": {
+      "id": "P15.1",
+      "phase": "P15",
+      "title": "Banglish encoder/classifier or small-model experiment with lawful dataset",
+      "status": "TODO",
+      "is_optional": true,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P13.6",
+        "P14.4"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P15.2": {
+      "id": "P15.2",
+      "phase": "P15",
+      "title": "Dedicated graph retrieval/traversal experiment against relational rule dependencies",
+      "status": "TODO",
+      "is_optional": true,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P15.1"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P15.3": {
+      "id": "P15.3",
+      "phase": "P15",
+      "title": "Embedding/reranker/layout-parser provider comparisons",
+      "status": "TODO",
+      "is_optional": true,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P15.1"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    },
+    "P15.4": {
+      "id": "P15.4",
+      "phase": "P15",
+      "title": "Qualified human referral and authorized official integration feasibility study",
+      "status": "TODO",
+      "is_optional": true,
+      "started_at": null,
+      "completed_at": null,
+      "dependencies": [
+        "P15.1"
+      ],
+      "changed_paths": [],
+      "acceptance_evidence": null,
+      "validation_commands": [],
+      "blocker": null,
+      "next_action": null
+    }
+  },
+  "phases": {
+    "P00": {
+      "phase_id": "P00",
+      "implementation_status": "DONE",
+      "validation_status": "PASSED",
+      "push_status": "pending",
+      "intended_remote": "origin",
+      "intended_branch": "main",
+      "completion_commit_sha": null,
+      "verified_remote_sha": null,
+      "last_attempt_or_error": null
+    },
+    "P01": {
+      "phase_id": "P01",
+      "implementation_status": "TODO",
+      "validation_status": "PENDING",
+      "push_status": "not_ready",
+      "intended_remote": "origin",
+      "intended_branch": "main",
+      "completion_commit_sha": null,
+      "verified_remote_sha": null,
+      "last_attempt_or_error": null
+    },
+    "P02": {
+      "phase_id": "P02",
+      "implementation_status": "TODO",
+      "validation_status": "PENDING",
+      "push_status": "not_ready",
+      "intended_remote": "origin",
+      "intended_branch": "main",
+      "completion_commit_sha": null,
+      "verified_remote_sha": null,
+      "last_attempt_or_error": null
+    },
+    "P03": {
+      "phase_id": "P03",
+      "implementation_status": "TODO",
+      "validation_status": "PENDING",
+      "push_status": "not_ready",
+      "intended_remote": "origin",
+      "intended_branch": "main",
+      "completion_commit_sha": null,
+      "verified_remote_sha": null,
+      "last_attempt_or_error": null
+    },
+    "P04": {
+      "phase_id": "P04",
+      "implementation_status": "TODO",
+      "validation_status": "PENDING",
+      "push_status": "not_ready",
+      "intended_remote": "origin",
+      "intended_branch": "main",
+      "completion_commit_sha": null,
+      "verified_remote_sha": null,
+      "last_attempt_or_error": null
+    },
+    "P05": {
+      "phase_id": "P05",
+      "implementation_status": "TODO",
+      "validation_status": "PENDING",
+      "push_status": "not_ready",
+      "intended_remote": "origin",
+      "intended_branch": "main",
+      "completion_commit_sha": null,
+      "verified_remote_sha": null,
+      "last_attempt_or_error": null
+    },
+    "P06": {
+      "phase_id": "P06",
+      "implementation_status": "TODO",
+      "validation_status": "PENDING",
+      "push_status": "not_ready",
+      "intended_remote": "origin",
+      "intended_branch": "main",
+      "completion_commit_sha": null,
+      "verified_remote_sha": null,
+      "last_attempt_or_error": null
+    },
+    "P07": {
+      "phase_id": "P07",
+      "implementation_status": "TODO",
+      "validation_status": "PENDING",
+      "push_status": "not_ready",
+      "intended_remote": "origin",
+      "intended_branch": "main",
+      "completion_commit_sha": null,
+      "verified_remote_sha": null,
+      "last_attempt_or_error": null
+    },
+    "P08": {
+      "phase_id": "P08",
+      "implementation_status": "TODO",
+      "validation_status": "PENDING",
+      "push_status": "not_ready",
+      "intended_remote": "origin",
+      "intended_branch": "main",
+      "completion_commit_sha": null,
+      "verified_remote_sha": null,
+      "last_attempt_or_error": null
+    },
+    "P09": {
+      "phase_id": "P09",
+      "implementation_status": "TODO",
+      "validation_status": "PENDING",
+      "push_status": "not_ready",
+      "intended_remote": "origin",
+      "intended_branch": "main",
+      "completion_commit_sha": null,
+      "verified_remote_sha": null,
+      "last_attempt_or_error": null
+    },
+    "P10": {
+      "phase_id": "P10",
+      "implementation_status": "TODO",
+      "validation_status": "PENDING",
+      "push_status": "not_ready",
+      "intended_remote": "origin",
+      "intended_branch": "main",
+      "completion_commit_sha": null,
+      "verified_remote_sha": null,
+      "last_attempt_or_error": null
+    },
+    "P11": {
+      "phase_id": "P11",
+      "implementation_status": "TODO",
+      "validation_status": "PENDING",
+      "push_status": "not_ready",
+      "intended_remote": "origin",
+      "intended_branch": "main",
+      "completion_commit_sha": null,
+      "verified_remote_sha": null,
+      "last_attempt_or_error": null
+    },
+    "P12": {
+      "phase_id": "P12",
+      "implementation_status": "TODO",
+      "validation_status": "PENDING",
+      "push_status": "not_ready",
+      "intended_remote": "origin",
+      "intended_branch": "main",
+      "completion_commit_sha": null,
+      "verified_remote_sha": null,
+      "last_attempt_or_error": null
+    },
+    "P13": {
+      "phase_id": "P13",
+      "implementation_status": "TODO",
+      "validation_status": "PENDING",
+      "push_status": "not_ready",
+      "intended_remote": "origin",
+      "intended_branch": "main",
+      "completion_commit_sha": null,
+      "verified_remote_sha": null,
+      "last_attempt_or_error": null
+    },
+    "P14": {
+      "phase_id": "P14",
+      "implementation_status": "TODO",
+      "validation_status": "PENDING",
+      "push_status": "not_ready",
+      "intended_remote": "origin",
+      "intended_branch": "main",
+      "completion_commit_sha": null,
+      "verified_remote_sha": null,
+      "last_attempt_or_error": null
+    },
+    "P15": {
+      "phase_id": "P15",
+      "implementation_status": "TODO",
+      "validation_status": "PENDING",
+      "push_status": "not_ready",
+      "intended_remote": "origin",
+      "intended_branch": "main",
+      "completion_commit_sha": null,
+      "verified_remote_sha": null,
+      "last_attempt_or_error": null
+    }
+  },
+  "blockers": [],
+  "next_action": "Complete P00.1 and record initial inventory",
+  "last_validation": [],
+  "environment": {
+    "mode": "development",
+    "live_ai_verified": false,
+    "source_documents": {
+      "ClaimCraft_BD_Master_Product_Blueprint_v4.1_Knowledge_AI_Engineering.md": "6C4D97EE7988CFE35C90E6D2397CBA1D2E7B4AC47D2DF9C9253594C5C448E61A",
+      "hacakthon details.txt": "65D607450DF631BEFAD35CF4D5A8A41DFA0ADF7A462AA46A7F32A4DA3608457B",
+      "plan.md": "E998906D971726FC2656B0090EB398424F741B0844F4AD75DA345EECD6372636"
+    }
+  },
+  "release": {
+    "application_commit": null,
+    "knowledge_release_id": null
+  }
+}

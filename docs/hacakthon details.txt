@@ -1,0 +1,112 @@
+🚀 EVERYTHING YOU NEED TO KNOW BEFORE SUBMITTING FOR OSTAD PRESENTS YUNET AIGNITE BUILDATHON 2026!
+
+💡 WHAT SHOULD YOU BUILD?
+
+Build a functional web app that solves a real-world problem faced by consumers or everyday users (B2C).
+
+Your project should:
+• Address a clear, real-world problem.
+• Offer a practical and useful solution.
+• Use AI as a meaningful part of the solution.
+• Be functional, accessible, and easy to use.
+
+You can explore any relevant domain, including:
+• Education and Learning
+• Career and Professional Development
+• Productivity and Daily Life
+• Finance and Business
+• Lifestyle and Consumer Services
+• Accessibility and Inclusion
+• Environment and Sustainability
+• Community and Social Impact
+
+You can use Agentic AI, AI APIs, AI coding assistants, frameworks, no-code/low-code tools, and other modern AI technologies.
+
+You do not need to build an AI model from scratch. You can use AI tools to build your application and integrate AI-powered features wherever they add value.
+
+📌 PROJECT RULES
+
+1. Ostad Presents YUNet AIgnite Buildathon 2026 is a strictly SOLO hackathon. Every participant must compete and submit individually.
+2. Team submissions will NOT be accepted. Devpost may show team creation or joining options, but only individual submissions will be considered.
+3. You may submit an existing project if you make meaningful improvements to it for Ostad Presents YUNet AIgnite Buildathon 2026.
+4. Each participant can submit only ONE project.
+5. Your app must be functional and publicly accessible.
+6. Every app must display the official "Built For Ostad Presents YUNet AIgnite Buildathon 2026" sticker. Place it in the navbar or another prominent area near the top of your app. The organizers will provide the sticker files. Link to sticker: https://drive.google.com/.../1ILpnmXpegv75cNM...
+
+📤 WHAT DO YOU NEED TO SUBMIT?
+
+Every participant must submit the following:
+
+1️⃣ LIVE WEB APP (MANDATORY)
+• Submit a publicly accessible link to your hosted web application.
+• Judges must be able to open and test your app.
+• Make sure the application works before submitting.
+
+2️⃣ PRESENTATION DECK (MANDATORY)
+• Maximum 5 slides.
+• Your presentation should cover:
+• Problem Statement
+• Proposed Solution
+• How the Solution Works
+• Participant Introduction
+• Other relevant project information
+
+3️⃣ PRODUCT DEMO VIDEO (OPTIONAL)
+• A YouTube video demonstrating your product and its key features is recommended but not mandatory.
+• If you submit a demo video, it MUST be in English because the judging panel includes international judges.
+
+4️⃣ GITHUB REPOSITORY (OPTIONAL)
+• You may share your GitHub or other code repository link.
+• It is not mandatory.
+• Organizers may request source code from shortlisted participants for verification.
+
+📍 WHERE AND HOW TO SUBMIT?
+
+All project submissions for Ostad Presents YUNet AIgnite Buildathon 2026 must be made through Devpost.
+
+• The submission window will open on Devpost during the Primary Round (1–5 November 2026).
+• Once the submission window opens, log in to your registered Devpost account and complete your project submission.
+• Submit your live web app link, presentation deck, and any optional materials through the official submission page.
+• Make sure to submit before 5 November 2026, 11:59 PM Bangladesh Time.
+
+🔗 Official Submission Platform: https://yunet-aignite26.devpost.com/
+
+⚠️ IMPORTANT: Devpost is the ONLY accepted submission channel for Ostad Presents YUNet AIgnite Buildathon 2026. Submissions sent through email, Google Forms, WhatsApp, or any other platform will NOT be considered.
+
+📅 IMPORTANT DATES
+
+• Registration Deadline: 31 October 2026
+• Primary Round: 1–5 November 2026
+• Final Submission Deadline: 5 November 2026, 11:59 PM Bangladesh Time
+• Top 20 Announcement: 15 November 2026
+• Final Round and Closing Ceremony: Date and venue to be announced.
+
+👥 WHAT HAPPENS NEXT?
+
+• All eligible submissions will be evaluated during the online Primary Round.
+• The Top 20 individual participants will advance to the Final Round.
+• Finalists will pitch and demonstrate their products before the judges.
+• All finalists will receive a Certificate of Excellence.
+
+⚖️ HOW WILL PROJECTS BE JUDGED?
+
+Projects will be evaluated based on:
+
+1. Problem and User Value: Clarity, relevance, and importance of the problem, along with the value provided to users.
+2. Solution and Innovation: Effectiveness, creativity, originality, and usefulness of the proposed solution.
+3. AI and Technical Implementation: Meaningful AI integration, effective use of AI tools or technologies, functionality, and technical quality.
+4. User Experience and Product Readiness: Ease of use, completeness, practicality, and potential for real-world use.
+5. Presentation and Pitch: Clarity of communication and product demonstration during the Final Round.
+
+Detailed scoring criteria may be updated by the organizers. The Primary Round will be evaluated based on submitted projects, while finalists will pitch and demonstrate their solutions in the Final Round.
+
+🔥 READY TO BUILD?
+
+Registration is FREE! Bring your idea, use AI to build something meaningful, and show us what you can create!
+
+🔗 Submit Now: https://yunet-aignite26.devpost.com/
+
+💬 Join the Official WhatsApp Group:
+https://chat.whatsapp.com/DpuztyZ70w6JbErb2e27Mo?s=cl&p=a...
+
+Bring your idea. Build with AI. Ignite the future. 🔥

@@ -1,0 +1,49 @@
+{
+  "landing": {
+    "tagline": "Know Your Rights. Take the Right Action.",
+    "hero_title": "Turn scattered evidence into your next clear step.",
+    "hero_description": "Bangladesh-first consumer resolution copilot. Organize dispute evidence, understand verified procedural paths, and draft structured consumer complaints.",
+    "start_cta": "Start your case",
+    "scenarios_cta": "Explore scenarios",
+    "preview_heading": "Interactive Product Preview",
+    "how_it_works_title": "How ClaimCraft BD Works",
+    "step1_title": "1. Provide Evidence",
+    "step1_desc": "Speak in Bangla/English, paste dispute text, or upload receipts and screenshots.",
+    "step2_title": "2. Review Extracted Facts",
+    "step2_desc": "Verify key details, transaction amounts, and dates. Full user control over every assertion.",
+    "step3_title": "3. Understand Viable Paths",
+    "step3_desc": "Explore procedural options backed by official statutory sources and regulatory remedies.",
+    "step4_title": "4. Act with Confidence",
+    "step4_desc": "Prepare grounded complaint packages, copy portal fields, and track follow-ups."
+  },
+  "nav": {
+    "home": "Home",
+    "overview": "Overview",
+    "evidence": "Evidence",
+    "paths": "Paths",
+    "actions": "Actions",
+    "activity": "Activity",
+    "scenarios": "Scenarios",
+    "technology": "Technology"
+  },
+  "case": {
+    "next_action": "Your Next Action",
+    "what_happened": "What Happened",
+    "material_facts": "Facts Needing Review",
+    "prepared_actions": "Prepared Actions",
+    "empty_state": "No case started yet. Begin by sharing your dispute story."
+  },
+  "common": {
+    "language": "Language",
+    "theme": "Theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "retry": "Retry",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "independent_notice": "ClaimCraft BD is an independent consumer assistance tool, not a government body or court."
+  }
+}

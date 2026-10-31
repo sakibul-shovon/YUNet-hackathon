@@ -1,0 +1,16 @@
+{
+  "name": "claimcraft-bd",
+  "version": "0.1.0",
+  "private": true,
+  "description": "ClaimCraft BD — The Consumer Resolution Copilot",
+  "scripts": {
+    "dev": "python scripts/tasks.py dev",
+    "doctor": "python scripts/tasks.py doctor",
+    "status": "python scripts/tasks.py status",
+    "check:foundation": "python scripts/tasks.py check --scope foundation"
+  },
+  "packageManager": "pnpm@12.16.1",
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Light Theme (Default) */
+  --canvas: #f8faf8;
+  --surface: #ffffff;
+  --elevated: #f0f4f1;
+  --foreground: #111813;
+  --muted: #f0f4f1;
+  --muted-foreground: #4a554d;
+  --border: #d5dfd7;
+  --primary: #1b7340;
+  --primary-foreground: #ffffff;
+  --accent: #2e9b5a;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  --font-bengali: "Hind Siliguri", "Kalpurush", "SolaimanLipi", system-ui, sans-serif;
+}
+
+.dark {
+  /* Dark Baseline */
+  --canvas: #101713;
+  --surface: #18221c;
+  --elevated: #213027;
+  --foreground: #edf3ed;
+  --muted: #213027;
+  --muted-foreground: #a9b8ac;
+  --border: #35453b;
+  --primary: #83d2a2;
+  --primary-foreground: #101713;
+  --accent: #83d2a2;
+}
+
+body {
+  background-color: var(--canvas);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  min-height: 100vh;
+}

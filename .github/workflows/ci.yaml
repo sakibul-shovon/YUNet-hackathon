@@ -1,0 +1,49 @@
+name: ClaimCraft BD CI
+
+on:
+  push:
+    branches: ["main", "build/*"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  foundation:
+    name: Foundation & Quality Gates
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          version: "latest"
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: "12.16.1"
+
+      - name: Install dependencies
+        run: |
+          pnpm install --frozen-lockfile
+          cd services/backend && uv sync --all-extras
+
+      - name: Run Foundation Checks
+        run: python scripts/tasks.py check --scope foundation
+
+      - name: Run Core Tests
+        run: python scripts/tasks.py check --scope core
+
+      - name: Build Web Application
+        run: pnpm --filter @claimcraft/web build
