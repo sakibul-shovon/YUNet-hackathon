@@ -42,6 +42,10 @@ export interface AssessmentRouteOut {
   reasons: unknown[];
   allowed_actions: unknown[];
   source_dependencies: unknown[];
+  statutory_citations?: unknown[];
+  supported_remedies?: unknown[];
+  unsupported_remedies?: unknown[];
+  unsupported_remedy_warnings?: unknown[];
   condition_trace: unknown[];
 }
 
@@ -328,6 +332,41 @@ export interface HybridSearchRequest {
   lexical_enabled?: boolean;
 }
 
+export interface IssueCreate {
+  canonical_taxonomy: string;
+  desired_remedy?: unknown;
+}
+
+export interface IssueMergeRequest {
+  issue_ids_to_merge: unknown[];
+  target_canonical_taxonomy: string;
+  target_desired_remedy?: unknown;
+}
+
+export interface IssueReviewRequest {
+  user_review: string;
+  desired_remedy?: unknown;
+  corrected_taxonomy?: unknown;
+}
+
+export interface IssueSplitRequest {
+  source_issue_id: string;
+  sub_issues: unknown[];
+}
+
+export interface IssueTrackOut {
+  id: string;
+  case_id: string;
+  canonical_taxonomy: string;
+  hypothesis_state: string;
+  user_review?: unknown;
+  desired_remedy?: unknown;
+  rejection_reason?: unknown;
+  active: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
 export interface KnowledgeReleaseOut {
   id: string;
   release_id: string;
@@ -336,6 +375,12 @@ export interface KnowledgeReleaseOut {
   is_active: boolean;
   created_at: string;
   promoted_at?: unknown;
+}
+
+export interface MultiIssueAssessmentOut {
+  case_id: string;
+  issue_tracks: unknown[];
+  independent_paths: unknown[];
 }
 
 export interface MultimodalFactProposal {
@@ -355,6 +400,18 @@ export interface MultimodalProposalResult {
   conflicting_assertion_id?: unknown;
   conflict_message_en?: unknown;
   conflict_message_bn?: unknown;
+}
+
+export interface NBQAnswerRequest {
+  question_key: string;
+  fact_field: string;
+  value: unknown;
+  field_type?: string;
+}
+
+export interface NBQSkipRequest {
+  question_key: string;
+  fact_field: string;
 }
 
 export interface NextBestQuestion {
@@ -392,6 +449,24 @@ export interface PaymentReconciliationResult {
   prompt_bn: string;
 }
 
+export interface PipelineRunOut {
+  pipeline_id: string;
+  case_id: string;
+  executed_at: string;
+  overall_status: string;
+  stages: unknown[];
+  technology_inventory: Record<string, unknown>;
+}
+
+export interface PipelineStageReceipt {
+  stage_name: string;
+  status: string;
+  provider: string;
+  model_or_algorithm: string;
+  duration_ms?: unknown;
+  details?: Record<string, unknown>;
+}
+
 export interface PrincipalOut {
   id: string;
   kind: string;
@@ -411,6 +486,10 @@ export interface ProceduralAssessmentOut {
   routes: unknown[];
   next_best_question?: unknown;
   source_cards: unknown[];
+  limitation_warning_en?: unknown;
+  limitation_warning_bn?: unknown;
+  days_remaining_in_limitation?: unknown;
+  is_deadline_uncertain?: boolean;
 }
 
 export interface ProvisionLookupResult {
@@ -484,6 +563,14 @@ export interface ReviewSubmission {
   limitations?: unknown;
 }
 
+export interface RouteDiffItem {
+  route_id: string;
+  issue_type: string;
+  baseline_status: unknown;
+  simulated_status: unknown;
+  changed: boolean;
+}
+
 export interface RouteStatus {
 }
 
@@ -520,6 +607,12 @@ export interface SourceProvisionOut {
   normalized_text: string;
   page_number?: unknown;
   created_at: string;
+}
+
+export interface SubIssueData {
+  canonical_taxonomy: string;
+  desired_remedy?: unknown;
+  assigned_fact_ids?: unknown[];
 }
 
 export interface TextRegion {
@@ -584,6 +677,25 @@ export interface ValidationError {
   type: string;
   input?: unknown;
   ctx?: Record<string, unknown>;
+}
+
+export interface WhatIfApplyRequest {
+  overrides: Record<string, unknown>;
+}
+
+export interface WhatIfSimulationRequest {
+  overrides: Record<string, unknown>;
+}
+
+export interface WhatIfSimulationResult {
+  case_id: string;
+  overrides: Record<string, unknown>;
+  baseline_routes: unknown[];
+  simulated_routes: unknown[];
+  route_diff: unknown[];
+  is_material_change: boolean;
+  summary_en: string;
+  summary_bn: string;
 }
 
 export interface WordTimestamp {

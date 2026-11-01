@@ -4,9 +4,23 @@ status: draft
 jurisdiction: BD
 issue_type: defective_goods
 date_basis: conduct_date
+statutory_limitation_days: 30
+statutory_citations:
+  - crpa2009:sec:41
+  - crpa2009:sec:44
+  - crpa2009:sec:60
+  - crpa2009:sec:76
 source_dependencies:
   - bd_crpa_2009
   - dncrp_ccms_portal
+supported_remedies:
+  - replacement
+  - repair
+  - full_refund
+  - partial_refund
+unsupported_remedies:
+  - criminal_prosecution_direct
+  - punitive_damages_triple
 conditions:
   all:
     - eq:
@@ -21,10 +35,10 @@ exclusions:
       value: true
 unknown_behavior: ask_material_question
 reason_templates:
-  eligible: reasons.shopping.defective_goods_eligible
+  supported: reasons.shopping.defective_goods_eligible
   excluded: reasons.shopping.defective_goods_excluded
   unknown: reasons.shopping.defective_goods_needs_facts
+  not_supported: reasons.shopping.defective_goods_not_supported
 allowed_actions:
   - prepare_merchant_replacement_request
   - prepare_dncrp_complaint
-

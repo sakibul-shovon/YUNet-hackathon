@@ -4,9 +4,18 @@ status: draft
 jurisdiction: BD
 issue_type: product_safety_hazard
 date_basis: conduct_date
+statutory_citations:
+  - crpa2009:sec:41
+  - crpa2009:sec:76
+  - dncrp_hotline_16121
 source_dependencies:
   - bd_crpa_2009
   - dncrp_hotline_16121
+supported_remedies:
+  - immediate_recall
+  - hotline_alert
+  - full_refund
+unsupported_remedies: []
 conditions:
   all:
     - eq:
@@ -15,10 +24,10 @@ conditions:
 exclusions: []
 unknown_behavior: ask_material_question
 reason_templates:
-  eligible: reasons.safety.immediate_hotline_alert
+  supported: reasons.safety.immediate_hotline_alert
   excluded: reasons.safety.no_hazard_identified
   unknown: reasons.safety.needs_hazard_facts
+  not_supported: reasons.safety.no_hazard_identified
 allowed_actions:
   - call_dncrp_hotline_16121
   - preserve_hazardous_sample
-

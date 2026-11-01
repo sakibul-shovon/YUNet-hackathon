@@ -1,8 +1,8 @@
 {
   "plan_version": "1.2",
-  "updated_at": "2026-11-01T07:15:14.415380+00:00",
-  "current_task": "P08.1",
-  "last_completed_task": "P07.6",
+  "updated_at": "2026-11-01T07:42:19.840855+00:00",
+  "current_task": "P09.1",
+  "last_completed_task": "P08.6",
   "tasks": {
     "P00.1": {
       "id": "P00.1",
@@ -890,7 +890,7 @@
         "services/backend/app/evidence/schemas.py",
         "services/backend/tests/unit/test_t21_payment_reconciliation.py"
       ],
-      "acceptance_evidence": "T21 narrated ৳5,500 vs ৳5,000 receipt conflict prompts clarification, second linked ৳500 resolves total, duplicate/unrelated receipt does not double-count.",
+      "acceptance_evidence": "T21 narrated \u09f35,500 vs \u09f35,000 receipt conflict prompts clarification, second linked \u09f3500 resolves total, duplicate/unrelated receipt does not double-count.",
       "validation_commands": [
         "uv run --directory services/backend pytest tests/unit/test_t21_payment_reconciliation.py"
       ],
@@ -1083,7 +1083,7 @@
         "services/backend/app/retrieval/router.py",
         "services/backend/tests/retrieval/test_t24_hierarchical_provisions.py"
       ],
-      "acceptance_evidence": "T24: Hierarchical chunks for CRPA 2009 and BB CIPC; exact Bengali and Latin section lookup (sec:45, ধারা ৪৫, sec:45(2), ধারা ৪৫(২), sec:60, sec:76, স্তর ১, স্তর ২); long Bengali clauses preserve qualifications without truncation; non-existent sections rejected without hallucination.",
+      "acceptance_evidence": "T24: Hierarchical chunks for CRPA 2009 and BB CIPC; exact Bengali and Latin section lookup (sec:45, \u09a7\u09be\u09b0\u09be \u09ea\u09eb, sec:45(2), \u09a7\u09be\u09b0\u09be \u09ea\u09eb(\u09e8), sec:60, sec:76, \u09b8\u09cd\u09a4\u09b0 \u09e7, \u09b8\u09cd\u09a4\u09b0 \u09e8); long Bengali clauses preserve qualifications without truncation; non-existent sections rejected without hallucination.",
       "validation_commands": [
         "uv run --directory services/backend pytest tests/retrieval/test_t24_hierarchical_provisions.py -v"
       ],
@@ -1125,7 +1125,7 @@
       "changed_paths": [
         "services/backend/app/retrieval/bm25_adapter.py"
       ],
-      "acceptance_evidence": "T25 / P07.3: NFC normalization; Unicode combining marks & vowel signs preserved; negation tokens retained; exact compound aliases (45(2), ৪৫(২), sec:45(2)) preserved; no English stopword corruption; snapshot save/load round-trip with manifest checksum.",
+      "acceptance_evidence": "T25 / P07.3: NFC normalization; Unicode combining marks & vowel signs preserved; negation tokens retained; exact compound aliases (45(2), \u09ea\u09eb(\u09e8), sec:45(2)) preserved; no English stopword corruption; snapshot save/load round-trip with manifest checksum.",
       "validation_commands": [
         "uv run --directory services/backend pytest tests/retrieval/test_t25_hybrid_retrieval_and_rrf.py -v"
       ],
@@ -1204,17 +1204,25 @@
       "id": "P08.1",
       "phase": "P08",
       "title": "Complete shopping/finance/safety rule packs with explicit unknown/exclusion/date handling",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
       "started_at": null,
-      "completed_at": null,
+      "completed_at": "2026-11-01T07:42:19.840855+00:00",
       "dependencies": [
         "P07.6",
         "P04.4",
         "P05.5"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
+      "changed_paths": [
+        "knowledge/packs/bd/shopping/ecommerce_delivery_failure.yaml",
+        "knowledge/packs/bd/shopping/defective_goods.yaml",
+        "knowledge/packs/bd/finance/mfs_unauthorized_charge.yaml",
+        "knowledge/packs/bd/safety/product_safety_hazard.yaml",
+        "services/backend/app/policy/ast.py",
+        "services/backend/app/policy/engine.py",
+        "services/backend/tests/policy/test_p08_1_paired_jurisdictions.py"
+      ],
+      "acceptance_evidence": "CRPA 2009 Sec 45/60/76 and BB CIPC Stage 1/2 rule packs verified; T19, T20, T30 date limitation caution, and unsupported remedy gates pass.",
       "validation_commands": [],
       "blocker": null,
       "next_action": null
@@ -1223,15 +1231,19 @@
       "id": "P08.2",
       "phase": "P08",
       "title": "User-reviewed issue split/merge and distinct remedy/stage action dependencies",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
       "started_at": null,
-      "completed_at": null,
+      "completed_at": "2026-11-01T07:42:19.840855+00:00",
       "dependencies": [
         "P08.1"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
+      "changed_paths": [
+        "services/backend/app/cases/issue_service.py",
+        "services/backend/app/cases/issue_router.py",
+        "services/backend/tests/policy/test_p08_2_issue_split_merge.py"
+      ],
+      "acceptance_evidence": "User-reviewed issue split and merge implemented; non-actionable brand tracks rejected; independent routes evaluated per issue track.",
       "validation_commands": [],
       "blocker": null,
       "next_action": null
@@ -1240,15 +1252,18 @@
       "id": "P08.3",
       "phase": "P08",
       "title": "Why/why-not Paths UI using actual condition traces",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
       "started_at": null,
-      "completed_at": null,
+      "completed_at": "2026-11-01T07:42:19.840855+00:00",
       "dependencies": [
         "P08.2"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
+      "changed_paths": [
+        "apps/web/src/components/paths/WhyWhyNotTraceView.tsx",
+        "apps/web/src/app/[locale]/cases/[id]/paths/page.tsx"
+      ],
+      "acceptance_evidence": "WhyWhyNotTraceView client component renders actual AST condition traces, statutory citation chips, and route status badges.",
       "validation_commands": [],
       "blocker": null,
       "next_action": null
@@ -1257,15 +1272,20 @@
       "id": "P08.4",
       "phase": "P08",
       "title": "What-if drawer/service with allowed fact overrides, comparison and explicit apply workflow",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
       "started_at": null,
-      "completed_at": null,
+      "completed_at": "2026-11-01T07:42:19.840855+00:00",
       "dependencies": [
         "P08.3"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
+      "changed_paths": [
+        "services/backend/app/policy/engine.py",
+        "services/backend/app/policy/router.py",
+        "apps/web/src/components/paths/WhatIfDrawer.tsx",
+        "services/backend/tests/policy/test_p08_4_what_if_simulation.py"
+      ],
+      "acceptance_evidence": "What-if simulation service and WhatIfDrawer UI verified with zero DB mutations (T31); relevant vs irrelevant counterfactuals tested.",
       "validation_commands": [],
       "blocker": null,
       "next_action": null
@@ -1274,15 +1294,19 @@
       "id": "P08.5",
       "phase": "P08",
       "title": "NBQ selection, safety priority, uncertain deadline warnings and skip semantics",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
       "started_at": null,
-      "completed_at": null,
+      "completed_at": "2026-11-01T07:42:19.840855+00:00",
       "dependencies": [
         "P08.4"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
+      "changed_paths": [
+        "services/backend/app/policy/engine.py",
+        "services/backend/app/policy/router.py",
+        "services/backend/tests/policy/test_p08_5_nbq_and_safety_priority.py"
+      ],
+      "acceptance_evidence": "NBQ prioritizes product hazard safety first; OTP/PIN collection strictly forbidden (T32); skip preserves UNKNOWN state without false coercion.",
       "validation_commands": [],
       "blocker": null,
       "next_action": null
@@ -1291,15 +1315,21 @@
       "id": "P08.6",
       "phase": "P08",
       "title": "Build owner-scoped Processing details view plus public Technology explanation",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
       "started_at": null,
-      "completed_at": null,
+      "completed_at": "2026-11-01T07:42:19.840855+00:00",
       "dependencies": [
         "P08.5"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
+      "changed_paths": [
+        "services/backend/app/operations/pipeline_service.py",
+        "services/backend/app/operations/router.py",
+        "apps/web/src/components/cases/ProcessingDetailsDrawer.tsx",
+        "apps/web/src/app/[locale]/technology/page.tsx",
+        "services/backend/tests/policy/test_p08_6_pipeline_runs.py"
+      ],
+      "acceptance_evidence": "Pipeline run durable execution receipts (GET /v1/cases/{case_id}/pipeline-runs) and ProcessingDetailsDrawer verified under T53; technology page updated.",
       "validation_commands": [],
       "blocker": null,
       "next_action": null

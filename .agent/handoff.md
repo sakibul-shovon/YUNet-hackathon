@@ -4,16 +4,17 @@
 - **Completed Phases:**
   - **P00 (Foundation & Compatibility):** 100% COMPLETE & VERIFIED (`9701af14cd10c25e4b6f0b0d0c6a8924da73ff82`)
   - **P01 (Design System & Connected Shell):** 100% COMPLETE & VERIFIED (`5472bb63612157ded81cca5e3fef9763e4ec0f27`)
-  - **P02 (Identity, Ownership, Persistence & Secure Sessions):** 100% COMPLETE & VERIFIED (`93189a59d0284126d7216f3a76d5149d45ba47f9` / `e64b0f77ea6bb9d5c316496ec8c79c3143ad45d2`)
+  - **P02 (Identity, Ownership, Persistence & Secure Sessions):** 100% COMPLETE & VERIFIED (`e64b0f77ea6bb9d5c316496ec8c79c3143ad45d2`)
   - **P03 (Governed Initial Sources & Deterministic Policy Skeleton):** 100% COMPLETE & VERIFIED (`f0e857c6cd946be984cfd2f8f3e79673db4a6e87`)
   - **P04 (First Text-to-Action Vertical Slice):** 100% COMPLETE & VERIFIED (`de01a45460639bda1bb6dfe2e1769826c31f8375`)
   - **P05 (Secure Evidence Vault & Provenance Graph):** 100% COMPLETE & VERIFIED (`f2b371aa607d1f1fd3261cecb754c0e783fe3600`)
   - **P06 (Multimodal Case Compiler):** 100% COMPLETE & VERIFIED (`3014eff5edc0b7248e3a960f611d9c061b99f382`)
-  - **P07 (Genuine Hybrid Retrieval & Exact Citations):** 100% COMPLETE & VERIFIED
-- **Active Phase:** P08 (Complete Proof-to-Path and multi-issue reasoning)
-- **Active Task:** P08.1 (Complete shopping/finance/safety rule packs with explicit unknown/exclusion/date handling)
-- **Last Completed Task:** P07.6 (Retrieval ablations and labeled query report; integrate full pipeline in workspace)
-- **Required Tasks Progress:** 45 / 86 (52.3% complete, 0 blocked)
+  - **P07 (Genuine Hybrid Retrieval & Exact Citations):** 100% COMPLETE & VERIFIED (`1129970e554268f7fe2ffe8575009fa6450b1a5b`)
+  - **P08 (Complete Proof-to-Path and Multi-Issue Reasoning):** 100% COMPLETE & VERIFIED
+- **Active Phase:** P09 (Action studio, filing companion and export)
+- **Active Task:** P09.1 (Remedy/stage-aware action DAG and one primary next action UI)
+- **Last Completed Task:** P08.6 (Build owner-scoped Processing details/How this result was built view plus public Technology explanation)
+- **Required Tasks Progress:** 51 / 86 (59.3% complete, 0 blocked)
 - **Phase Delivery History:**
   - P00 SHA: `9701af14cd10c25e4b6f0b0d0c6a8924da73ff82` (Verified on `origin/main`)
   - P01 SHA: `5472bb63612157ded81cca5e3fef9763e4ec0f27` (Verified on `origin/main`)
@@ -22,34 +23,43 @@
   - P04 SHA: `de01a45460639bda1bb6dfe2e1769826c31f8375` (Verified on `origin/main`)
   - P05 SHA: `f2b371aa607d1f1fd3261cecb754c0e783fe3600` (Verified on `origin/main`)
   - P06 SHA: `3014eff5edc0b7248e3a960f611d9c061b99f382` (Verified on `origin/main`)
+  - P07 SHA: `1129970e554268f7fe2ffe8575009fa6450b1a5b` (Verified on `origin/main`)
 
 ## What Works
-- **Phase P07 (Genuine Hybrid Retrieval & Exact Supported Citations):**
-  - **P07.1 Hierarchical Provision Chunks & Exact-ID Round-Trip (T24):**
-    - `services/backend/app/retrieval/provisions_data.py`: Canonical governed provisions for CRPA 2009 (Sections 41, 44, 45, 45(2), 60, 76) and Bangladesh Bank CIPC procedure (Stage 1 and 2).
-    - `services/backend/app/retrieval/provision_service.py`: Exact section lookup supporting Bengali and Latin numerals and aliases (`ধারা ৪৫`, `sec:45`, `ধারা ৪৫(২)`, `sec:45(2)`, `ধারা ৬০`, `ধারা ৭৬`, `স্তর ১`, `স্তর ২`).
-    - Long Bengali legal clauses preserve qualifications and exceptions verbatim ("তবে শর্ত থাকে যে, কোনো অনিবার্য কারণবশত বা যুক্তিসঙ্গত কারণে সরবরাহ সম্ভব না হইলে অনতিবিলম্বে ক্রেতাকে সমুদয় অর্থ ফেরত প্রদান করিতে হইবে।").
-    - Invariant T24 strictly verified: non-existent sections (`sec:999`, `ধারা ৯৯৯`, `sec:100`) return `match_found=False` without hallucinating or inventing missing provisions.
-  - **P07.2 Pinned E5 Embedding Adapter & Pre-Ranking Filtering (T25):**
-    - `services/backend/app/retrieval/e5_adapter.py`: Pinned `intfloat/multilingual-e5-small` with 384 dimensions and strict `query: ` and `passage: ` prefix formatting.
-    - Invariant T25: Allowed-ID masks and temporal validity intervals (`effective_from <= date_context < effective_to`) are applied **before** top-k cosine ranking, preventing obsolete or candidate provisions from crowding out applicable current law.
-  - **P07.3 Bengali-Aware BM25s Tokenizer & Snapshot Persistence (T25):**
-    - `services/backend/app/retrieval/bm25_adapter.py`: NFC normalization; tokenizes Unicode letters including Bengali combining marks (hasanta, vowel signs) without splitting; retains negation words (`না`, `নাই`, `নহে`, `নয়`, `not`, `no`); preserves compound section aliases (`45(2)`, `৪৫(২)`, `sec:45(2)`).
-    - Safe from English stopword damage.
-    - Deterministic snapshot save and reload verified with manifest SHA-256 hash.
-  - **P07.4 Reciprocal Rank Fusion (RRF) & Deterministic Assembly (T25):**
-    - `services/backend/app/retrieval/hybrid_retriever.py`: Fuses exact section match (rank 0 boost), dense cosine ranks, and BM25 lexical ranks using `RRF(d) = sum(1 / (60 + rank_i(d)))`. Deduplicated by unique citation handle.
-  - **P07.5 Citation & Statement Validator (T28, T29) & Interactive Source Drawer:**
-    - `services/backend/app/retrieval/citation_validator.py`: Strictly validates citation existence and temporal applicability; blocks output on non-existent (`CITATION_NON_EXISTENT`) or repealed (`CITATION_OUTDATED_OR_REPEALED`) provisions.
-    - `apps/web/src/components/sources/StatutorySourceDrawer.tsx`: Interactive client component with section search, copy citation handle, qualification badges, and official gazette links embedded in `/[locale]/sources`.
-  - **P07.6 Labeled Query Ablation Report & API Integration:**
-    - `docs/benchmarks/retrieval_ablation_benchmark_report.md`: Documented 12-query benchmark verifying 100% exact recall, 0% hallucination on negative queries, and honest reporting of degraded mode when a channel is disabled.
-    - Endpoints: `GET /v1/retrieval/provisions/lookup`, `GET /v1/retrieval/provisions/{citation_handle}`, `GET /v1/retrieval/sources/{source_id}/provisions`, `POST /v1/retrieval/search`, and `POST /v1/retrieval/citations/validate`.
+- **Phase P08 (Proof-to-Path Engine & Multi-Issue Reasoning):**
+  - **P08.1 Shopping/Finance/Safety Rule Packs & Date Handling (T17–T20, T30):**
+    - Updated rule packs: `ecommerce_delivery_failure.yaml`, `defective_goods.yaml`, `mfs_unauthorized_charge.yaml`, `product_safety_hazard.yaml`.
+    - Exact statutory citations attached: `crpa2009:sec:45`, `crpa2009:sec:60`, `crpa2009:sec:76`, `bb_cipc:stage:1 & 2`.
+    - T30 Invariant: Date uncertainty withholds definitive limitation timer and issues limitation caution ("Cause-of-action or incident date is unverified; exact 30-day statutory cutoff under Section 60 cannot be definitively determined").
+    - Verified date limitation calculation: accurately computes remaining days within 30-day filing period or flags condonation requirement if expired.
+    - Unsupported remedy checking: flags unsupported remedies (e.g., direct criminal prosecution or treble punitive damages).
+  - **P08.2 Issue Split/Merge & Multi-Issue Decomposition:**
+    - `services/backend/app/cases/issue_service.py` & `issue_router.py`:
+      - `POST /v1/cases/{case_id}/issues/split`: splits an issue into distinct sub-issues (e.g. non-delivery of Item A vs defect in Item B).
+      - `POST /v1/cases/{case_id}/issues/merge`: merges sub-issues back into one consolidated track.
+      - Brand-only false track rejection: non-actionable complaints (`brand_reputation`, `seller_criticism`) without statutory breach are automatically rejected.
+      - `GET /v1/cases/{case_id}/issues/assessment`: evaluates each active issue track independently.
+  - **P08.3 Why/Why-Not Paths UI with Actual Condition Traces:**
+    - `apps/web/src/components/paths/WhyWhyNotTraceView.tsx`: interactive client component replacing static mocks in `/[locale]/cases/[id]/paths`.
+    - Inspectable condition trace: reveals exact node type, fact, inspected value, outcome (TRUE, FALSE, UNKNOWN), details, and citation links.
+  - **P08.4 What-If Simulation Service & Drawer (T31):**
+    - `POST /v1/cases/{case_id}/what-if`: in-memory simulation with zero persistent DB changes, zero row version bumps, and zero outbox events.
+    - Material vs irrelevant counterfactual comparison: diff identifies exact route state transitions.
+    - `POST /v1/cases/{case_id}/what-if/apply`: explicit adoption workflow committing verified facts.
+    - `apps/web/src/components/paths/WhatIfDrawer.tsx`: interactive sliding drawer.
+  - **P08.5 NBQ Selection & Safety Priority (T32):**
+    - Emergency product hazard question (`product_presents_immediate_hazard`) prioritized before commercial/financial questions.
+    - Strict prohibition on collecting OTP, PIN, password, CVV (rejects with HTTP 400).
+    - `POST /v1/cases/{case_id}/nbq/skip`: skipping preserves UNKNOWN status (never coerced to false) and prevents repetitive prompting.
+  - **P08.6 Processing Details & Technology Manifest (T53):**
+    - `GET /v1/cases/{case_id}/pipeline-runs`: durable actual execution receipts with truthful status (`completed`, `not_applicable`, `skipped`).
+    - `apps/web/src/components/cases/ProcessingDetailsDrawer.tsx`: execution receipt drawer.
+    - `apps/web/src/app/[locale]/technology/page.tsx`: public architecture & security invariants manifest.
 
 ## Test Evidence
-- `python scripts/tasks.py check --scope foundation`: PASSED (1:1 i18n parity, Ruff lint clean, Next.js build clean across 23 static & dynamic routes).
-- `python scripts/tasks.py check --scope core`: PASSED (88/88 pytest tests passing across integration, multimodal, policy, retrieval, security, and unit suites).
+- `python scripts/tasks.py check --scope foundation`: PASSED (1:1 i18n parity verified across 162 message keys, Ruff lint clean, Next.js build clean across 23 routes).
+- `python scripts/tasks.py check --scope core`: PASSED (99/99 pytest tests passing across integration, multimodal, policy, retrieval, security, and unit suites).
 - `python scripts/tasks.py contracts`: PASSED (OpenAPI schema & TypeScript contracts updated and verified).
 
 ## Next Action
-- Stage Phase P07 deliverables, commit (`feat(P07): complete genuine hybrid retrieval with E5 embeddings, Bengali BM25s tokenizer, RRF fusion, and citation validator`), push to GitHub `origin main`, verify remote commit receipt, and immediately begin Phase P08 (Task P08.1: Complete shopping/finance/safety rule packs with explicit unknown/exclusion/date handling).
+- Stage Phase P08 deliverables, commit (`feat(P08): complete Proof-to-Path engine, multi-issue reasoning, why-why-not traces, what-if simulation, and pipeline receipts`), push to GitHub `origin main`, verify remote commit receipt, and immediately proceed with Phase P09 (Action studio, filing companion and export).

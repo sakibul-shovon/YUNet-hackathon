@@ -340,16 +340,16 @@ export function EvidenceVaultClient({
                   selectedItem.status === 'accepted'
                     ? 'success'
                     : selectedItem.status === 'rejected'
-                    ? 'danger'
-                    : 'warning'
+                      ? 'danger'
+                      : 'warning'
                 }
                 className="text-[10px]"
               >
                 {selectedItem.status === 'accepted'
                   ? (isBangla ? 'গৃহীত ও সুরক্ষিত' : 'Accepted & Encrypted')
                   : selectedItem.status === 'rejected'
-                  ? (isBangla ? 'প্রত্যাখ্যাত' : 'Rejected')
-                  : (isBangla ? 'স্ক্যান করা হচ্ছে...' : 'Scanning...')}
+                    ? (isBangla ? 'প্রত্যাখ্যাত' : 'Rejected')
+                    : (isBangla ? 'স্ক্যান করা হচ্ছে...' : 'Scanning...')}
               </Badge>
               <Button
                 variant="outline"
@@ -417,11 +417,10 @@ export function EvidenceVaultClient({
               <div
                 key={item.id}
                 onClick={() => setSelectedItem(item)}
-                className={`p-3 rounded-[var(--radius-control)] border cursor-pointer transition-colors ${
-                  selectedItem?.id === item.id
-                    ? 'border-primary bg-primary/5 shadow-xs'
-                    : 'border-border bg-surface hover:bg-elevated/40'
-                }`}
+                className={`p-3 rounded-[var(--radius-control)] border cursor-pointer transition-colors ${selectedItem?.id === item.id
+                  ? 'border-primary bg-primary/5 shadow-xs'
+                  : 'border-border bg-surface hover:bg-elevated/40'
+                  }`}
               >
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex items-center gap-2 overflow-hidden">
@@ -439,8 +438,8 @@ export function EvidenceVaultClient({
                       item.status === 'accepted'
                         ? 'success'
                         : item.status === 'rejected'
-                        ? 'danger'
-                        : 'warning'
+                          ? 'danger'
+                          : 'warning'
                     }
                     className="text-[9px] shrink-0"
                   >
@@ -459,4 +458,3 @@ export function EvidenceVaultClient({
     </div>
   );
 }
-

@@ -675,6 +675,356 @@
         }
       }
     },
+    "/v1/cases/{case_id}/issues": {
+      "get": {
+        "tags": [
+          "Case Issue Tracks"
+        ],
+        "summary": "List Case Issues",
+        "description": "P08.2: Lists all active and historical issue tracks for a case.",
+        "operationId": "list_case_issues_v1_cases__case_id__issues_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IssueTrackOut"
+                  },
+                  "title": "Response List Case Issues V1 Cases  Case Id  Issues Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Case Issue Tracks"
+        ],
+        "summary": "Create Case Issue",
+        "description": "P08.2: Creates a new issue track; rejects brand-only false tracks without statutory basis.",
+        "operationId": "create_case_issue_v1_cases__case_id__issues_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IssueCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IssueTrackOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/cases/{case_id}/issues/split": {
+      "post": {
+        "tags": [
+          "Case Issue Tracks"
+        ],
+        "summary": "Split Case Issue",
+        "description": "P08.2: Splits an issue track into distinct sub-issues (e.g. non-delivery of Item A vs defect in Item B).",
+        "operationId": "split_case_issue_v1_cases__case_id__issues_split_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IssueSplitRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IssueTrackOut"
+                  },
+                  "title": "Response Split Case Issue V1 Cases  Case Id  Issues Split Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/cases/{case_id}/issues/merge": {
+      "post": {
+        "tags": [
+          "Case Issue Tracks"
+        ],
+        "summary": "Merge Case Issues",
+        "description": "P08.2: Merges multiple related issues into one consolidated issue track.",
+        "operationId": "merge_case_issues_v1_cases__case_id__issues_merge_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IssueMergeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IssueTrackOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/cases/{case_id}/issues/{issue_id}": {
+      "patch": {
+        "tags": [
+          "Case Issue Tracks"
+        ],
+        "summary": "Review Case Issue",
+        "description": "P08.2: Reviews or corrects an issue track (accepted, corrected, rejected, unsure).",
+        "operationId": "review_case_issue_v1_cases__case_id__issues__issue_id__patch",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "issue_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Issue Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IssueReviewRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IssueTrackOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/cases/{case_id}/issues/assessment": {
+      "get": {
+        "tags": [
+          "Case Issue Tracks"
+        ],
+        "summary": "Get Multi Issue Assessment",
+        "description": "P08.2: Evaluates each active issue track independently with distinct remedies and routes.",
+        "operationId": "get_multi_issue_assessment_v1_cases__case_id__issues_assessment_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MultiIssueAssessmentOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v1/sources/{id}": {
       "get": {
         "tags": [
@@ -1279,7 +1629,7 @@
           "Case Procedural Assessment"
         ],
         "summary": "Get Case Assessment",
-        "description": "T19/T20: Computes deterministic procedural assessment, condition traces, NBQ, and next actions.",
+        "description": "T19/T20/T30/T32: Computes deterministic procedural assessment, condition traces, NBQ, and next actions.",
         "operationId": "get_case_assessment_v1_cases__case_id__assessment_get",
         "security": [
           {
@@ -1347,6 +1697,246 @@
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProceduralAssessmentOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/cases/{case_id}/what-if": {
+      "post": {
+        "tags": [
+          "Case Procedural Assessment"
+        ],
+        "summary": "Simulate What If Scenario",
+        "description": "T31: Ephemeral What-If simulation with ZERO database side effects.",
+        "operationId": "simulate_what_if_scenario_v1_cases__case_id__what_if_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WhatIfSimulationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WhatIfSimulationResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/cases/{case_id}/what-if/apply": {
+      "post": {
+        "tags": [
+          "Case Procedural Assessment"
+        ],
+        "summary": "Apply What If Overrides",
+        "description": "Explicit workflow to commit simulated facts into the actual case as reviewed assertions.",
+        "operationId": "apply_what_if_overrides_v1_cases__case_id__what_if_apply_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WhatIfApplyRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FactAssertionOut"
+                  },
+                  "title": "Response Apply What If Overrides V1 Cases  Case Id  What If Apply Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/cases/{case_id}/nbq/answer": {
+      "post": {
+        "tags": [
+          "Case Procedural Assessment"
+        ],
+        "summary": "Answer Next Best Question",
+        "description": "T32: Answers the Next Best Question, creating an active fact assertion and returning updated assessment.",
+        "operationId": "answer_next_best_question_v1_cases__case_id__nbq_answer_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NBQAnswerRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProceduralAssessmentOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/cases/{case_id}/nbq/skip": {
+      "post": {
+        "tags": [
+          "Case Procedural Assessment"
+        ],
+        "summary": "Skip Next Best Question",
+        "description": "T32 Invariant: Skipping a question preserves UNKNOWN status (never coerced to false)\n\nand ensures the question is not repetitively prompted.",
+        "operationId": "skip_next_best_question_v1_cases__case_id__nbq_skip_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NBQSkipRequest"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -2541,6 +3131,59 @@
         }
       }
     },
+    "/v1/cases/{case_id}/pipeline-runs": {
+      "get": {
+        "tags": [
+          "Case Operations & Pipeline History"
+        ],
+        "summary": "Get Case Pipeline Runs",
+        "description": "P08.6 & T53: Returns durable execution receipts and technology inventory for a case.",
+        "operationId": "get_case_pipeline_runs_v1_cases__case_id__pipeline_runs_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PipelineRunOut"
+                  },
+                  "title": "Response Get Case Pipeline Runs V1 Cases  Case Id  Pipeline Runs Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/capabilities": {
       "get": {
         "tags": [
@@ -3134,6 +3777,356 @@
                     "$ref": "#/components/schemas/CaseEventOut"
                   },
                   "title": "Response Get Case Activity Api V1 Cases  Id  Activity Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{case_id}/issues": {
+      "get": {
+        "tags": [
+          "Case Issue Tracks"
+        ],
+        "summary": "List Case Issues",
+        "description": "P08.2: Lists all active and historical issue tracks for a case.",
+        "operationId": "list_case_issues_api_v1_cases__case_id__issues_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IssueTrackOut"
+                  },
+                  "title": "Response List Case Issues Api V1 Cases  Case Id  Issues Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Case Issue Tracks"
+        ],
+        "summary": "Create Case Issue",
+        "description": "P08.2: Creates a new issue track; rejects brand-only false tracks without statutory basis.",
+        "operationId": "create_case_issue_api_v1_cases__case_id__issues_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IssueCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IssueTrackOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{case_id}/issues/split": {
+      "post": {
+        "tags": [
+          "Case Issue Tracks"
+        ],
+        "summary": "Split Case Issue",
+        "description": "P08.2: Splits an issue track into distinct sub-issues (e.g. non-delivery of Item A vs defect in Item B).",
+        "operationId": "split_case_issue_api_v1_cases__case_id__issues_split_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IssueSplitRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IssueTrackOut"
+                  },
+                  "title": "Response Split Case Issue Api V1 Cases  Case Id  Issues Split Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{case_id}/issues/merge": {
+      "post": {
+        "tags": [
+          "Case Issue Tracks"
+        ],
+        "summary": "Merge Case Issues",
+        "description": "P08.2: Merges multiple related issues into one consolidated issue track.",
+        "operationId": "merge_case_issues_api_v1_cases__case_id__issues_merge_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IssueMergeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IssueTrackOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{case_id}/issues/{issue_id}": {
+      "patch": {
+        "tags": [
+          "Case Issue Tracks"
+        ],
+        "summary": "Review Case Issue",
+        "description": "P08.2: Reviews or corrects an issue track (accepted, corrected, rejected, unsure).",
+        "operationId": "review_case_issue_api_v1_cases__case_id__issues__issue_id__patch",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "issue_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Issue Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IssueReviewRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IssueTrackOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{case_id}/issues/assessment": {
+      "get": {
+        "tags": [
+          "Case Issue Tracks"
+        ],
+        "summary": "Get Multi Issue Assessment",
+        "description": "P08.2: Evaluates each active issue track independently with distinct remedies and routes.",
+        "operationId": "get_multi_issue_assessment_api_v1_cases__case_id__issues_assessment_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MultiIssueAssessmentOut"
                 }
               }
             }
@@ -3755,7 +4748,7 @@
           "Case Procedural Assessment"
         ],
         "summary": "Get Case Assessment",
-        "description": "T19/T20: Computes deterministic procedural assessment, condition traces, NBQ, and next actions.",
+        "description": "T19/T20/T30/T32: Computes deterministic procedural assessment, condition traces, NBQ, and next actions.",
         "operationId": "get_case_assessment_api_v1_cases__case_id__assessment_get",
         "security": [
           {
@@ -3823,6 +4816,246 @@
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProceduralAssessmentOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{case_id}/what-if": {
+      "post": {
+        "tags": [
+          "Case Procedural Assessment"
+        ],
+        "summary": "Simulate What If Scenario",
+        "description": "T31: Ephemeral What-If simulation with ZERO database side effects.",
+        "operationId": "simulate_what_if_scenario_api_v1_cases__case_id__what_if_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WhatIfSimulationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WhatIfSimulationResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{case_id}/what-if/apply": {
+      "post": {
+        "tags": [
+          "Case Procedural Assessment"
+        ],
+        "summary": "Apply What If Overrides",
+        "description": "Explicit workflow to commit simulated facts into the actual case as reviewed assertions.",
+        "operationId": "apply_what_if_overrides_api_v1_cases__case_id__what_if_apply_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WhatIfApplyRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FactAssertionOut"
+                  },
+                  "title": "Response Apply What If Overrides Api V1 Cases  Case Id  What If Apply Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{case_id}/nbq/answer": {
+      "post": {
+        "tags": [
+          "Case Procedural Assessment"
+        ],
+        "summary": "Answer Next Best Question",
+        "description": "T32: Answers the Next Best Question, creating an active fact assertion and returning updated assessment.",
+        "operationId": "answer_next_best_question_api_v1_cases__case_id__nbq_answer_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NBQAnswerRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProceduralAssessmentOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{case_id}/nbq/skip": {
+      "post": {
+        "tags": [
+          "Case Procedural Assessment"
+        ],
+        "summary": "Skip Next Best Question",
+        "description": "T32 Invariant: Skipping a question preserves UNKNOWN status (never coerced to false)\n\nand ensures the question is not repetitively prompted.",
+        "operationId": "skip_next_best_question_api_v1_cases__case_id__nbq_skip_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NBQSkipRequest"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -5016,6 +6249,59 @@
           }
         }
       }
+    },
+    "/api/v1/cases/{case_id}/pipeline-runs": {
+      "get": {
+        "tags": [
+          "Case Operations & Pipeline History"
+        ],
+        "summary": "Get Case Pipeline Runs",
+        "description": "P08.6 & T53: Returns durable execution receipts and technology inventory for a case.",
+        "operationId": "get_case_pipeline_runs_api_v1_cases__case_id__pipeline_runs_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PipelineRunOut"
+                  },
+                  "title": "Response Get Case Pipeline Runs Api V1 Cases  Case Id  Pipeline Runs Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -5057,6 +6343,34 @@
             },
             "type": "array",
             "title": "Source Dependencies"
+          },
+          "statutory_citations": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Statutory Citations"
+          },
+          "supported_remedies": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Supported Remedies"
+          },
+          "unsupported_remedies": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Unsupported Remedies"
+          },
+          "unsupported_remedy_warnings": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Unsupported Remedy Warnings"
           },
           "condition_trace": {
             "items": {
@@ -6716,6 +8030,205 @@
         ],
         "title": "HybridSearchRequest"
       },
+      "IssueCreate": {
+        "properties": {
+          "canonical_taxonomy": {
+            "type": "string",
+            "maxLength": 128,
+            "minLength": 2,
+            "title": "Canonical Taxonomy"
+          },
+          "desired_remedy": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Desired Remedy"
+          }
+        },
+        "type": "object",
+        "required": [
+          "canonical_taxonomy"
+        ],
+        "title": "IssueCreate"
+      },
+      "IssueMergeRequest": {
+        "properties": {
+          "issue_ids_to_merge": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array",
+            "minItems": 2,
+            "title": "Issue Ids To Merge"
+          },
+          "target_canonical_taxonomy": {
+            "type": "string",
+            "title": "Target Canonical Taxonomy"
+          },
+          "target_desired_remedy": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target Desired Remedy"
+          }
+        },
+        "type": "object",
+        "required": [
+          "issue_ids_to_merge",
+          "target_canonical_taxonomy"
+        ],
+        "title": "IssueMergeRequest"
+      },
+      "IssueReviewRequest": {
+        "properties": {
+          "user_review": {
+            "type": "string",
+            "pattern": "^(accepted|corrected|rejected|unsure)$",
+            "title": "User Review"
+          },
+          "desired_remedy": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Desired Remedy"
+          },
+          "corrected_taxonomy": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Corrected Taxonomy"
+          }
+        },
+        "type": "object",
+        "required": [
+          "user_review"
+        ],
+        "title": "IssueReviewRequest"
+      },
+      "IssueSplitRequest": {
+        "properties": {
+          "source_issue_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Source Issue Id"
+          },
+          "sub_issues": {
+            "items": {
+              "$ref": "#/components/schemas/SubIssueData"
+            },
+            "type": "array",
+            "minItems": 2,
+            "title": "Sub Issues"
+          }
+        },
+        "type": "object",
+        "required": [
+          "source_issue_id",
+          "sub_issues"
+        ],
+        "title": "IssueSplitRequest"
+      },
+      "IssueTrackOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "case_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Case Id"
+          },
+          "canonical_taxonomy": {
+            "type": "string",
+            "title": "Canonical Taxonomy"
+          },
+          "hypothesis_state": {
+            "type": "string",
+            "title": "Hypothesis State"
+          },
+          "user_review": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "User Review"
+          },
+          "desired_remedy": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Desired Remedy"
+          },
+          "rejection_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rejection Reason"
+          },
+          "active": {
+            "type": "boolean",
+            "title": "Active"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Updated At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "case_id",
+          "canonical_taxonomy",
+          "hypothesis_state",
+          "active",
+          "created_at",
+          "updated_at"
+        ],
+        "title": "IssueTrackOut"
+      },
       "KnowledgeReleaseOut": {
         "properties": {
           "id": {
@@ -6767,6 +8280,37 @@
           "created_at"
         ],
         "title": "KnowledgeReleaseOut"
+      },
+      "MultiIssueAssessmentOut": {
+        "properties": {
+          "case_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Case Id"
+          },
+          "issue_tracks": {
+            "items": {
+              "$ref": "#/components/schemas/IssueTrackOut"
+            },
+            "type": "array",
+            "title": "Issue Tracks"
+          },
+          "independent_paths": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Independent Paths"
+          }
+        },
+        "type": "object",
+        "required": [
+          "case_id",
+          "issue_tracks",
+          "independent_paths"
+        ],
+        "title": "MultiIssueAssessmentOut"
       },
       "MultimodalFactProposal": {
         "properties": {
@@ -6877,6 +8421,51 @@
           "source_link_id"
         ],
         "title": "MultimodalProposalResult"
+      },
+      "NBQAnswerRequest": {
+        "properties": {
+          "question_key": {
+            "type": "string",
+            "title": "Question Key"
+          },
+          "fact_field": {
+            "type": "string",
+            "title": "Fact Field"
+          },
+          "value": {
+            "title": "Value"
+          },
+          "field_type": {
+            "type": "string",
+            "title": "Field Type",
+            "default": "boolean"
+          }
+        },
+        "type": "object",
+        "required": [
+          "question_key",
+          "fact_field",
+          "value"
+        ],
+        "title": "NBQAnswerRequest"
+      },
+      "NBQSkipRequest": {
+        "properties": {
+          "question_key": {
+            "type": "string",
+            "title": "Question Key"
+          },
+          "fact_field": {
+            "type": "string",
+            "title": "Fact Field"
+          }
+        },
+        "type": "object",
+        "required": [
+          "question_key",
+          "fact_field"
+        ],
+        "title": "NBQSkipRequest"
       },
       "NextBestQuestion": {
         "properties": {
@@ -7047,6 +8636,98 @@
         ],
         "title": "PaymentReconciliationResult"
       },
+      "PipelineRunOut": {
+        "properties": {
+          "pipeline_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Pipeline Id"
+          },
+          "case_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Case Id"
+          },
+          "executed_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Executed At"
+          },
+          "overall_status": {
+            "type": "string",
+            "title": "Overall Status"
+          },
+          "stages": {
+            "items": {
+              "$ref": "#/components/schemas/PipelineStageReceipt"
+            },
+            "type": "array",
+            "title": "Stages"
+          },
+          "technology_inventory": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Technology Inventory"
+          }
+        },
+        "type": "object",
+        "required": [
+          "pipeline_id",
+          "case_id",
+          "executed_at",
+          "overall_status",
+          "stages",
+          "technology_inventory"
+        ],
+        "title": "PipelineRunOut"
+      },
+      "PipelineStageReceipt": {
+        "properties": {
+          "stage_name": {
+            "type": "string",
+            "title": "Stage Name"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "provider": {
+            "type": "string",
+            "title": "Provider"
+          },
+          "model_or_algorithm": {
+            "type": "string",
+            "title": "Model Or Algorithm"
+          },
+          "duration_ms": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Duration Ms"
+          },
+          "details": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Details",
+            "default": {}
+          }
+        },
+        "type": "object",
+        "required": [
+          "stage_name",
+          "status",
+          "provider",
+          "model_or_algorithm"
+        ],
+        "title": "PipelineStageReceipt"
+      },
       "PrincipalOut": {
         "properties": {
           "id": {
@@ -7146,6 +8827,44 @@
             },
             "type": "array",
             "title": "Source Cards"
+          },
+          "limitation_warning_en": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Limitation Warning En"
+          },
+          "limitation_warning_bn": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Limitation Warning Bn"
+          },
+          "days_remaining_in_limitation": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Days Remaining In Limitation"
+          },
+          "is_deadline_uncertain": {
+            "type": "boolean",
+            "title": "Is Deadline Uncertain",
+            "default": false
           }
         },
         "type": "object",
@@ -7534,6 +9253,37 @@
         ],
         "title": "ReviewSubmission"
       },
+      "RouteDiffItem": {
+        "properties": {
+          "route_id": {
+            "type": "string",
+            "title": "Route Id"
+          },
+          "issue_type": {
+            "type": "string",
+            "title": "Issue Type"
+          },
+          "baseline_status": {
+            "$ref": "#/components/schemas/RouteStatus"
+          },
+          "simulated_status": {
+            "$ref": "#/components/schemas/RouteStatus"
+          },
+          "changed": {
+            "type": "boolean",
+            "title": "Changed"
+          }
+        },
+        "type": "object",
+        "required": [
+          "route_id",
+          "issue_type",
+          "baseline_status",
+          "simulated_status",
+          "changed"
+        ],
+        "title": "RouteDiffItem"
+      },
       "RouteStatus": {
         "type": "string",
         "enum": [
@@ -7720,6 +9470,38 @@
           "created_at"
         ],
         "title": "SourceProvisionOut"
+      },
+      "SubIssueData": {
+        "properties": {
+          "canonical_taxonomy": {
+            "type": "string",
+            "title": "Canonical Taxonomy"
+          },
+          "desired_remedy": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Desired Remedy"
+          },
+          "assigned_fact_ids": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array",
+            "title": "Assigned Fact Ids"
+          }
+        },
+        "type": "object",
+        "required": [
+          "canonical_taxonomy"
+        ],
+        "title": "SubIssueData"
       },
       "TextRegion": {
         "properties": {
@@ -8026,6 +9808,94 @@
           "type"
         ],
         "title": "ValidationError"
+      },
+      "WhatIfApplyRequest": {
+        "properties": {
+          "overrides": {
+            "additionalProperties": true,
+            "type": "object",
+            "minProperties": 1,
+            "title": "Overrides"
+          }
+        },
+        "type": "object",
+        "required": [
+          "overrides"
+        ],
+        "title": "WhatIfApplyRequest"
+      },
+      "WhatIfSimulationRequest": {
+        "properties": {
+          "overrides": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Overrides"
+          }
+        },
+        "type": "object",
+        "required": [
+          "overrides"
+        ],
+        "title": "WhatIfSimulationRequest"
+      },
+      "WhatIfSimulationResult": {
+        "properties": {
+          "case_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Case Id"
+          },
+          "overrides": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Overrides"
+          },
+          "baseline_routes": {
+            "items": {
+              "$ref": "#/components/schemas/AssessmentRouteOut"
+            },
+            "type": "array",
+            "title": "Baseline Routes"
+          },
+          "simulated_routes": {
+            "items": {
+              "$ref": "#/components/schemas/AssessmentRouteOut"
+            },
+            "type": "array",
+            "title": "Simulated Routes"
+          },
+          "route_diff": {
+            "items": {
+              "$ref": "#/components/schemas/RouteDiffItem"
+            },
+            "type": "array",
+            "title": "Route Diff"
+          },
+          "is_material_change": {
+            "type": "boolean",
+            "title": "Is Material Change"
+          },
+          "summary_en": {
+            "type": "string",
+            "title": "Summary En"
+          },
+          "summary_bn": {
+            "type": "string",
+            "title": "Summary Bn"
+          }
+        },
+        "type": "object",
+        "required": [
+          "case_id",
+          "overrides",
+          "baseline_routes",
+          "simulated_routes",
+          "route_diff",
+          "is_material_change",
+          "summary_en",
+          "summary_bn"
+        ],
+        "title": "WhatIfSimulationResult"
       },
       "WordTimestamp": {
         "properties": {

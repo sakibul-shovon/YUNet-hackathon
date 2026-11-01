@@ -4,9 +4,20 @@ status: draft
 jurisdiction: BD
 issue_type: mfs_unauthorized_charge
 date_basis: conduct_date
+statutory_limitation_days: 30
+statutory_citations:
+  - bb_cipc:stage:1
+  - bb_cipc:stage:2
+  - bb_mfs_regulations_2022
 source_dependencies:
   - bb_cipc_procedure
   - bb_mfs_regulations_2022
+supported_remedies:
+  - full_refund
+  - account_security_restore
+unsupported_remedies:
+  - punitive_damages
+  - criminal_fine_to_consumer
 conditions:
   all:
     - eq:
@@ -24,10 +35,10 @@ exclusions:
       value: true
 unknown_behavior: ask_material_question
 reason_templates:
-  eligible: reasons.finance.mfs_charge_eligible_for_bb_escalation
+  supported: reasons.finance.mfs_charge_eligible_for_bb_escalation
   excluded: reasons.finance.mfs_charge_excluded_pin_sharing
   unknown: reasons.finance.mfs_charge_needs_ticket
+  not_supported: reasons.finance.mfs_charge_not_supported
 allowed_actions:
   - prepare_provider_formal_letter
   - prepare_bb_cipc_escalation
-

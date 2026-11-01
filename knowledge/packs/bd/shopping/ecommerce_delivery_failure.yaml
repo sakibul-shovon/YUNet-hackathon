@@ -4,9 +4,21 @@ status: draft
 jurisdiction: BD
 issue_type: ecommerce_delivery_failure
 date_basis: conduct_date
+statutory_limitation_days: 30
+statutory_citations:
+  - crpa2009:sec:45
+  - crpa2009:sec:60
+  - crpa2009:sec:76
 source_dependencies:
   - bd_crpa_2009
   - dncrp_ccms_portal
+supported_remedies:
+  - full_refund
+  - replacement
+  - statutory_fine_share_25pct
+unsupported_remedies:
+  - criminal_prosecution_direct
+  - punitive_damages_triple
 conditions:
   all:
     - eq:
@@ -27,10 +39,10 @@ exclusions:
       value: true
 unknown_behavior: ask_material_question
 reason_templates:
-  eligible: reasons.shopping.delivery_failure_eligible
+  supported: reasons.shopping.delivery_failure_eligible
   excluded: reasons.shopping.delivery_failure_excluded
   unknown: reasons.shopping.delivery_failure_needs_facts
+  not_supported: reasons.shopping.delivery_failure_not_supported
 allowed_actions:
   - prepare_merchant_notice
   - prepare_dncrp_complaint
-

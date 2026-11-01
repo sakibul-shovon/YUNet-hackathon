@@ -5,6 +5,7 @@ from fastapi import FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.actions.router import router as actions_router
+from app.cases.issue_router import router as issue_router
 from app.cases.router import router as cases_router
 from app.core.config import settings
 from app.core.public_router import router as public_router
@@ -15,6 +16,7 @@ from app.identity.router import router as identity_router
 from app.knowledge.router import router as knowledge_router
 from app.multimodal.audio.router import router as audio_router
 from app.multimodal.vision.router import router as vision_router
+from app.operations.router import router as operations_router
 from app.policy.router import router as policy_router
 from app.retrieval.router import router as retrieval_router
 
@@ -85,6 +87,7 @@ async def api_ping():
 app.include_router(public_router)
 app.include_router(identity_router)
 app.include_router(cases_router)
+app.include_router(issue_router)
 app.include_router(knowledge_router)
 app.include_router(facts_router)
 app.include_router(extraction_router)
@@ -94,10 +97,12 @@ app.include_router(evidence_router)
 app.include_router(audio_router)
 app.include_router(vision_router)
 app.include_router(retrieval_router)
+app.include_router(operations_router)
 
 app.include_router(public_router, prefix="/api")
 app.include_router(identity_router, prefix="/api")
 app.include_router(cases_router, prefix="/api")
+app.include_router(issue_router, prefix="/api")
 app.include_router(knowledge_router, prefix="/api")
 app.include_router(facts_router, prefix="/api")
 app.include_router(extraction_router, prefix="/api")
@@ -107,3 +112,4 @@ app.include_router(evidence_router, prefix="/api")
 app.include_router(audio_router, prefix="/api")
 app.include_router(vision_router, prefix="/api")
 app.include_router(retrieval_router, prefix="/api")
+app.include_router(operations_router, prefix="/api")
