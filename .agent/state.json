@@ -1,8 +1,8 @@
 {
   "plan_version": "1.2",
-  "updated_at": "2026-11-01T08:16:21.758983+00:00",
-  "current_task": "P11.1",
-  "last_completed_task": "P06.6",
+  "updated_at": "2026-11-01T08:37:54.155360+00:00",
+  "current_task": "P12.1",
+  "last_completed_task": "P11.5",
   "tasks": {
     "P00.1": {
       "id": "P00.1",
@@ -890,7 +890,7 @@
         "services/backend/app/evidence/schemas.py",
         "services/backend/tests/unit/test_t21_payment_reconciliation.py"
       ],
-      "acceptance_evidence": "T21 narrated ৳5,500 vs ৳5,000 receipt conflict prompts clarification, second linked ৳500 resolves total, duplicate/unrelated receipt does not double-count.",
+      "acceptance_evidence": "T21 narrated \u09f35,500 vs \u09f35,000 receipt conflict prompts clarification, second linked \u09f3500 resolves total, duplicate/unrelated receipt does not double-count.",
       "validation_commands": [
         "uv run --directory services/backend pytest tests/unit/test_t21_payment_reconciliation.py"
       ],
@@ -1087,7 +1087,7 @@
         "services/backend/app/retrieval/router.py",
         "services/backend/tests/retrieval/test_t24_hierarchical_provisions.py"
       ],
-      "acceptance_evidence": "T24: Hierarchical chunks for CRPA 2009 and BB CIPC; exact Bengali and Latin section lookup (sec:45, ধারা ৪৫, sec:45(2), ধারা ৪৫(২), sec:60, sec:76, স্তর ১, স্তর ২); long Bengali clauses preserve qualifications without truncation; non-existent sections rejected without hallucination.",
+      "acceptance_evidence": "T24: Hierarchical chunks for CRPA 2009 and BB CIPC; exact Bengali and Latin section lookup (sec:45, \u09a7\u09be\u09b0\u09be \u09ea\u09eb, sec:45(2), \u09a7\u09be\u09b0\u09be \u09ea\u09eb(\u09e8), sec:60, sec:76, \u09b8\u09cd\u09a4\u09b0 \u09e7, \u09b8\u09cd\u09a4\u09b0 \u09e8); long Bengali clauses preserve qualifications without truncation; non-existent sections rejected without hallucination.",
       "validation_commands": [
         "uv run --directory services/backend pytest tests/retrieval/test_t24_hierarchical_provisions.py -v"
       ],
@@ -1129,7 +1129,7 @@
       "changed_paths": [
         "services/backend/app/retrieval/bm25_adapter.py"
       ],
-      "acceptance_evidence": "T25 / P07.3: NFC normalization; Unicode combining marks & vowel signs preserved; negation tokens retained; exact compound aliases (45(2), ৪৫(২), sec:45(2)) preserved; no English stopword corruption; snapshot save/load round-trip with manifest checksum.",
+      "acceptance_evidence": "T25 / P07.3: NFC normalization; Unicode combining marks & vowel signs preserved; negation tokens retained; exact compound aliases (45(2), \u09ea\u09eb(\u09e8), sec:45(2)) preserved; no English stopword corruption; snapshot save/load round-trip with manifest checksum.",
       "validation_commands": [
         "uv run --directory services/backend pytest tests/retrieval/test_t25_hybrid_retrieval_and_rrf.py -v"
       ],
@@ -1588,18 +1588,20 @@
       "id": "P11.1",
       "phase": "P11",
       "title": "Tested watchers for official listing/direct sources, permissions/cadence and manual-import fallback",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
       "started_at": null,
-      "completed_at": null,
+      "completed_at": "2026-11-01T08:37:54.155360+00:00",
       "dependencies": [
         "P03.5",
         "P07.6",
         "P10.2"
       ],
       "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "acceptance_evidence": "Official source watchers tested with SSRF protection, redirect quarantine, 503 outage graceful fallback, cosmetic whitespace diff classification, and manual import fallback (T42).",
+      "validation_commands": [
+        "pytest tests/knowledge/test_p11_official_watchers_and_safe_releases.py -k test_p11_1"
+      ],
       "blocker": null,
       "next_action": null
     },
@@ -1607,16 +1609,18 @@
       "id": "P11.2",
       "phase": "P11",
       "title": "Section-aware diff, candidate impact proposal, publication/commencement/conflict fields",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
       "started_at": null,
-      "completed_at": null,
+      "completed_at": "2026-11-01T08:37:54.155360+00:00",
       "dependencies": [
         "P11.1"
       ],
       "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "acceptance_evidence": "Section-aware legal diff engine parses statutory provisions, detects added/modified/repealed provisions, maps to policy rules, and ensures unapproved changes are not current law and unknown commencement dates remain unknown without defaulting to today (T43).",
+      "validation_commands": [
+        "pytest tests/knowledge/test_p11_official_watchers_and_safe_releases.py -k test_p11_2"
+      ],
       "blocker": null,
       "next_action": null
     },
@@ -1624,16 +1628,18 @@
       "id": "P11.3",
       "phase": "P11",
       "title": "Reviewer source/original/diff/quality view and auditable scoped approval",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
       "started_at": null,
-      "completed_at": null,
+      "completed_at": "2026-11-01T08:37:54.155360+00:00",
       "dependencies": [
         "P11.2"
       ],
       "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "acceptance_evidence": "Reviewer source candidate diff and scoped approval (origin_and_procedure vs statutory_interpretation); consumer and unauthenticated requests rejected with 403/401; candidate promoted to approved SourceVersion and SourceProvisions (T44).",
+      "validation_commands": [
+        "pytest tests/knowledge/test_p11_official_watchers_and_safe_releases.py -k test_p11_3"
+      ],
       "blocker": null,
       "next_action": null
     },
@@ -1641,16 +1647,18 @@
       "id": "P11.4",
       "phase": "P11",
       "title": "Immutable release builder, preload/checksum readiness, pointer promotion/rollback and disable overlays",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
       "started_at": null,
-      "completed_at": null,
+      "completed_at": "2026-11-01T08:37:54.155360+00:00",
       "dependencies": [
         "P11.3"
       ],
       "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "acceptance_evidence": "Immutable release builder with manifest SHA-256 hash, rejection of test_only rules, atomic pointer promotion, instant rollback to prior release manifest without mixing versions, and emergency disable overlay (T45).",
+      "validation_commands": [
+        "pytest tests/knowledge/test_p11_official_watchers_and_safe_releases.py -k test_p11_4"
+      ],
       "blocker": null,
       "next_action": null
     },
@@ -1658,16 +1666,18 @@
       "id": "P11.5",
       "phase": "P11",
       "title": "Impacted-case reassessment queue and source-health/correction notices",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
       "started_at": null,
-      "completed_at": null,
+      "completed_at": "2026-11-01T08:37:54.155360+00:00",
       "dependencies": [
         "P11.4"
       ],
       "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "acceptance_evidence": "Impacted-case reassessment queue flags only dependent open cases while retaining historical case interpretations; on-demand case reassessment generates semantic decision diff; live source-health transparency endpoint verified (T39, T45).",
+      "validation_commands": [
+        "pytest tests/knowledge/test_p11_official_watchers_and_safe_releases.py -k test_p11_5"
+      ],
       "blocker": null,
       "next_action": null
     },
@@ -2160,9 +2170,9 @@
     },
     "P11": {
       "phase_id": "P11",
-      "implementation_status": "TODO",
-      "validation_status": "PENDING",
-      "push_status": "not_ready",
+      "implementation_status": "COMPLETE",
+      "validation_status": "PASSED",
+      "push_status": "ready",
       "intended_remote": "origin",
       "intended_branch": "main",
       "completion_commit_sha": null,

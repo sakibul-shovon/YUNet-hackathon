@@ -5,6 +5,7 @@ import { Header } from '@/components/layout/Header';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { StatutorySourceDrawer } from '@/components/sources/StatutorySourceDrawer';
+import { SourceHealthMonitor } from '@/components/sources/SourceHealthMonitor';
 
 export default async function SourcesPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -37,17 +38,30 @@ export default async function SourcesPage({ params }: { params: Promise<{ locale
         <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-4">
           {isBangla ? 'আইনি ও সরকারি রেফারেন্সসমূহ' : 'Official Statutory Sources & References'}
         </h1>
-        <p className="text-muted-foreground text-base mb-10 leading-relaxed">
+        <p className="text-muted-foreground text-base mb-8 leading-relaxed">
           {isBangla
-            ? 'আমাদের সকল আইনি বিশ্লেষণ ও সুপারিশ বাংলাদেশ সরকারের অফিশিয়াল গেজেট ও বিধি দ্বারা সমর্থিত।'
-            : 'All statutory citations in ClaimCraft BD correspond to verified official legislation and gazettes published by the Government of Bangladesh.'}
+            ? 'আমাদের সকল আইনি বিশ্লেষণ ও সুপারিশ বাংলাদেশ সরকারের অফিশিয়াল গেজেট ও বিধি দ্বারা সমর্থিত। কোনো মনগড়া আইনি পরামর্শ দেওয়া হয় না।'
+            : 'All statutory citations in ClaimCraft BD correspond to verified official legislation and gazettes published by the Government of Bangladesh. Zero hallucinated legal advice.'}
         </p>
 
+        {/* Live Official Watcher Monitor & Release Status */}
         <div className="mb-10">
+          <SourceHealthMonitor locale={locale} />
+        </div>
+
+        {/* Interactive Statutory Citations & Exact Provisions */}
+        <div className="mb-10">
+          <h2 className="text-lg font-bold mb-4">
+            {isBangla ? 'অনুমোদিত আইনি ধারা ও বিধানসমূহ' : 'Approved Provisions & Citations'}
+          </h2>
           <StatutorySourceDrawer locale={locale} />
         </div>
 
         <div className="space-y-4">
+          <h2 className="text-lg font-bold mb-2">
+            {isBangla ? 'মূল বিধিবদ্ধ সংস্থা ও কর্তৃপক্ষ' : 'Authoritative Bodies & Official Portals'}
+          </h2>
+
           <Card>
             <CardHeader className="flex flex-row items-center justify-between">
               <div>
@@ -57,7 +71,7 @@ export default async function SourcesPage({ params }: { params: Promise<{ locale
                 </CardTitle>
               </div>
               <a
-                href="http://bdlaws.minlaw.gov.bd/act-details-1016.html"
+                href="http://bdlaws.minlaw.gov.bd/act-1014.html"
                 target="_blank"
                 rel="noreferrer"
                 className="text-primary hover:opacity-80 p-1"
@@ -68,7 +82,8 @@ export default async function SourcesPage({ params }: { params: Promise<{ locale
             </CardHeader>
             <CardContent className="text-xs text-muted-foreground space-y-1">
               <p>ধারা ৪৫: প্রতিশ্রুত পণ্য বা সেবা যথাযথভাবে বিক্রয় বা সরবরাহে ব্যর্থতার দণ্ড।</p>
-              <p>ধারা ৭৬: অভিযোগ দায়েরের পদ্ধতি ও ঘটনার ৩০ দিনের মধ্যে প্রতিকার প্রার্থনার নিয়মাবলী।</p>
+              <p>ধারা ৬০: অভিযোগ দায়েরের তামাদি ও ঘটনার ৩০ দিনের মধ্যে প্রতিকার প্রার্থনার নিয়মাবলী।</p>
+              <p>ধারা ৭৬: অভিযোগ দাখিল এবং আরোপিত জরিমানার ২৫% অর্থ অভিযোগকারীকে প্রদানের বিধান।</p>
             </CardContent>
           </Card>
 
@@ -77,11 +92,11 @@ export default async function SourcesPage({ params }: { params: Promise<{ locale
               <div>
                 <Badge variant="brand" className="mb-1">Central Bank Regulation</Badge>
                 <CardTitle className="text-base font-bold">
-                  বাংলাদেশ ব্যাংক পেমেন্ট সিস্টেমস ডিপার্টমেন্ট গাইডলাইনস (PSD Circulars)
+                  বাংলাদেশ ব্যাংক গ্রাহক স্বার্থ সংরক্ষণ কেন্দ্র (CIPC Procedure & MFS 2022)
                 </CardTitle>
               </div>
               <a
-                href="https://www.bb.org.bd"
+                href="https://bb.org.bd"
                 target="_blank"
                 rel="noreferrer"
                 className="text-primary hover:opacity-80 p-1"
@@ -91,7 +106,8 @@ export default async function SourcesPage({ params }: { params: Promise<{ locale
               </a>
             </CardHeader>
             <CardContent className="text-xs text-muted-foreground space-y-1">
-              <p>এমএফএস ও ডিজিটাল পেমেন্টে অসফল লেনদেনের অটো-রিভার্সাল ও কাস্টমার কমপ্লেন এসকেলেশন ফ্রেমওয়ার্ক।</p>
+              <p>দ্বি-স্তরীয় অভিযোগ নিষ্পত্তি ফ্রেমওয়ার্ক: স্তর ১ এ ব্যাংক বা এমএফএস প্রোভাইডারে অভিযোগ দাখিল বাধ্যতামূলক।</p>
+              <p>অমীমাংসিত থাকলে বাংলাদেশ ব্যাংকের সিআইপিসি সেলে আনুষ্ঠানিক এসকেলেশন।</p>
             </CardContent>
           </Card>
 
@@ -104,7 +120,7 @@ export default async function SourcesPage({ params }: { params: Promise<{ locale
                 </CardTitle>
               </div>
               <a
-                href="http://www.btrc.gov.bd"
+                href="http://btrc.gov.bd"
                 target="_blank"
                 rel="noreferrer"
                 className="text-primary hover:opacity-80 p-1"
@@ -122,4 +138,3 @@ export default async function SourcesPage({ params }: { params: Promise<{ locale
     </div>
   );
 }
-

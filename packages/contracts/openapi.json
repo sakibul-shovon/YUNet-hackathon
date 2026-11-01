@@ -1091,6 +1091,171 @@
         }
       }
     },
+    "/v1/knowledge/source-health": {
+      "get": {
+        "tags": [
+          "Knowledge & Sources"
+        ],
+        "summary": "Get Source Health",
+        "description": "Public transparency endpoint returning monitored source health and active release ID.",
+        "operationId": "get_source_health_v1_knowledge_source_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SourceHealthResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/cases/{case_id}/reassess": {
+      "post": {
+        "tags": [
+          "Knowledge & Sources"
+        ],
+        "summary": "Reassess Case",
+        "description": "Owner scoped: re-evaluates case against active release and generates semantic decision diff (T39, T45).",
+        "operationId": "reassess_case_v1_cases__case_id__reassess_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CaseReassessmentResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/watchers/check": {
+      "post": {
+        "tags": [
+          "Knowledge & Sources"
+        ],
+        "summary": "Run Watcher Check",
+        "description": "Reviewer only: executes a monitored source check with SSRF and redirect protection (T42).",
+        "operationId": "run_watcher_check_v1_admin_watchers_check_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WatcherCheckRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WatcherCheckResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/v1/admin/sources/manual-import": {
+      "post": {
+        "tags": [
+          "Knowledge & Sources"
+        ],
+        "summary": "Manual Source Import",
+        "description": "Reviewer only: manual-import fallback for offline or air-gapped updates (T42).",
+        "operationId": "manual_source_import_v1_admin_sources_manual_import_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ManualImportRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SourceCandidateOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
     "/v1/admin/source-candidates": {
       "get": {
         "tags": [
@@ -1122,13 +1287,121 @@
         ]
       }
     },
+    "/v1/admin/source-candidates/{id}/diff": {
+      "get": {
+        "tags": [
+          "Knowledge & Sources"
+        ],
+        "summary": "Get Candidate Diff",
+        "description": "Reviewer only: section-aware diff and candidate impact proposal (T43).",
+        "operationId": "get_candidate_diff_v1_admin_source_candidates__id__diff_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CandidateDiffOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/source-candidates/{id}/approve": {
+      "post": {
+        "tags": [
+          "Knowledge & Sources"
+        ],
+        "summary": "Approve Candidate",
+        "description": "Reviewer only: scoped human approval promoting candidate into approved SourceVersion (T44).",
+        "operationId": "approve_candidate_v1_admin_source_candidates__id__approve_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReviewSubmission"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReviewResultOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v1/admin/source-versions/{id}/review": {
       "post": {
         "tags": [
           "Knowledge & Sources"
         ],
         "summary": "Review Source Version",
-        "description": "Reviewer only: records explicit named review scope and promotes candidate to approved.",
+        "description": "Reviewer only: records explicit named review scope and promotes candidate version to approved.",
         "operationId": "review_source_version_v1_admin_source_versions__id__review_post",
         "security": [
           {
@@ -1187,7 +1460,7 @@
           "Knowledge & Sources"
         ],
         "summary": "Build Release",
-        "description": "Publisher only: constructs an immutable release manifest; rejects test_only rules (T18).",
+        "description": "Publisher only: constructs an immutable release manifest; rejects test_only rules (T18, T45).",
         "operationId": "build_release_v1_admin_releases_build_post",
         "requestBody": {
           "content": {
@@ -1234,7 +1507,7 @@
           "Knowledge & Sources"
         ],
         "summary": "Promote Release",
-        "description": "Publisher only: performs atomic active release pointer swap.",
+        "description": "Publisher only: performs atomic active release pointer swap (T45).",
         "operationId": "promote_release_v1_admin_releases__id__promote_post",
         "security": [
           {
@@ -1276,13 +1549,71 @@
         }
       }
     },
+    "/v1/admin/releases/{id}/rollback": {
+      "post": {
+        "tags": [
+          "Knowledge & Sources"
+        ],
+        "summary": "Rollback Release",
+        "description": "Publisher only: atomically rolls back active release to target approved release manifest (T45).",
+        "operationId": "rollback_release_v1_admin_releases__id__rollback_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReleaseRollbackRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KnowledgeReleaseOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v1/admin/releases/{id}/disable": {
       "post": {
         "tags": [
           "Knowledge & Sources"
         ],
         "summary": "Disable Release",
-        "description": "Publisher only: disables active release in an emergency.",
+        "description": "Publisher only: disables active release in an emergency (T45).",
         "operationId": "disable_release_v1_admin_releases__id__disable_post",
         "security": [
           {
@@ -1307,6 +1638,54 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/KnowledgeReleaseOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/releases/{id}/flag-impacted-cases": {
+      "post": {
+        "tags": [
+          "Knowledge & Sources"
+        ],
+        "summary": "Flag Impacted Cases",
+        "description": "Publisher only: scans open cases and flags only those dependent on modified rules (T39, T45).",
+        "operationId": "flag_impacted_cases_v1_admin_releases__id__flag_impacted_cases_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReassessmentQueueResult"
                 }
               }
             }
@@ -4988,6 +5367,171 @@
         }
       }
     },
+    "/api/v1/knowledge/source-health": {
+      "get": {
+        "tags": [
+          "Knowledge & Sources"
+        ],
+        "summary": "Get Source Health",
+        "description": "Public transparency endpoint returning monitored source health and active release ID.",
+        "operationId": "get_source_health_api_v1_knowledge_source_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SourceHealthResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{case_id}/reassess": {
+      "post": {
+        "tags": [
+          "Knowledge & Sources"
+        ],
+        "summary": "Reassess Case",
+        "description": "Owner scoped: re-evaluates case against active release and generates semantic decision diff (T39, T45).",
+        "operationId": "reassess_case_api_v1_cases__case_id__reassess_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CaseReassessmentResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/admin/watchers/check": {
+      "post": {
+        "tags": [
+          "Knowledge & Sources"
+        ],
+        "summary": "Run Watcher Check",
+        "description": "Reviewer only: executes a monitored source check with SSRF and redirect protection (T42).",
+        "operationId": "run_watcher_check_api_v1_admin_watchers_check_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WatcherCheckRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WatcherCheckResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/admin/sources/manual-import": {
+      "post": {
+        "tags": [
+          "Knowledge & Sources"
+        ],
+        "summary": "Manual Source Import",
+        "description": "Reviewer only: manual-import fallback for offline or air-gapped updates (T42).",
+        "operationId": "manual_source_import_api_v1_admin_sources_manual_import_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ManualImportRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SourceCandidateOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
     "/api/v1/admin/source-candidates": {
       "get": {
         "tags": [
@@ -5019,13 +5563,121 @@
         ]
       }
     },
+    "/api/v1/admin/source-candidates/{id}/diff": {
+      "get": {
+        "tags": [
+          "Knowledge & Sources"
+        ],
+        "summary": "Get Candidate Diff",
+        "description": "Reviewer only: section-aware diff and candidate impact proposal (T43).",
+        "operationId": "get_candidate_diff_api_v1_admin_source_candidates__id__diff_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CandidateDiffOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/admin/source-candidates/{id}/approve": {
+      "post": {
+        "tags": [
+          "Knowledge & Sources"
+        ],
+        "summary": "Approve Candidate",
+        "description": "Reviewer only: scoped human approval promoting candidate into approved SourceVersion (T44).",
+        "operationId": "approve_candidate_api_v1_admin_source_candidates__id__approve_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReviewSubmission"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReviewResultOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/admin/source-versions/{id}/review": {
       "post": {
         "tags": [
           "Knowledge & Sources"
         ],
         "summary": "Review Source Version",
-        "description": "Reviewer only: records explicit named review scope and promotes candidate to approved.",
+        "description": "Reviewer only: records explicit named review scope and promotes candidate version to approved.",
         "operationId": "review_source_version_api_v1_admin_source_versions__id__review_post",
         "security": [
           {
@@ -5084,7 +5736,7 @@
           "Knowledge & Sources"
         ],
         "summary": "Build Release",
-        "description": "Publisher only: constructs an immutable release manifest; rejects test_only rules (T18).",
+        "description": "Publisher only: constructs an immutable release manifest; rejects test_only rules (T18, T45).",
         "operationId": "build_release_api_v1_admin_releases_build_post",
         "requestBody": {
           "content": {
@@ -5131,7 +5783,7 @@
           "Knowledge & Sources"
         ],
         "summary": "Promote Release",
-        "description": "Publisher only: performs atomic active release pointer swap.",
+        "description": "Publisher only: performs atomic active release pointer swap (T45).",
         "operationId": "promote_release_api_v1_admin_releases__id__promote_post",
         "security": [
           {
@@ -5173,13 +5825,71 @@
         }
       }
     },
+    "/api/v1/admin/releases/{id}/rollback": {
+      "post": {
+        "tags": [
+          "Knowledge & Sources"
+        ],
+        "summary": "Rollback Release",
+        "description": "Publisher only: atomically rolls back active release to target approved release manifest (T45).",
+        "operationId": "rollback_release_api_v1_admin_releases__id__rollback_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReleaseRollbackRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KnowledgeReleaseOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/admin/releases/{id}/disable": {
       "post": {
         "tags": [
           "Knowledge & Sources"
         ],
         "summary": "Disable Release",
-        "description": "Publisher only: disables active release in an emergency.",
+        "description": "Publisher only: disables active release in an emergency (T45).",
         "operationId": "disable_release_api_v1_admin_releases__id__disable_post",
         "security": [
           {
@@ -5204,6 +5914,54 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/KnowledgeReleaseOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/admin/releases/{id}/flag-impacted-cases": {
+      "post": {
+        "tags": [
+          "Knowledge & Sources"
+        ],
+        "summary": "Flag Impacted Cases",
+        "description": "Publisher only: scans open cases and flags only those dependent on modified rules (T39, T45).",
+        "operationId": "flag_impacted_cases_api_v1_admin_releases__id__flag_impacted_cases_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReassessmentQueueResult"
                 }
               }
             }
@@ -8202,6 +8960,111 @@
         ],
         "title": "Body_transcribe_case_audio_v1_cases__case_id__audio_transcribe_post"
       },
+      "CandidateDiffOut": {
+        "properties": {
+          "candidate_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Candidate Id"
+          },
+          "family_slug": {
+            "type": "string",
+            "title": "Family Slug"
+          },
+          "is_current_law": {
+            "type": "boolean",
+            "title": "Is Current Law",
+            "default": false
+          },
+          "publication_date": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Publication Date"
+          },
+          "commencement_date": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Commencement Date"
+          },
+          "commencement_status": {
+            "type": "string",
+            "title": "Commencement Status"
+          },
+          "has_transitional_clauses": {
+            "type": "boolean",
+            "title": "Has Transitional Clauses",
+            "default": false
+          },
+          "transitional_notes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Transitional Notes"
+          },
+          "impacted_rules": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Impacted Rules"
+          },
+          "impacted_domains": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Impacted Domains"
+          },
+          "provision_diffs": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Provision Diffs"
+          },
+          "added_count": {
+            "type": "integer",
+            "title": "Added Count",
+            "default": 0
+          },
+          "modified_count": {
+            "type": "integer",
+            "title": "Modified Count",
+            "default": 0
+          },
+          "repealed_count": {
+            "type": "integer",
+            "title": "Repealed Count",
+            "default": 0
+          },
+          "unchanged_count": {
+            "type": "integer",
+            "title": "Unchanged Count",
+            "default": 0
+          }
+        },
+        "type": "object",
+        "required": [
+          "candidate_id",
+          "family_slug",
+          "commencement_status"
+        ],
+        "title": "CandidateDiffOut"
+      },
       "CaseCreate": {
         "properties": {
           "title": {
@@ -8509,6 +9372,63 @@
           "updated_at"
         ],
         "title": "CaseOut"
+      },
+      "CaseReassessmentResult": {
+        "properties": {
+          "case_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Case Id"
+          },
+          "reassessed_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Reassessed At"
+          },
+          "release_id": {
+            "type": "string",
+            "title": "Release Id"
+          },
+          "has_changed": {
+            "type": "boolean",
+            "title": "Has Changed"
+          },
+          "prior_primary_action": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Prior Primary Action"
+          },
+          "new_primary_action": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "New Primary Action"
+          },
+          "decision_diff": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Decision Diff"
+          }
+        },
+        "type": "object",
+        "required": [
+          "case_id",
+          "reassessed_at",
+          "release_id",
+          "has_changed"
+        ],
+        "title": "CaseReassessmentResult"
       },
       "CaseSnapshotOut": {
         "properties": {
@@ -10355,6 +11275,11 @@
             "type": "boolean",
             "title": "Is Active"
           },
+          "manifest_data": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Manifest Data"
+          },
           "created_at": {
             "type": "string",
             "format": "date-time",
@@ -10383,6 +11308,72 @@
           "created_at"
         ],
         "title": "KnowledgeReleaseOut"
+      },
+      "ManualImportRequest": {
+        "properties": {
+          "family_slug": {
+            "type": "string",
+            "title": "Family Slug"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "text_content": {
+            "type": "string",
+            "title": "Text Content"
+          },
+          "issuer": {
+            "type": "string",
+            "title": "Issuer"
+          },
+          "document_type": {
+            "type": "string",
+            "title": "Document Type",
+            "default": "statute"
+          },
+          "official_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Official Url"
+          },
+          "publication_date": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Publication Date"
+          },
+          "commencement_date": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Commencement Date"
+          }
+        },
+        "type": "object",
+        "required": [
+          "family_slug",
+          "title",
+          "text_content",
+          "issuer"
+        ],
+        "title": "ManualImportRequest"
       },
       "MultiIssueAssessmentOut": {
         "properties": {
@@ -11360,6 +12351,41 @@
         ],
         "title": "RasterRedactionRequest"
       },
+      "ReassessmentQueueResult": {
+        "properties": {
+          "release_id": {
+            "type": "string",
+            "title": "Release Id"
+          },
+          "impacted_cases_count": {
+            "type": "integer",
+            "title": "Impacted Cases Count"
+          },
+          "flagged_case_ids": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array",
+            "title": "Flagged Case Ids"
+          },
+          "affected_rules": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Affected Rules"
+          }
+        },
+        "type": "object",
+        "required": [
+          "release_id",
+          "impacted_cases_count",
+          "flagged_case_ids",
+          "affected_rules"
+        ],
+        "title": "ReassessmentQueueResult"
+      },
       "ReconciliationItem": {
         "properties": {
           "evidence_id": {
@@ -11422,6 +12448,36 @@
             },
             "type": "array",
             "title": "Rules"
+          },
+          "portal_maps": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Portal Maps"
+          },
+          "lexical_index_hash": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lexical Index Hash"
+          },
+          "dense_index_model": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dense Index Model"
           }
         },
         "type": "object",
@@ -11430,6 +12486,25 @@
           "source_version_ids"
         ],
         "title": "ReleaseBuildRequest"
+      },
+      "ReleaseRollbackRequest": {
+        "properties": {
+          "target_release_id": {
+            "type": "string",
+            "title": "Target Release Id"
+          },
+          "rationale": {
+            "type": "string",
+            "minLength": 5,
+            "title": "Rationale"
+          }
+        },
+        "type": "object",
+        "required": [
+          "target_release_id",
+          "rationale"
+        ],
+        "title": "ReleaseRollbackRequest"
       },
       "ReminderCreate": {
         "properties": {
@@ -11799,44 +12874,149 @@
             "format": "uuid",
             "title": "Family Id"
           },
-          "version_tag": {
+          "url": {
             "type": "string",
-            "title": "Version Tag"
+            "title": "Url"
           },
-          "issuer": {
+          "status": {
             "type": "string",
-            "title": "Issuer"
+            "title": "Status"
           },
-          "document_type": {
+          "raw_hash": {
             "type": "string",
-            "title": "Document Type"
+            "title": "Raw Hash"
           },
-          "applicability_status": {
-            "type": "string",
-            "title": "Applicability Status"
+          "origin_chain": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Origin Chain"
           },
-          "clean_text_hash": {
-            "type": "string",
-            "title": "Clean Text Hash"
-          },
-          "created_at": {
+          "fetched_at": {
             "type": "string",
             "format": "date-time",
-            "title": "Created At"
+            "title": "Fetched At"
           }
         },
         "type": "object",
         "required": [
           "id",
           "family_id",
-          "version_tag",
-          "issuer",
-          "document_type",
-          "applicability_status",
-          "clean_text_hash",
-          "created_at"
+          "url",
+          "status",
+          "raw_hash",
+          "fetched_at"
         ],
         "title": "SourceCandidateOut"
+      },
+      "SourceHealthItem": {
+        "properties": {
+          "source_id": {
+            "type": "string",
+            "title": "Source Id"
+          },
+          "title_en": {
+            "type": "string",
+            "title": "Title En"
+          },
+          "title_bn": {
+            "type": "string",
+            "title": "Title Bn"
+          },
+          "official_url": {
+            "type": "string",
+            "title": "Official Url"
+          },
+          "document_type": {
+            "type": "string",
+            "title": "Document Type"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "health_status": {
+            "type": "string",
+            "title": "Health Status"
+          },
+          "procedural_scope": {
+            "type": "string",
+            "title": "Procedural Scope"
+          },
+          "is_authoritative_for_penalties": {
+            "type": "boolean",
+            "title": "Is Authoritative For Penalties",
+            "default": false
+          },
+          "notice": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notice"
+          }
+        },
+        "type": "object",
+        "required": [
+          "source_id",
+          "title_en",
+          "title_bn",
+          "official_url",
+          "document_type",
+          "status",
+          "health_status",
+          "procedural_scope"
+        ],
+        "title": "SourceHealthItem"
+      },
+      "SourceHealthResponse": {
+        "properties": {
+          "active_release_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Active Release Id"
+          },
+          "active_release_mode": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Active Release Mode"
+          },
+          "active_manifest_hash": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Active Manifest Hash"
+          },
+          "sources": {
+            "items": {
+              "$ref": "#/components/schemas/SourceHealthItem"
+            },
+            "type": "array",
+            "title": "Sources"
+          }
+        },
+        "type": "object",
+        "title": "SourceHealthResponse"
       },
       "SourceProvisionOut": {
         "properties": {
@@ -12302,6 +13482,126 @@
           "type"
         ],
         "title": "ValidationError"
+      },
+      "WatcherCheckRequest": {
+        "properties": {
+          "source_id": {
+            "type": "string",
+            "title": "Source Id"
+          },
+          "simulate_fixture": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Simulate Fixture"
+          }
+        },
+        "type": "object",
+        "required": [
+          "source_id"
+        ],
+        "title": "WatcherCheckRequest"
+      },
+      "WatcherCheckResponse": {
+        "properties": {
+          "source_id": {
+            "type": "string",
+            "title": "Source Id"
+          },
+          "target_url": {
+            "type": "string",
+            "title": "Target Url"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "change_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Change Type"
+          },
+          "raw_hash": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Raw Hash"
+          },
+          "clean_text_hash": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Clean Text Hash"
+          },
+          "quarantine_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Quarantine Reason"
+          },
+          "error_message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error Message"
+          },
+          "candidate_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Candidate Id"
+          },
+          "fetched_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Fetched At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "source_id",
+          "target_url",
+          "status",
+          "fetched_at"
+        ],
+        "title": "WatcherCheckResponse"
       },
       "WhatIfApplyRequest": {
         "properties": {

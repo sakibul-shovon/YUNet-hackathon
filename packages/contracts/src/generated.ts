@@ -99,6 +99,24 @@ export interface Body_transcribe_case_audio_v1_cases__case_id__audio_transcribe_
   client_duration?: number;
 }
 
+export interface CandidateDiffOut {
+  candidate_id: string;
+  family_slug: string;
+  is_current_law?: boolean;
+  publication_date?: unknown;
+  commencement_date?: unknown;
+  commencement_status: string;
+  has_transitional_clauses?: boolean;
+  transitional_notes?: unknown[];
+  impacted_rules?: unknown[];
+  impacted_domains?: unknown[];
+  provision_diffs?: unknown[];
+  added_count?: number;
+  modified_count?: number;
+  repealed_count?: number;
+  unchanged_count?: number;
+}
+
 export interface CaseCreate {
   title: string;
   jurisdiction?: string;
@@ -154,6 +172,16 @@ export interface CaseOut {
   story_narrative?: unknown;
   created_at: string;
   updated_at: string;
+}
+
+export interface CaseReassessmentResult {
+  case_id: string;
+  reassessed_at: string;
+  release_id: string;
+  has_changed: boolean;
+  prior_primary_action?: unknown;
+  new_primary_action?: unknown;
+  decision_diff?: Record<string, unknown>;
 }
 
 export interface CaseSnapshotOut {
@@ -484,8 +512,20 @@ export interface KnowledgeReleaseOut {
   release_mode: string;
   manifest_hash: string;
   is_active: boolean;
+  manifest_data?: Record<string, unknown>;
   created_at: string;
   promoted_at?: unknown;
+}
+
+export interface ManualImportRequest {
+  family_slug: string;
+  title: string;
+  text_content: string;
+  issuer: string;
+  document_type?: string;
+  official_url?: unknown;
+  publication_date?: unknown;
+  commencement_date?: unknown;
 }
 
 export interface MultiIssueAssessmentOut {
@@ -671,6 +711,13 @@ export interface RasterRedactionRequest {
   bounding_boxes: unknown[];
 }
 
+export interface ReassessmentQueueResult {
+  release_id: string;
+  impacted_cases_count: number;
+  flagged_case_ids: unknown[];
+  affected_rules: unknown[];
+}
+
 export interface ReconciliationItem {
   evidence_id: string;
   filename: string;
@@ -684,6 +731,14 @@ export interface ReleaseBuildRequest {
   release_mode?: string;
   source_version_ids: unknown[];
   rules?: unknown[];
+  portal_maps?: unknown[];
+  lexical_index_hash?: unknown;
+  dense_index_model?: unknown;
+}
+
+export interface ReleaseRollbackRequest {
+  target_release_id: string;
+  rationale: string;
 }
 
 export interface ReminderCreate {
@@ -762,12 +817,31 @@ export interface SemanticDecisionDiff {
 export interface SourceCandidateOut {
   id: string;
   family_id: string;
-  version_tag: string;
-  issuer: string;
+  url: string;
+  status: string;
+  raw_hash: string;
+  origin_chain?: Record<string, unknown>;
+  fetched_at: string;
+}
+
+export interface SourceHealthItem {
+  source_id: string;
+  title_en: string;
+  title_bn: string;
+  official_url: string;
   document_type: string;
-  applicability_status: string;
-  clean_text_hash: string;
-  created_at: string;
+  status: string;
+  health_status: string;
+  procedural_scope: string;
+  is_authoritative_for_penalties?: boolean;
+  notice?: unknown;
+}
+
+export interface SourceHealthResponse {
+  active_release_id?: unknown;
+  active_release_mode?: unknown;
+  active_manifest_hash?: unknown;
+  sources?: unknown[];
 }
 
 export interface SourceProvisionOut {
@@ -862,6 +936,24 @@ export interface ValidationError {
   type: string;
   input?: unknown;
   ctx?: Record<string, unknown>;
+}
+
+export interface WatcherCheckRequest {
+  source_id: string;
+  simulate_fixture?: unknown;
+}
+
+export interface WatcherCheckResponse {
+  source_id: string;
+  target_url: string;
+  status: string;
+  change_type?: unknown;
+  raw_hash?: unknown;
+  clean_text_hash?: unknown;
+  quarantine_reason?: unknown;
+  error_message?: unknown;
+  candidate_id?: unknown;
+  fetched_at: string;
 }
 
 export interface WhatIfApplyRequest {
