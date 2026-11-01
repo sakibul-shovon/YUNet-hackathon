@@ -1,0 +1,49 @@
+schema_version: policy.v1
+rule_id: bd.grs.public_service_grievance
+status: draft
+jurisdiction: BD
+issue_type: public_service_grievance
+date_basis: conduct_date
+statutory_limitation_days: 90
+statutory_citations:
+  - cabinet_division:grs_guidelines_2015:sec:4
+  - citizen_charter_directive:2018
+source_dependencies:
+  - cabinet_grs_portal
+supported_remedies:
+  - administrative_explanation
+  - service_expedition
+  - supervisory_review
+unsupported_remedies:
+  - judicial_order_or_writ
+  - monetary_compensation_direct
+conditions:
+  all:
+    - eq:
+        fact: public_service_request_submitted
+        value: true
+    - eq:
+        fact: citizen_charter_timeline_exceeded
+        value: true
+    - eq:
+        fact: relevant_office_contacted_first
+        value: true
+exclusions:
+  - eq:
+      fact: subject_of_ongoing_court_litigation
+      value: true
+  - eq:
+      fact: service_cadre_discipline_or_promotion
+      value: true
+  - eq:
+      fact: alternative_statutory_appeal_pending
+      value: true
+unknown_behavior: ask_material_question
+reason_templates:
+  supported: reasons.grs.grievance_eligible_for_submission
+  excluded: reasons.grs.grievance_excluded_sub_judice_or_discipline
+  unknown: reasons.grs.grievance_needs_submission_proof
+  not_supported: reasons.grs.grievance_not_supported
+allowed_actions:
+  - prepare_departmental_grievance
+  - prepare_grs_submission

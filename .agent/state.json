@@ -1,8 +1,8 @@
 {
   "plan_version": "1.2",
-  "updated_at": "2026-11-01T08:37:54.155360+00:00",
-  "current_task": "P12.1",
-  "last_completed_task": "P11.5",
+  "updated_at": "2026-11-01T09:01:03.933494+00:00",
+  "current_task": "P13.1",
+  "last_completed_task": "P12.5",
   "tasks": {
     "P00.1": {
       "id": "P00.1",
@@ -1685,18 +1685,25 @@
       "id": "P12.1",
       "phase": "P12",
       "title": "Telecom/ISP taxonomy, reviewed sources/procedure, conditions, form map and templates",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
-      "started_at": null,
-      "completed_at": null,
+      "started_at": "2026-11-01T09:01:03.933494+00:00",
+      "completed_at": "2026-11-01T09:01:03.933494+00:00",
       "dependencies": [
         "P08.5",
         "P09.3",
         "P11.3"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "knowledge/packs/bd/telecom/telecom_billing_and_outage.yaml",
+        "services/backend/app/actions/portal_field_maps.py",
+        "services/backend/app/actions/destinations.py",
+        "services/backend/app/actions/action_dag.py"
+      ],
+      "acceptance_evidence": "Telecom/ISP pack implemented with two-stage escalation (operator notice -> BTRC complaint), BTRC portal field map with operator fallback, verified BTRC destination, and positive/negative/hardware-defect exclusion tests passing.",
+      "validation_commands": [
+        "cd services/backend && uv run pytest tests/policy/test_p12_domain_packs_and_cross_domain_coherence.py -k test_p12_1"
+      ],
       "blocker": null,
       "next_action": null
     },
@@ -1704,16 +1711,23 @@
       "id": "P12.2",
       "phase": "P12",
       "title": "Insurance taxonomy, reviewed current procedure and remedy-aware request/escalation guidance",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
-      "started_at": null,
-      "completed_at": null,
+      "started_at": "2026-11-01T09:01:03.933494+00:00",
+      "completed_at": "2026-11-01T09:01:03.933494+00:00",
       "dependencies": [
         "P12.1"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "knowledge/packs/bd/insurance/insurance_claim_dispute.yaml",
+        "services/backend/app/actions/destinations.py",
+        "services/backend/app/actions/action_dag.py",
+        "services/backend/app/actions/document_ast.py"
+      ],
+      "acceptance_evidence": "Insurance pack implemented with staged depth disclosure, IDRA cell destination, two-stage escalation (insurer reconsideration -> IDRA), sub judice exclusion, and unsupported remedy abstention (no guaranteed payout) verified.",
+      "validation_commands": [
+        "cd services/backend && uv run pytest tests/policy/test_p12_domain_packs_and_cross_domain_coherence.py -k test_p12_2"
+      ],
       "blocker": null,
       "next_action": null
     },
@@ -1721,16 +1735,23 @@
       "id": "P12.3",
       "phase": "P12",
       "title": "Secondary public-service GRS pack and explicit exclusions",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
-      "started_at": null,
-      "completed_at": null,
+      "started_at": "2026-11-01T09:01:03.933494+00:00",
+      "completed_at": "2026-11-01T09:01:03.933494+00:00",
       "dependencies": [
         "P12.2"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "knowledge/packs/bd/grs/public_service_grievance.yaml",
+        "services/backend/app/actions/destinations.py",
+        "services/backend/app/actions/action_dag.py",
+        "services/backend/app/actions/document_ast.py"
+      ],
+      "acceptance_evidence": "Secondary GRS pack implemented with departmental GRO and Central GRS pathways, verified cabinet_grs_portal destination, and statutory exclusions (sub judice, service cadre discipline/promotion, statutory appeal) passing.",
+      "validation_commands": [
+        "cd services/backend && uv run pytest tests/policy/test_p12_domain_packs_and_cross_domain_coherence.py -k test_p12_3"
+      ],
       "blocker": null,
       "next_action": null
     },
@@ -1738,16 +1759,21 @@
       "id": "P12.4",
       "phase": "P12",
       "title": "Domain capability catalogue, disclosure and unsupported-jurisdiction fallback",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
-      "started_at": null,
-      "completed_at": null,
+      "started_at": "2026-11-01T09:01:03.933494+00:00",
+      "completed_at": "2026-11-01T09:01:03.933494+00:00",
       "dependencies": [
         "P12.3"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "services/backend/app/policy/domain_catalogue.py",
+        "services/backend/app/policy/router.py"
+      ],
+      "acceptance_evidence": "Domain catalogue service and API endpoints (GET /v1/domains/catalogue, GET /v1/domains/{domain_id}/support) disclosing exact support depths (fully_supported, staged_depth, secondary_civic), unsupported jurisdiction advisory, and unapproved domain fallback.",
+      "validation_commands": [
+        "cd services/backend && uv run pytest tests/policy/test_p12_domain_packs_and_cross_domain_coherence.py -k test_p12_4"
+      ],
       "blocker": null,
       "next_action": null
     },
@@ -1755,16 +1781,20 @@
       "id": "P12.5",
       "phase": "P12",
       "title": "Cross-domain regression and multi-issue coherence suite",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
-      "started_at": null,
-      "completed_at": null,
+      "started_at": "2026-11-01T09:01:03.933494+00:00",
+      "completed_at": "2026-11-01T09:01:03.933494+00:00",
       "dependencies": [
         "P12.4"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "services/backend/tests/policy/test_p12_domain_packs_and_cross_domain_coherence.py"
+      ],
+      "acceptance_evidence": "T46 cross-domain coherence verified: all 5 domain packs (shopping, finance, safety, telecom, insurance, grs) coexist without regression; T54 verified destination registry covers all domains.",
+      "validation_commands": [
+        "cd services/backend && uv run pytest tests/policy/test_p12_domain_packs_and_cross_domain_coherence.py"
+      ],
       "blocker": null,
       "next_action": null
     },
@@ -2181,9 +2211,9 @@
     },
     "P12": {
       "phase_id": "P12",
-      "implementation_status": "TODO",
-      "validation_status": "PENDING",
-      "push_status": "not_ready",
+      "implementation_status": "COMPLETE",
+      "validation_status": "PASSED",
+      "push_status": "ready",
       "intended_remote": "origin",
       "intended_branch": "main",
       "completion_commit_sha": null,

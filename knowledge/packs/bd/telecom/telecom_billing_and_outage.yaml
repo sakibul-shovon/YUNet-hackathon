@@ -1,0 +1,47 @@
+schema_version: policy.v1
+rule_id: bd.telecom.telecom_billing_and_outage
+status: draft
+jurisdiction: BD
+issue_type: telecom_billing_and_outage
+date_basis: conduct_date
+statutory_limitation_days: 60
+statutory_citations:
+  - btrc:directive:2021:qos
+  - btrc:consumer_grievance:stage1
+  - btrc:consumer_grievance:stage2
+source_dependencies:
+  - btrc_complaint_guidelines
+supported_remedies:
+  - service_credit_or_reversal
+  - service_restoration
+  - plan_correction
+unsupported_remedies:
+  - punitive_consequential_damages
+  - license_cancellation_direct
+conditions:
+  all:
+    - eq:
+        fact: telecom_provider_ticket_filed
+        value: true
+    - eq:
+        fact: provider_response_overdue_or_unsatisfactory
+        value: true
+    - eq:
+        fact: service_disruption_or_billing_error_documented
+        value: true
+exclusions:
+  - eq:
+      fact: issue_is_handset_hardware_only
+      value: true
+  - eq:
+      fact: consumer_has_unpaid_due_prior_to_dispute
+      value: true
+unknown_behavior: ask_material_question
+reason_templates:
+  supported: reasons.telecom.complaint_eligible_for_btrc_escalation
+  excluded: reasons.telecom.complaint_excluded_hardware_or_default
+  unknown: reasons.telecom.complaint_needs_provider_ticket
+  not_supported: reasons.telecom.complaint_not_supported
+allowed_actions:
+  - prepare_telecom_provider_notice
+  - prepare_btrc_complaint

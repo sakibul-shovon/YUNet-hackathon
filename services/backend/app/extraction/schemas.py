@@ -9,6 +9,8 @@ ALLOWED_DOMAINS = {
     "mfs_banking",
     "telecom_isp",
     "product_safety",
+    "insurance",
+    "government_grs",
 }
 
 ALLOWED_ISSUES = {
@@ -16,6 +18,9 @@ ALLOWED_ISSUES = {
     "defective_goods",
     "mfs_unauthorized_charge",
     "product_safety_hazard",
+    "telecom_billing_and_outage",
+    "insurance_claim_dispute",
+    "public_service_grievance",
     "other_consumer_dispute",
 }
 
@@ -40,6 +45,26 @@ ALLOWED_FIELD_NAMES = {
     "merchant_name",
     "transaction_id",
     "order_id",
+    # Telecom domain facts
+    "telecom_provider_ticket_filed",
+    "provider_response_overdue_or_unsatisfactory",
+    "service_disruption_or_billing_error_documented",
+    "issue_is_handset_hardware_only",
+    "consumer_has_unpaid_due_prior_to_dispute",
+    "provider_ticket_number",
+    # Insurance domain facts
+    "insurance_policy_documented",
+    "formal_claim_submitted_to_insurer",
+    "claim_denied_or_settlement_delayed_over_90d",
+    "subject_of_ongoing_court_litigation",
+    "fraudulent_misrepresentation_admitted",
+    "claim_reference",
+    # GRS domain facts
+    "public_service_request_submitted",
+    "citizen_charter_timeline_exceeded",
+    "relevant_office_contacted_first",
+    "service_cadre_discipline_or_promotion",
+    "alternative_statutory_appeal_pending",
 }
 
 

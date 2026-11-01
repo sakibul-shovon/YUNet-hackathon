@@ -309,6 +309,26 @@ export interface DocumentSentenceAST {
   is_user_edited?: boolean;
 }
 
+export interface DomainCapabilityEntry {
+  domain_id: string;
+  title_en: string;
+  title_bn: string;
+  support_status: string;
+  support_depth: string;
+  disclosed_routes: unknown[];
+  statutory_basis: string;
+  is_fully_supported: boolean;
+  caveat_en?: unknown;
+  caveat_bn?: unknown;
+}
+
+export interface DomainCatalogueResponse {
+  jurisdiction?: string;
+  domains: unknown[];
+  disclaimer_en?: string;
+  disclaimer_bn?: string;
+}
+
 export interface DraftRequestOut {
   document_type?: string;
   locale?: string;

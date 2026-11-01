@@ -10,6 +10,10 @@ from app.core.security import get_current_principal
 from app.facts.schemas import FactAssertionCreate, FactAssertionOut
 from app.facts.service import FactService
 from app.identity.models import Principal
+from app.policy.domain_catalogue import (
+    DomainCatalogueResponse,
+    DomainCatalogueService,
+)
 from app.policy.engine import (
     ProceduralAssessmentEngine,
     ProceduralAssessmentOut,
@@ -202,3 +206,28 @@ async def skip_next_best_question(
 
     skips = _CASE_SKIPPED_QUESTIONS[case.id]
     return await ProceduralAssessmentEngine.assess_case(case, db, skipped_questions=skips)
+
+
+# --- P12.4 Domain Catalogue & Jurisdiction Disclosure Endpoints ---
+
+
+@router.get(
+    "/v1/domains/catalogue",
+    response_model=DomainCatalogueResponse,
+)
+async def get_domain_catalogue(
+    jurisdiction: str = "BD",
+):
+    """P12.4: Transparency catalogue disclosing exact verified support depth for each domain."""
+    return DomainCatalogueService.get_catalogue(jurisdiction=jurisdiction)
+
+
+@router.get(
+    "/v1/domains/{domain_id}/support",
+)
+async def check_domain_support(
+    domain_id: str,
+    jurisdiction: str = "BD",
+):
+    """P12.4: Checks domain support and enforces unsupported-jurisdiction fallback."""
+    return DomainCatalogueService.check_domain_support(domain_id=domain_id, jurisdiction=jurisdiction)

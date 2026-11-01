@@ -2340,6 +2340,101 @@
         }
       }
     },
+    "/v1/domains/catalogue": {
+      "get": {
+        "tags": [
+          "Case Procedural Assessment"
+        ],
+        "summary": "Get Domain Catalogue",
+        "description": "P12.4: Transparency catalogue disclosing exact verified support depth for each domain.",
+        "operationId": "get_domain_catalogue_v1_domains_catalogue_get",
+        "parameters": [
+          {
+            "name": "jurisdiction",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "BD",
+              "title": "Jurisdiction"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DomainCatalogueResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/domains/{domain_id}/support": {
+      "get": {
+        "tags": [
+          "Case Procedural Assessment"
+        ],
+        "summary": "Check Domain Support",
+        "description": "P12.4: Checks domain support and enforces unsupported-jurisdiction fallback.",
+        "operationId": "check_domain_support_v1_domains__domain_id__support_get",
+        "parameters": [
+          {
+            "name": "domain_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Domain Id"
+            }
+          },
+          {
+            "name": "jurisdiction",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "BD",
+              "title": "Jurisdiction"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v1/cases/{case_id}/actions/dag": {
       "get": {
         "tags": [
@@ -6616,6 +6711,101 @@
         }
       }
     },
+    "/api/v1/domains/catalogue": {
+      "get": {
+        "tags": [
+          "Case Procedural Assessment"
+        ],
+        "summary": "Get Domain Catalogue",
+        "description": "P12.4: Transparency catalogue disclosing exact verified support depth for each domain.",
+        "operationId": "get_domain_catalogue_api_v1_domains_catalogue_get",
+        "parameters": [
+          {
+            "name": "jurisdiction",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "BD",
+              "title": "Jurisdiction"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DomainCatalogueResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/domains/{domain_id}/support": {
+      "get": {
+        "tags": [
+          "Case Procedural Assessment"
+        ],
+        "summary": "Check Domain Support",
+        "description": "P12.4: Checks domain support and enforces unsupported-jurisdiction fallback.",
+        "operationId": "check_domain_support_api_v1_domains__domain_id__support_get",
+        "parameters": [
+          {
+            "name": "domain_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Domain Id"
+            }
+          },
+          {
+            "name": "jurisdiction",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "BD",
+              "title": "Jurisdiction"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/cases/{case_id}/actions/dag": {
       "get": {
         "tags": [
@@ -10133,6 +10323,110 @@
           "statement_type"
         ],
         "title": "DocumentSentenceAST"
+      },
+      "DomainCapabilityEntry": {
+        "properties": {
+          "domain_id": {
+            "type": "string",
+            "title": "Domain Id"
+          },
+          "title_en": {
+            "type": "string",
+            "title": "Title En"
+          },
+          "title_bn": {
+            "type": "string",
+            "title": "Title Bn"
+          },
+          "support_status": {
+            "type": "string",
+            "title": "Support Status"
+          },
+          "support_depth": {
+            "type": "string",
+            "title": "Support Depth"
+          },
+          "disclosed_routes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Disclosed Routes"
+          },
+          "statutory_basis": {
+            "type": "string",
+            "title": "Statutory Basis"
+          },
+          "is_fully_supported": {
+            "type": "boolean",
+            "title": "Is Fully Supported"
+          },
+          "caveat_en": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Caveat En"
+          },
+          "caveat_bn": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Caveat Bn"
+          }
+        },
+        "type": "object",
+        "required": [
+          "domain_id",
+          "title_en",
+          "title_bn",
+          "support_status",
+          "support_depth",
+          "disclosed_routes",
+          "statutory_basis",
+          "is_fully_supported"
+        ],
+        "title": "DomainCapabilityEntry"
+      },
+      "DomainCatalogueResponse": {
+        "properties": {
+          "jurisdiction": {
+            "type": "string",
+            "title": "Jurisdiction",
+            "default": "BD"
+          },
+          "domains": {
+            "items": {
+              "$ref": "#/components/schemas/DomainCapabilityEntry"
+            },
+            "type": "array",
+            "title": "Domains"
+          },
+          "disclaimer_en": {
+            "type": "string",
+            "title": "Disclaimer En",
+            "default": "ClaimCraft BD discloses exact supported depths for each domain. Unapproved or experimental domains are never advertised as fully supported."
+          },
+          "disclaimer_bn": {
+            "type": "string",
+            "title": "Disclaimer Bn",
+            "default": "\u0995\u09cd\u09b2\u09c7\u0987\u09ae\u0995\u09cd\u09b0\u09be\u09ab\u099f \u09ac\u09bf\u09a1\u09bf \u09aa\u09cd\u09b0\u09a4\u09bf\u099f\u09bf \u09a1\u09cb\u09ae\u09c7\u0987\u09a8\u09c7\u09b0 \u0985\u09a8\u09c1\u09ae\u09cb\u09a6\u09bf\u09a4 \u09b8\u0995\u09cd\u09b7\u09ae\u09a4\u09be\u09b0 \u09ae\u09be\u09a4\u09cd\u09b0\u09be \u09b8\u09cd\u09ac\u099a\u09cd\u099b\u09ad\u09be\u09ac\u09c7 \u09aa\u09cd\u09b0\u0995\u09be\u09b6 \u0995\u09b0\u09c7\u0964 \u0985\u09a8\u09a8\u09c1\u09ae\u09cb\u09a6\u09bf\u09a4 \u0995\u09cb\u09a8\u09cb \u09a1\u09cb\u09ae\u09c7\u0987\u09a8\u0995\u09c7 \u09b8\u09ae\u09cd\u09aa\u09c2\u09b0\u09cd\u09a3 \u09b8\u09ae\u09b0\u09cd\u09a5\u09bf\u09a4 \u09b9\u09bf\u09b8\u09c7\u09ac\u09c7 \u0989\u09aa\u09b8\u09cd\u09a5\u09be\u09aa\u09a8 \u0995\u09b0\u09be \u09b9\u09df \u09a8\u09be\u0964"
+          }
+        },
+        "type": "object",
+        "required": [
+          "domains"
+        ],
+        "title": "DomainCatalogueResponse"
       },
       "DraftRequestOut": {
         "properties": {

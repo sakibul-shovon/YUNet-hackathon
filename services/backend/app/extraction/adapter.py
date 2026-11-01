@@ -51,10 +51,22 @@ class CaseExtractor:
         is_unauthorized_mfs = any(w in lower_text for w in ("unauthorized", "টাকা কাটা", "টাকা কেটে", "কাটা গেছে", "হ্যাক", "fraud", "scam", "না জানিয়ে কাটা", "অননুমোদিত"))
         is_defective = any(w in lower_text for w in ("নষ্ট", "ভাঙা", "ত্রুটিপূর্ণ", "defective", "damaged", "broken", "faulty"))
         is_hazard = any(w in lower_text for w in ("বিষাক্ত", "কেমিক্যাল", "বিপজ্জনক", "poison", "toxic", "hazard", "fire", "danger"))
+        is_telecom = any(w in lower_text for w in ("grameenphone", "gp", "robi", "banglalink", "teletalk", "broadband", "isp", "sim", "telecom", "টেলিকম", "ইন্টারনেট", "সিম", "নেটওয়ার্ক", "কলড্রপ"))
+        is_insurance = any(w in lower_text for w in ("insurance", "বীমা", "বিমা", "idra", "policy", "পলিসি", "claim", "প্রিমিয়াম", "premium"))
+        is_grs = any(w in lower_text for w in ("grs", "জিআরএস", "সরকারি সেবা", "সিটিজেন চার্টার", "citizen charter", "পাসপোর্ট অফিস", "মন্ত্রণালয়"))
 
         if is_hazard:
             detected_domain = "product_safety"
             detected_issue = "product_safety_hazard"
+        elif is_telecom:
+            detected_domain = "telecom_isp"
+            detected_issue = "telecom_billing_and_outage"
+        elif is_insurance:
+            detected_domain = "insurance"
+            detected_issue = "insurance_claim_dispute"
+        elif is_grs:
+            detected_domain = "government_grs"
+            detected_issue = "public_service_grievance"
         elif is_unauthorized_mfs or (not is_order_delivery and any(w in lower_text for w in ("bkash", "বিকাশ", "nagad", "নগদ", "rocket", "রকেট", "bank"))):
             detected_domain = "financial_services"
             detected_issue = "mfs_unauthorized_charge"

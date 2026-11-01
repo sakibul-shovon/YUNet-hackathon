@@ -14,52 +14,45 @@
   - **P09 (Action Studio, Filing Companion and Export):** 100% COMPLETE & VERIFIED (`229cc5c97d4097b58cea9e36370dd7020b40ac2d`, docs `7d6cadd`)
   - **P10 (Living Case, Follow-Up and Decision Changes):** 100% COMPLETE & VERIFIED (`c9a5d01c35ee3951bbebb3bd640d1be3163b1ea7`, docs `aa572b2`)
   - **P11 (Monitored official updates and safe release operations):** 100% COMPLETE & VERIFIED (`facdc2537968e266f0361869097abce622b3c32a`)
-- **Active Phase:** P12 (Telecom, insurance and secondary GRS completeness)
-- **Active Task:** P12.1 (Telecom/ISP taxonomy, reviewed sources/procedure, conditions, form map and templates)
-- **Overall Ledger Progress:** 69 / 86 required tasks completed (80.2%). Zero blocked.
+  - **P12 (Telecom, insurance and secondary GRS completeness):** 100% COMPLETE & VERIFIED
+- **Active Phase:** P13 (Evaluation, adversarial testing and usability refinement)
+- **Active Task:** P13.1 (Build adjudicated datasets/splits and annotation source/version records)
+- **Overall Ledger Progress:** 74 / 86 required tasks completed (86.0%). Zero blocked.
 
 ---
 
-## Phase P11 Summary & Acceptance Evidence
-1. **P11.1 (Official Watchers, Permissions/Cadence & Manual Import Fallback - T42):**
-   - Implemented `OfficialSourceWatcher` with official host allowlist (`OFFICIAL_HOST_ALLOWLIST`) and SSRF protection (blocking loopback, private RFC1918 IPs, and AWS/GCP 169.254.169.254 metadata).
-   - Validated redirect quarantine: HTTP redirects targeting untrusted destinations are immediately quarantined (`status="quarantined"`, `quarantine_reason="untrusted_redirect"`).
-   - Handled server outages gracefully: HTTP 503 or network failure returns `health_status="temporarily_unavailable"`, retaining prior approved versions without inventing updated rules.
-   - Classified cosmetic whitespace and HTML comment diffs (`cosmetic_whitespace`) separately from substantive regulatory amendments.
-   - Created manual-import fallback endpoint (`POST /v1/admin/sources/manual-import`) for offline or air-gapped uploads.
+## Phase P12 Summary & Acceptance Evidence
+1. **P12.1 (Telecom/ISP Domain Pack & BTRC Portal Map - T46):**
+   - Created `knowledge/packs/bd/telecom/telecom_billing_and_outage.yaml` covering broadband outage, billing disputes, and QoS failures.
+   - Enforced two-stage procedural escalation in Action DAG: Mandatory Stage 1 Operator Ticket before Stage 2 BTRC Consumer Cell complaint.
+   - Implemented `btrc_complaint` portal field map with operator fallback and document AST generator.
+   - Verified hardware defect exclusion: Handset defects safely excluded from telecom QoS track.
 
-2. **P11.2 (Section-Aware Diff, Candidate Impact Proposal & Commencement Dates - T43):**
-   - Implemented `SectionAwareDiffService` supporting Bengali and English provision extraction (`sec:45`, `sec:60`, `sec:76`).
-   - Provision comparator detects `added`, `modified`, `repealed`, and `unchanged` provisions with granular text diffs.
-   - Candidate impact proposal maps modified provisions to dependent policy rules (`R-CRPA-S45-MISLEADING-PRICE`, `R-CRPA-S76-REWARD-25PCT`) and affected domains.
-   - Invariant T43 enforced: Unapproved changes are strictly `is_current_law = False`.
-   - Invariant T43 enforced: Unknown or deferred commencement dates remain `deferred_pending_gazette` and never default to today's date.
-   - Transitional and savings clauses automatically detected.
+2. **P12.2 (Insurance Domain Pack & Remedy-Aware Guidance - T46):**
+   - Created `knowledge/packs/bd/insurance/insurance_claim_dispute.yaml` covering claims delay, non-response, and denial under Insurance Act 2010.
+   - Enforced two-stage procedural escalation: Insurer Reconsideration Request (Stage 1) -> IDRA Policyholder Protection Cell (Stage 2).
+   - Invariant T46 enforced: Staged depth clearly disclosed (`staged_depth`); unsupported remedies (guaranteed claim payout, triple punitive damages) strictly abstained.
+   - Statutory sub judice exclusion verified: Ongoing court litigation excluded from IDRA administrative review.
 
-3. **P11.3 (Reviewer Diff View & Auditable Scoped Approval - T44):**
-   - Added reviewer inspection endpoint (`GET /v1/admin/source-candidates/{id}/diff`).
-   - Scoped approval endpoint (`POST /v1/admin/source-candidates/{id}/approve`): requires human reviewer with explicit scope (`origin_and_procedure` vs `statutory_interpretation`).
-   - Invariant T44 enforced: Consumer role (`role == "consumer"`) or unauthenticated callers receive HTTP 403 Forbidden / HTTP 401 Unauthorized; AI models cannot approve releases.
-   - On approval, creates approved `SourceVersion` and extracts/persists all `SourceProvision` records for authoritative RAG.
+3. **P12.3 (Secondary Public-Service GRS Pack & Statutory Exclusions - T46):**
+   - Created `knowledge/packs/bd/grs/public_service_grievance.yaml` based on Cabinet Division Citizen Charter guidelines.
+   - Enforced departmental grievance officer notice and central GRS portal pathways (`cabinet_grs_portal`).
+   - Invariant T46 enforced: Explicit exclusions verified for sub judice litigation, civil service cadre discipline/promotions, and pending statutory appeals.
 
-4. **P11.4 (Immutable Release Builder, Atomic Pointer Swap, Rollback & Disable Overlays - T45):**
-   - Implemented `AdminKnowledgeService.build_release`: rejects `test_only` rules (T18) and unapproved source versions; canonical JSON manifest produces immutable SHA-256 hash.
-   - Atomic pointer swap (`POST /v1/admin/releases/{id}/promote`): sets target release to `is_active = True` and deactivates prior releases in a single atomic transaction.
-   - Atomic instant rollback (`POST /v1/admin/releases/{id}/rollback`): demotes active release and reactivates prior approved release manifest.
-   - Invariant T45 enforced: Dense embeddings, lexical BM25 index, policy rules, and portal maps from different releases never mix.
-   - Emergency disable overlay (`POST /v1/admin/releases/{id}/disable`): immediately deactivates release with safe fallback.
+4. **P12.4 (Domain Capability Catalogue & Unsupported-Jurisdiction Fallback):**
+   - Implemented `DomainCatalogueService` and exposed `GET /v1/domains/catalogue` and `GET /v1/domains/{domain_id}/support`.
+   - Discloses granular support depths: `fully_supported` (e-commerce, retail goods, banking/MFS, telecom), `staged_depth` (insurance explanation and IDRA escalation), and `secondary_civic` (administrative public service GRS).
+   - Enforces unsupported jurisdiction fallback (e.g. foreign jurisdictions return explicit Bangladesh statutory boundary advisory) and unapproved domain fallback.
 
-5. **P11.5 (Impacted-Case Reassessment Queue & Source-Health Transparency - T39, T45):**
-   - Implemented `ReassessmentQueueService.detect_and_flag_impacted_cases`: scans open cases and flags ONLY dependent cases (e.g. e-commerce pricing cases when CRPA Section 45 rules change, skipping unrelated telecom disputes).
-   - Invariant T39/T45 enforced: Historical case snapshots and interpretations are retained without silent overwriting; non-intrusive `source_update_flagged` event added to timeline.
-   - On-demand case reassessment (`POST /v1/cases/{case_id}/reassess`): re-evaluates case against active release, generates semantic decision diff, and creates new versioned snapshot.
-   - Public source-health transparency endpoint (`GET /v1/knowledge/source-health`): reports monitored sources, check health, and active release metadata.
-   - Next.js Web UI updated: `SourceHealthMonitor` integrated into `/[locale]/sources` with active release badges, watcher statuses, and real-time health refresh.
+5. **P12.5 (Cross-Domain Regression, Coherence Suite & Destination Readiness - T46, T54):**
+   - Created `services/backend/tests/policy/test_p12_domain_packs_and_cross_domain_coherence.py` covering all 5 tasks.
+   - Verified that multi-issue cases (e.g. e-commerce non-delivery coexisting with MFS payment debit) resolve cleanly without cross-domain regression.
+   - Verified Destination Registry (T54) readiness across all five official channels: `dncrp_ccms_portal`, `bb_cipc_portal`, `btrc_consumer_cell`, `idra_grievance_cell`, and `cabinet_grs_portal`.
 
 ---
 
 ## Verification Evidence
-- **Pytest Suite:** 116 / 116 tests passing across all suites (`tests/knowledge/test_p11_official_watchers_and_safe_releases.py` 5/5 passed).
+- **Pytest Suite:** 121 / 121 tests passing across all suites (`tests/policy/test_p12_domain_packs_and_cross_domain_coherence.py` 5/5 passed).
 - **Foundation Checks:** Passed (`python scripts/tasks.py check --scope foundation`):
   - 1:1 i18n parity verified across 203 message keys.
   - Backend Ruff linting 100% clean.
@@ -71,6 +64,6 @@
 ---
 
 ## Next Action
-- Stage Phase P11 files, create commit `feat(P11): official source watchers, section-aware diffs, scoped approvals, and atomic release promoter`.
+- Commit Phase P12 changes (`feat(P12): telecom, insurance, and secondary GRS domain packs with domain capability catalogue`).
 - Push to GitHub working branch `main` and verify remote receipt.
-- Resume Phase P12 (Telecom, insurance and secondary GRS completeness), starting with task P12.1.
+- Resume Phase P13 (Evaluation, adversarial testing and usability refinement), starting with P13.1.

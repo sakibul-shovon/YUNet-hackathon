@@ -67,9 +67,42 @@ class ActionDAGService:
         assessment = await ProceduralAssessmentEngine.assess_case(case, db)
 
         # Inspect route types
+        case_title_lower = (case.title or "").lower()
         has_safety = any(r.issue_type == "product_safety_hazard" and r.status == RouteStatus.SUPPORTED for r in assessment.routes)
         has_finance = any(r.issue_type == "mfs_unauthorized_charge" for r in assessment.routes)
         finance_route = next((r for r in assessment.routes if r.issue_type == "mfs_unauthorized_charge"), None)
+        has_telecom = any(
+            "telecom" in r.issue_type
+            and (
+                r.status == RouteStatus.SUPPORTED
+                or facts.get("telecom_provider_ticket_filed") is not None
+                or "telecom" in case_title_lower
+                or "isp" in case_title_lower
+                or "broadband" in case_title_lower
+            )
+            for r in assessment.routes
+        )
+        has_insurance = any(
+            "insurance" in r.issue_type
+            and (
+                r.status == RouteStatus.SUPPORTED
+                or facts.get("formal_claim_submitted_to_insurer") is not None
+                or facts.get("insurance_policy_documented") is not None
+                or "insurance" in case_title_lower
+            )
+            for r in assessment.routes
+        )
+        has_grs = any(
+            ("grs" in r.issue_type or "public_service" in r.issue_type)
+            and (
+                r.status == RouteStatus.SUPPORTED
+                or facts.get("public_service_request_submitted") is not None
+                or "grs" in case_title_lower
+                or "passport" in case_title_lower
+                or "government" in case_title_lower
+            )
+            for r in assessment.routes
+        )
 
         nodes: list[ActionNode] = []
 
@@ -156,7 +189,135 @@ class ActionDAGService:
                 stage_hierarchy_explanation_bn="আর্থিক বিরোধের ক্ষেত্রে দুই ধাপের শৃঙ্খলা প্রযোজ্য: প্রোভাইডার গ্রিভেন্স (ধাপ ১) -> বাংলাদেশ ব্যাংক সিআইপিসি (ধাপ ২)।",
             )
 
-        # Case 3: E-Commerce / Consumer Goods (DNCRP CCMS & Optional Merchant Notice)
+        # Case 3: Telecom / ISP Dispute (Stage 1 Operator -> Stage 2 BTRC)
+        if has_telecom:
+            is_ticket_filed = facts.get("telecom_provider_ticket_filed") is True or facts.get("provider_ticket_number") is not None
+
+            nodes.append(ActionNode(
+                action_id="prepare_telecom_provider_notice",
+                title_en="Submit Formal Grievance to Telecom Operator / ISP (Stage 1)",
+                title_bn="টেলিকম অপারেটর বা আইএসপিতে আনুষ্ঠানিক অভিযোগ দাখিল করুন (ধাপ ১)",
+                description_en="Mandatory Stage 1: File formal ticket with telecom operator and obtain complaint tracking number.",
+                description_bn="বাধ্যতামূলক ধাপ ১: অপারেটরে অভিযোগ দাখিল করে ট্র্যাকিং টিকিট নম্বর গ্রহণ করুন।",
+                action_type="provider_dispute",
+                status="completed" if is_ticket_filed else "ready",
+                is_primary=not is_ticket_filed,
+                is_mandatory=True,
+                destination_id="btrc_consumer_cell",
+            ))
+
+            stage2_blocked = not is_ticket_filed
+            blocking_reasons = []
+            if stage2_blocked:
+                blocking_reasons.append(
+                    "BTRC guidelines require obtaining a prior formal complaint ticket from your operator before regulator escalation."
+                )
+
+            nodes.append(ActionNode(
+                action_id="prepare_btrc_complaint",
+                title_en="Escalate to BTRC Consumer Grievance Portal (Stage 2)",
+                title_bn="বিটিআরসি ভোক্তা অভিযোগ পোর্টালে দাখিল করুন (ধাপ ২)",
+                description_en="Official BTRC regulatory complaint portal for unresolved cellular or broadband ISP disputes.",
+                description_bn="অমীমাংসিত টেলিকম বা ব্রডব্যান্ড বিরোধের জন্য বিটিআরসির অফিশিয়াল অভিযোগ প্রতিকার পোর্টাল।",
+                action_type="official_portal",
+                status="blocked" if stage2_blocked else "ready",
+                blocking_reasons=blocking_reasons,
+                prerequisite_actions=["prepare_telecom_provider_notice"],
+                is_primary=is_ticket_filed,
+                destination_id="btrc_consumer_cell",
+            ))
+
+            return ActionDAGOut(
+                case_id=case.id,
+                primary_action_id="prepare_btrc_complaint" if is_ticket_filed else "prepare_telecom_provider_notice",
+                nodes=nodes,
+                stage_hierarchy_explanation_en="Telecom disputes enforce two-stage escalation: Operator Notice (Stage 1) -> BTRC Escalation (Stage 2).",
+                stage_hierarchy_explanation_bn="টেলিকম বিরোধে দুই ধাপের শৃঙ্খলা প্রযোজ্য: অপারেটর নোটিশ (ধাপ ১) -> বিটিআরসি এসকেলেশন (ধাপ ২)।",
+            )
+
+        # Case 4: Insurance Claim Dispute (Stage 1 Insurer -> Stage 2 IDRA)
+        if has_insurance:
+            is_claim_filed = facts.get("formal_claim_submitted_to_insurer") is True
+
+            nodes.append(ActionNode(
+                action_id="prepare_insurer_reconsideration_request",
+                title_en="Submit Written Reconsideration Request to Insurer (Stage 1)",
+                title_bn="বীমা কোম্পানির নিকট পুনর্বিবেচনার আবেদন দাখিল করুন (ধাপ ১)",
+                description_en="Formal request to insurer claims department requesting detailed written explanation of denial or settlement.",
+                description_bn="দাবি পর্যালোচনা ও প্রত্যাখ্যাত হওয়ার কারণ জানতে বীমা কোম্পানির নিকট আনুষ্ঠানিক আবেদন।",
+                action_type="provider_dispute",
+                status="completed" if is_claim_filed else "ready",
+                is_primary=not is_claim_filed,
+                is_mandatory=True,
+                destination_id="idra_grievance_cell",
+            ))
+
+            stage2_blocked = not is_claim_filed
+            blocking_reasons = []
+            if stage2_blocked:
+                blocking_reasons.append(
+                    "IDRA grievance procedure requires prior formal claim submission and insurer response or 90-day delay."
+                )
+
+            nodes.append(ActionNode(
+                action_id="prepare_idra_grievance",
+                title_en="File Grievance with IDRA Policyholder Protection Cell (Stage 2)",
+                title_bn="আইডিআরএ বীমা গ্রাহক সুরক্ষা সেলে অভিযোগ দাখিল করুন (ধাপ ২)",
+                description_en="Official Insurance Development and Regulatory Authority grievance cell under Insurance Act 2010.",
+                description_bn="বীমা আইন ২০১০ অনুযায়ী আইডিআরএ-এর গ্রাহক স্বার্থ সংরক্ষণ সেলে আনুষ্ঠানিক অভিযোগ।",
+                action_type="official_portal",
+                status="blocked" if stage2_blocked else "ready",
+                blocking_reasons=blocking_reasons,
+                prerequisite_actions=["prepare_insurer_reconsideration_request"],
+                is_primary=is_claim_filed,
+                destination_id="idra_grievance_cell",
+            ))
+
+            return ActionDAGOut(
+                case_id=case.id,
+                primary_action_id="prepare_idra_grievance" if is_claim_filed else "prepare_insurer_reconsideration_request",
+                nodes=nodes,
+                stage_hierarchy_explanation_en="Insurance claim disputes require insurer reconsideration request prior to IDRA regulatory escalation.",
+                stage_hierarchy_explanation_bn="বীমা বিরোধের ক্ষেত্রে আইডিআরএ-তে যাওয়ার পূর্বে বীমা কোম্পানির নিকট আনুষ্ঠানিক আবেদন আবশ্যক।",
+            )
+
+        # Case 5: Government GRS Track (Stage 1 Department -> Stage 2 Central GRS)
+        if has_grs:
+            nodes.append(ActionNode(
+                action_id="prepare_departmental_grievance",
+                title_en="Submit Grievance to Departmental Grievance Redress Officer (GRO)",
+                title_bn="সংশ্লিষ্ট দপ্তরের অভিযোগ নিষ্পত্তি কর্মকর্তার (GRO) নিকট আবেদন",
+                description_en="Initial administrative notice directly to designated ministerial or departmental GRO.",
+                description_bn="সংশ্লিষ্ট মন্ত্রণালয় বা বিভাগের মনোনীত কর্মকর্তার নিকট আনুষ্ঠানিক নাগরিক অভিযোগ।",
+                action_type="provider_dispute",
+                status="ready",
+                is_primary=True,
+                is_mandatory=True,
+                destination_id="cabinet_grs_portal",
+            ))
+
+            nodes.append(ActionNode(
+                action_id="prepare_grs_submission",
+                title_en="Submit Grievance to Central Government GRS Portal",
+                title_bn="কেন্দ্রীয় সরকারি জিআরএস পোর্টালে অভিযোগ দাখিল করুন",
+                description_en="Cabinet Division centralized online citizen grievance platform (grs.gov.bd).",
+                description_bn="মন্ত্রিপরিষদ বিভাগ পরিচালিত কেন্দ্রীয় নাগরিক অভিযোগ প্রতিকার পোর্টাল (grs.gov.bd)।",
+                action_type="official_portal",
+                status="ready",
+                is_primary=False,
+                is_mandatory=False,
+                destination_id="cabinet_grs_portal",
+            ))
+
+            return ActionDAGOut(
+                case_id=case.id,
+                primary_action_id="prepare_departmental_grievance",
+                nodes=nodes,
+                stage_hierarchy_explanation_en="Administrative public service grievances provide departmental notice and central GRS portal pathways.",
+                stage_hierarchy_explanation_bn="সরকারি সেবা সংক্রান্ত বিরোধে বিভাগীয় নিষ্পত্তি কর্মকর্তা ও কেন্দ্রীয় জিআরএস পথ উন্মুক্ত।",
+            )
+
+        # Case 6: E-Commerce / Consumer Goods (DNCRP CCMS & Optional Merchant Notice)
         # P09.1 Invariant: Seller notice is OPTIONAL, not universally forced!
         nodes.append(ActionNode(
             action_id="prepare_merchant_notice",

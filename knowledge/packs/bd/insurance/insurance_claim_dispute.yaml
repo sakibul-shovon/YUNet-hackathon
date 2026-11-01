@@ -1,0 +1,46 @@
+schema_version: policy.v1
+rule_id: bd.insurance.insurance_claim_dispute
+status: draft
+jurisdiction: BD
+issue_type: insurance_claim_dispute
+date_basis: conduct_date
+statutory_limitation_days: 90
+statutory_citations:
+  - insurance_act_2010:sec:72
+  - idra:dispute_resolution_regulations:2019
+source_dependencies:
+  - idra_insurance_guidelines
+supported_remedies:
+  - claim_reconsideration
+  - written_explanation_of_denial
+  - dispute_arbitration_referral
+unsupported_remedies:
+  - guaranteed_claim_payout
+  - bad_faith_punitive_damages
+conditions:
+  all:
+    - eq:
+        fact: insurance_policy_documented
+        value: true
+    - eq:
+        fact: formal_claim_submitted_to_insurer
+        value: true
+    - eq:
+        fact: claim_denied_or_settlement_delayed_over_90d
+        value: true
+exclusions:
+  - eq:
+      fact: subject_of_ongoing_court_litigation
+      value: true
+  - eq:
+      fact: fraudulent_misrepresentation_admitted
+      value: true
+unknown_behavior: ask_material_question
+reason_templates:
+  supported: reasons.insurance.claim_dispute_eligible_for_idra_review
+  excluded: reasons.insurance.claim_dispute_excluded_sub_judice
+  unknown: reasons.insurance.claim_dispute_needs_policy_or_submission
+  not_supported: reasons.insurance.claim_dispute_not_supported
+allowed_actions:
+  - prepare_insurer_reconsideration_request
+  - prepare_idra_grievance
