@@ -163,6 +163,7 @@ class ProceduralAssessmentEngine:
 
         import yaml
 
+
         repo_root = Path(__file__).resolve().parents[4]
         packs_dir = repo_root / "knowledge" / "packs" / "bd"
 

@@ -34,6 +34,29 @@ export interface ErrorResponse {
   };
 }
 
+export interface ActionDAGOut {
+  case_id: string;
+  primary_action_id: string;
+  nodes: unknown[];
+  stage_hierarchy_explanation_en: string;
+  stage_hierarchy_explanation_bn: string;
+}
+
+export interface ActionNode {
+  action_id: string;
+  title_en: string;
+  title_bn: string;
+  description_en: string;
+  description_bn: string;
+  action_type: string;
+  status: string;
+  blocking_reasons?: unknown[];
+  prerequisite_actions?: unknown[];
+  destination_id?: unknown;
+  is_primary?: boolean;
+  is_mandatory?: boolean;
+}
+
 export interface AssessmentRouteOut {
   route_id: string;
   rule_id: string;
@@ -97,6 +120,19 @@ export interface CaseEventOut {
   payload: Record<string, unknown>;
 }
 
+export interface CaseExportOut {
+  export_id: string;
+  case_id: string;
+  format: string;
+  document_title: string;
+  content: string;
+  sha256_hash: string;
+  disclaimer_notice?: string;
+  is_filed?: boolean;
+  is_sent?: boolean;
+  created_at: string;
+}
+
 export interface CaseListOut {
   items: unknown[];
   total: number;
@@ -151,6 +187,20 @@ export interface CitationValidationResponse {
   invalid_citations?: unknown[];
 }
 
+export interface ComplaintDestinationOut {
+  destination_id: string;
+  title_en: string;
+  title_bn: string;
+  authority_name: string;
+  official_portal_url: string;
+  procedure_guide_url: string;
+  prerequisites_en?: unknown[];
+  prerequisites_bn?: unknown[];
+  link_health?: string;
+  fallback_instructions_en: string;
+  fallback_instructions_bn: string;
+}
+
 export interface ConsentCreate {
   purpose: string;
   policy_version: string;
@@ -188,6 +238,13 @@ export interface DeletionRequestOut {
   completed_at?: unknown;
 }
 
+export interface DocumentEditRequest {
+  document_type: string;
+  section_id: string;
+  sentence_id: string;
+  new_text: string;
+}
+
 export interface DocumentParseResult {
   evidence_id: string;
   page_count: number;
@@ -197,6 +254,22 @@ export interface DocumentParseResult {
   full_text?: string;
   quality_flags?: unknown[];
   page_dimensions?: unknown[];
+}
+
+export interface DocumentSectionAST {
+  section_id: string;
+  section_title_en: string;
+  section_title_bn: string;
+  sentences: unknown[];
+}
+
+export interface DocumentSentenceAST {
+  sentence_id: string;
+  text: string;
+  statement_type: string;
+  supporting_fact_id?: unknown;
+  supporting_citation?: unknown;
+  is_user_edited?: boolean;
 }
 
 export interface DraftRequestOut {
@@ -211,6 +284,25 @@ export interface DraftRequestOut {
   is_filed?: boolean;
   unsubmitted_banner_notice_en?: string;
   unsubmitted_banner_notice_bn?: string;
+  created_at: string;
+}
+
+export interface EditableDocumentAST {
+  document_id: string;
+  case_id: string;
+  document_type: string;
+  locale?: string;
+  title: string;
+  counterpart_name: string;
+  desired_remedy: string;
+  sections: unknown[];
+  evidence_index?: unknown[];
+  preparation_checklist?: unknown[];
+  unsubmitted_disclaimer_en?: string;
+  unsubmitted_disclaimer_bn?: string;
+  lifecycle_state?: string;
+  is_filed?: boolean;
+  is_sent?: boolean;
   created_at: string;
 }
 
@@ -467,6 +559,30 @@ export interface PipelineStageReceipt {
   details?: Record<string, unknown>;
 }
 
+export interface PortalFieldDef {
+  field_key: string;
+  label_en: string;
+  label_bn: string;
+  fact_source: string;
+  required?: boolean;
+  prepared_value?: unknown;
+  transformation?: unknown;
+  notes?: unknown;
+}
+
+export interface PortalFieldMapOut {
+  portal_id: string;
+  portal_name_en: string;
+  portal_name_bn: string;
+  official_destination_url: string;
+  map_version: string;
+  is_stale?: boolean;
+  stale_reason?: unknown;
+  fields: unknown[];
+  disclaimer_en?: string;
+  disclaimer_bn?: string;
+}
+
 export interface PrincipalOut {
   id: string;
   kind: string;
@@ -530,6 +646,10 @@ export interface ProvisionTreeItem {
   title_bn: string;
   section_number: string;
   children?: unknown[];
+}
+
+export interface RasterRedactionRequest {
+  bounding_boxes: unknown[];
 }
 
 export interface ReconciliationItem {

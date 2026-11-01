@@ -1,0 +1,194 @@
+from typing import Any
+
+from pydantic import BaseModel, ConfigDict
+
+
+class PortalFieldDef(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    field_key: str
+    label_en: str
+    label_bn: str
+    fact_source: str
+    required: bool = True
+    prepared_value: str | None = None
+    transformation: str | None = None
+    notes: str | None = None
+
+
+class PortalFieldMapOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    portal_id: str
+    portal_name_en: str
+    portal_name_bn: str
+    official_destination_url: str
+    map_version: str
+    is_stale: bool = False
+    stale_reason: str | None = None
+    fields: list[PortalFieldDef]
+    disclaimer_en: str = (
+        "Copy values per field into the verified official government portal. "
+        "ClaimCraft BD never asks for, enters, or stores portal credentials (T33)."
+    )
+    disclaimer_bn: str = (
+        "সরকারি অফিশিয়াল পোর্টালে ফিল্ড অনুযায়ী তথ্য কপি করে বসান। "
+        "ক্লেইমক্রাফট বিডি কখনোই আপনার পোর্টাল পাসওয়ার্ড চায় না বা স্বয়ংক্রিয়ভাবে প্রবেশ করে না (T33)।"
+    )
+
+
+PORTAL_MAP_REGISTRY: dict[str, dict[str, Any]] = {
+    "dncrp_ccms": {
+        "portal_id": "dncrp_ccms",
+        "portal_name_en": "DNCRP Central Complaint Management System (CCMS)",
+        "portal_name_bn": "ভোক্তা অধিকার সংরক্ষণ অধিদপ্তর সিসিএমএস পোর্টাল",
+        "official_destination_url": "https://ccms.dncrp.com/",
+        "map_version": "2026.1",
+        "is_stale": False,
+        "stale_reason": None,
+        "fields": [
+            {
+                "field_key": "opposite_party_name",
+                "label_en": "Opposite Party / Merchant Name",
+                "label_bn": "অভিযুক্ত প্রতিষ্ঠান / বিক্রেতার নাম",
+                "fact_source": "merchant_name",
+                "required": True,
+            },
+            {
+                "field_key": "incident_date",
+                "label_en": "Date of Occurrence",
+                "label_bn": "ঘটনার তারিখ",
+                "fact_source": "incident_date",
+                "required": True,
+            },
+            {
+                "field_key": "claim_amount_bdt",
+                "label_en": "Total Claim Amount (BDT)",
+                "label_bn": "দাবিকৃত অর্থের পরিমাণ (টাকা)",
+                "fact_source": "amount_paid",
+                "required": True,
+                "transformation": "minor_units_to_bdt",
+            },
+            {
+                "field_key": "brief_description",
+                "label_en": "Brief Description of Consumer Violation",
+                "label_bn": "অভিযোগের সংক্ষিপ্ত বিবরণ",
+                "fact_source": "story_narrative",
+                "required": True,
+            },
+            {
+                "field_key": "desired_relief",
+                "label_en": "Remedy Claimed (Section 76)",
+                "label_bn": "প্রার্থিত আইনানুগ প্রতিকার (৭৬ ধারা)",
+                "fact_source": "desired_outcomes",
+                "required": True,
+            },
+        ],
+    },
+    "bb_cipc": {
+        "portal_id": "bb_cipc",
+        "portal_name_en": "Bangladesh Bank Customer Interests Protection Centre (CIPC)",
+        "portal_name_bn": "বাংলাদেশ ব্যাংক সিআইপিসি অভিযোগ সেল",
+        "official_destination_url": "https://cms.bb.org.bd/ords/f?p=107%3A133%3A",
+        "map_version": "2026.1",
+        "is_stale": False,
+        "stale_reason": None,
+        "fields": [
+            {
+                "field_key": "provider_name",
+                "label_en": "MFS Provider / Bank Name",
+                "label_bn": "এমএফএস / ব্যাংক প্রোভাইডারের নাম",
+                "fact_source": "merchant_name",
+                "required": True,
+            },
+            {
+                "field_key": "provider_ticket_number",
+                "label_en": "Stage 1 Complaint Ticket Number",
+                "label_bn": "ধাপ ১ অভিযোগ ট্র্যাকিং টিকিট নম্বর",
+                "fact_source": "provider_ticket_number",
+                "required": True,
+                "notes": "Mandatory prior grievance reference (T20)",
+            },
+            {
+                "field_key": "disputed_transaction_id",
+                "label_en": "Transaction ID (TrxID)",
+                "label_bn": "ট্রানজেকশন আইডি (TrxID)",
+                "fact_source": "transaction_id",
+                "required": True,
+            },
+            {
+                "field_key": "disputed_amount_bdt",
+                "label_en": "Disputed Amount (BDT)",
+                "label_bn": "বিরোধপূর্ণ টাকার পরিমাণ",
+                "fact_source": "amount_paid",
+                "required": True,
+                "transformation": "minor_units_to_bdt",
+            },
+            {
+                "field_key": "grievance_narrative",
+                "label_en": "Detailed Chronology of Incident",
+                "label_bn": "ঘটনার বিস্তারিত বিবরণ",
+                "fact_source": "story_narrative",
+                "required": True,
+            },
+        ],
+    },
+}
+
+
+class PortalFieldMapService:
+    """P09.3 & T33: Prepares versioned portal field maps with reviewed fact mapping
+
+    and safe per-field copy. Stale map fallback supported.
+    """
+
+    @classmethod
+    def get_field_map(
+        cls,
+        portal_id: str,
+        case_data: dict[str, Any],
+        facts: dict[str, Any],
+    ) -> PortalFieldMapOut:
+        raw_map = PORTAL_MAP_REGISTRY.get(portal_id)
+        if not raw_map:
+            # Fallback to DNCRP CCMS
+            raw_map = PORTAL_MAP_REGISTRY["dncrp_ccms"]
+
+        fields_out: list[PortalFieldDef] = []
+        is_stale = raw_map.get("is_stale", False)
+
+        for f in raw_map["fields"]:
+            fact_src = f["fact_source"]
+            val = facts.get(fact_src) or case_data.get(fact_src)
+
+            prep_val = None
+            if not is_stale and val is not None:
+                if f.get("transformation") == "minor_units_to_bdt" and isinstance(val, int):
+                    prep_val = f"{val / 100:,.2f}"
+                elif isinstance(val, list):
+                    prep_val = ", ".join(str(x) for x in val)
+                else:
+                    prep_val = str(val)
+
+            fields_out.append(PortalFieldDef(
+                field_key=f["field_key"],
+                label_en=f["label_en"],
+                label_bn=f["label_bn"],
+                fact_source=f["fact_source"],
+                required=f.get("required", True),
+                prepared_value=prep_val,
+                transformation=f.get("transformation"),
+                notes=f.get("notes"),
+            ))
+
+        return PortalFieldMapOut(
+            portal_id=raw_map["portal_id"],
+            portal_name_en=raw_map["portal_name_en"],
+            portal_name_bn=raw_map["portal_name_bn"],
+            official_destination_url=raw_map["official_destination_url"],
+            map_version=raw_map["map_version"],
+            is_stale=is_stale,
+            stale_reason=raw_map.get("stale_reason"),
+            fields=fields_out,
+        )
+

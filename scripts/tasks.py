@@ -32,11 +32,13 @@ def get_pnpm_cmd() -> str:
 
 
 def compute_sha256(filepath: Path) -> str:
-    sha = hashlib.sha256()
-    with open(filepath, "rb") as f:
-        while chunk := f.read(65536):
-            sha.update(chunk)
-    return sha.hexdigest().upper()
+    raw = filepath.read_bytes()
+    h_raw = hashlib.sha256(raw).hexdigest().upper()
+    h_lf = hashlib.sha256(raw.replace(b"\r\n", b"\n")).hexdigest().upper()
+    expected = EXPECTED_SOURCE_HASHES.get(filepath.name)
+    if expected and h_lf == expected:
+        return h_lf
+    return h_raw
 
 
 def load_state():

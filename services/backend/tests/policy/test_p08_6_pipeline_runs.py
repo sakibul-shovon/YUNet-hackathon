@@ -60,3 +60,4 @@ async def test_p08_6_pipeline_runs_and_receipts_t53(client: AsyncClient, db_sess
 
     foreign_res = await client.get(f"/v1/cases/{case_id}/pipeline-runs", headers=foreign_headers)
     assert foreign_res.status_code == 404
+

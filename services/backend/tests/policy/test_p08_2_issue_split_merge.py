@@ -156,3 +156,4 @@ async def test_p08_2_multi_issue_independent_evaluation(client: AsyncClient, db_
     path_taxonomies = [p["canonical_taxonomy"] for p in multi_assess["independent_paths"]]
     assert "ecommerce_delivery_failure" in path_taxonomies
     assert "defective_goods" in path_taxonomies
+

@@ -95,3 +95,4 @@ async def test_p08_5_nbq_skip_preserves_unknown_t32(client: AsyncClient, db_sess
     # Verify that facts database does NOT have a false assertion created for the skipped question
     facts = (await client.get(f"/v1/cases/{case_id}/facts", headers=headers)).json()
     assert not any(f["field_name"] == q1["fact_field"] for f in facts)
+

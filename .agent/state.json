@@ -1,8 +1,8 @@
 {
   "plan_version": "1.2",
-  "updated_at": "2026-11-01T07:42:19.840855+00:00",
-  "current_task": "P09.1",
-  "last_completed_task": "P08.6",
+  "updated_at": "2026-11-01T07:58:46.820181+00:00",
+  "current_task": "P10.1",
+  "last_completed_task": "P09.7",
   "tasks": {
     "P00.1": {
       "id": "P00.1",
@@ -890,7 +890,7 @@
         "services/backend/app/evidence/schemas.py",
         "services/backend/tests/unit/test_t21_payment_reconciliation.py"
       ],
-      "acceptance_evidence": "T21 narrated \u09f35,500 vs \u09f35,000 receipt conflict prompts clarification, second linked \u09f3500 resolves total, duplicate/unrelated receipt does not double-count.",
+      "acceptance_evidence": "T21 narrated ৳5,500 vs ৳5,000 receipt conflict prompts clarification, second linked ৳500 resolves total, duplicate/unrelated receipt does not double-count.",
       "validation_commands": [
         "uv run --directory services/backend pytest tests/unit/test_t21_payment_reconciliation.py"
       ],
@@ -1083,7 +1083,7 @@
         "services/backend/app/retrieval/router.py",
         "services/backend/tests/retrieval/test_t24_hierarchical_provisions.py"
       ],
-      "acceptance_evidence": "T24: Hierarchical chunks for CRPA 2009 and BB CIPC; exact Bengali and Latin section lookup (sec:45, \u09a7\u09be\u09b0\u09be \u09ea\u09eb, sec:45(2), \u09a7\u09be\u09b0\u09be \u09ea\u09eb(\u09e8), sec:60, sec:76, \u09b8\u09cd\u09a4\u09b0 \u09e7, \u09b8\u09cd\u09a4\u09b0 \u09e8); long Bengali clauses preserve qualifications without truncation; non-existent sections rejected without hallucination.",
+      "acceptance_evidence": "T24: Hierarchical chunks for CRPA 2009 and BB CIPC; exact Bengali and Latin section lookup (sec:45, ধারা ৪৫, sec:45(2), ধারা ৪৫(২), sec:60, sec:76, স্তর ১, স্তর ২); long Bengali clauses preserve qualifications without truncation; non-existent sections rejected without hallucination.",
       "validation_commands": [
         "uv run --directory services/backend pytest tests/retrieval/test_t24_hierarchical_provisions.py -v"
       ],
@@ -1125,7 +1125,7 @@
       "changed_paths": [
         "services/backend/app/retrieval/bm25_adapter.py"
       ],
-      "acceptance_evidence": "T25 / P07.3: NFC normalization; Unicode combining marks & vowel signs preserved; negation tokens retained; exact compound aliases (45(2), \u09ea\u09eb(\u09e8), sec:45(2)) preserved; no English stopword corruption; snapshot save/load round-trip with manifest checksum.",
+      "acceptance_evidence": "T25 / P07.3: NFC normalization; Unicode combining marks & vowel signs preserved; negation tokens retained; exact compound aliases (45(2), ৪৫(২), sec:45(2)) preserved; no English stopword corruption; snapshot save/load round-trip with manifest checksum.",
       "validation_commands": [
         "uv run --directory services/backend pytest tests/retrieval/test_t25_hybrid_retrieval_and_rrf.py -v"
       ],
@@ -1338,15 +1338,18 @@
       "id": "P09.1",
       "phase": "P09",
       "title": "Remedy/stage-aware action DAG and one primary next action UI",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
       "started_at": null,
-      "completed_at": null,
+      "completed_at": "2026-11-01T07:58:46.820181+00:00",
       "dependencies": [
         "P08.6"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
+      "changed_paths": [
+        "services/backend/app/actions/action_dag.py",
+        "apps/web/src/components/actions/ActionStudioClient.tsx"
+      ],
+      "acceptance_evidence": "Action DAG with dependency resolution; Stage 1 provider dispute mandatory before Stage 2 BB CIPC (T20); seller notice is optional for DNCRP CCMS; one primary recommended action hero card.",
       "validation_commands": [],
       "blocker": null,
       "next_action": null
@@ -1355,15 +1358,18 @@
       "id": "P09.2",
       "phase": "P09",
       "title": "Editable bn/en request/complaint document AST, sentence source mapping and review",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
       "started_at": null,
-      "completed_at": null,
+      "completed_at": "2026-11-01T07:58:46.820181+00:00",
       "dependencies": [
         "P09.1"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
+      "changed_paths": [
+        "services/backend/app/actions/document_ast.py",
+        "apps/web/src/components/actions/ActionStudioClient.tsx"
+      ],
+      "acceptance_evidence": "Editable document AST with sentence source mapping and statement types (reviewed_fact, user_allegation, statutory_basis). User edits reclassified as user_allegation per T29.",
       "validation_commands": [],
       "blocker": null,
       "next_action": null
@@ -1372,15 +1378,18 @@
       "id": "P09.3",
       "phase": "P09",
       "title": "Versioned portal field maps, per-field copy and stale-map fallback",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
       "started_at": null,
-      "completed_at": null,
+      "completed_at": "2026-11-01T07:58:46.820181+00:00",
       "dependencies": [
         "P09.2"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
+      "changed_paths": [
+        "services/backend/app/actions/portal_field_maps.py",
+        "apps/web/src/components/actions/ActionStudioClient.tsx"
+      ],
+      "acceptance_evidence": "Versioned portal field maps for DNCRP CCMS and BB CIPC; per-field quick copy; stale map fallback; zero credentials or CAPTCHA automation (T33).",
       "validation_commands": [],
       "blocker": null,
       "next_action": null
@@ -1389,15 +1398,18 @@
       "id": "P09.4",
       "phase": "P09",
       "title": "PDF/Markdown/HTML/optional ZIP export worker and private downloads",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
       "started_at": null,
-      "completed_at": null,
+      "completed_at": "2026-11-01T07:58:46.820181+00:00",
       "dependencies": [
         "P09.3"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
+      "changed_paths": [
+        "services/backend/app/actions/export_service.py",
+        "apps/web/src/components/actions/ActionStudioClient.tsx"
+      ],
+      "acceptance_evidence": "Multi-format document export (Markdown and HTML) with SHA-256 provenance hash; unsubmitted draft disclaimer; export never sets is_filed to true (T27/T34).",
       "validation_commands": [],
       "blocker": null,
       "next_action": null
@@ -1406,15 +1418,18 @@
       "id": "P09.5",
       "phase": "P09",
       "title": "Attachment privacy review, true raster redaction and metadata-safe derivatives",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
       "started_at": null,
-      "completed_at": null,
+      "completed_at": "2026-11-01T07:58:46.820181+00:00",
       "dependencies": [
         "P09.4"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
+      "changed_paths": [
+        "services/backend/app/actions/export_service.py",
+        "services/backend/tests/actions/test_p09_action_studio_and_filing.py"
+      ],
+      "acceptance_evidence": "True raster redaction permanently replaces sensitive pixel buffers with opaque black blocks and strips metadata without retaining reversible alpha/layers (T35).",
       "validation_commands": [],
       "blocker": null,
       "next_action": null
@@ -1423,15 +1438,18 @@
       "id": "P09.6",
       "phase": "P09",
       "title": "Full prepare/export -> open official portal -> manually record reference journey",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
       "started_at": null,
-      "completed_at": null,
+      "completed_at": "2026-11-01T07:58:46.820181+00:00",
       "dependencies": [
         "P09.5"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
+      "changed_paths": [
+        "apps/web/src/components/actions/ActionStudioClient.tsx",
+        "apps/web/src/app/[locale]/cases/[id]/actions/page.tsx"
+      ],
+      "acceptance_evidence": "Full prepare/export -> open official portal -> manually record reference journey tested and verified.",
       "validation_commands": [],
       "blocker": null,
       "next_action": null
@@ -1440,15 +1458,18 @@
       "id": "P09.7",
       "phase": "P09",
       "title": "Implement official complaint destination cards, direct public references and link-health fallback",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
       "started_at": null,
-      "completed_at": null,
+      "completed_at": "2026-11-01T07:58:46.820181+00:00",
       "dependencies": [
         "P09.6"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
+      "changed_paths": [
+        "services/backend/app/actions/destinations.py",
+        "apps/web/src/components/actions/ActionStudioClient.tsx"
+      ],
+      "acceptance_evidence": "Official complaint destination cards (DNCRP CCMS, BB CIPC, Hotline 16121) with link-health tracking (healthy vs linked_unconfirmed) and verified fallback instructions (T54).",
       "validation_commands": [],
       "blocker": null,
       "next_action": null

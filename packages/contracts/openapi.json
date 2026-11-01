@@ -1961,10 +1961,461 @@
         }
       }
     },
+    "/v1/cases/{case_id}/actions/dag": {
+      "get": {
+        "tags": [
+          "Case Actions, Documents & Filing Companion"
+        ],
+        "summary": "Get Case Action Dag",
+        "description": "P09.1: Returns remedy and stage-aware action DAG with dependency and blocking explanations.",
+        "operationId": "get_case_action_dag_v1_cases__case_id__actions_dag_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionDAGOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/cases/{case_id}/documents/ast": {
+      "get": {
+        "tags": [
+          "Case Actions, Documents & Filing Companion"
+        ],
+        "summary": "Get Editable Document Ast",
+        "description": "P09.2: Generates editable document AST with sentence source mapping and fact/allegation tags.",
+        "operationId": "get_editable_document_ast_v1_cases__case_id__documents_ast_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "document_type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "dncrp_ccms_complaint",
+              "title": "Document Type"
+            }
+          },
+          {
+            "name": "locale",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "pattern": "^(en|bn)$",
+              "default": "en",
+              "title": "Locale"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EditableDocumentAST"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/cases/{case_id}/documents/edit": {
+      "post": {
+        "tags": [
+          "Case Actions, Documents & Filing Companion"
+        ],
+        "summary": "Edit Document Ast Sentence",
+        "description": "P09.2 & T29: Applies user edit to document AST; marks statement as user_allegation.",
+        "operationId": "edit_document_ast_sentence_v1_cases__case_id__documents_edit_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocumentEditRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EditableDocumentAST"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/cases/{case_id}/portals/{portal_id}/fields": {
+      "get": {
+        "tags": [
+          "Case Actions, Documents & Filing Companion"
+        ],
+        "summary": "Get Portal Field Map",
+        "description": "P09.3 & T33: Returns versioned official portal field map with per-field copy data.",
+        "operationId": "get_portal_field_map_v1_cases__case_id__portals__portal_id__fields_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "portal_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Portal Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PortalFieldMapOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/cases/{case_id}/export/{format_type}": {
+      "post": {
+        "tags": [
+          "Case Actions, Documents & Filing Companion"
+        ],
+        "summary": "Export Case Document",
+        "description": "P09.4 & T27: Exports dispute document as Markdown or HTML. Never marks case as filed.",
+        "operationId": "export_case_document_v1_cases__case_id__export__format_type__post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "format_type",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Format Type"
+            }
+          },
+          {
+            "name": "locale",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "pattern": "^(en|bn)$",
+              "default": "en",
+              "title": "Locale"
+            }
+          },
+          {
+            "name": "document_type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "dncrp_ccms_complaint",
+              "title": "Document Type"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CaseExportOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/cases/{case_id}/evidence/{evidence_id}/redact": {
+      "post": {
+        "tags": [
+          "Case Actions, Documents & Filing Companion"
+        ],
+        "summary": "Redact Evidence Attachment",
+        "description": "P09.5 & T35: True raster redaction permanently blacking out sensitive pixels in memory.",
+        "operationId": "redact_evidence_attachment_v1_cases__case_id__evidence__evidence_id__redact_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "evidence_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Evidence Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RasterRedactionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/actions/destinations": {
+      "get": {
+        "tags": [
+          "Case Actions, Documents & Filing Companion"
+        ],
+        "summary": "List Complaint Destinations",
+        "description": "P09.7 & T54: Lists official complaint destinations with link health and verified fallbacks.",
+        "operationId": "list_complaint_destinations_v1_actions_destinations_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ComplaintDestinationOut"
+                  },
+                  "type": "array",
+                  "title": "Response List Complaint Destinations V1 Actions Destinations Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/actions/destinations/{destination_id}": {
+      "get": {
+        "tags": [
+          "Case Actions, Documents & Filing Companion"
+        ],
+        "summary": "Get Complaint Destination",
+        "description": "P09.7 & T54: Returns details for an official complaint destination.",
+        "operationId": "get_complaint_destination_v1_actions_destinations__destination_id__get",
+        "parameters": [
+          {
+            "name": "destination_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Destination Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ComplaintDestinationOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v1/cases/{case_id}/draft": {
       "get": {
         "tags": [
-          "Case Actions & Drafts"
+          "Case Actions, Documents & Filing Companion"
         ],
         "summary": "Get Case Draft Request",
         "description": "T26: Generates a respectful, legally grounded, unsubmitted dispute request draft.",
@@ -5080,10 +5531,461 @@
         }
       }
     },
+    "/api/v1/cases/{case_id}/actions/dag": {
+      "get": {
+        "tags": [
+          "Case Actions, Documents & Filing Companion"
+        ],
+        "summary": "Get Case Action Dag",
+        "description": "P09.1: Returns remedy and stage-aware action DAG with dependency and blocking explanations.",
+        "operationId": "get_case_action_dag_api_v1_cases__case_id__actions_dag_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionDAGOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{case_id}/documents/ast": {
+      "get": {
+        "tags": [
+          "Case Actions, Documents & Filing Companion"
+        ],
+        "summary": "Get Editable Document Ast",
+        "description": "P09.2: Generates editable document AST with sentence source mapping and fact/allegation tags.",
+        "operationId": "get_editable_document_ast_api_v1_cases__case_id__documents_ast_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "document_type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "dncrp_ccms_complaint",
+              "title": "Document Type"
+            }
+          },
+          {
+            "name": "locale",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "pattern": "^(en|bn)$",
+              "default": "en",
+              "title": "Locale"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EditableDocumentAST"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{case_id}/documents/edit": {
+      "post": {
+        "tags": [
+          "Case Actions, Documents & Filing Companion"
+        ],
+        "summary": "Edit Document Ast Sentence",
+        "description": "P09.2 & T29: Applies user edit to document AST; marks statement as user_allegation.",
+        "operationId": "edit_document_ast_sentence_api_v1_cases__case_id__documents_edit_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocumentEditRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EditableDocumentAST"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{case_id}/portals/{portal_id}/fields": {
+      "get": {
+        "tags": [
+          "Case Actions, Documents & Filing Companion"
+        ],
+        "summary": "Get Portal Field Map",
+        "description": "P09.3 & T33: Returns versioned official portal field map with per-field copy data.",
+        "operationId": "get_portal_field_map_api_v1_cases__case_id__portals__portal_id__fields_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "portal_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Portal Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PortalFieldMapOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{case_id}/export/{format_type}": {
+      "post": {
+        "tags": [
+          "Case Actions, Documents & Filing Companion"
+        ],
+        "summary": "Export Case Document",
+        "description": "P09.4 & T27: Exports dispute document as Markdown or HTML. Never marks case as filed.",
+        "operationId": "export_case_document_api_v1_cases__case_id__export__format_type__post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "format_type",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Format Type"
+            }
+          },
+          {
+            "name": "locale",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "pattern": "^(en|bn)$",
+              "default": "en",
+              "title": "Locale"
+            }
+          },
+          {
+            "name": "document_type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "dncrp_ccms_complaint",
+              "title": "Document Type"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CaseExportOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{case_id}/evidence/{evidence_id}/redact": {
+      "post": {
+        "tags": [
+          "Case Actions, Documents & Filing Companion"
+        ],
+        "summary": "Redact Evidence Attachment",
+        "description": "P09.5 & T35: True raster redaction permanently blacking out sensitive pixels in memory.",
+        "operationId": "redact_evidence_attachment_api_v1_cases__case_id__evidence__evidence_id__redact_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "evidence_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Evidence Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RasterRedactionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/actions/destinations": {
+      "get": {
+        "tags": [
+          "Case Actions, Documents & Filing Companion"
+        ],
+        "summary": "List Complaint Destinations",
+        "description": "P09.7 & T54: Lists official complaint destinations with link health and verified fallbacks.",
+        "operationId": "list_complaint_destinations_api_v1_actions_destinations_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ComplaintDestinationOut"
+                  },
+                  "type": "array",
+                  "title": "Response List Complaint Destinations Api V1 Actions Destinations Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/actions/destinations/{destination_id}": {
+      "get": {
+        "tags": [
+          "Case Actions, Documents & Filing Companion"
+        ],
+        "summary": "Get Complaint Destination",
+        "description": "P09.7 & T54: Returns details for an official complaint destination.",
+        "operationId": "get_complaint_destination_api_v1_actions_destinations__destination_id__get",
+        "parameters": [
+          {
+            "name": "destination_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Destination Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ComplaintDestinationOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/cases/{case_id}/draft": {
       "get": {
         "tags": [
-          "Case Actions & Drafts"
+          "Case Actions, Documents & Filing Companion"
         ],
         "summary": "Get Case Draft Request",
         "description": "T26: Generates a respectful, legally grounded, unsubmitted dispute request draft.",
@@ -6306,6 +7208,121 @@
   },
   "components": {
     "schemas": {
+      "ActionDAGOut": {
+        "properties": {
+          "case_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Case Id"
+          },
+          "primary_action_id": {
+            "type": "string",
+            "title": "Primary Action Id"
+          },
+          "nodes": {
+            "items": {
+              "$ref": "#/components/schemas/ActionNode"
+            },
+            "type": "array",
+            "title": "Nodes"
+          },
+          "stage_hierarchy_explanation_en": {
+            "type": "string",
+            "title": "Stage Hierarchy Explanation En"
+          },
+          "stage_hierarchy_explanation_bn": {
+            "type": "string",
+            "title": "Stage Hierarchy Explanation Bn"
+          }
+        },
+        "type": "object",
+        "required": [
+          "case_id",
+          "primary_action_id",
+          "nodes",
+          "stage_hierarchy_explanation_en",
+          "stage_hierarchy_explanation_bn"
+        ],
+        "title": "ActionDAGOut"
+      },
+      "ActionNode": {
+        "properties": {
+          "action_id": {
+            "type": "string",
+            "title": "Action Id"
+          },
+          "title_en": {
+            "type": "string",
+            "title": "Title En"
+          },
+          "title_bn": {
+            "type": "string",
+            "title": "Title Bn"
+          },
+          "description_en": {
+            "type": "string",
+            "title": "Description En"
+          },
+          "description_bn": {
+            "type": "string",
+            "title": "Description Bn"
+          },
+          "action_type": {
+            "type": "string",
+            "title": "Action Type"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "blocking_reasons": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Blocking Reasons"
+          },
+          "prerequisite_actions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Prerequisite Actions"
+          },
+          "destination_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Destination Id"
+          },
+          "is_primary": {
+            "type": "boolean",
+            "title": "Is Primary",
+            "default": false
+          },
+          "is_mandatory": {
+            "type": "boolean",
+            "title": "Is Mandatory",
+            "default": true
+          }
+        },
+        "type": "object",
+        "required": [
+          "action_id",
+          "title_en",
+          "title_bn",
+          "description_en",
+          "description_bn",
+          "action_type",
+          "status"
+        ],
+        "title": "ActionNode"
+      },
       "AssessmentRouteOut": {
         "properties": {
           "route_id": {
@@ -6650,6 +7667,66 @@
         ],
         "title": "CaseEventOut"
       },
+      "CaseExportOut": {
+        "properties": {
+          "export_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Export Id"
+          },
+          "case_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Case Id"
+          },
+          "format": {
+            "type": "string",
+            "title": "Format"
+          },
+          "document_title": {
+            "type": "string",
+            "title": "Document Title"
+          },
+          "content": {
+            "type": "string",
+            "title": "Content"
+          },
+          "sha256_hash": {
+            "type": "string",
+            "title": "Sha256 Hash"
+          },
+          "disclaimer_notice": {
+            "type": "string",
+            "title": "Disclaimer Notice",
+            "default": "PREPARATION MATERIAL ONLY \u2014 NOT SUBMITTED BY CLAIMCRAFT BD. Generating or downloading this document does not constitute official submission (T27)."
+          },
+          "is_filed": {
+            "type": "boolean",
+            "title": "Is Filed",
+            "default": false
+          },
+          "is_sent": {
+            "type": "boolean",
+            "title": "Is Sent",
+            "default": false
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "export_id",
+          "case_id",
+          "format",
+          "document_title",
+          "content",
+          "sha256_hash",
+          "created_at"
+        ],
+        "title": "CaseExportOut"
+      },
       "CaseListOut": {
         "properties": {
           "items": {
@@ -6987,6 +8064,73 @@
         ],
         "title": "CitationValidationResponse"
       },
+      "ComplaintDestinationOut": {
+        "properties": {
+          "destination_id": {
+            "type": "string",
+            "title": "Destination Id"
+          },
+          "title_en": {
+            "type": "string",
+            "title": "Title En"
+          },
+          "title_bn": {
+            "type": "string",
+            "title": "Title Bn"
+          },
+          "authority_name": {
+            "type": "string",
+            "title": "Authority Name"
+          },
+          "official_portal_url": {
+            "type": "string",
+            "title": "Official Portal Url"
+          },
+          "procedure_guide_url": {
+            "type": "string",
+            "title": "Procedure Guide Url"
+          },
+          "prerequisites_en": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Prerequisites En"
+          },
+          "prerequisites_bn": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Prerequisites Bn"
+          },
+          "link_health": {
+            "type": "string",
+            "title": "Link Health",
+            "default": "healthy"
+          },
+          "fallback_instructions_en": {
+            "type": "string",
+            "title": "Fallback Instructions En"
+          },
+          "fallback_instructions_bn": {
+            "type": "string",
+            "title": "Fallback Instructions Bn"
+          }
+        },
+        "type": "object",
+        "required": [
+          "destination_id",
+          "title_en",
+          "title_bn",
+          "authority_name",
+          "official_portal_url",
+          "procedure_guide_url",
+          "fallback_instructions_en",
+          "fallback_instructions_bn"
+        ],
+        "title": "ComplaintDestinationOut"
+      },
       "ConsentCreate": {
         "properties": {
           "purpose": {
@@ -7209,6 +8353,34 @@
         ],
         "title": "DeletionRequestOut"
       },
+      "DocumentEditRequest": {
+        "properties": {
+          "document_type": {
+            "type": "string",
+            "title": "Document Type"
+          },
+          "section_id": {
+            "type": "string",
+            "title": "Section Id"
+          },
+          "sentence_id": {
+            "type": "string",
+            "title": "Sentence Id"
+          },
+          "new_text": {
+            "type": "string",
+            "title": "New Text"
+          }
+        },
+        "type": "object",
+        "required": [
+          "document_type",
+          "section_id",
+          "sentence_id",
+          "new_text"
+        ],
+        "title": "DocumentEditRequest"
+      },
       "DocumentParseResult": {
         "properties": {
           "evidence_id": {
@@ -7264,6 +8436,88 @@
           "ocr_applied"
         ],
         "title": "DocumentParseResult"
+      },
+      "DocumentSectionAST": {
+        "properties": {
+          "section_id": {
+            "type": "string",
+            "title": "Section Id"
+          },
+          "section_title_en": {
+            "type": "string",
+            "title": "Section Title En"
+          },
+          "section_title_bn": {
+            "type": "string",
+            "title": "Section Title Bn"
+          },
+          "sentences": {
+            "items": {
+              "$ref": "#/components/schemas/DocumentSentenceAST"
+            },
+            "type": "array",
+            "title": "Sentences"
+          }
+        },
+        "type": "object",
+        "required": [
+          "section_id",
+          "section_title_en",
+          "section_title_bn",
+          "sentences"
+        ],
+        "title": "DocumentSectionAST"
+      },
+      "DocumentSentenceAST": {
+        "properties": {
+          "sentence_id": {
+            "type": "string",
+            "title": "Sentence Id"
+          },
+          "text": {
+            "type": "string",
+            "title": "Text"
+          },
+          "statement_type": {
+            "type": "string",
+            "title": "Statement Type"
+          },
+          "supporting_fact_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Supporting Fact Id"
+          },
+          "supporting_citation": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Supporting Citation"
+          },
+          "is_user_edited": {
+            "type": "boolean",
+            "title": "Is User Edited",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "sentence_id",
+          "text",
+          "statement_type"
+        ],
+        "title": "DocumentSentenceAST"
       },
       "DraftRequestOut": {
         "properties": {
@@ -7334,6 +8588,104 @@
           "created_at"
         ],
         "title": "DraftRequestOut"
+      },
+      "EditableDocumentAST": {
+        "properties": {
+          "document_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Document Id"
+          },
+          "case_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Case Id"
+          },
+          "document_type": {
+            "type": "string",
+            "title": "Document Type"
+          },
+          "locale": {
+            "type": "string",
+            "title": "Locale",
+            "default": "en"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "counterpart_name": {
+            "type": "string",
+            "title": "Counterpart Name"
+          },
+          "desired_remedy": {
+            "type": "string",
+            "title": "Desired Remedy"
+          },
+          "sections": {
+            "items": {
+              "$ref": "#/components/schemas/DocumentSectionAST"
+            },
+            "type": "array",
+            "title": "Sections"
+          },
+          "evidence_index": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Evidence Index"
+          },
+          "preparation_checklist": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Preparation Checklist"
+          },
+          "unsubmitted_disclaimer_en": {
+            "type": "string",
+            "title": "Unsubmitted Disclaimer En",
+            "default": "PREPARATION MATERIAL ONLY \u2014 NOT SUBMITTED BY CLAIMCRAFT BD. Review carefully and file personally via official portal or merchant contact."
+          },
+          "unsubmitted_disclaimer_bn": {
+            "type": "string",
+            "title": "Unsubmitted Disclaimer Bn",
+            "default": "\u09b6\u09c1\u09a7\u09c1\u09ae\u09be\u09a4\u09cd\u09b0 \u09aa\u09cd\u09b0\u09b8\u09cd\u09a4\u09c1\u09a4\u09bf\u09b0 \u0996\u09b8\u09dc\u09be \u2014 \u0995\u09cd\u09b2\u09c7\u0987\u09ae\u0995\u09cd\u09b0\u09be\u09ab\u099f \u09ac\u09bf\u09a1\u09bf \u0995\u09b0\u09cd\u09a4\u09c3\u0995 \u09a6\u09be\u0996\u09bf\u09b2\u0995\u09c3\u09a4 \u09a8\u09df\u0964 \u09ac\u09cd\u09af\u0995\u09cd\u09a4\u09bf\u0997\u09a4\u09ad\u09be\u09ac\u09c7 \u09aa\u09b0\u09cd\u09af\u09be\u09b2\u09cb\u099a\u09a8\u09be \u0995\u09b0\u09c7 \u09b8\u09cd\u09ac\u09df\u0982 \u0985\u09ab\u09bf\u09b6\u09bf\u09df\u09be\u09b2 \u09aa\u09cb\u09b0\u09cd\u099f\u09be\u09b2 \u09ac\u09be \u09ac\u09bf\u0995\u09cd\u09b0\u09c7\u09a4\u09be\u09b0 \u09a8\u09bf\u0995\u099f \u09a6\u09be\u0996\u09bf\u09b2 \u0995\u09b0\u09c1\u09a8\u0964"
+          },
+          "lifecycle_state": {
+            "type": "string",
+            "title": "Lifecycle State",
+            "default": "unsubmitted_draft"
+          },
+          "is_filed": {
+            "type": "boolean",
+            "title": "Is Filed",
+            "default": false
+          },
+          "is_sent": {
+            "type": "boolean",
+            "title": "Is Sent",
+            "default": false
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "document_id",
+          "case_id",
+          "document_type",
+          "title",
+          "counterpart_name",
+          "desired_remedy",
+          "sections",
+          "created_at"
+        ],
+        "title": "EditableDocumentAST"
       },
       "EvidenceItemOut": {
         "properties": {
@@ -8728,6 +10080,139 @@
         ],
         "title": "PipelineStageReceipt"
       },
+      "PortalFieldDef": {
+        "properties": {
+          "field_key": {
+            "type": "string",
+            "title": "Field Key"
+          },
+          "label_en": {
+            "type": "string",
+            "title": "Label En"
+          },
+          "label_bn": {
+            "type": "string",
+            "title": "Label Bn"
+          },
+          "fact_source": {
+            "type": "string",
+            "title": "Fact Source"
+          },
+          "required": {
+            "type": "boolean",
+            "title": "Required",
+            "default": true
+          },
+          "prepared_value": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Prepared Value"
+          },
+          "transformation": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Transformation"
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notes"
+          }
+        },
+        "type": "object",
+        "required": [
+          "field_key",
+          "label_en",
+          "label_bn",
+          "fact_source"
+        ],
+        "title": "PortalFieldDef"
+      },
+      "PortalFieldMapOut": {
+        "properties": {
+          "portal_id": {
+            "type": "string",
+            "title": "Portal Id"
+          },
+          "portal_name_en": {
+            "type": "string",
+            "title": "Portal Name En"
+          },
+          "portal_name_bn": {
+            "type": "string",
+            "title": "Portal Name Bn"
+          },
+          "official_destination_url": {
+            "type": "string",
+            "title": "Official Destination Url"
+          },
+          "map_version": {
+            "type": "string",
+            "title": "Map Version"
+          },
+          "is_stale": {
+            "type": "boolean",
+            "title": "Is Stale",
+            "default": false
+          },
+          "stale_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Stale Reason"
+          },
+          "fields": {
+            "items": {
+              "$ref": "#/components/schemas/PortalFieldDef"
+            },
+            "type": "array",
+            "title": "Fields"
+          },
+          "disclaimer_en": {
+            "type": "string",
+            "title": "Disclaimer En",
+            "default": "Copy values per field into the verified official government portal. ClaimCraft BD never asks for, enters, or stores portal credentials (T33)."
+          },
+          "disclaimer_bn": {
+            "type": "string",
+            "title": "Disclaimer Bn",
+            "default": "\u09b8\u09b0\u0995\u09be\u09b0\u09bf \u0985\u09ab\u09bf\u09b6\u09bf\u09df\u09be\u09b2 \u09aa\u09cb\u09b0\u09cd\u099f\u09be\u09b2\u09c7 \u09ab\u09bf\u09b2\u09cd\u09a1 \u0985\u09a8\u09c1\u09af\u09be\u09df\u09c0 \u09a4\u09a5\u09cd\u09af \u0995\u09aa\u09bf \u0995\u09b0\u09c7 \u09ac\u09b8\u09be\u09a8\u0964 \u0995\u09cd\u09b2\u09c7\u0987\u09ae\u0995\u09cd\u09b0\u09be\u09ab\u099f \u09ac\u09bf\u09a1\u09bf \u0995\u0996\u09a8\u09cb\u0987 \u0986\u09aa\u09a8\u09be\u09b0 \u09aa\u09cb\u09b0\u09cd\u099f\u09be\u09b2 \u09aa\u09be\u09b8\u0993\u09df\u09be\u09b0\u09cd\u09a1 \u099a\u09be\u09df \u09a8\u09be \u09ac\u09be \u09b8\u09cd\u09ac\u09df\u0982\u0995\u09cd\u09b0\u09bf\u09df\u09ad\u09be\u09ac\u09c7 \u09aa\u09cd\u09b0\u09ac\u09c7\u09b6 \u0995\u09b0\u09c7 \u09a8\u09be (T33)\u0964"
+          }
+        },
+        "type": "object",
+        "required": [
+          "portal_id",
+          "portal_name_en",
+          "portal_name_bn",
+          "official_destination_url",
+          "map_version",
+          "fields"
+        ],
+        "title": "PortalFieldMapOut"
+      },
       "PrincipalOut": {
         "properties": {
           "id": {
@@ -9103,6 +10588,26 @@
           "section_number"
         ],
         "title": "ProvisionTreeItem"
+      },
+      "RasterRedactionRequest": {
+        "properties": {
+          "bounding_boxes": {
+            "items": {
+              "additionalProperties": {
+                "type": "integer"
+              },
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Bounding Boxes",
+            "description": "List of pixel coordinate boxes to permanently overwrite: [{'x': 10, 'y': 20, 'w': 100, 'h': 40}]"
+          }
+        },
+        "type": "object",
+        "required": [
+          "bounding_boxes"
+        ],
+        "title": "RasterRedactionRequest"
       },
       "ReconciliationItem": {
         "properties": {

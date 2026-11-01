@@ -10,11 +10,12 @@
   - **P05 (Secure Evidence Vault & Provenance Graph):** 100% COMPLETE & VERIFIED (`f2b371aa607d1f1fd3261cecb754c0e783fe3600`)
   - **P06 (Multimodal Case Compiler):** 100% COMPLETE & VERIFIED (`3014eff5edc0b7248e3a960f611d9c061b99f382`)
   - **P07 (Genuine Hybrid Retrieval & Exact Citations):** 100% COMPLETE & VERIFIED (`1129970e554268f7fe2ffe8575009fa6450b1a5b`)
-  - **P08 (Complete Proof-to-Path and Multi-Issue Reasoning):** 100% COMPLETE & VERIFIED
-- **Active Phase:** P09 (Action studio, filing companion and export)
-- **Active Task:** P09.1 (Remedy/stage-aware action DAG and one primary next action UI)
-- **Last Completed Task:** P08.6 (Build owner-scoped Processing details/How this result was built view plus public Technology explanation)
-- **Required Tasks Progress:** 51 / 86 (59.3% complete, 0 blocked)
+  - **P08 (Complete Proof-to-Path and Multi-Issue Reasoning):** 100% COMPLETE & VERIFIED (`5779d8e7dc492bd7c13041eea11bed3b40f5c8dd`)
+  - **P09 (Action Studio, Filing Companion and Export):** 100% COMPLETE & VERIFIED
+- **Active Phase:** P10 (Living Case, follow-up and decision changes)
+- **Active Task:** P10.1 (User-reported response/submission/outcome update UI and private references)
+- **Last Completed Task:** P09.7 (Implement official complaint destination cards, direct public references and link-health fallback)
+- **Required Tasks Progress:** 58 / 86 (67.4% complete, 0 blocked)
 - **Phase Delivery History:**
   - P00 SHA: `9701af14cd10c25e4b6f0b0d0c6a8924da73ff82` (Verified on `origin/main`)
   - P01 SHA: `5472bb63612157ded81cca5e3fef9763e4ec0f27` (Verified on `origin/main`)
@@ -25,42 +26,42 @@
   - P06 SHA: `3014eff5edc0b7248e3a960f611d9c061b99f382` (Verified on `origin/main`)
   - P07 SHA: `1129970e554268f7fe2ffe8575009fa6450b1a5b` (Verified on `origin/main`)
   - P08 SHA: `5779d8e7dc492bd7c13041eea11bed3b40f5c8dd` (Verified on `origin/main`)
+  - P09 SHA: *(Pending commit & push)*
 
 ## What Works
-- **Phase P08 (Proof-to-Path Engine & Multi-Issue Reasoning):**
-  - **P08.1 Shopping/Finance/Safety Rule Packs & Date Handling (T17–T20, T30):**
-    - Updated rule packs: `ecommerce_delivery_failure.yaml`, `defective_goods.yaml`, `mfs_unauthorized_charge.yaml`, `product_safety_hazard.yaml`.
-    - Exact statutory citations attached: `crpa2009:sec:45`, `crpa2009:sec:60`, `crpa2009:sec:76`, `bb_cipc:stage:1 & 2`.
-    - T30 Invariant: Date uncertainty withholds definitive limitation timer and issues limitation caution ("Cause-of-action or incident date is unverified; exact 30-day statutory cutoff under Section 60 cannot be definitively determined").
-    - Verified date limitation calculation: accurately computes remaining days within 30-day filing period or flags condonation requirement if expired.
-    - Unsupported remedy checking: flags unsupported remedies (e.g., direct criminal prosecution or treble punitive damages).
-  - **P08.2 Issue Split/Merge & Multi-Issue Decomposition:**
-    - `services/backend/app/cases/issue_service.py` & `issue_router.py`:
-      - `POST /v1/cases/{case_id}/issues/split`: splits an issue into distinct sub-issues (e.g. non-delivery of Item A vs defect in Item B).
-      - `POST /v1/cases/{case_id}/issues/merge`: merges sub-issues back into one consolidated track.
-      - Brand-only false track rejection: non-actionable complaints (`brand_reputation`, `seller_criticism`) without statutory breach are automatically rejected.
-      - `GET /v1/cases/{case_id}/issues/assessment`: evaluates each active issue track independently.
-  - **P08.3 Why/Why-Not Paths UI with Actual Condition Traces:**
-    - `apps/web/src/components/paths/WhyWhyNotTraceView.tsx`: interactive client component replacing static mocks in `/[locale]/cases/[id]/paths`.
-    - Inspectable condition trace: reveals exact node type, fact, inspected value, outcome (TRUE, FALSE, UNKNOWN), details, and citation links.
-  - **P08.4 What-If Simulation Service & Drawer (T31):**
-    - `POST /v1/cases/{case_id}/what-if`: in-memory simulation with zero persistent DB changes, zero row version bumps, and zero outbox events.
-    - Material vs irrelevant counterfactual comparison: diff identifies exact route state transitions.
-    - `POST /v1/cases/{case_id}/what-if/apply`: explicit adoption workflow committing verified facts.
-    - `apps/web/src/components/paths/WhatIfDrawer.tsx`: interactive sliding drawer.
-  - **P08.5 NBQ Selection & Safety Priority (T32):**
-    - Emergency product hazard question (`product_presents_immediate_hazard`) prioritized before commercial/financial questions.
-    - Strict prohibition on collecting OTP, PIN, password, CVV (rejects with HTTP 400).
-    - `POST /v1/cases/{case_id}/nbq/skip`: skipping preserves UNKNOWN status (never coerced to false) and prevents repetitive prompting.
-  - **P08.6 Processing Details & Technology Manifest (T53):**
-    - `GET /v1/cases/{case_id}/pipeline-runs`: durable actual execution receipts with truthful status (`completed`, `not_applicable`, `skipped`).
-    - `apps/web/src/components/cases/ProcessingDetailsDrawer.tsx`: execution receipt drawer.
-    - `apps/web/src/app/[locale]/technology/page.tsx`: public architecture & security invariants manifest.
+- **Phase P09 (Action Studio, Filing Companion and Export):**
+  - **P09.1 Action DAG & One Primary Next Action UI:**
+    - `services/backend/app/actions/action_dag.py`: Action DAG service enforcing dependency resolution, mandatory Stage 1 provider grievance before Central Bank escalation (T20), and non-forced optional seller messages for DNCRP CCMS complaints.
+    - Status transitions: `ready`, `blocked`, `optional`, `completed`.
+  - **P09.2 Editable Document AST & Sentence Verification (T26, T29):**
+    - `services/backend/app/actions/document_ast.py`: Generates structured document AST with sentence-level source provenance.
+    - Statement types: `reviewed_fact` (verified evidence), `user_allegation` (unverified claim), `statutory_basis` (legal citations).
+    - T29 Invariant: Material edits by consumer via `/v1/cases/{case_id}/documents/edit` are classified as `user_allegation` and clear verified provenance links.
+    - T26 Invariant: Document lifecycle strictly remains `unsubmitted_draft`; `is_filed` and `is_sent` remain False.
+  - **P09.3 Versioned Portal Field Maps & Stale-Map Fallback (T33):**
+    - `services/backend/app/actions/portal_field_maps.py`: Versioned field maps for DNCRP CCMS (`dncrp_ccms`) and Bangladesh Bank CIPC (`bb_cipc`).
+    - BDT currency transformations, evidence notes, and stale-map fallback.
+    - T33 Invariant: Zero credentials, passwords, or CAPTCHA automation requested or exposed.
+  - **P09.4 Multi-Format Document Export & Downloads (T27, T34):**
+    - `services/backend/app/actions/export_service.py`: Generates Markdown and HTML exports with cryptographic SHA-256 provenance hash.
+    - Prominent unsubmitted draft disclaimer in English and Bangla.
+    - T27 Invariant: Export or download never marks `lifecycle_status` as `filed`.
+  - **P09.5 Attachment Privacy Review & True Raster Redaction (T35):**
+    - `POST /v1/cases/{case_id}/evidence/{evidence_id}/redact`: Permanently draws solid black opaque boxes directly over image pixel buffers and strips all EXIF metadata.
+    - Irreversible pixel destruction verified by buffer analysis.
+  - **P09.6 Full Prepare/Export to Official Portal Journey (T27, T33):**
+    - Consumer can review facts, edit draft, copy per-field values, export document, and access official government portals with clear unsubmitted boundaries.
+  - **P09.7 Official Complaint Destination Cards & Link Health (T54):**
+    - `services/backend/app/actions/destinations.py`: Verified registry of official dispute destinations (`dncrp_ccms_portal`, `bb_cipc_portal`, `dncrp_hotline_16121`).
+    - Link health monitoring (`healthy` vs `linked_unconfirmed`) with verified email and phone fallback routes.
+  - **Action Studio Web UI:**
+    - `apps/web/src/components/actions/ActionStudioClient.tsx`: Interactive multi-tab studio integrated directly into `/[locale]/cases/[id]/actions`.
+    - Bilingual parity across 187 keys with 100% English and Bangla parity.
 
 ## Test Evidence
-- `python scripts/tasks.py check --scope foundation`: PASSED (1:1 i18n parity verified across 162 message keys, Ruff lint clean, Next.js build clean across 23 routes).
-- `python scripts/tasks.py check --scope core`: PASSED (99/99 pytest tests passing across integration, multimodal, policy, retrieval, security, and unit suites).
+- `python scripts/tasks.py check --scope foundation`: PASSED (1:1 i18n parity verified across 187 message keys, Ruff lint clean, Next.js build clean across 23 routes).
+- `python scripts/tasks.py check --scope core`: PASSED (106/106 pytest tests passing across actions, integration, multimodal, policy, retrieval, security, and unit suites).
 - `python scripts/tasks.py contracts`: PASSED (OpenAPI schema & TypeScript contracts updated and verified).
 
 ## Next Action
-- Stage Phase P08 deliverables, commit (`feat(P08): complete Proof-to-Path engine, multi-issue reasoning, why-why-not traces, what-if simulation, and pipeline receipts`), push to GitHub `origin main`, verify remote commit receipt, and immediately proceed with Phase P09 (Action studio, filing companion and export).
+- Stage Phase P09 deliverables, commit (`feat(P09): complete action studio, editable document AST, filing companion, multi-format export, and destination cards`), push to GitHub `origin main`, verify remote commit receipt, and immediately proceed with Phase P10 (Living Case, follow-up and decision changes).

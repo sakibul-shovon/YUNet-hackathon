@@ -117,3 +117,4 @@ async def test_p08_1_unsupported_remedy_checking(client: AsyncClient, db_session
     assert "criminal_prosecution_direct" in delivery_route["unsupported_remedies"]
     assert len(delivery_route["unsupported_remedy_warnings"]) > 0
     assert "criminal_prosecution_direct" in delivery_route["unsupported_remedy_warnings"][0]
+
