@@ -12,7 +12,7 @@
   - **P07 (Genuine Hybrid Retrieval & Exact Citations):** 100% COMPLETE & VERIFIED (`1129970e554268f7fe2ffe8575009fa6450b1a5b`)
   - **P08 (Complete Proof-to-Path and Multi-Issue Reasoning):** 100% COMPLETE & VERIFIED (`5779d8e7dc492bd7c13041eea11bed3b40f5c8dd`)
   - **P09 (Action Studio, Filing Companion and Export):** 100% COMPLETE & VERIFIED (`229cc5c97d4097b58cea9e36370dd7020b40ac2d`)
-  - **P10 (Living Case, Follow-Up and Decision Changes):** 100% COMPLETE & VERIFIED
+  - **P10 (Living Case, Follow-Up and Decision Changes):** 100% COMPLETE & VERIFIED (`c9a5d01c35ee3951bbebb3bd640d1be3163b1ea7`)
 - **Active Phase:** P11 (Monitored official updates and safe release operations) & P06.6
 - **Active Task:** P11.1 (Tested watchers for official listing/direct sources, permissions/cadence and manual-import fallback)
 - **Last Completed Task:** P10.5 (Resume stale tab, race cancellation and returning guest upgrade experience)
@@ -28,7 +28,7 @@
   - P07 SHA: `1129970e554268f7fe2ffe8575009fa6450b1a5b` (Verified on `origin/main`)
   - P08 SHA: `5779d8e7dc492bd7c13041eea11bed3b40f5c8dd` (Verified on `origin/main`)
   - P09 SHA: `229cc5c97d4097b58cea9e36370dd7020b40ac2d` (Verified on `origin/main`)
-  - P10 SHA: *(Pending commit & push)*
+  - P10 SHA: `c9a5d01c35ee3951bbebb3bd640d1be3163b1ea7` (Verified on `origin/main`)
 
 ## What Works
 - **Phase P10 (Living Case, Follow-Up and Decision Changes):**
