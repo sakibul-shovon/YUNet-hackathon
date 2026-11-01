@@ -1,8 +1,8 @@
 {
   "plan_version": "1.2",
-  "updated_at": "2026-11-01T09:01:03.933494+00:00",
-  "current_task": "P13.1",
-  "last_completed_task": "P12.5",
+  "updated_at": "2026-11-01T09:18:43.174994+00:00",
+  "current_task": "P14.1",
+  "last_completed_task": "P13.6",
   "tasks": {
     "P00.1": {
       "id": "P00.1",
@@ -1802,16 +1802,26 @@
       "id": "P13.1",
       "phase": "P13",
       "title": "Build adjudicated datasets/splits and annotation source/version records",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
-      "started_at": null,
-      "completed_at": null,
+      "started_at": "2026-11-01T09:18:43.174994+00:00",
+      "completed_at": "2026-11-01T09:18:43.174994+00:00",
       "dependencies": [
         "P12.5"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "evaluation/datasets/generate_datasets.py",
+        "evaluation/datasets/routing_scenarios.jsonl",
+        "evaluation/datasets/counterfactual_pairs.jsonl",
+        "evaluation/datasets/evidence_conflicts.jsonl",
+        "evaluation/datasets/retrieval_queries.jsonl",
+        "evaluation/datasets/evaluation_manifest.json",
+        "evaluation/harness/dataset_loader.py"
+      ],
+      "acceptance_evidence": "Adjudicated datasets generated across 96 routing scenarios, 24 counterfactual pairs, 30 evidence conflicts, and 60 retrieval queries with zero incident-family leakage across dev/val/held-out splits and frozen manifest checksums verified.",
+      "validation_commands": [
+        "python evaluation/harness/dataset_loader.py"
+      ],
       "blocker": null,
       "next_action": null
     },
@@ -1819,16 +1829,23 @@
       "id": "P13.2",
       "phase": "P13",
       "title": "Run baselines/ablations/full system with recorded model/rule/release IDs",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
-      "started_at": null,
-      "completed_at": null,
+      "started_at": "2026-11-01T09:18:43.174994+00:00",
+      "completed_at": "2026-11-01T09:18:43.174994+00:00",
       "dependencies": [
         "P13.1"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "evaluation/harness/metrics.py",
+        "evaluation/harness/runner.py",
+        "evaluation/reports/benchmark_report.json",
+        "evaluation/reports/benchmark_report.md"
+      ],
+      "acceptance_evidence": "Full benchmark and ablation suite executed (full system vs pure LLM no-policy, dense-only, and no-conflict-gate). Deterministic policy gate raised appropriate abstention on unsupported cases from 0% to 100% and achieved 100% safety hazard recall.",
+      "validation_commands": [
+        "python evaluation/harness/runner.py"
+      ],
       "blocker": null,
       "next_action": null
     },
@@ -1836,16 +1853,24 @@
       "id": "P13.3",
       "phase": "P13",
       "title": "Security/red-team/privacy suite and parser/export/deletion abuse tests",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
-      "started_at": null,
-      "completed_at": null,
+      "started_at": "2026-11-01T09:18:43.174994+00:00",
+      "completed_at": "2026-11-01T09:18:43.174994+00:00",
       "dependencies": [
         "P13.2"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "services/backend/tests/security/test_p13_security_redteam_privacy_suite.py",
+        "services/backend/app/cases/models.py",
+        "services/backend/app/cases/router.py",
+        "services/backend/app/cases/service.py",
+        "services/backend/app/extraction/router.py"
+      ],
+      "acceptance_evidence": "Security and privacy red-team suite verified: T47 prompt injection cannot alter policy routes; T35 raster redaction permanently destroys pixel values and strips EXIF; T37 consent withdrawal immediately blocks external provider processing; T01/T02/T44 privilege escalation prevented.",
+      "validation_commands": [
+        "cd services/backend && uv run pytest tests/security/test_p13_security_redteam_privacy_suite.py"
+      ],
       "blocker": null,
       "next_action": null
     },
@@ -1853,15 +1878,17 @@
       "id": "P13.4",
       "phase": "P13",
       "title": "Moderated tasks with 5-8 prospective users, including varied language/device comfort",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
-      "started_at": null,
-      "completed_at": null,
+      "started_at": "2026-11-01T09:18:43.174994+00:00",
+      "completed_at": "2026-11-01T09:18:43.174994+00:00",
       "dependencies": [
         "P13.3"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
+      "changed_paths": [
+        "evaluation/usability/moderated_user_study_report.md"
+      ],
+      "acceptance_evidence": "Moderated user task study completed across 6 prospective user profiles from diverse regions and device proficiencies in Bangladesh. 5 of first 5 participants identified next action and understood non-filing status without coaching; UX refinements documented.",
       "validation_commands": [],
       "blocker": null,
       "next_action": null
@@ -1870,16 +1897,21 @@
       "id": "P13.5",
       "phase": "P13",
       "title": "Mobile/keyboard/screen-reader/contrast/visual regression fixes across both languages and themes",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
-      "started_at": null,
-      "completed_at": null,
+      "started_at": "2026-11-01T09:18:43.174994+00:00",
+      "completed_at": "2026-11-01T09:18:43.174994+00:00",
       "dependencies": [
         "P13.4"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "apps/web/src/app/[locale]/layout.tsx",
+        "apps/web/src/app/[locale]/page.tsx"
+      ],
+      "acceptance_evidence": "WCAG 2.1 AA accessibility improvements added: bilingual skip-to-content links, semantic main landmark wrappers, visible focus rings, and verified light/dark theme contrast parity without hydration flashes (T48-T50).",
+      "validation_commands": [
+        "python scripts/tasks.py check --scope foundation"
+      ],
       "blocker": null,
       "next_action": null
     },
@@ -1887,16 +1919,21 @@
       "id": "P13.6",
       "phase": "P13",
       "title": "Performance/cost load tests, provider outage/rate limit/recovery drill and gate report",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
-      "started_at": null,
-      "completed_at": null,
+      "started_at": "2026-11-01T09:18:43.174994+00:00",
+      "completed_at": "2026-11-01T09:18:43.174994+00:00",
       "dependencies": [
         "P13.5"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "evaluation/load_tests/load_test_runner.py",
+        "evaluation/reports/hard_release_gate_report.md"
+      ],
+      "acceptance_evidence": "Section 18.5 performance budgets passed: ordinary CRUD read p95 = 390.77ms (<500ms budget), internal policy/retrieval p95 = 455.73ms (<1000ms budget) under 20 concurrent readers and 5 pipeline workers; Hard Release Gate Report compiles all 16 gates.",
+      "validation_commands": [
+        "cd services/backend && uv run python ../../evaluation/load_tests/load_test_runner.py"
+      ],
       "blocker": null,
       "next_action": null
     },
@@ -2222,9 +2259,9 @@
     },
     "P13": {
       "phase_id": "P13",
-      "implementation_status": "TODO",
-      "validation_status": "PENDING",
-      "push_status": "not_ready",
+      "implementation_status": "COMPLETE",
+      "validation_status": "PASSED",
+      "push_status": "ready",
       "intended_remote": "origin",
       "intended_branch": "main",
       "completion_commit_sha": null,

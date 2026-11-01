@@ -1,6 +1,6 @@
 import uuid
 
-from fastapi import APIRouter, Depends, Query, status
+from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.database import get_db_session
@@ -27,6 +27,12 @@ async def extract_case_narrative(
 ):
     """T08: Extracts structured fact proposals and verbatim text spans from the case story narrative."""
     c = await FactService.get_authorized_case(case_id, principal, db)
+
+    if getattr(c, "consent_status", "active") == "withdrawn":
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail={"error": {"code": "CONSENT_WITHDRAWN", "message": "External processing consent has been withdrawn by user (T37)"}},
+        )
 
     narrative = c.story_narrative or ""
     proposal_set = CaseExtractor.propose(narrative)

@@ -1,0 +1,73 @@
+{
+  "manifest_version": "1.0",
+  "created_at": "2026-11-01T15:00:00Z",
+  "benchmark_name": "ClaimCraft-BD-Benchmark-v1",
+  "release_binding": "rel_2026_03_active_v1",
+  "files": {
+    "routing_scenarios": {
+      "path": "routing_scenarios.jsonl",
+      "total_items": 96,
+      "splits": {
+        "dev": 48,
+        "val": 24,
+        "held_out": 24
+      },
+      "domains": {
+        "shopping": 28,
+        "finance": 28,
+        "telecom": 12,
+        "insurance": 12,
+        "government_grs": 8,
+        "unsupported": 8
+      },
+      "safety_tagged_cases": 11,
+      "sha256": "b7779aadecadc8896debe7afe9d6998e5ec1fd27243c5179c43e8315bd625ef9"
+    },
+    "counterfactual_pairs": {
+      "path": "counterfactual_pairs.jsonl",
+      "total_items": 24,
+      "splits": {
+        "dev": 12,
+        "val": 6,
+        "held_out": 6
+      },
+      "sha256": "379077701041309f59e77eb2c9ac61bc5cb58f7dfb630a3531cd4456c8bf91c1"
+    },
+    "evidence_conflicts": {
+      "path": "evidence_conflicts.jsonl",
+      "total_items": 30,
+      "splits": {
+        "dev": 15,
+        "val": 8,
+        "held_out": 7
+      },
+      "sha256": "225a9b6bb7c9c68fa35c30d4c497a96e383fc10a279fcd93cc74425d73a58bb6"
+    },
+    "retrieval_queries": {
+      "path": "retrieval_queries.jsonl",
+      "total_items": 60,
+      "splits": {
+        "dev": 30,
+        "val": 15,
+        "held_out": 15
+      },
+      "languages": {
+        "en": 20,
+        "bn": 20,
+        "banglish": 20
+      },
+      "sha256": "430ad4192b7b9b6dfcde84265055b04ba07425f8912e4f95d21dd033671864ed"
+    }
+  },
+  "adjudication_governance": {
+    "source_review_standard": "Section 18.2 Ground Truth Adjudication",
+    "leakage_protection": "Family-grouped disjoint splits; counterfactual pairs tied together",
+    "statutory_references_verified": [
+      "CRPA 2009 (Sections 41, 45, 60, 76)",
+      "BB PSD Guidelines 2020",
+      "BTRC Directive 2021 QoS",
+      "Insurance Act 2010 Section 72",
+      "Cabinet Division Citizen Charter Directive 2018"
+    ]
+  }
+}

@@ -53,6 +53,11 @@ class Case(Base):
         index=True,
         nullable=False,
     )  # 'draft', 'active', 'archived', 'deleting', 'deleted'
+    consent_status: Mapped[str] = mapped_column(
+        String(32),
+        default="active",
+        nullable=False,
+    )  # 'active', 'withdrawn'
     row_version: Mapped[int] = mapped_column(Integer, default=1, nullable=False)
     is_demo: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
     incident_date: Mapped[str | None] = mapped_column(String(32), nullable=True)

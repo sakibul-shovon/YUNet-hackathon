@@ -165,6 +165,7 @@ export interface CaseOut {
   locale: string;
   desired_outcomes: unknown[];
   lifecycle_status: string;
+  consent_status?: string;
   row_version: number;
   is_demo: boolean;
   incident_date?: unknown;

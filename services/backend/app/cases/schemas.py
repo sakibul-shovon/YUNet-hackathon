@@ -35,6 +35,7 @@ class CaseOut(BaseModel):
     locale: str
     desired_outcomes: list[str]
     lifecycle_status: str
+    consent_status: str = "active"
     row_version: int
     is_demo: bool
     incident_date: str | None = None

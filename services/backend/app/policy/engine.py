@@ -155,10 +155,14 @@ class ProceduralAssessmentEngine:
     FORBIDDEN_CREDENTIAL_TERMS: ClassVar[set[str]] = {
         "otp", "pin", "password", "cvv", "secret", "cvv2", "mfs_pin", "card_cvv",
     }
+    _CACHED_STARTER_RULES: ClassVar[list[PolicyRule] | None] = None
 
     @classmethod
     def load_starter_rules(cls) -> list[PolicyRule]:
-        """Loads canonical starter rules."""
+        """Loads canonical starter rules with in-memory caching."""
+        if cls._CACHED_STARTER_RULES is not None:
+            return cls._CACHED_STARTER_RULES
+
         from pathlib import Path
 
         import yaml
@@ -173,6 +177,7 @@ class ProceduralAssessmentEngine:
                 with open(yf, "r", encoding="utf-8") as f:
                     data = yaml.safe_load(f)
                 rules.append(PolicyRule.model_validate(data))
+        cls._CACHED_STARTER_RULES = rules
         return rules
 
     @classmethod

@@ -40,8 +40,9 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       {/* 1. Header with Event Sticker slot */}
       <Header locale={locale} labels={headerLabels} />
 
-      {/* 2. Hero Section with Real Product Preview */}
-      <section className="relative px-4 md:px-8 pt-12 pb-20 max-w-7xl mx-auto w-full flex flex-col items-center text-center">
+      <main id="main-content" className="flex-1">
+        {/* 2. Hero Section with Real Product Preview */}
+        <section className="relative px-4 md:px-8 pt-12 pb-20 max-w-7xl mx-auto w-full flex flex-col items-center text-center">
         <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[var(--brand-soft)] text-primary text-xs font-semibold mb-6 border border-primary/20">
           <Sparkles className="w-3.5 h-3.5" />
           <span>{t('tagline')}</span>
@@ -528,6 +529,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           </div>
         </div>
       </section>
+      </main>
 
       {/* Footer with Mandatory Links (Section 5.6) */}
       <footer className="border-t border-border bg-surface py-10 px-4 md:px-8 text-xs text-muted-foreground">

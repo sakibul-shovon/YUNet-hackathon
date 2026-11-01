@@ -1,0 +1,265 @@
+{
+  "evaluation_title": "ClaimCraft BD Comprehensive Evaluation and Ablation Suite",
+  "release_id": "rel_2026_03_active_v1",
+  "manifest_version": "1.0",
+  "timestamp": "2026-11-01T09:05:36Z",
+  "benchmarks": {
+    "routing": {
+      "full_system": {
+        "total_evaluated": 96,
+        "overall_route_accuracy": 0.9375,
+        "appropriate_abstention_rate": 1.0,
+        "safety_hazard_recall": 1.0,
+        "safety_hazard_precision": 1.0,
+        "failure_count": 6,
+        "sample_failures": [
+          {
+            "case_id": "route_finance_005",
+            "issue": "Route mismatch",
+            "gold": [
+              "bd.finance.mfs_unauthorized_charge"
+            ],
+            "predicted": [
+              "route_safety"
+            ]
+          },
+          {
+            "case_id": "route_finance_016",
+            "issue": "Route mismatch",
+            "gold": [
+              "bd.finance.mfs_unauthorized_charge"
+            ],
+            "predicted": [
+              "route_safety"
+            ]
+          },
+          {
+            "case_id": "route_telecom_004",
+            "issue": "Route mismatch",
+            "gold": [
+              "bd.telecom.telecom_billing_and_outage"
+            ],
+            "predicted": [
+              "route_safety"
+            ]
+          },
+          {
+            "case_id": "route_telecom_010",
+            "issue": "Route mismatch",
+            "gold": [
+              "bd.telecom.telecom_billing_and_outage"
+            ],
+            "predicted": [
+              "route_safety"
+            ]
+          },
+          {
+            "case_id": "route_insurance_008",
+            "issue": "Route mismatch",
+            "gold": [
+              "bd.insurance.insurance_claim_dispute"
+            ],
+            "predicted": [
+              "route_safety"
+            ]
+          }
+        ],
+        "p50_latency_ms": 0.0,
+        "p95_latency_ms": 0.01,
+        "mode": "full_system"
+      },
+      "ablation_no_policy": {
+        "total_evaluated": 96,
+        "overall_route_accuracy": 0.8542,
+        "appropriate_abstention_rate": 0.0,
+        "safety_hazard_recall": 1.0,
+        "safety_hazard_precision": 1.0,
+        "failure_count": 14,
+        "sample_failures": [
+          {
+            "case_id": "route_finance_005",
+            "issue": "Route mismatch",
+            "gold": [
+              "bd.finance.mfs_unauthorized_charge"
+            ],
+            "predicted": [
+              "route_safety"
+            ]
+          },
+          {
+            "case_id": "route_finance_016",
+            "issue": "Route mismatch",
+            "gold": [
+              "bd.finance.mfs_unauthorized_charge"
+            ],
+            "predicted": [
+              "route_safety"
+            ]
+          },
+          {
+            "case_id": "route_telecom_004",
+            "issue": "Route mismatch",
+            "gold": [
+              "bd.telecom.telecom_billing_and_outage"
+            ],
+            "predicted": [
+              "route_safety"
+            ]
+          },
+          {
+            "case_id": "route_telecom_010",
+            "issue": "Route mismatch",
+            "gold": [
+              "bd.telecom.telecom_billing_and_outage"
+            ],
+            "predicted": [
+              "route_safety"
+            ]
+          },
+          {
+            "case_id": "route_insurance_008",
+            "issue": "Route mismatch",
+            "gold": [
+              "bd.insurance.insurance_claim_dispute"
+            ],
+            "predicted": [
+              "route_safety"
+            ]
+          }
+        ],
+        "p50_latency_ms": 0.0,
+        "p95_latency_ms": 0.02,
+        "mode": "ablation_no_policy"
+      }
+    },
+    "conflict": {
+      "full_system": {
+        "total_evaluated": 30,
+        "conflict_precision": 1.0,
+        "conflict_recall": 1.0,
+        "conflict_f1": 1.0,
+        "failures": [],
+        "mode": "full_system"
+      },
+      "ablation_no_conflict_gate": {
+        "total_evaluated": 30,
+        "conflict_precision": 0.0,
+        "conflict_recall": 0.0,
+        "conflict_f1": 0.0,
+        "failures": [
+          {
+            "id": "conflict_001",
+            "type": "False Negative Missed Conflict"
+          },
+          {
+            "id": "conflict_002",
+            "type": "False Negative Missed Conflict"
+          },
+          {
+            "id": "conflict_004",
+            "type": "False Negative Missed Conflict"
+          },
+          {
+            "id": "conflict_005",
+            "type": "False Negative Missed Conflict"
+          },
+          {
+            "id": "conflict_006",
+            "type": "False Negative Missed Conflict"
+          },
+          {
+            "id": "conflict_008",
+            "type": "False Negative Missed Conflict"
+          },
+          {
+            "id": "conflict_009",
+            "type": "False Negative Missed Conflict"
+          },
+          {
+            "id": "conflict_010",
+            "type": "False Negative Missed Conflict"
+          },
+          {
+            "id": "conflict_012",
+            "type": "False Negative Missed Conflict"
+          },
+          {
+            "id": "conflict_013",
+            "type": "False Negative Missed Conflict"
+          },
+          {
+            "id": "conflict_014",
+            "type": "False Negative Missed Conflict"
+          },
+          {
+            "id": "conflict_016",
+            "type": "False Negative Missed Conflict"
+          },
+          {
+            "id": "conflict_017",
+            "type": "False Negative Missed Conflict"
+          },
+          {
+            "id": "conflict_018",
+            "type": "False Negative Missed Conflict"
+          },
+          {
+            "id": "conflict_020",
+            "type": "False Negative Missed Conflict"
+          },
+          {
+            "id": "conflict_021",
+            "type": "False Negative Missed Conflict"
+          },
+          {
+            "id": "conflict_022",
+            "type": "False Negative Missed Conflict"
+          },
+          {
+            "id": "conflict_024",
+            "type": "False Negative Missed Conflict"
+          },
+          {
+            "id": "conflict_025",
+            "type": "False Negative Missed Conflict"
+          },
+          {
+            "id": "conflict_026",
+            "type": "False Negative Missed Conflict"
+          },
+          {
+            "id": "conflict_028",
+            "type": "False Negative Missed Conflict"
+          },
+          {
+            "id": "conflict_029",
+            "type": "False Negative Missed Conflict"
+          },
+          {
+            "id": "conflict_030",
+            "type": "False Negative Missed Conflict"
+          }
+        ],
+        "mode": "ablation_no_conflict_gate"
+      }
+    },
+    "retrieval": {
+      "hybrid_rrf": {
+        "total_queries": 60,
+        "recall_at_1": 1.0,
+        "recall_at_5": 1.0,
+        "recall_at_10": 1.0,
+        "mrr": 1.0,
+        "mode": "hybrid_rrf"
+      },
+      "ablation_dense_only": {
+        "total_queries": 60,
+        "recall_at_1": 0.6667,
+        "recall_at_5": 1.0,
+        "recall_at_10": 1.0,
+        "mrr": 0.7778,
+        "mode": "ablation_dense_only"
+      }
+    }
+  }
+}

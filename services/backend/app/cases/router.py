@@ -72,3 +72,13 @@ async def get_case_activity(
 ):
     """Retrieves chronological activity log and history for an authorized case."""
     return await CaseService.get_case_events(id, principal, db)
+
+
+@router.post("/v1/cases/{id}/consent/withdraw", response_model=CaseOut)
+async def withdraw_case_consent(
+    id: uuid.UUID,
+    principal: Principal = Depends(get_current_principal),
+    db: AsyncSession = Depends(get_db_session),
+):
+    """T37: Withdrawn consent immediately blocks new external provider dispatches."""
+    return await CaseService.withdraw_consent(id, principal, db)

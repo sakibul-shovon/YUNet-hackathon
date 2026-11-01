@@ -342,3 +342,50 @@ class CaseService:
         )
         events_res = await db.execute(events_stmt)
         return [CaseEventOut.model_validate(e, from_attributes=True) for e in events_res.scalars().all()]
+
+    @staticmethod
+    async def withdraw_consent(
+        case_id: uuid.UUID,
+        principal: Principal,
+        db: AsyncSession,
+    ) -> CaseOut:
+        """T37: Immediately sets consent_status to 'withdrawn' and records an audit event."""
+        stmt = select(Case).where(
+            Case.id == case_id,
+            Case.principal_id == principal.id,
+            Case.lifecycle_status.notin_(["deleting", "deleted"]),
+            Case.deleted_at.is_(None),
+        )
+        res = await db.execute(stmt)
+        case = res.scalar_one_or_none()
+        if not case:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail={"error": {"code": "CASE_NOT_FOUND", "message": "Case not found"}},
+            )
+
+        now = datetime.datetime.now(datetime.UTC)
+        case.consent_status = "withdrawn"
+        case.updated_at = now
+
+        seq_stmt = select(func.coalesce(func.max(CaseEvent.event_sequence), 0)).where(
+            CaseEvent.case_id == case.id
+        )
+        max_seq = (await db.execute(seq_stmt)).scalar_one()
+
+        event = CaseEvent(
+            id=uuid.uuid4(),
+            case_id=case.id,
+            principal_id=principal.id,
+            event_sequence=max_seq + 1,
+            event_type="consent.withdrawn",
+            actor_type="consumer",
+            actor_id=principal.id,
+            schema_version=1,
+            payload={"action": "consent_withdrawn", "timestamp": now.isoformat()},
+            created_at=now,
+        )
+        db.add(event)
+        await db.commit()
+        await db.refresh(case)
+        return CaseOut.model_validate(case, from_attributes=True)
