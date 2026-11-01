@@ -123,7 +123,15 @@
     "remove_btn": "Delete Document",
     "status_quarantined": "Scanning...",
     "status_accepted": "Accepted & Encrypted",
-    "linked_facts": "Linked Facts"
+    "linked_facts": "Linked Facts",
+    "reconciliation_title": "Payment Reconciliation",
+    "narrated_total": "Narrated Total",
+    "receipts_total": "Linked Receipts Total",
+    "discrepancy": "Discrepancy",
+    "reconciled": "Reconciled",
+    "unlinked_available": "Unlinked Receipts Available",
+    "link_btn": "Link Receipt",
+    "preview_btn": "Preview Document"
   },
   "paths": {
     "title": "Viable Procedural Paths",

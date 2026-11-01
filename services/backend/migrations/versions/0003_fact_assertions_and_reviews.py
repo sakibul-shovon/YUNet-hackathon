@@ -87,3 +87,4 @@ def downgrade() -> None:
     op.drop_table("fact_reviews")
     op.drop_table("fact_source_links")
     op.drop_table("fact_assertions")
+

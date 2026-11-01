@@ -31,3 +31,4 @@
 - Submissions generate a unique CCMS Tracking Number.
 - Complainants receive SMS alerts for hearing dates, mediation sessions, or administrative orders.
 - Both parties are summoned to the relevant district/divisional DNCRP office for reconciliation before formal adjudication.
+

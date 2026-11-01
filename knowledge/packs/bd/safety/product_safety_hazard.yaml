@@ -21,3 +21,4 @@ reason_templates:
 allowed_actions:
   - call_dncrp_hotline_16121
   - preserve_hazardous_sample
+

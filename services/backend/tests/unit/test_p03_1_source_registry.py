@@ -72,3 +72,4 @@ def test_get_source_by_id_lookup():
 
     missing = get_source_by_id("non_existent_source_123")
     assert missing is None
+

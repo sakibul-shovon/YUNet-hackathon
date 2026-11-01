@@ -123,7 +123,15 @@
     "remove_btn": "ডকুমেন্ট মুছে ফেলুন",
     "status_quarantined": "স্ক্যান হচ্ছে...",
     "status_accepted": "গৃহীত ও সুরক্ষিত",
-    "linked_facts": "সংযুক্ত তথ্য"
+    "linked_facts": "সংযুক্ত তথ্য",
+    "reconciliation_title": "টাকার পরিমাণ সমাধান ও হিসাব মিল",
+    "narrated_total": "বর্ণনাকৃত মোট পরিমাণ",
+    "receipts_total": "যুক্ত রসিদের মোট পরিমাণ",
+    "discrepancy": "পার্থক্য / অমিল",
+    "reconciled": "সম্পূর্ণভাবে মিলে গেছে",
+    "unlinked_available": "অতিরিক্ত রসিদ বিদ্যমান",
+    "link_btn": "রসিদ সংযুক্ত করুন",
+    "preview_btn": "নথিটি দেখুন"
   },
   "paths": {
     "title": "প্রযোজ্য আইনি ও প্রাতিষ্ঠানিক পথ",

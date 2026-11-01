@@ -156,3 +156,4 @@ def test_t18_security_injection_and_test_only_rejection():
     # In explicit test mode (allow_test_only=True), evaluation succeeds
     res_test = PolicyEvaluator.evaluate(test_only_rule, facts={"is_test": True}, allow_test_only=True)
     assert res_test.status == RouteStatus.SUPPORTED
+

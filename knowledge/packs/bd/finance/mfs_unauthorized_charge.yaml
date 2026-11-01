@@ -30,3 +30,4 @@ reason_templates:
 allowed_actions:
   - prepare_provider_formal_letter
   - prepare_bb_cipc_escalation
+

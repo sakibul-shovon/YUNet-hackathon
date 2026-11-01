@@ -107,3 +107,4 @@ async def test_t26_draft_api_endpoint_and_tenant_isolation(client: AsyncClient, 
 
     foreign_draft = await client.get(f"/v1/cases/{case_id}/draft", headers=foreign_headers)
     assert foreign_draft.status_code == 404
+

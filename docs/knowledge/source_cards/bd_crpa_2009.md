@@ -43,3 +43,4 @@
 1. Antigravity / ClaimCraft BD does **not** provide legal advice. Citations to CRPA 2009 are educational and procedural references.
 2. Complainants must preserve authentic purchase receipts, invoices, communication logs, and physical evidence.
 3. No guarantee of penalty imposition or specific outcome can be made to the consumer.
+

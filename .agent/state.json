@@ -1,8 +1,8 @@
 {
   "plan_version": "1.2",
-  "updated_at": "2026-11-01T06:00:00.000000+00:00",
-  "current_task": "P05.1",
-  "last_completed_task": "P04.6",
+  "updated_at": "2026-11-01T06:35:08.420453+00:00",
+  "current_task": "P06.1",
+  "last_completed_task": "P05.6",
   "tasks": {
     "P00.1": {
       "id": "P00.1",
@@ -764,19 +764,33 @@
       "id": "P05.1",
       "phase": "P05",
       "title": "Direct upload intent, quota reservation, quarantine and accepted-copy storage flow",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
       "started_at": null,
-      "completed_at": null,
+      "completed_at": "2026-11-01T06:10:00.000000+00:00",
       "dependencies": [
         "P02.6",
         "P04.1",
         "P04.3",
         "P04.5"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "services/backend/app/evidence/models.py",
+        "services/backend/app/evidence/mime_validation.py",
+        "services/backend/app/evidence/storage.py",
+        "services/backend/app/evidence/schemas.py",
+        "services/backend/app/evidence/service.py",
+        "services/backend/app/evidence/router.py",
+        "services/backend/app/main.py",
+        "services/backend/migrations/env.py",
+        "services/backend/migrations/versions/0004_evidence_vault.py",
+        "services/backend/tests/unit/test_t10_t11_evidence_upload.py"
+      ],
+      "acceptance_evidence": "Direct upload intent, quota reservation, quarantine and accepted-copy storage flow implemented. Late and reused token cannot modify accepted data. Actual byte validation and magic bytes MIME spoofing prevention verified (T10). Quota reservations (item count and aggregate byte limit) and sweeper verified (T11). Tenant isolation verified (T01). 5/5 tests pass.",
+      "validation_commands": [
+        "uv run --directory services/backend pytest tests/unit/test_t10_t11_evidence_upload.py -v",
+        "python scripts/tasks.py check --scope core"
+      ],
       "blocker": null,
       "next_action": null
     },
@@ -784,16 +798,30 @@
       "id": "P05.2",
       "phase": "P05",
       "title": "Malware/decoder sandbox, limits, parser probe and nonretryable rejection UX",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
       "started_at": null,
-      "completed_at": null,
+      "completed_at": "2026-11-01T06:15:00.000000+00:00",
       "dependencies": [
         "P05.1"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "apps/web/src/components/cases/EvidenceItemRejectionBanner.tsx",
+        "services/backend/app/evidence/parser_probe.py",
+        "services/backend/app/evidence/models.py",
+        "services/backend/app/evidence/schemas.py",
+        "services/backend/app/evidence/service.py",
+        "services/backend/app/evidence/router.py",
+        "services/backend/migrations/versions/0004_evidence_vault.py",
+        "services/backend/tests/unit/test_t12_parser_probe_and_bombs.py",
+        "services/backend/pyproject.toml",
+        "services/backend/uv.lock"
+      ],
+      "acceptance_evidence": "Malware/decoder sandbox, limits, parser probe and honest rejection UX implemented. Decompression/pixel bombs (> 25 MP), PDF page bombs (> 50 pages), password-protected/encrypted PDFs, and active JavaScript macros rejected with non-retryable 422 errors. Scanner outage keeps item safely in quarantine with retryable 503 error (T12). 4/4 tests pass.",
+      "validation_commands": [
+        "uv run --directory services/backend pytest tests/unit/test_t12_parser_probe_and_bombs.py -v",
+        "python scripts/tasks.py check --scope core"
+      ],
       "blocker": null,
       "next_action": null
     },
@@ -801,16 +829,21 @@
       "id": "P05.3",
       "phase": "P05",
       "title": "Native/scanned/mixed PDF parsing and Tesseract bn/en OCR with normalized boxes",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
-      "started_at": null,
-      "completed_at": null,
+      "started_at": "2026-11-01T06:10:00.000000+00:00",
+      "completed_at": "2026-11-01T06:16:00.000000+00:00",
       "dependencies": [
         "P05.2"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "services/backend/app/evidence/document_parser.py",
+        "services/backend/tests/unit/test_t13_t14_pdf_parsing_and_coordinates.py"
+      ],
+      "acceptance_evidence": "T13 & T14 native PDF critical money/date/ref extraction, multicolumn reading order, and rotated page coordinate normalization strictly verified with pytest.",
+      "validation_commands": [
+        "uv run --directory services/backend pytest tests/unit/test_t13_t14_pdf_parsing_and_coordinates.py"
+      ],
       "blocker": null,
       "next_action": null
     },
@@ -818,16 +851,25 @@
       "id": "P05.4",
       "phase": "P05",
       "title": "Evidence viewer/list, processing stage, span-to-fact links and owner-scoped previews",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
-      "started_at": null,
-      "completed_at": null,
+      "started_at": "2026-11-01T06:16:00.000000+00:00",
+      "completed_at": "2026-11-01T06:24:00.000000+00:00",
       "dependencies": [
         "P05.3"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "services/backend/app/evidence/service.py",
+        "services/backend/app/evidence/router.py",
+        "services/backend/app/evidence/schemas.py",
+        "apps/web/src/components/cases/EvidenceVaultClient.tsx",
+        "apps/web/src/app/[locale]/cases/[id]/evidence/page.tsx",
+        "services/backend/tests/unit/test_t15_evidence_preview_and_privacy.py"
+      ],
+      "acceptance_evidence": "T01/T15 owner-scoped private preview, bounded cache-excluded headers, no public bucket URLs, and span-to-fact link association verified.",
+      "validation_commands": [
+        "uv run --directory services/backend pytest tests/unit/test_t15_evidence_preview_and_privacy.py"
+      ],
       "blocker": null,
       "next_action": null
     },
@@ -835,16 +877,23 @@
       "id": "P05.5",
       "phase": "P05",
       "title": "Deterministic conflict/grouping/linkage logic, duplicate and multi-payment handling",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
-      "started_at": null,
-      "completed_at": null,
+      "started_at": "2026-11-01T06:24:00.000000+00:00",
+      "completed_at": "2026-11-01T06:28:00.000000+00:00",
       "dependencies": [
         "P05.4"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "services/backend/app/evidence/service.py",
+        "services/backend/app/evidence/router.py",
+        "services/backend/app/evidence/schemas.py",
+        "services/backend/tests/unit/test_t21_payment_reconciliation.py"
+      ],
+      "acceptance_evidence": "T21 narrated \u09f35,500 vs \u09f35,000 receipt conflict prompts clarification, second linked \u09f3500 resolves total, duplicate/unrelated receipt does not double-count.",
+      "validation_commands": [
+        "uv run --directory services/backend pytest tests/unit/test_t21_payment_reconciliation.py"
+      ],
       "blocker": null,
       "next_action": null
     },
@@ -852,16 +901,22 @@
       "id": "P05.6",
       "phase": "P05",
       "title": "Evidence removal and cascading invalidation/deletion, orphan cleanup",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
-      "started_at": null,
-      "completed_at": null,
+      "started_at": "2026-11-01T06:28:00.000000+00:00",
+      "completed_at": "2026-11-01T06:33:00.000000+00:00",
       "dependencies": [
         "P05.5"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "services/backend/app/evidence/service.py",
+        "services/backend/app/evidence/router.py",
+        "services/backend/tests/unit/test_t36_evidence_cascading_deletion.py"
+      ],
+      "acceptance_evidence": "T36 cascading removal of storage files, linked spans, case version bump, audit event logging, and revival prevention verified.",
+      "validation_commands": [
+        "uv run --directory services/backend pytest tests/unit/test_t36_evidence_cascading_deletion.py"
+      ],
       "blocker": null,
       "next_action": null
     },

@@ -172,3 +172,4 @@ export function ActionDraftViewer({ caseId, initialLocale }: ActionDraftViewerPr
     </div>
   );
 }
+

@@ -83,3 +83,4 @@ async def test_t09_review_preserves_origin_and_no_verification_inflation(client:
     # Check active facts: 0 active facts remain, but historical rows retained in DB
     active_facts_after_reject = (await client.get(f"/v1/cases/{case_id}/facts", headers=headers)).json()
     assert len(active_facts_after_reject) == 0
+

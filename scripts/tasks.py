@@ -201,6 +201,10 @@ def cmd_check(args):
         subprocess.check_call(["uv", "run", "ruff", "check", "app"], cwd=backend_dir)
 
         print("\n--- 3. Web Next.js Build / Typecheck ---")
+        next_dir = ROOT_DIR / "apps" / "web" / ".next"
+        if next_dir.exists():
+            import shutil
+            shutil.rmtree(next_dir, ignore_errors=True)
         subprocess.check_call([get_pnpm_cmd(), "--filter", "@claimcraft/web", "build"], cwd=ROOT_DIR)
 
         print("\n[SUCCESS] Foundation checks passed completely.")

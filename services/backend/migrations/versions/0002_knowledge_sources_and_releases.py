@@ -133,3 +133,4 @@ def downgrade() -> None:
     op.drop_table("source_versions")
     op.drop_table("source_candidates")
     op.drop_table("source_families")
+

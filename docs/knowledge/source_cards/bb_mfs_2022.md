@@ -29,3 +29,4 @@
 ### 3. Exclusions & Consumer Responsibility
 - Voluntary disclosure of Secret PIN or OTP to third parties (social engineering/phishing where customer validated authentication) generally places burden on customer unless systemic provider security breach is proven.
 - Systemic failure (e.g., duplicate debits, wallet synchronization bugs) remains the strict liability of the MFS operator.
+

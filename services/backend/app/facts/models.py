@@ -178,3 +178,4 @@ class FactResolution(Base):
         default=lambda: datetime.datetime.now(datetime.UTC),
         nullable=False,
     )
+

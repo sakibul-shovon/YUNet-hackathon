@@ -136,6 +136,17 @@ export interface DeletionRequestOut {
   completed_at?: unknown;
 }
 
+export interface DocumentParseResult {
+  evidence_id: string;
+  page_count: number;
+  has_native_text: boolean;
+  ocr_applied: boolean;
+  regions?: unknown[];
+  full_text?: string;
+  quality_flags?: unknown[];
+  page_dimensions?: unknown[];
+}
+
 export interface DraftRequestOut {
   document_type?: string;
   locale?: string;
@@ -148,6 +159,42 @@ export interface DraftRequestOut {
   is_filed?: boolean;
   unsubmitted_banner_notice_en?: string;
   unsubmitted_banner_notice_bn?: string;
+  created_at: string;
+}
+
+export interface EvidenceItemOut {
+  id: string;
+  case_id: string;
+  original_filename: string;
+  declared_mime_type: string;
+  detected_mime_type?: unknown;
+  byte_size: number;
+  sha256_hash?: unknown;
+  status: string;
+  is_quarantined: boolean;
+  rejection_reason?: unknown;
+  rejection_code?: unknown;
+  is_retryable?: boolean;
+  guidance_en?: unknown;
+  guidance_bn?: unknown;
+  created_at: string;
+}
+
+export interface EvidenceSpanLinkCreate {
+  assertion_id: string;
+  page_number?: unknown;
+  normalized_box?: unknown;
+  selected_text?: unknown;
+}
+
+export interface EvidenceSpanLinkOut {
+  id: string;
+  assertion_id: string;
+  evidence_id: string;
+  source_type: string;
+  page_number?: unknown;
+  normalized_box?: unknown;
+  selected_text?: unknown;
   created_at: string;
 }
 
@@ -245,6 +292,19 @@ export interface NextBestQuestion {
   relevance_rationale: string;
 }
 
+export interface PaymentReconciliationResult {
+  case_id: string;
+  narrated_amount_minor_units: number;
+  linked_evidence_total_minor_units: number;
+  discrepancy_minor_units: number;
+  is_reconciled: boolean;
+  status: string;
+  reconciled_items?: unknown[];
+  unlinked_items?: unknown[];
+  prompt_en: string;
+  prompt_bn: string;
+}
+
 export interface PrincipalOut {
   id: string;
   kind: string;
@@ -264,6 +324,14 @@ export interface ProceduralAssessmentOut {
   routes: unknown[];
   next_best_question?: unknown;
   source_cards: unknown[];
+}
+
+export interface ReconciliationItem {
+  evidence_id: string;
+  filename: string;
+  amount_minor_units: number;
+  is_duplicate?: boolean;
+  is_linked?: boolean;
 }
 
 export interface ReleaseBuildRequest {
@@ -313,6 +381,17 @@ export interface SourceProvisionOut {
   created_at: string;
 }
 
+export interface TextRegion {
+  region_id: string;
+  page_number: number;
+  text: string;
+  normalized_box: unknown[];
+  origin?: string;
+  confidence?: number;
+  is_critical_token?: boolean;
+  critical_token_type?: unknown;
+}
+
 export interface TextSpan {
   span_id: string;
   text: string;
@@ -331,6 +410,23 @@ export interface UpgradeResponse {
   kind: string;
   access_token: string;
   message: string;
+}
+
+export interface UploadIntentCreate {
+  case_id: string;
+  declared_filename: string;
+  declared_mime_type: string;
+  declared_byte_size: number;
+}
+
+export interface UploadIntentOut {
+  intent_id: string;
+  case_id: string;
+  upload_url: string;
+  upload_token: string;
+  token_expires_at: string;
+  max_byte_size: number;
+  storage_kind: string;
 }
 
 export interface ValidationError {

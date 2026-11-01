@@ -90,3 +90,4 @@ Before promoting candidate rules to an active knowledge release, the assigned re
 1. **Step 1 (Reviewer Role):** Submit formal review via `POST /v1/admin/source-versions/{id}/review` with reviewer identity and scope.
 2. **Step 2 (Publisher Role):** Construct candidate manifest via `POST /v1/admin/releases/build`. Ensure `test_only` rules are absent.
 3. **Step 3 (Publisher Role):** Promote active release pointer atomically via `POST /v1/admin/releases/{id}/promote`.
+

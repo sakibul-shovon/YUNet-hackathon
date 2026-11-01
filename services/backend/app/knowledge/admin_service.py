@@ -95,7 +95,7 @@ class AdminKnowledgeService:
         for r in req.rules:
             if r.get("status") == "test_only":
                 raise HTTPException(
-                    status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
+                    status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
                     detail={
                         "error": {
                             "code": "TEST_ONLY_RULE_REJECTED",
@@ -114,12 +114,12 @@ class AdminKnowledgeService:
                 v = versions.get(sv_id)
                 if not v:
                     raise HTTPException(
-                        status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
+                        status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
                         detail={"error": {"code": "SOURCE_VERSION_MISSING", "message": f"Source version {sv_id} not found."}},
                     )
                 if v.applicability_status != "approved":
                     raise HTTPException(
-                        status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
+                        status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
                         detail={"error": {"code": "UNAPPROVED_SOURCE_VERSION", "message": f"Source version {sv_id} is not approved."}},
                     )
 
@@ -202,3 +202,4 @@ class AdminKnowledgeService:
         await db.commit()
         await db.refresh(release)
         return KnowledgeReleaseOut.model_validate(release, from_attributes=True)
+

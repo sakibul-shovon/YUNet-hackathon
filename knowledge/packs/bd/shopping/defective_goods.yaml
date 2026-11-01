@@ -27,3 +27,4 @@ reason_templates:
 allowed_actions:
   - prepare_merchant_replacement_request
   - prepare_dncrp_complaint
+

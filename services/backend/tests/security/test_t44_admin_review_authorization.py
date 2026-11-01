@@ -161,3 +161,4 @@ async def test_t44_admin_reviewer_authorization_and_release_build(
     assert public_res.status_code == 200
     assert public_res.json()["release_id"] == "REL-2026-001"
     assert public_res.json()["is_active"] is True
+

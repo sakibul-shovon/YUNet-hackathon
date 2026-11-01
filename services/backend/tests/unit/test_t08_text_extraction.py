@@ -174,3 +174,4 @@ async def test_t08_extract_endpoint_and_auto_persist(client: AsyncClient, db_ses
         headers=foreign_headers,
     )
     assert foreign_extract.status_code == 404
+

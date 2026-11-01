@@ -57,6 +57,7 @@ service_account.json
 quarantine/
 storage/uploads/
 storage/exports/
+services/backend/data/
 *.sqlite
 *.sqlite3
 *.db

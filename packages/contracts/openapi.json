@@ -1382,6 +1382,647 @@
         }
       }
     },
+    "/v1/uploads/init": {
+      "post": {
+        "tags": [
+          "Evidence & Upload Vault"
+        ],
+        "summary": "Init Upload",
+        "description": "T10/T11: Checks case ownership and quota, reserves quota, and generates one-path signed upload intent.",
+        "operationId": "init_upload_v1_uploads_init_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UploadIntentCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UploadIntentOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/v1/uploads/{intent_id}/raw": {
+      "put": {
+        "tags": [
+          "Evidence & Upload Vault"
+        ],
+        "summary": "Upload Raw Quarantine Data",
+        "description": "Direct-to-quarantine payload destination using the one-path upload token.",
+        "operationId": "upload_raw_quarantine_data_v1_uploads__intent_id__raw_put",
+        "parameters": [
+          {
+            "name": "intent_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Intent Id"
+            }
+          },
+          {
+            "name": "token",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "One-path upload token from init",
+              "title": "Token"
+            },
+            "description": "One-path upload token from init"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/uploads/{intent_id}/complete": {
+      "post": {
+        "tags": [
+          "Evidence & Upload Vault"
+        ],
+        "summary": "Complete Upload",
+        "description": "T10, T11, T12: Consumes intent once, validates server actual bytes, probes limits/malware, and moves to accepted storage.",
+        "operationId": "complete_upload_v1_uploads__intent_id__complete_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "intent_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Intent Id"
+            }
+          },
+          {
+            "name": "X-Simulate-Scanner-Outage",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "X-Simulate-Scanner-Outage"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EvidenceItemOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/cases/{case_id}/evidence": {
+      "get": {
+        "tags": [
+          "Evidence & Upload Vault"
+        ],
+        "summary": "List Case Evidence",
+        "description": "Lists evidence items for the authorized case owner.",
+        "operationId": "list_case_evidence_v1_cases__case_id__evidence_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EvidenceItemOut"
+                  },
+                  "title": "Response List Case Evidence V1 Cases  Case Id  Evidence Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/cases/{case_id}/evidence/reconciliation": {
+      "get": {
+        "tags": [
+          "Evidence & Upload Vault"
+        ],
+        "summary": "Get Payment Reconciliation",
+        "description": "T21: Reconciles asserted transaction amount with linked evidence receipts, prompts for clarifications.",
+        "operationId": "get_payment_reconciliation_v1_cases__case_id__evidence_reconciliation_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentReconciliationResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/cases/{case_id}/evidence/{evidence_id}": {
+      "get": {
+        "tags": [
+          "Evidence & Upload Vault"
+        ],
+        "summary": "Get Case Evidence Item",
+        "description": "T01: Returns evidence item metadata for authorized case owner.",
+        "operationId": "get_case_evidence_item_v1_cases__case_id__evidence__evidence_id__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "evidence_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Evidence Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EvidenceItemOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Evidence & Upload Vault"
+        ],
+        "summary": "Delete Case Evidence",
+        "description": "T36: Cascading removal and invalidation of evidence, private files, linked spans and derived assertions.",
+        "operationId": "delete_case_evidence_v1_cases__case_id__evidence__evidence_id__delete",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "evidence_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Evidence Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/cases/{case_id}/evidence/{evidence_id}/preview": {
+      "get": {
+        "tags": [
+          "Evidence & Upload Vault"
+        ],
+        "summary": "Get Evidence Preview",
+        "description": "T15: Bounded private preview with owner authorization and cache exclusion. Never returns public bucket URL.",
+        "operationId": "get_evidence_preview_v1_cases__case_id__evidence__evidence_id__preview_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "evidence_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Evidence Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/cases/{case_id}/evidence/{evidence_id}/spans": {
+      "post": {
+        "tags": [
+          "Evidence & Upload Vault"
+        ],
+        "summary": "Create Evidence Span Link",
+        "description": "T14, T15: Links evidence region or page to an asserted case fact.",
+        "operationId": "create_evidence_span_link_v1_cases__case_id__evidence__evidence_id__spans_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "evidence_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Evidence Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EvidenceSpanLinkCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EvidenceSpanLinkOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Evidence & Upload Vault"
+        ],
+        "summary": "List Evidence Spans",
+        "description": "T14, T15: Lists linked spans for an evidence item.",
+        "operationId": "list_evidence_spans_v1_cases__case_id__evidence__evidence_id__spans_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "evidence_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Evidence Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EvidenceSpanLinkOut"
+                  },
+                  "title": "Response List Evidence Spans V1 Cases  Case Id  Evidence  Evidence Id  Spans Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/cases/{case_id}/evidence/{evidence_id}/regions": {
+      "get": {
+        "tags": [
+          "Evidence & Upload Vault"
+        ],
+        "summary": "Get Evidence Regions",
+        "description": "T13, T14: Returns parsed document regions with normalized bounding boxes and quality flags.",
+        "operationId": "get_evidence_regions_v1_cases__case_id__evidence__evidence_id__regions_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "evidence_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Evidence Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentParseResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/uploads/sweep": {
+      "post": {
+        "tags": [
+          "Evidence & Upload Vault"
+        ],
+        "summary": "Sweep Expired Uploads",
+        "description": "T11: Sweeps expired upload tokens, releases quota reservations, and cleans up quarantine.",
+        "operationId": "sweep_expired_uploads_v1_uploads_sweep_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/capabilities": {
       "get": {
         "tags": [
@@ -2698,6 +3339,647 @@
           }
         }
       }
+    },
+    "/api/v1/uploads/init": {
+      "post": {
+        "tags": [
+          "Evidence & Upload Vault"
+        ],
+        "summary": "Init Upload",
+        "description": "T10/T11: Checks case ownership and quota, reserves quota, and generates one-path signed upload intent.",
+        "operationId": "init_upload_api_v1_uploads_init_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UploadIntentCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UploadIntentOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/uploads/{intent_id}/raw": {
+      "put": {
+        "tags": [
+          "Evidence & Upload Vault"
+        ],
+        "summary": "Upload Raw Quarantine Data",
+        "description": "Direct-to-quarantine payload destination using the one-path upload token.",
+        "operationId": "upload_raw_quarantine_data_api_v1_uploads__intent_id__raw_put",
+        "parameters": [
+          {
+            "name": "intent_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Intent Id"
+            }
+          },
+          {
+            "name": "token",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "One-path upload token from init",
+              "title": "Token"
+            },
+            "description": "One-path upload token from init"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/uploads/{intent_id}/complete": {
+      "post": {
+        "tags": [
+          "Evidence & Upload Vault"
+        ],
+        "summary": "Complete Upload",
+        "description": "T10, T11, T12: Consumes intent once, validates server actual bytes, probes limits/malware, and moves to accepted storage.",
+        "operationId": "complete_upload_api_v1_uploads__intent_id__complete_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "intent_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Intent Id"
+            }
+          },
+          {
+            "name": "X-Simulate-Scanner-Outage",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "X-Simulate-Scanner-Outage"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EvidenceItemOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{case_id}/evidence": {
+      "get": {
+        "tags": [
+          "Evidence & Upload Vault"
+        ],
+        "summary": "List Case Evidence",
+        "description": "Lists evidence items for the authorized case owner.",
+        "operationId": "list_case_evidence_api_v1_cases__case_id__evidence_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EvidenceItemOut"
+                  },
+                  "title": "Response List Case Evidence Api V1 Cases  Case Id  Evidence Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{case_id}/evidence/reconciliation": {
+      "get": {
+        "tags": [
+          "Evidence & Upload Vault"
+        ],
+        "summary": "Get Payment Reconciliation",
+        "description": "T21: Reconciles asserted transaction amount with linked evidence receipts, prompts for clarifications.",
+        "operationId": "get_payment_reconciliation_api_v1_cases__case_id__evidence_reconciliation_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentReconciliationResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{case_id}/evidence/{evidence_id}": {
+      "get": {
+        "tags": [
+          "Evidence & Upload Vault"
+        ],
+        "summary": "Get Case Evidence Item",
+        "description": "T01: Returns evidence item metadata for authorized case owner.",
+        "operationId": "get_case_evidence_item_api_v1_cases__case_id__evidence__evidence_id__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "evidence_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Evidence Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EvidenceItemOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Evidence & Upload Vault"
+        ],
+        "summary": "Delete Case Evidence",
+        "description": "T36: Cascading removal and invalidation of evidence, private files, linked spans and derived assertions.",
+        "operationId": "delete_case_evidence_api_v1_cases__case_id__evidence__evidence_id__delete",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "evidence_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Evidence Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{case_id}/evidence/{evidence_id}/preview": {
+      "get": {
+        "tags": [
+          "Evidence & Upload Vault"
+        ],
+        "summary": "Get Evidence Preview",
+        "description": "T15: Bounded private preview with owner authorization and cache exclusion. Never returns public bucket URL.",
+        "operationId": "get_evidence_preview_api_v1_cases__case_id__evidence__evidence_id__preview_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "evidence_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Evidence Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{case_id}/evidence/{evidence_id}/spans": {
+      "post": {
+        "tags": [
+          "Evidence & Upload Vault"
+        ],
+        "summary": "Create Evidence Span Link",
+        "description": "T14, T15: Links evidence region or page to an asserted case fact.",
+        "operationId": "create_evidence_span_link_api_v1_cases__case_id__evidence__evidence_id__spans_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "evidence_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Evidence Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EvidenceSpanLinkCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EvidenceSpanLinkOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Evidence & Upload Vault"
+        ],
+        "summary": "List Evidence Spans",
+        "description": "T14, T15: Lists linked spans for an evidence item.",
+        "operationId": "list_evidence_spans_api_v1_cases__case_id__evidence__evidence_id__spans_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "evidence_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Evidence Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EvidenceSpanLinkOut"
+                  },
+                  "title": "Response List Evidence Spans Api V1 Cases  Case Id  Evidence  Evidence Id  Spans Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{case_id}/evidence/{evidence_id}/regions": {
+      "get": {
+        "tags": [
+          "Evidence & Upload Vault"
+        ],
+        "summary": "Get Evidence Regions",
+        "description": "T13, T14: Returns parsed document regions with normalized bounding boxes and quality flags.",
+        "operationId": "get_evidence_regions_api_v1_cases__case_id__evidence__evidence_id__regions_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "evidence_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Evidence Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentParseResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/uploads/sweep": {
+      "post": {
+        "tags": [
+          "Evidence & Upload Vault"
+        ],
+        "summary": "Sweep Expired Uploads",
+        "description": "T11: Sweeps expired upload tokens, releases quota reservations, and cleans up quarantine.",
+        "operationId": "sweep_expired_uploads_api_v1_uploads_sweep_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -3317,6 +4599,62 @@
         ],
         "title": "DeletionRequestOut"
       },
+      "DocumentParseResult": {
+        "properties": {
+          "evidence_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Evidence Id"
+          },
+          "page_count": {
+            "type": "integer",
+            "title": "Page Count"
+          },
+          "has_native_text": {
+            "type": "boolean",
+            "title": "Has Native Text"
+          },
+          "ocr_applied": {
+            "type": "boolean",
+            "title": "Ocr Applied"
+          },
+          "regions": {
+            "items": {
+              "$ref": "#/components/schemas/TextRegion"
+            },
+            "type": "array",
+            "title": "Regions"
+          },
+          "full_text": {
+            "type": "string",
+            "title": "Full Text",
+            "default": ""
+          },
+          "quality_flags": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Quality Flags"
+          },
+          "page_dimensions": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Page Dimensions"
+          }
+        },
+        "type": "object",
+        "required": [
+          "evidence_id",
+          "page_count",
+          "has_native_text",
+          "ocr_applied"
+        ],
+        "title": "DocumentParseResult"
+      },
       "DraftRequestOut": {
         "properties": {
           "document_type": {
@@ -3386,6 +4724,252 @@
           "created_at"
         ],
         "title": "DraftRequestOut"
+      },
+      "EvidenceItemOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "case_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Case Id"
+          },
+          "original_filename": {
+            "type": "string",
+            "title": "Original Filename"
+          },
+          "declared_mime_type": {
+            "type": "string",
+            "title": "Declared Mime Type"
+          },
+          "detected_mime_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Detected Mime Type"
+          },
+          "byte_size": {
+            "type": "integer",
+            "title": "Byte Size"
+          },
+          "sha256_hash": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sha256 Hash"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "is_quarantined": {
+            "type": "boolean",
+            "title": "Is Quarantined"
+          },
+          "rejection_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rejection Reason"
+          },
+          "rejection_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rejection Code"
+          },
+          "is_retryable": {
+            "type": "boolean",
+            "title": "Is Retryable",
+            "default": false
+          },
+          "guidance_en": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Guidance En"
+          },
+          "guidance_bn": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Guidance Bn"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "case_id",
+          "original_filename",
+          "declared_mime_type",
+          "byte_size",
+          "status",
+          "is_quarantined",
+          "created_at"
+        ],
+        "title": "EvidenceItemOut"
+      },
+      "EvidenceSpanLinkCreate": {
+        "properties": {
+          "assertion_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Assertion Id"
+          },
+          "page_number": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Page Number",
+            "default": 1
+          },
+          "normalized_box": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "number"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Normalized Box"
+          },
+          "selected_text": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Selected Text"
+          }
+        },
+        "type": "object",
+        "required": [
+          "assertion_id"
+        ],
+        "title": "EvidenceSpanLinkCreate"
+      },
+      "EvidenceSpanLinkOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "assertion_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Assertion Id"
+          },
+          "evidence_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Evidence Id"
+          },
+          "source_type": {
+            "type": "string",
+            "title": "Source Type"
+          },
+          "page_number": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Page Number"
+          },
+          "normalized_box": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "number"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Normalized Box"
+          },
+          "selected_text": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Selected Text"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "assertion_id",
+          "evidence_id",
+          "source_type",
+          "created_at"
+        ],
+        "title": "EvidenceSpanLinkOut"
       },
       "FactAssertionCreate": {
         "properties": {
@@ -3895,6 +5479,69 @@
         ],
         "title": "NextBestQuestion"
       },
+      "PaymentReconciliationResult": {
+        "properties": {
+          "case_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Case Id"
+          },
+          "narrated_amount_minor_units": {
+            "type": "integer",
+            "title": "Narrated Amount Minor Units"
+          },
+          "linked_evidence_total_minor_units": {
+            "type": "integer",
+            "title": "Linked Evidence Total Minor Units"
+          },
+          "discrepancy_minor_units": {
+            "type": "integer",
+            "title": "Discrepancy Minor Units"
+          },
+          "is_reconciled": {
+            "type": "boolean",
+            "title": "Is Reconciled"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "reconciled_items": {
+            "items": {
+              "$ref": "#/components/schemas/ReconciliationItem"
+            },
+            "type": "array",
+            "title": "Reconciled Items"
+          },
+          "unlinked_items": {
+            "items": {
+              "$ref": "#/components/schemas/ReconciliationItem"
+            },
+            "type": "array",
+            "title": "Unlinked Items"
+          },
+          "prompt_en": {
+            "type": "string",
+            "title": "Prompt En"
+          },
+          "prompt_bn": {
+            "type": "string",
+            "title": "Prompt Bn"
+          }
+        },
+        "type": "object",
+        "required": [
+          "case_id",
+          "narrated_amount_minor_units",
+          "linked_evidence_total_minor_units",
+          "discrepancy_minor_units",
+          "is_reconciled",
+          "status",
+          "prompt_en",
+          "prompt_bn"
+        ],
+        "title": "PaymentReconciliationResult"
+      },
       "PrincipalOut": {
         "properties": {
           "id": {
@@ -4008,6 +5655,40 @@
           "source_cards"
         ],
         "title": "ProceduralAssessmentOut"
+      },
+      "ReconciliationItem": {
+        "properties": {
+          "evidence_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Evidence Id"
+          },
+          "filename": {
+            "type": "string",
+            "title": "Filename"
+          },
+          "amount_minor_units": {
+            "type": "integer",
+            "title": "Amount Minor Units"
+          },
+          "is_duplicate": {
+            "type": "boolean",
+            "title": "Is Duplicate",
+            "default": false
+          },
+          "is_linked": {
+            "type": "boolean",
+            "title": "Is Linked",
+            "default": true
+          }
+        },
+        "type": "object",
+        "required": [
+          "evidence_id",
+          "filename",
+          "amount_minor_units"
+        ],
+        "title": "ReconciliationItem"
       },
       "ReleaseBuildRequest": {
         "properties": {
@@ -4238,6 +5919,64 @@
         ],
         "title": "SourceProvisionOut"
       },
+      "TextRegion": {
+        "properties": {
+          "region_id": {
+            "type": "string",
+            "title": "Region Id"
+          },
+          "page_number": {
+            "type": "integer",
+            "title": "Page Number"
+          },
+          "text": {
+            "type": "string",
+            "title": "Text"
+          },
+          "normalized_box": {
+            "items": {
+              "type": "number"
+            },
+            "type": "array",
+            "title": "Normalized Box",
+            "description": "[x1, y1, x2, y2] strictly normalized in [0.0, 1.0]"
+          },
+          "origin": {
+            "type": "string",
+            "title": "Origin",
+            "default": "native_text"
+          },
+          "confidence": {
+            "type": "number",
+            "title": "Confidence",
+            "default": 1.0
+          },
+          "is_critical_token": {
+            "type": "boolean",
+            "title": "Is Critical Token",
+            "default": false
+          },
+          "critical_token_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Critical Token Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "region_id",
+          "page_number",
+          "text",
+          "normalized_box"
+        ],
+        "title": "TextRegion"
+      },
       "TextSpan": {
         "properties": {
           "span_id": {
@@ -4329,6 +6068,87 @@
           "message"
         ],
         "title": "UpgradeResponse"
+      },
+      "UploadIntentCreate": {
+        "properties": {
+          "case_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Case Id"
+          },
+          "declared_filename": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 1,
+            "title": "Declared Filename"
+          },
+          "declared_mime_type": {
+            "type": "string",
+            "maxLength": 128,
+            "minLength": 3,
+            "title": "Declared Mime Type"
+          },
+          "declared_byte_size": {
+            "type": "integer",
+            "maximum": 20971520.0,
+            "minimum": 1.0,
+            "title": "Declared Byte Size"
+          }
+        },
+        "type": "object",
+        "required": [
+          "case_id",
+          "declared_filename",
+          "declared_mime_type",
+          "declared_byte_size"
+        ],
+        "title": "UploadIntentCreate"
+      },
+      "UploadIntentOut": {
+        "properties": {
+          "intent_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Intent Id"
+          },
+          "case_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Case Id"
+          },
+          "upload_url": {
+            "type": "string",
+            "title": "Upload Url"
+          },
+          "upload_token": {
+            "type": "string",
+            "title": "Upload Token"
+          },
+          "token_expires_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Token Expires At"
+          },
+          "max_byte_size": {
+            "type": "integer",
+            "title": "Max Byte Size"
+          },
+          "storage_kind": {
+            "type": "string",
+            "title": "Storage Kind"
+          }
+        },
+        "type": "object",
+        "required": [
+          "intent_id",
+          "case_id",
+          "upload_url",
+          "upload_token",
+          "token_expires_at",
+          "max_byte_size",
+          "storage_kind"
+        ],
+        "title": "UploadIntentOut"
       },
       "ValidationError": {
         "properties": {

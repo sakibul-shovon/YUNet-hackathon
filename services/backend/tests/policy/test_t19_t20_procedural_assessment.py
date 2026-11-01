@@ -147,3 +147,4 @@ async def test_t20_provider_stage_hierarchy_and_nbq(client: AsyncClient, db_sess
 
     foreign_res = await client.get(f"/v1/cases/{case_id}/assessment", headers=foreign_headers)
     assert foreign_res.status_code == 404
+

@@ -33,3 +33,4 @@
   - Toll-Free Hotline: 16236
   - Physical Letter: Addressed to The General Manager, FICSD, Bangladesh Bank, Motijheel, Dhaka.
 - Mandatory Prerequisites: Proof of Stage 1 grievance submission and ticket number. Unverified direct submissions to BB without provider ticket are typically redirected to the provider first.
+
