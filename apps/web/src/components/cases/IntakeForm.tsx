@@ -2,11 +2,13 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Mic, Upload, Shield, Loader2 } from 'lucide-react';
+import { Mic, Upload, Shield, Loader2, FileText, CheckCircle2 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/Card';
 import { Textarea } from '@/components/ui/Textarea';
 import { Input } from '@/components/ui/Input';
+import { Badge } from '@/components/ui/Badge';
+import { VoiceNoteRecorder } from '@/components/intake/VoiceNoteRecorder';
 
 interface IntakeFormProps {
   locale: string;
@@ -35,6 +37,8 @@ export function IntakeForm({ locale, labels }: IntakeFormProps) {
     'আমি ফেসবুকের একটি পেজ থেকে ৫,৫০০ টাকায় একটি ফোন অর্ডার করেছিলাম। ১৫ অক্টোবর বিকাশে টাকা দিই, কিন্তু তারা আমাকে ব্লক করে দেয় এবং পণ্য পাঠায়নি।'
   );
   const [remedy, setRemedy] = useState('full_refund');
+  const [inputMode, setInputMode] = useState<'type' | 'voice'>('type');
+  const [hasVoiceTranscribed, setHasVoiceTranscribed] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
@@ -122,20 +126,62 @@ export function IntakeForm({ locale, labels }: IntakeFormProps) {
             <CardTitle className="text-base font-bold">{labels.story_label}</CardTitle>
             <CardDescription className="text-xs">{labels.story_hint}</CardDescription>
           </div>
-          <Button type="button" variant="outline" size="sm" className="gap-1.5 text-xs">
-            <Mic className="w-3.5 h-3.5 text-red-600" />
-            <span>{isBangla ? 'ভয়েস ইনপুট' : 'Speak'}</span>
-          </Button>
+          <div className="flex items-center gap-1.5">
+            <Button
+              type="button"
+              variant={inputMode === 'type' ? 'secondary' : 'outline'}
+              size="sm"
+              onClick={() => setInputMode('type')}
+              className="gap-1.5 text-xs h-7"
+            >
+              <FileText className="w-3.5 h-3.5" />
+              <span>{isBangla ? 'টাইপ' : 'Type'}</span>
+            </Button>
+            <Button
+              type="button"
+              variant={inputMode === 'voice' ? 'primary' : 'outline'}
+              size="sm"
+              onClick={() => setInputMode('voice')}
+              className="gap-1.5 text-xs h-7"
+            >
+              <Mic className="w-3.5 h-3.5" />
+              <span>{isBangla ? 'ভয়েস নোট' : 'Voice'}</span>
+            </Button>
+          </div>
         </CardHeader>
-        <CardContent>
-          <Textarea
-            rows={5}
-            value={story}
-            onChange={(e) => setStory(e.target.value)}
-            placeholder={labels.story_placeholder}
-            required
-            className="text-sm font-medium"
-          />
+        <CardContent className="space-y-3">
+          {inputMode === 'voice' ? (
+            <VoiceNoteRecorder
+              locale={locale}
+              onSwitchToTyping={() => setInputMode('type')}
+              onTranscribeSuccess={(transcript) => {
+                setStory(transcript);
+                setHasVoiceTranscribed(true);
+                setInputMode('type');
+              }}
+            />
+          ) : (
+            <>
+              {hasVoiceTranscribed && (
+                <div className="flex items-center gap-2 p-2 rounded bg-success/10 border border-success/30 text-xs text-success">
+                  <CheckCircle2 className="w-4 h-4 shrink-0" />
+                  <span>
+                    {isBangla
+                      ? 'ভয়েস নোট সফলভাবে টেক্সটে রূপান্তর করা হয়েছে। জমা দেওয়ার পূর্বে যেকোনো তথ্য সম্পাদনা করতে পারেন।'
+                      : 'Voice note transcribed successfully. You can review and edit any detail below before submitting.'}
+                  </span>
+                </div>
+              )}
+              <Textarea
+                rows={5}
+                value={story}
+                onChange={(e) => setStory(e.target.value)}
+                placeholder={labels.story_placeholder}
+                required
+                className="text-sm font-medium"
+              />
+            </>
+          )}
         </CardContent>
       </Card>
 

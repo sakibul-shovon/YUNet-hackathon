@@ -185,7 +185,7 @@ class CaseExtractor:
                 break
 
         # 5. Extract Delivery / Defect Status
-        delivery_failure_pat = r"(?:(?:ডেলিভারি|পণ্য|অর্ডার|পার্সেল)(?:টি|টা)?\s*পাইনি|(?:ডেলিভারি|পণ্য|অর্ডার|পার্সেল)(?:টি|টা)?\s*পাই\s*নাই|পাইনি|পাই\s*নাই|not\s*delivered|never\s*received|didn'?t\s*receive|delivery\s*pai\s*nai)"
+        delivery_failure_pat = r"(?:(?:ডেলিভারি|পণ্য|অর্ডার|পার্সেল)(?:টি|টা)?\s*পাইনি|(?:ডেলিভারি|পণ্য|অর্ডার|পার্সেল)(?:টি|টা)?\s*পাই\s*নাই|পাইনি|পাই\s*নাই|not\s*delivered|never\s*received|didn'?t\s*receive|failed\s*to\s*deliver|delivery\s*pai\s*nai)"
         m_del = re.search(delivery_failure_pat, text, re.IGNORECASE)
         if m_del:
             matched_str = m_del.group(0).strip()

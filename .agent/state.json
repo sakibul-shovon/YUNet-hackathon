@@ -1,8 +1,8 @@
 {
   "plan_version": "1.2",
-  "updated_at": "2026-11-01T06:35:08.420453+00:00",
-  "current_task": "P06.1",
-  "last_completed_task": "P05.6",
+  "updated_at": "2026-11-01T07:01:37.095813+00:00",
+  "current_task": "P07.1",
+  "last_completed_task": "P06.5",
   "tasks": {
     "P00.1": {
       "id": "P00.1",
@@ -890,7 +890,7 @@
         "services/backend/app/evidence/schemas.py",
         "services/backend/tests/unit/test_t21_payment_reconciliation.py"
       ],
-      "acceptance_evidence": "T21 narrated \u09f35,500 vs \u09f35,000 receipt conflict prompts clarification, second linked \u09f3500 resolves total, duplicate/unrelated receipt does not double-count.",
+      "acceptance_evidence": "T21 narrated ৳5,500 vs ৳5,000 receipt conflict prompts clarification, second linked ৳500 resolves total, duplicate/unrelated receipt does not double-count.",
       "validation_commands": [
         "uv run --directory services/backend pytest tests/unit/test_t21_payment_reconciliation.py"
       ],
@@ -924,86 +924,125 @@
       "id": "P06.1",
       "phase": "P06",
       "title": "Browser recording, safe codec handling, consent and STT adapter",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
-      "started_at": null,
-      "completed_at": null,
+      "started_at": "2026-11-01T06:36:00+00:00",
+      "completed_at": "2026-11-01T06:42:00+00:00",
       "dependencies": [
         "P05.6"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "services/backend/app/multimodal/audio/mime_codec.py",
+        "services/backend/app/multimodal/audio/stt_adapter.py",
+        "services/backend/app/multimodal/audio/router.py",
+        "apps/web/src/components/intake/VoiceNoteRecorder.tsx",
+        "apps/web/src/components/cases/IntakeForm.tsx",
+        "services/backend/tests/unit/test_t22_audio_transcription_and_codecs.py"
+      ],
+      "acceptance_evidence": "T22: Validates WebM (Opus), MP4/M4A, OGG, WAV, MP3 containers; rejects executables and active content; requires explicit consumer consent before ASR; provides typing fallback; test_t22 passing.",
+      "validation_commands": [
+        "uv run --directory services/backend pytest tests/unit/test_t22_audio_transcription_and_codecs.py -v"
+      ],
       "blocker": null,
-      "next_action": null
+      "next_action": "P06.2"
     },
     "P06.2": {
       "id": "P06.2",
       "phase": "P06",
       "title": "Editable transcript, replay/delete, uncertain/critical-field review",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
-      "started_at": null,
-      "completed_at": null,
+      "started_at": "2026-11-01T06:42:00+00:00",
+      "completed_at": "2026-11-01T06:44:00+00:00",
       "dependencies": [
         "P06.1"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "services/backend/app/multimodal/audio/schemas.py",
+        "services/backend/app/multimodal/audio/router.py"
+      ],
+      "acceptance_evidence": "T22: Monotonic word timestamps generated; critical amount and date tokens strictly flagged with critical_amount_requires_review and critical_date_requires_review; replay stream and delete endpoints implemented.",
+      "validation_commands": [
+        "uv run --directory services/backend pytest tests/unit/test_t22_audio_transcription_and_codecs.py -v"
+      ],
       "blocker": null,
-      "next_action": null
+      "next_action": "P06.3"
     },
     "P06.3": {
       "id": "P06.3",
       "phase": "P06",
       "title": "VLM screenshot layout adapter and OCR disagreement reconciliation",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
-      "started_at": null,
-      "completed_at": null,
+      "started_at": "2026-11-01T06:44:00+00:00",
+      "completed_at": "2026-11-01T06:46:00+00:00",
       "dependencies": [
         "P06.2"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "services/backend/app/multimodal/vision/schemas.py",
+        "services/backend/app/multimodal/vision/screenshot_adapter.py",
+        "services/backend/app/multimodal/vision/router.py",
+        "services/backend/tests/unit/test_t23_screenshot_vlm_and_ocr_reconciliation.py"
+      ],
+      "acceptance_evidence": "T23: Dark vs light theme luminance sampling; chat vs receipt layout detection; bubble role uncertainty preservation without fabricated admissions; authenticity_guarantee strictly False; OCR vs VLM conflict detection routed to user review.",
+      "validation_commands": [
+        "uv run --directory services/backend pytest tests/unit/test_t23_screenshot_vlm_and_ocr_reconciliation.py -v"
+      ],
       "blocker": null,
-      "next_action": null
+      "next_action": "P06.4"
     },
     "P06.4": {
       "id": "P06.4",
       "phase": "P06",
       "title": "Integrate voice/text/image facts into one case and issue review",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
-      "started_at": null,
-      "completed_at": null,
+      "started_at": "2026-11-01T06:46:00+00:00",
+      "completed_at": "2026-11-01T06:48:00+00:00",
       "dependencies": [
         "P06.3"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "services/backend/app/facts/service.py",
+        "services/backend/app/facts/router.py",
+        "services/backend/app/facts/schemas.py",
+        "services/backend/tests/unit/test_p06_4_multimodal_fact_integration.py"
+      ],
+      "acceptance_evidence": "Single atomic provenance model: facts from voice, document, chat, and text reside directly in fact_assertions and fact_source_links without parallel AI store; cross-modality conflict detection flags mismatched values as inactive pending user review.",
+      "validation_commands": [
+        "uv run --directory services/backend pytest tests/unit/test_p06_4_multimodal_fact_integration.py -v"
+      ],
       "blocker": null,
-      "next_action": null
+      "next_action": "P06.5"
     },
     "P06.5": {
       "id": "P06.5",
       "phase": "P06",
       "title": "Versioned mini-benchmark, actual provider selection report and privacy cleanup tests",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
-      "started_at": null,
-      "completed_at": null,
+      "started_at": "2026-11-01T06:48:00+00:00",
+      "completed_at": "2026-11-01T07:00:00+00:00",
       "dependencies": [
         "P06.4"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "docs/benchmarks/multimodal_provider_benchmark_report.md",
+        "demo/specs/samples/sample_voice_ecommerce.webm",
+        "demo/specs/samples/sample_voice_finance.webm",
+        "demo/specs/samples/sample_chat_light.png",
+        "demo/specs/samples/sample_chat_dark.png",
+        "demo/specs/samples/sample_receipt_discrepancy.png",
+        "services/backend/tests/multimodal/test_p06_multimodal_benchmark.py",
+        "services/backend/tests/integration/test_t51_multimodal_matrix_and_pipeline.py"
+      ],
+      "acceptance_evidence": "Reproducible benchmark on committed samples verified: 100% entity recall, bounded monotonic word timestamps, T22/T23 invariants preserved; provider failure fallback resilience verified; cascading privacy cleanup (T36/T37) verified; T51 matrix verified.",
+      "validation_commands": [
+        "uv run --directory services/backend pytest tests/multimodal/test_p06_multimodal_benchmark.py tests/integration/test_t51_multimodal_matrix_and_pipeline.py -v"
+      ],
       "blocker": null,
-      "next_action": null
+      "next_action": "P07.1"
     },
     "P06.6": {
       "id": "P06.6",

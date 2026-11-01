@@ -63,3 +63,22 @@ class FactResolutionOut(BaseModel):
     rationale: str | None = None
     case_version: int
     resolved_at: datetime.datetime
+
+
+class MultimodalFactProposal(BaseModel):
+    field_name: str = Field(..., max_length=128)
+    field_type: str = Field(..., pattern="^(money|date|boolean|string|select)$")
+    raw_value: Any
+    original_text: str
+    origin: str = Field("user_statement", max_length=64)  # 'voice_transcript', 'document_extraction', 'chat_screenshot'
+    source_type: str = Field("evidence_span", max_length=64)
+    locator_meta: dict[str, Any] | None = None
+
+
+class MultimodalProposalResult(BaseModel):
+    assertion: FactAssertionOut
+    source_link_id: uuid.UUID
+    has_conflict: bool = False
+    conflicting_assertion_id: uuid.UUID | None = None
+    conflict_message_en: str | None = None
+    conflict_message_bn: str | None = None

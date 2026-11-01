@@ -13,6 +13,8 @@ from app.extraction.router import router as extraction_router
 from app.facts.router import router as facts_router
 from app.identity.router import router as identity_router
 from app.knowledge.router import router as knowledge_router
+from app.multimodal.audio.router import router as audio_router
+from app.multimodal.vision.router import router as vision_router
 from app.policy.router import router as policy_router
 
 app = FastAPI(
@@ -88,6 +90,8 @@ app.include_router(extraction_router)
 app.include_router(policy_router)
 app.include_router(actions_router)
 app.include_router(evidence_router)
+app.include_router(audio_router)
+app.include_router(vision_router)
 
 app.include_router(public_router, prefix="/api")
 app.include_router(identity_router, prefix="/api")
@@ -98,3 +102,5 @@ app.include_router(extraction_router, prefix="/api")
 app.include_router(policy_router, prefix="/api")
 app.include_router(actions_router, prefix="/api")
 app.include_router(evidence_router, prefix="/api")
+app.include_router(audio_router, prefix="/api")
+app.include_router(vision_router, prefix="/api")

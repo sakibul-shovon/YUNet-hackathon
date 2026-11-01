@@ -14,6 +14,8 @@ from app.facts.schemas import (
     FactAssertionOut,
     FactReviewOut,
     FactReviewSubmission,
+    MultimodalFactProposal,
+    MultimodalProposalResult,
 )
 from app.identity.models import Principal
 
@@ -122,6 +124,79 @@ class FactService:
         await db.commit()
         await db.refresh(assertion)
         return FactAssertionOut.model_validate(assertion)
+
+    @classmethod
+    async def propose_multimodal_fact(
+        cls,
+        case_id: uuid.UUID,
+        proposal: MultimodalFactProposal,
+        principal: Principal,
+        db: AsyncSession,
+    ) -> MultimodalProposalResult:
+        """P06.4: Unified atomic provenance model integrating voice, text, and visual facts into the primary case store."""
+        case = await cls.get_authorized_case(case_id, principal, db)
+
+        typed_val, orig_text = cls.normalize_value(
+            proposal.field_type,
+            proposal.raw_value,
+            proposal.original_text,
+        )
+
+        # Check for existing active assertion for the same field (cross-modality conflict detection)
+        stmt_existing = select(FactAssertion).where(
+            FactAssertion.case_id == case_id,
+            FactAssertion.field_name == proposal.field_name,
+            FactAssertion.is_active == True,
+        )
+        res_existing = await db.execute(stmt_existing)
+        existing = res_existing.scalar_one_or_none()
+
+        has_conflict = False
+        conflicting_id = None
+        conflict_msg_en = None
+        conflict_msg_bn = None
+
+        if existing and existing.typed_value != typed_val:
+            has_conflict = True
+            conflicting_id = existing.id
+            conflict_msg_en = f"Conflict detected for {proposal.field_name}: Existing {existing.origin} ({existing.original_text}) vs new {proposal.origin} ({orig_text}). Routed to user review."
+            conflict_msg_bn = f"{proposal.field_name} তথ্যের ক্ষেত্রে অমিল পাওয়া গেছে: পূর্বের {existing.origin} ({existing.original_text}) বনাম নতুন {proposal.origin} ({orig_text})। ব্যবহারকারীর পর্যালোচনার জন্য পাঠানো হয়েছে।"
+
+        assertion = FactAssertion(
+            id=uuid.uuid4(),
+            case_id=case.id,
+            field_name=proposal.field_name,
+            field_type=proposal.field_type,
+            typed_value=typed_val,
+            original_text=orig_text,
+            origin=proposal.origin,
+            asserting_actor_id=principal.id,
+            created_case_version=case.row_version,
+            is_active=not has_conflict,
+            created_at=datetime.datetime.now(datetime.UTC),
+        )
+        db.add(assertion)
+        await db.flush()
+
+        source_link = FactSourceLink(
+            id=uuid.uuid4(),
+            assertion_id=assertion.id,
+            source_type=proposal.source_type,
+            locator_meta=proposal.locator_meta,
+            created_at=datetime.datetime.now(datetime.UTC),
+        )
+        db.add(source_link)
+        await db.commit()
+        await db.refresh(assertion)
+
+        return MultimodalProposalResult(
+            assertion=FactAssertionOut.model_validate(assertion),
+            source_link_id=source_link.id,
+            has_conflict=has_conflict,
+            conflicting_assertion_id=conflicting_id,
+            conflict_message_en=conflict_msg_en,
+            conflict_message_bn=conflict_msg_bn,
+        )
 
     @classmethod
     async def get_assertions(

@@ -45,6 +45,33 @@ export interface AssessmentRouteOut {
   condition_trace: unknown[];
 }
 
+export interface AudioTranscriptOut {
+  case_id: string;
+  audio_evidence_id?: unknown;
+  transcript_text: string;
+  language: string;
+  overall_confidence: number;
+  duration_seconds: number;
+  words?: unknown[];
+  uncertain_spans?: unknown[];
+  consent_recorded?: boolean;
+  created_at: string;
+}
+
+export interface Body_transcribe_case_audio_api_v1_cases__case_id__audio_transcribe_post {
+  audio_file: string;
+  consent_granted: boolean;
+  language_hint?: string;
+  client_duration?: number;
+}
+
+export interface Body_transcribe_case_audio_v1_cases__case_id__audio_transcribe_post {
+  audio_file: string;
+  consent_granted: boolean;
+  language_hint?: string;
+  client_duration?: number;
+}
+
 export interface CaseCreate {
   title: string;
   jurisdiction?: string;
@@ -97,6 +124,15 @@ export interface CaseUpdate {
   incident_date?: unknown;
   story_narrative?: unknown;
   lifecycle_status?: unknown;
+}
+
+export interface ChatBubbleProposal {
+  bubble_id: string;
+  text: string;
+  speaker_role?: string;
+  speaker_role_confidence?: number;
+  timestamp_text?: unknown;
+  normalized_box?: unknown;
 }
 
 export interface ConsentCreate {
@@ -281,6 +317,25 @@ export interface KnowledgeReleaseOut {
   promoted_at?: unknown;
 }
 
+export interface MultimodalFactProposal {
+  field_name: string;
+  field_type: string;
+  raw_value: unknown;
+  original_text: string;
+  origin?: string;
+  source_type?: string;
+  locator_meta?: unknown;
+}
+
+export interface MultimodalProposalResult {
+  assertion: unknown;
+  source_link_id: string;
+  has_conflict?: boolean;
+  conflicting_assertion_id?: unknown;
+  conflict_message_en?: unknown;
+  conflict_message_bn?: unknown;
+}
+
 export interface NextBestQuestion {
   question_key: string;
   fact_field: string;
@@ -290,6 +345,17 @@ export interface NextBestQuestion {
   options?: unknown;
   priority: string;
   relevance_rationale: string;
+}
+
+export interface OCRDisagreement {
+  field_name: string;
+  ocr_detected_value: unknown;
+  vlm_detected_value: unknown;
+  ocr_confidence: number;
+  vlm_confidence: number;
+  resolution_status?: string;
+  guidance_en: string;
+  guidance_bn: string;
 }
 
 export interface PaymentReconciliationResult {
@@ -360,6 +426,20 @@ export interface ReviewSubmission {
 export interface RouteStatus {
 }
 
+export interface ScreenshotAnalysisResult {
+  evidence_id: string;
+  case_id: string;
+  detected_layout: string;
+  theme: string;
+  authenticity_guarantee?: boolean;
+  bubbles?: unknown[];
+  proposed_facts?: unknown[];
+  ocr_disagreements?: unknown[];
+  disclaimer_en?: string;
+  disclaimer_bn?: string;
+  analyzed_at: string;
+}
+
 export interface SourceCandidateOut {
   id: string;
   family_id: string;
@@ -399,6 +479,14 @@ export interface TextSpan {
   end_offset: number;
 }
 
+export interface UncertainSpan {
+  span: string;
+  start_time: number;
+  end_time: number;
+  reason: string;
+  suggested_alternatives?: unknown[];
+}
+
 export interface UpgradeRequest {
   verified_user_id: string;
   verified_email: string;
@@ -435,4 +523,11 @@ export interface ValidationError {
   type: string;
   input?: unknown;
   ctx?: Record<string, unknown>;
+}
+
+export interface WordTimestamp {
+  word: string;
+  start_time: number;
+  end_time: number;
+  confidence?: number;
 }
