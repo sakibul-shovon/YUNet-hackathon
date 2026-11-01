@@ -7,7 +7,7 @@
   - **P02 (Identity, Ownership, Persistence & Secure Sessions):** 100% COMPLETE & VERIFIED (`93189a59d0284126d7216f3a76d5149d45ba47f9` / `e64b0f77ea6bb9d5c316496ec8c79c3143ad45d2`)
   - **P03 (Governed Initial Sources & Deterministic Policy Skeleton):** 100% COMPLETE & VERIFIED (`f0e857c6cd946be984cfd2f8f3e79673db4a6e87`)
   - **P04 (First Text-to-Action Vertical Slice):** 100% COMPLETE & VERIFIED (`de01a45460639bda1bb6dfe2e1769826c31f8375`)
-  - **P05 (Secure Evidence Vault & Provenance Graph):** 100% COMPLETE & READY TO PUSH
+  - **P05 (Secure Evidence Vault & Provenance Graph):** 100% COMPLETE & VERIFIED (`f2b371aa607d1f1fd3261cecb754c0e783fe3600`)
 - **Active Phase:** P06 (Guided intake, multimodal timeline & voice note ingestion)
 - **Active Task:** P06.1 (Browser recording, safe codec handling, consent and STT adapter)
 - **Last Completed Task:** P05.6 (Evidence removal and cascading invalidation/deletion, orphan cleanup)
@@ -18,6 +18,7 @@
   - P02 SHA: `e64b0f77ea6bb9d5c316496ec8c79c3143ad45d2` (Verified on `origin/main`)
   - P03 SHA: `f0e857c6cd946be984cfd2f8f3e79673db4a6e87` (Verified on `origin/main`)
   - P04 SHA: `de01a45460639bda1bb6dfe2e1769826c31f8375` (Verified on `origin/main`)
+  - P05 SHA: `f2b371aa607d1f1fd3261cecb754c0e783fe3600` (Verified on `origin/main`)
 
 ## What Works
 - **Phase P05 (Secure Evidence Vault & Provenance Graph):**
