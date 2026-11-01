@@ -245,13 +245,50 @@ def cmd_dev(args):
     print("==================================================")
     print(" ClaimCraft BD — Local Development Stack")
     print("==================================================")
-    print("To run local development services concurrently:")
-    print("  Terminal 1 (Backend API):")
-    print("    cd services/backend && uv run uvicorn app.main:app --reload --port 8000")
-    print("  Terminal 2 (Web UI):")
-    print("    pnpm --filter @claimcraft/web dev")
-    print("Or run containers via:")
-    print("    docker compose -f infra/compose.yaml up")
+
+    # 1. Clean stale Next.js build cache to avoid EINVAL on Windows
+    next_dir = ROOT_DIR / "apps" / "web" / ".next"
+    if next_dir.exists():
+        import shutil
+        shutil.rmtree(next_dir, ignore_errors=True)
+
+    backend_dir = ROOT_DIR / "services" / "backend"
+    web_dir = ROOT_DIR
+
+    print("Starting Backend API on http://127.0.0.1:8000...")
+    backend_proc = subprocess.Popen(
+        ["uv", "run", "uvicorn", "app.main:app", "--host", "127.0.0.1", "--port", "8000", "--reload"],
+        cwd=backend_dir,
+    )
+
+    print("Starting Web UI on http://localhost:3000...")
+    pnpm_cmd = get_pnpm_cmd()
+    web_proc = subprocess.Popen(
+        [pnpm_cmd, "--filter", "@claimcraft/web", "dev"],
+        cwd=web_dir,
+    )
+
+    print("\nClaimCraft BD dev services are running:")
+    print("  - Backend API: http://127.0.0.1:8000")
+    print("  - Web Frontend: http://localhost:3000")
+    print("\nPress Ctrl+C to terminate both services.\n")
+
+    import time
+    try:
+        while True:
+            b_ret = backend_proc.poll()
+            w_ret = web_proc.poll()
+            if b_ret is not None or w_ret is not None:
+                break
+            time.sleep(1)
+    except KeyboardInterrupt:
+        print("\nShutting down dev services...")
+    finally:
+        for p in (backend_proc, web_proc):
+            try:
+                p.terminate()
+            except Exception:
+                pass
 
 
 def main():
