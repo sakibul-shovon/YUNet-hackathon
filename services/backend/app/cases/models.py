@@ -99,6 +99,11 @@ class Case(Base):
         back_populates="case",
         cascade="all, delete-orphan",
     )
+    reminders: Mapped[list["CaseReminder"]] = relationship(
+        "CaseReminder",
+        back_populates="case",
+        cascade="all, delete-orphan",
+    )
 
 
 class CaseSnapshot(Base):
@@ -298,3 +303,42 @@ class OutboxMessage(Base):
     )
     attempts: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
     last_error: Mapped[str | None] = mapped_column(Text, nullable=True)
+
+
+class CaseReminder(Base):
+    __tablename__ = "case_reminders"
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        Uuid(as_uuid=True),
+        primary_key=True,
+        default=uuid.uuid4,
+    )
+    case_id: Mapped[uuid.UUID] = mapped_column(
+        Uuid(as_uuid=True),
+        ForeignKey("cases.id", ondelete="CASCADE"),
+        index=True,
+        nullable=False,
+    )
+    principal_id: Mapped[uuid.UUID] = mapped_column(
+        Uuid(as_uuid=True),
+        ForeignKey("principals.id", ondelete="CASCADE"),
+        index=True,
+        nullable=False,
+    )
+    reminder_title: Mapped[str] = mapped_column(String(255), nullable=False)
+    remind_at: Mapped[str] = mapped_column(String(64), nullable=False)  # ISO 8601 UTC string
+    category: Mapped[str] = mapped_column(
+        String(64),
+        default="personal_follow_up",
+        nullable=False,
+    )  # 'personal_follow_up', 'seller_response_sla', 'portal_check'
+    notes: Mapped[str | None] = mapped_column(Text, nullable=True)
+    is_completed: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
+    created_at: Mapped[datetime.datetime] = mapped_column(
+        DateTime(timezone=True),
+        default=lambda: datetime.datetime.now(datetime.UTC),
+        nullable=False,
+    )
+
+    case: Mapped["Case"] = relationship("Case", back_populates="reminders")
+

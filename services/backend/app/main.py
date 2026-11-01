@@ -7,6 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.actions.router import router as actions_router
 from app.cases.issue_router import router as issue_router
 from app.cases.router import router as cases_router
+from app.cases.timeline_router import router as timeline_router
 from app.core.config import settings
 from app.core.public_router import router as public_router
 from app.evidence.router import router as evidence_router
@@ -98,6 +99,7 @@ app.include_router(audio_router)
 app.include_router(vision_router)
 app.include_router(retrieval_router)
 app.include_router(operations_router)
+app.include_router(timeline_router)
 
 app.include_router(public_router, prefix="/api")
 app.include_router(identity_router, prefix="/api")
@@ -113,3 +115,4 @@ app.include_router(audio_router, prefix="/api")
 app.include_router(vision_router, prefix="/api")
 app.include_router(retrieval_router, prefix="/api")
 app.include_router(operations_router, prefix="/api")
+app.include_router(timeline_router, prefix="/api")

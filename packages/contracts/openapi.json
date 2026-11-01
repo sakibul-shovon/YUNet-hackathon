@@ -3635,6 +3635,333 @@
         }
       }
     },
+    "/v1/cases/{case_id}/activity/updates": {
+      "post": {
+        "tags": [
+          "Case Living Timeline, Updates, Diff & Reminders"
+        ],
+        "summary": "Record Case External Update",
+        "description": "P10.1 & T38: Records user-reported external milestone, update, or response. Emits semantic decision diff.",
+        "operationId": "record_case_external_update_v1_cases__case_id__activity_updates_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExternalUpdateCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimelineEventOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/cases/{case_id}/activity/timeline": {
+      "get": {
+        "tags": [
+          "Case Living Timeline, Updates, Diff & Reminders"
+        ],
+        "summary": "Get Case Timeline",
+        "description": "P10.1 & T38: Returns chronological case activity timeline with origin visibility.",
+        "operationId": "get_case_timeline_v1_cases__case_id__activity_timeline_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TimelineEventOut"
+                  },
+                  "title": "Response Get Case Timeline V1 Cases  Case Id  Activity Timeline Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/cases/{case_id}/snapshots": {
+      "get": {
+        "tags": [
+          "Case Living Timeline, Updates, Diff & Reminders"
+        ],
+        "summary": "List Case Snapshots",
+        "description": "P10.2 & T39: Lists versioned immutable snapshots for the case.",
+        "operationId": "list_case_snapshots_v1_cases__case_id__snapshots_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CaseSnapshotOut"
+                  },
+                  "title": "Response List Case Snapshots V1 Cases  Case Id  Snapshots Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/cases/{case_id}/reminders": {
+      "post": {
+        "tags": [
+          "Case Living Timeline, Updates, Diff & Reminders"
+        ],
+        "summary": "Create Case Reminder",
+        "description": "P10.4 & T40: Sets personal reminder with user-selected follow-up time.",
+        "operationId": "create_case_reminder_v1_cases__case_id__reminders_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReminderCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReminderOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Case Living Timeline, Updates, Diff & Reminders"
+        ],
+        "summary": "List Case Reminders",
+        "description": "P10.4 & T40: Lists active reminders for a case.",
+        "operationId": "list_case_reminders_v1_cases__case_id__reminders_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ReminderOut"
+                  },
+                  "title": "Response List Case Reminders V1 Cases  Case Id  Reminders Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/cases/{case_id}/reminders/{reminder_id}": {
+      "delete": {
+        "tags": [
+          "Case Living Timeline, Updates, Diff & Reminders"
+        ],
+        "summary": "Cancel Case Reminder",
+        "description": "P10.4 & T40: Cancels a personal reminder.",
+        "operationId": "cancel_case_reminder_v1_cases__case_id__reminders__reminder_id__delete",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "reminder_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Reminder Id"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/capabilities": {
       "get": {
         "tags": [
@@ -7204,6 +7531,333 @@
           }
         }
       }
+    },
+    "/api/v1/cases/{case_id}/activity/updates": {
+      "post": {
+        "tags": [
+          "Case Living Timeline, Updates, Diff & Reminders"
+        ],
+        "summary": "Record Case External Update",
+        "description": "P10.1 & T38: Records user-reported external milestone, update, or response. Emits semantic decision diff.",
+        "operationId": "record_case_external_update_api_v1_cases__case_id__activity_updates_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExternalUpdateCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimelineEventOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{case_id}/activity/timeline": {
+      "get": {
+        "tags": [
+          "Case Living Timeline, Updates, Diff & Reminders"
+        ],
+        "summary": "Get Case Timeline",
+        "description": "P10.1 & T38: Returns chronological case activity timeline with origin visibility.",
+        "operationId": "get_case_timeline_api_v1_cases__case_id__activity_timeline_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TimelineEventOut"
+                  },
+                  "title": "Response Get Case Timeline Api V1 Cases  Case Id  Activity Timeline Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{case_id}/snapshots": {
+      "get": {
+        "tags": [
+          "Case Living Timeline, Updates, Diff & Reminders"
+        ],
+        "summary": "List Case Snapshots",
+        "description": "P10.2 & T39: Lists versioned immutable snapshots for the case.",
+        "operationId": "list_case_snapshots_api_v1_cases__case_id__snapshots_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CaseSnapshotOut"
+                  },
+                  "title": "Response List Case Snapshots Api V1 Cases  Case Id  Snapshots Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{case_id}/reminders": {
+      "post": {
+        "tags": [
+          "Case Living Timeline, Updates, Diff & Reminders"
+        ],
+        "summary": "Create Case Reminder",
+        "description": "P10.4 & T40: Sets personal reminder with user-selected follow-up time.",
+        "operationId": "create_case_reminder_api_v1_cases__case_id__reminders_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReminderCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReminderOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Case Living Timeline, Updates, Diff & Reminders"
+        ],
+        "summary": "List Case Reminders",
+        "description": "P10.4 & T40: Lists active reminders for a case.",
+        "operationId": "list_case_reminders_api_v1_cases__case_id__reminders_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ReminderOut"
+                  },
+                  "title": "Response List Case Reminders Api V1 Cases  Case Id  Reminders Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{case_id}/reminders/{reminder_id}": {
+      "delete": {
+        "tags": [
+          "Case Living Timeline, Updates, Diff & Reminders"
+        ],
+        "summary": "Cancel Case Reminder",
+        "description": "P10.4 & T40: Cancels a personal reminder.",
+        "operationId": "cancel_case_reminder_api_v1_cases__case_id__reminders__reminder_id__delete",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "reminder_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Reminder Id"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -7855,6 +8509,47 @@
           "updated_at"
         ],
         "title": "CaseOut"
+      },
+      "CaseSnapshotOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "case_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Case Id"
+          },
+          "version": {
+            "type": "integer",
+            "title": "Version"
+          },
+          "canonical_input_hash": {
+            "type": "string",
+            "title": "Canonical Input Hash"
+          },
+          "issue_state": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Issue State"
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "case_id",
+          "version",
+          "canonical_input_hash",
+          "issue_state",
+          "created_at"
+        ],
+        "title": "CaseSnapshotOut"
       },
       "CaseUpdate": {
         "properties": {
@@ -8932,6 +9627,62 @@
           "created_at"
         ],
         "title": "EvidenceSpanLinkOut"
+      },
+      "ExternalUpdateCreate": {
+        "properties": {
+          "update_type": {
+            "type": "string",
+            "title": "Update Type"
+          },
+          "authority_or_channel": {
+            "type": "string",
+            "title": "Authority Or Channel"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description"
+          },
+          "reference_number": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reference Number"
+          },
+          "outcome_status": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Outcome Status"
+          },
+          "additional_facts": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Additional Facts"
+          },
+          "expected_version": {
+            "type": "integer",
+            "title": "Expected Version",
+            "description": "Mandatory expected row_version for optimistic concurrency (T41)"
+          }
+        },
+        "type": "object",
+        "required": [
+          "update_type",
+          "authority_or_channel",
+          "description",
+          "expected_version"
+        ],
+        "title": "ExternalUpdateCreate"
       },
       "FactAssertionCreate": {
         "properties": {
@@ -10680,6 +11431,106 @@
         ],
         "title": "ReleaseBuildRequest"
       },
+      "ReminderCreate": {
+        "properties": {
+          "reminder_title": {
+            "type": "string",
+            "title": "Reminder Title"
+          },
+          "remind_at": {
+            "type": "string",
+            "title": "Remind At"
+          },
+          "category": {
+            "type": "string",
+            "title": "Category",
+            "default": "personal_follow_up"
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notes"
+          }
+        },
+        "type": "object",
+        "required": [
+          "reminder_title",
+          "remind_at"
+        ],
+        "title": "ReminderCreate"
+      },
+      "ReminderOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "case_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Case Id"
+          },
+          "reminder_title": {
+            "type": "string",
+            "title": "Reminder Title"
+          },
+          "remind_at": {
+            "type": "string",
+            "title": "Remind At"
+          },
+          "category": {
+            "type": "string",
+            "title": "Category"
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notes"
+          },
+          "is_completed": {
+            "type": "boolean",
+            "title": "Is Completed"
+          },
+          "is_legal_caution": {
+            "type": "boolean",
+            "title": "Is Legal Caution",
+            "default": false
+          },
+          "disclaimer_notice": {
+            "type": "string",
+            "title": "Disclaimer Notice",
+            "default": "Personal reminder for tracking convenience only. Does not alter or guarantee statutory limitation periods under CRPA 2009 Section 60 (T40)."
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "case_id",
+          "reminder_title",
+          "remind_at",
+          "category",
+          "is_completed",
+          "created_at"
+        ],
+        "title": "ReminderOut"
+      },
       "ReviewResultOut": {
         "properties": {
           "id": {
@@ -10873,6 +11724,68 @@
           "analyzed_at"
         ],
         "title": "ScreenshotAnalysisResult"
+      },
+      "SemanticDecisionDiff": {
+        "properties": {
+          "prior_version": {
+            "type": "integer",
+            "title": "Prior Version"
+          },
+          "new_version": {
+            "type": "integer",
+            "title": "New Version"
+          },
+          "prior_primary_action": {
+            "type": "string",
+            "title": "Prior Primary Action"
+          },
+          "new_primary_action": {
+            "type": "string",
+            "title": "New Primary Action"
+          },
+          "is_decision_changed": {
+            "type": "boolean",
+            "title": "Is Decision Changed"
+          },
+          "changed_routes": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Changed Routes"
+          },
+          "unchanged_routes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Unchanged Routes"
+          },
+          "changed_actions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Changed Actions"
+          },
+          "unchanged_actions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Unchanged Actions"
+          }
+        },
+        "type": "object",
+        "required": [
+          "prior_version",
+          "new_version",
+          "prior_primary_action",
+          "new_primary_action",
+          "is_decision_changed"
+        ],
+        "title": "SemanticDecisionDiff"
       },
       "SourceCandidateOut": {
         "properties": {
@@ -11099,6 +12012,82 @@
           "end_offset"
         ],
         "title": "TextSpan"
+      },
+      "TimelineEventOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "case_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Case Id"
+          },
+          "event_sequence": {
+            "type": "integer",
+            "title": "Event Sequence"
+          },
+          "event_type": {
+            "type": "string",
+            "title": "Event Type"
+          },
+          "actor_type": {
+            "type": "string",
+            "title": "Actor Type"
+          },
+          "origin": {
+            "type": "string",
+            "title": "Origin"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description"
+          },
+          "reference_number": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reference Number"
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At"
+          },
+          "decision_diff": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SemanticDecisionDiff"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "case_id",
+          "event_sequence",
+          "event_type",
+          "actor_type",
+          "origin",
+          "title",
+          "description",
+          "created_at"
+        ],
+        "title": "TimelineEventOut"
       },
       "UncertainSpan": {
         "properties": {

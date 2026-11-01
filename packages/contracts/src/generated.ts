@@ -156,6 +156,15 @@ export interface CaseOut {
   updated_at: string;
 }
 
+export interface CaseSnapshotOut {
+  id: string;
+  case_id: string;
+  version: number;
+  canonical_input_hash: string;
+  issue_state: Record<string, unknown>;
+  created_at: string;
+}
+
 export interface CaseUpdate {
   expected_version: number;
   title?: unknown;
@@ -340,6 +349,16 @@ export interface EvidenceSpanLinkOut {
   normalized_box?: unknown;
   selected_text?: unknown;
   created_at: string;
+}
+
+export interface ExternalUpdateCreate {
+  update_type: string;
+  authority_or_channel: string;
+  description: string;
+  reference_number?: unknown;
+  outcome_status?: unknown;
+  additional_facts?: Record<string, unknown>;
+  expected_version: number;
 }
 
 export interface FactAssertionCreate {
@@ -667,6 +686,26 @@ export interface ReleaseBuildRequest {
   rules?: unknown[];
 }
 
+export interface ReminderCreate {
+  reminder_title: string;
+  remind_at: string;
+  category?: string;
+  notes?: unknown;
+}
+
+export interface ReminderOut {
+  id: string;
+  case_id: string;
+  reminder_title: string;
+  remind_at: string;
+  category: string;
+  notes?: unknown;
+  is_completed: boolean;
+  is_legal_caution?: boolean;
+  disclaimer_notice?: string;
+  created_at: string;
+}
+
 export interface ReviewResultOut {
   id: string;
   source_version_id: string;
@@ -706,6 +745,18 @@ export interface ScreenshotAnalysisResult {
   disclaimer_en?: string;
   disclaimer_bn?: string;
   analyzed_at: string;
+}
+
+export interface SemanticDecisionDiff {
+  prior_version: number;
+  new_version: number;
+  prior_primary_action: string;
+  new_primary_action: string;
+  is_decision_changed: boolean;
+  changed_routes?: unknown[];
+  unchanged_routes?: unknown[];
+  changed_actions?: unknown[];
+  unchanged_actions?: unknown[];
 }
 
 export interface SourceCandidateOut {
@@ -751,6 +802,20 @@ export interface TextSpan {
   text: string;
   start_offset: number;
   end_offset: number;
+}
+
+export interface TimelineEventOut {
+  id: string;
+  case_id: string;
+  event_sequence: number;
+  event_type: string;
+  actor_type: string;
+  origin: string;
+  title: string;
+  description: string;
+  reference_number?: unknown;
+  created_at: string;
+  decision_diff?: unknown;
 }
 
 export interface UncertainSpan {

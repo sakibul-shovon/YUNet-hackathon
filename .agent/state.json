@@ -1,8 +1,8 @@
 {
   "plan_version": "1.2",
-  "updated_at": "2026-11-01T07:58:46.820181+00:00",
-  "current_task": "P10.1",
-  "last_completed_task": "P09.7",
+  "updated_at": "2026-11-01T08:12:35.495345+00:00",
+  "current_task": "P11.1",
+  "last_completed_task": "P10.5",
   "tasks": {
     "P00.1": {
       "id": "P00.1",
@@ -1478,15 +1478,20 @@
       "id": "P10.1",
       "phase": "P10",
       "title": "User-reported response/submission/outcome update UI and private references",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
       "started_at": null,
-      "completed_at": null,
+      "completed_at": "2026-11-01T08:12:35.495345+00:00",
       "dependencies": [
         "P09.7"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
+      "changed_paths": [
+        "services/backend/app/cases/timeline_service.py",
+        "services/backend/app/cases/timeline_router.py",
+        "apps/web/src/components/cases/LivingCaseActivityClient.tsx",
+        "apps/web/src/app/[locale]/cases/[id]/activity/page.tsx"
+      ],
+      "acceptance_evidence": "User-reported response/submission/outcome updates recorded with explicit user_reported origin; external reference numbers securely stored; no fabricated government receipt (T38).",
       "validation_commands": [],
       "blocker": null,
       "next_action": null
@@ -1495,15 +1500,18 @@
       "id": "P10.2",
       "phase": "P10",
       "title": "Dependency-based reassessment, prior/new snapshots and semantic decision diff",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
       "started_at": null,
-      "completed_at": null,
+      "completed_at": "2026-11-01T08:12:35.495345+00:00",
       "dependencies": [
         "P10.1"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
+      "changed_paths": [
+        "services/backend/app/cases/timeline_service.py",
+        "services/backend/tests/cases/test_p10_living_case_and_decision_changes.py"
+      ],
+      "acceptance_evidence": "Dependency-based procedural reassessment; immutable CaseSnapshot creation; semantic decision diff tracking changed routes/actions and guaranteeing stability of unrelated facts/actions (T39).",
       "validation_commands": [],
       "blocker": null,
       "next_action": null
@@ -1512,15 +1520,18 @@
       "id": "P10.3",
       "phase": "P10",
       "title": "Superseded document/assessment warnings and artifact version history",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
       "started_at": null,
-      "completed_at": null,
+      "completed_at": "2026-11-01T08:12:35.495345+00:00",
       "dependencies": [
         "P10.2"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
+      "changed_paths": [
+        "services/backend/app/cases/timeline_service.py",
+        "apps/web/src/components/cases/LivingCaseActivityClient.tsx"
+      ],
+      "acceptance_evidence": "Snapshot version history tracked with canonical input hash; re-export produces new version while preserving historical version snapshots.",
       "validation_commands": [],
       "blocker": null,
       "next_action": null
@@ -1529,15 +1540,21 @@
       "id": "P10.4",
       "phase": "P10",
       "title": "In-app reminders, user-selected follow-up times and cancellation",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
       "started_at": null,
-      "completed_at": null,
+      "completed_at": "2026-11-01T08:12:35.495345+00:00",
       "dependencies": [
         "P10.3"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
+      "changed_paths": [
+        "services/backend/app/cases/models.py",
+        "services/backend/migrations/versions/0005_living_case_reminders.py",
+        "services/backend/app/cases/timeline_service.py",
+        "services/backend/app/cases/timeline_router.py",
+        "apps/web/src/components/cases/LivingCaseActivityClient.tsx"
+      ],
+      "acceptance_evidence": "In-app personal follow-up reminders with timezone-safe UTC scheduling; personal timer explicitly distinguished from Section 60 statutory limitation caution; cancellation supported (T40).",
       "validation_commands": [],
       "blocker": null,
       "next_action": null
@@ -1546,15 +1563,19 @@
       "id": "P10.5",
       "phase": "P10",
       "title": "Resume stale tab, race cancellation and returning guest upgrade experience",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
       "started_at": null,
-      "completed_at": null,
+      "completed_at": "2026-11-01T08:12:35.495345+00:00",
       "dependencies": [
         "P10.4"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
+      "changed_paths": [
+        "services/backend/app/cases/timeline_service.py",
+        "apps/web/src/components/cases/LivingCaseActivityClient.tsx",
+        "services/backend/tests/cases/test_p10_living_case_and_decision_changes.py"
+      ],
+      "acceptance_evidence": "Stale browser tab race prevention with expected_version; 409 Conflict returned on stale submission; UI displays reload prompt to prevent overwriting newer edits (T41).",
       "validation_commands": [],
       "blocker": null,
       "next_action": null
