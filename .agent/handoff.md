@@ -16,7 +16,7 @@
   - P01 SHA: `5472bb63612157ded81cca5e3fef9763e4ec0f27` (Verified on `origin/main`)
   - P02 SHA: `e64b0f77ea6bb9d5c316496ec8c79c3143ad45d2` (Verified on `origin/main`)
   - P03 SHA: `f0e857c6cd946be984cfd2f8f3e79673db4a6e87` (Verified on `origin/main`)
-  - P04 SHA: Pending push
+  - P04 SHA: `de01a45460639bda1bb6dfe2e1769826c31f8375` (Verified on `origin/main`)
 
 ## What Works
 - **Phase P00 (Foundation & Compatibility):**
