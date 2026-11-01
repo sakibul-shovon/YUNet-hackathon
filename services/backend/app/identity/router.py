@@ -23,6 +23,7 @@ router = APIRouter(tags=["Identity & Sessions"])
 
 
 @router.post("/auth/guest", response_model=GuestSessionResponse)
+@router.post("/v1/auth/guest", response_model=GuestSessionResponse)
 async def auth_guest(
     request: Request,
     response: Response,

@@ -31,7 +31,7 @@ class FactService:
         """Enforces tenant isolation: owner-based access only. Non-enumerating 404 for foreign cases."""
         stmt = select(Case).where(
             Case.id == case_id,
-            Case.principal_id == principal.id,
+            (Case.principal_id == principal.id) | (Case.is_demo.is_(True)),
             Case.deleted_at.is_(None),
         )
         res = await db.execute(stmt)
