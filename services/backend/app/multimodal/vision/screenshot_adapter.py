@@ -1,5 +1,6 @@
 import datetime
 import io
+import re
 import uuid
 from typing import Any
 
@@ -129,10 +130,17 @@ class ScreenshotAdapter:
 
         # 4. Proposed facts from visual/layout analysis
         proposed_facts: list[dict[str, Any]] = []
-        if is_payment or any(k in lower_ocr for k in ("টাকা", "bdt", "5500", "5000")):
+        if is_payment or any(k in lower_ocr for k in ("টাকা", "bdt", "trx", "receipt", "paid", "amount", "5500", "5000")):
             # VLM visual extraction proposal
-            # Check for money token
-            vlm_amount = 550000 if "5500" in lower_ocr or "৫,৫০০" in lower_ocr else 500000
+            num_match = re.findall(r"(?:bdt|tk|টাকা)?\s*([\d,]+(?:\.\d+)?)\s*(?:bdt|tk|টাকা)?", lower_ocr, re.IGNORECASE)
+            valid_nums = [float(n.replace(",", "")) for n in num_match if n.replace(",", "").replace(".", "").isdigit() and float(n.replace(",", "")) > 0]
+            if "5500" in lower_ocr or "৫,৫০০" in lower_ocr:
+                vlm_amount = 550000
+            elif valid_nums:
+                vlm_amount = int(max(valid_nums) * 100)
+            else:
+                vlm_amount = 500000
+
             proposed_facts.append(
                 {
                     "field_name": "transaction_amount",

@@ -211,6 +211,19 @@ async def get_current_principal(
     return principal
 
 
+async def get_optional_principal(
+    request: Request,
+    response: Response,
+    bearer: HTTPAuthorizationCredentials | None = Depends(security_bearer),
+    db: AsyncSession = Depends(get_db_session),
+) -> Principal | None:
+    """Optionally returns authenticated principal, or None if anonymous / unauthenticated."""
+    try:
+        return await get_current_principal(request, response, bearer, db)
+    except HTTPException:
+        return None
+
+
 def require_role(required_role: str):
     """Enforces specific actor role (e.g., 'reviewer', 'publisher', 'operator')."""
 

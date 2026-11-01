@@ -15,6 +15,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.cases.models import Case, CaseEvent
+from app.evidence.models import EvidenceItem
 from app.facts.models import FactAssertion
 from app.identity.models import Principal
 from app.scenarios.manifests import (
@@ -116,6 +117,50 @@ class ScenarioService:
             )
             db.add(assertion)
             fact_count += 1
+
+        # 4. Pre-seed realistic evidence items for demonstration
+        if manifest.scenario_letter in ("A", "B", "C"):
+            samples = [
+                (
+                    "bkash_statement_trx_receipt.png",
+                    "image/png",
+                    84200,
+                    "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                ),
+                (
+                    "whatsapp_merchant_chat_blocking.png",
+                    "image/png",
+                    65100,
+                    "a1b2c3d4e5f67890123456789abcdef0123456789abcdef0123456789abcdef0",
+                ),
+                (
+                    "steadfast_courier_tracking_slip.png",
+                    "image/png",
+                    72400,
+                    "f0e1d2c3b4a596877869504132231405f0e1d2c3b4a596877869504132231405",
+                ),
+            ]
+            for filename, mime, size, sha in samples:
+                ev_item = EvidenceItem(
+                    id=uuid.uuid4(),
+                    case_id=case_id,
+                    principal_id=principal.id,
+                    storage_kind="local_disk",
+                    quarantine_path=f"quarantine/{case_id}/{filename}",
+                    accepted_path=f"accepted/{case_id}/{filename}",
+                    original_filename=filename,
+                    declared_mime_type=mime,
+                    detected_mime_type=mime,
+                    byte_size=size,
+                    sha256_hash=sha,
+                    status="accepted",
+                    is_quarantined=False,
+                    upload_token=f"seed-{uuid.uuid4().hex}",
+                    token_expires_at=now + datetime.timedelta(days=365),
+                    intent_consumed=True,
+                    created_at=now,
+                )
+                db.add(ev_item)
 
         await db.commit()
         await db.refresh(case)

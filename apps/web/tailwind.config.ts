@@ -10,6 +10,7 @@ const config: Config = {
       colors: {
         canvas: 'var(--canvas)',
         surface: 'var(--surface)',
+        background: 'var(--surface)',
         elevated: 'var(--elevated)',
         primary: {
           DEFAULT: 'var(--primary)',

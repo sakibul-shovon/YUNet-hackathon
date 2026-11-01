@@ -43,9 +43,21 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <main id="main-content" className="flex-1">
         {/* 2. Hero Section with Real Product Preview */}
         <section className="relative px-4 md:px-8 pt-12 pb-20 max-w-7xl mx-auto w-full flex flex-col items-center text-center">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[var(--brand-soft)] text-primary text-xs font-semibold mb-6 border border-primary/20">
-          <Sparkles className="w-3.5 h-3.5" />
-          <span>{t('tagline')}</span>
+        <div className="flex flex-wrap items-center justify-center gap-3 mb-6">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--brand-soft)] text-primary text-xs font-semibold border border-primary/20 shadow-2xs">
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>{t('tagline')}</span>
+          </div>
+          <a
+            href="https://yunet-aignite26.devpost.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elevated border border-border/80 hover:border-primary/50 text-[11px] font-medium text-foreground transition-all hover:scale-[1.02] shadow-2xs"
+            title="Official Entry — Ostad Presents YUNet AIgnite Buildathon 2026"
+          >
+            <img src="/built-for-aignite-2026.png" alt="Built for Ostad Presents YUNet AIgnite Buildathon 2026" className="h-6 w-auto rounded" />
+            <span className="font-semibold text-primary">Solo Track</span>
+          </a>
         </div>
 
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight max-w-4xl leading-[1.15] mb-6">
@@ -83,7 +95,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               <span className="w-3 h-3 rounded-full bg-amber-400/80 inline-block" />
               <span className="w-3 h-3 rounded-full bg-emerald-400/80 inline-block" />
               <span className="ml-2 font-mono text-[11px] font-medium text-foreground">
-                claimcraft.bd/cases/case_demo_phone
+                ebarki.bd/cases/case_demo_phone
               </span>
             </div>
             <Badge variant="brand" className="text-[10px] py-0">
@@ -537,7 +549,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           <div className="flex flex-col items-center md:items-start gap-1">
             <div className="flex items-center gap-2 font-bold text-foreground">
               <Shield className="w-4 h-4 text-primary" />
-              <span>ClaimCraft BD</span>
+              <span>{locale === 'bn' ? 'এবার কি? (EbarKi)' : 'EbarKi BD'}</span>
             </div>
             <p className="text-center md:text-left text-[11px] max-w-md">
               {tCommon('independent_notice')}

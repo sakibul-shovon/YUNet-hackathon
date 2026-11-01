@@ -241,10 +241,31 @@ def cmd_seed_demo(args):
     print("Demo seed complete.")
 
 
+def free_port(port: int):
+    """Frees port if held by a process to prevent EADDRINUSE on startup."""
+    if is_windows():
+        try:
+            out = subprocess.check_output(
+                f"netstat -ano | findstr :{port}", shell=True, text=True, stderr=subprocess.DEVNULL
+            )
+            for line in out.strip().splitlines():
+                if "LISTENING" in line:
+                    parts = line.strip().split()
+                    pid = parts[-1]
+                    if pid and pid != "0":
+                        subprocess.run(f"taskkill /F /PID {pid}", shell=True, capture_output=True)
+        except Exception:
+            pass
+
+
 def cmd_dev(args):
     print("==================================================")
     print(" ClaimCraft BD — Local Development Stack")
     print("==================================================")
+
+    # 0. Free ports 8000 and 3000 if occupied by stale processes
+    free_port(8000)
+    free_port(3000)
 
     # 1. Clean stale Next.js build cache to avoid EINVAL on Windows
     next_dir = ROOT_DIR / "apps" / "web" / ".next"
@@ -279,6 +300,10 @@ def cmd_dev(args):
             b_ret = backend_proc.poll()
             w_ret = web_proc.poll()
             if b_ret is not None or w_ret is not None:
+                if b_ret is not None:
+                    print(f"\n[ALERT] Backend API terminated with exit code {b_ret}.")
+                if w_ret is not None:
+                    print(f"\n[ALERT] Web Frontend terminated with exit code {w_ret}.")
                 break
             time.sleep(1)
     except KeyboardInterrupt:
@@ -289,6 +314,17 @@ def cmd_dev(args):
                 p.terminate()
             except Exception:
                 pass
+
+
+def cmd_graphify(args):
+    py_path_file = ROOT_DIR / "graphify-out" / ".graphify_python"
+    if py_path_file.exists():
+        py_exe = py_path_file.read_text(encoding="utf-8").strip()
+    else:
+        py_exe = sys.executable
+
+    cmd = [py_exe, "-m", "graphify"] + (args.graphify_args or [])
+    sys.exit(subprocess.call(cmd, cwd=ROOT_DIR))
 
 
 def main():
@@ -317,6 +353,10 @@ def main():
 
     dev_parser = subparsers.add_parser("dev", help="Show instructions for running development servers")
     dev_parser.set_defaults(func=cmd_dev)
+
+    graphify_parser = subparsers.add_parser("graphify", help="Execute graphify CLI (query, update, path, explain)")
+    graphify_parser.add_argument("graphify_args", nargs=argparse.REMAINDER, help="Arguments passed directly to graphify")
+    graphify_parser.set_defaults(func=cmd_graphify)
 
     args = parser.parse_args()
     args.func(args)

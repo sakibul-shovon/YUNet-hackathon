@@ -14,7 +14,7 @@
     "scenario_gallery_title": "Featured Real-World Scenarios",
     "scenario_gallery_sub": "Explore simulated dispute runs through our actual production engine.",
     "view_all_scenarios": "View all 8 scenarios",
-    "how_it_works_title": "How ClaimCraft BD Works",
+    "how_it_works_title": "How EbarKi Works",
     "how_it_works_sub": "From scattered receipts and Bengali narration to a defensible complaint package in four clear steps.",
     "step1_title": "1. Provide Evidence",
     "step1_desc": "Speak in Bangla/English, paste dispute text, or upload receipts and screenshots.",
@@ -92,7 +92,7 @@
     "story_label": "Your Dispute Story",
     "story_placeholder": "Example: I ordered a phone for ৳5,500 from a Facebook page. I paid via bKash on 15 October, but the seller blocked me and never delivered the item...",
     "outcome_label": "What resolution do you want?",
-    "outcome_refund": "Full refund (৳5,500)",
+    "outcome_refund": "Full money refund / reimbursement",
     "outcome_replacement": "Product delivery or replacement",
     "outcome_apology": "Written explanation / corrective action",
     "attachments_label": "Dispute Documents & Evidence (Optional)",
@@ -147,7 +147,7 @@
   "actions": {
     "title": "Action Studio & Filing Companion",
     "subtitle": "Review your prepared complaint, copy verified portal fields, or export PDF.",
-    "unsubmitted_notice": "Status: Prepared, Not Submitted. ClaimCraft BD does not file on your behalf. You control external submission.",
+    "unsubmitted_notice": "Status: Prepared, Not Submitted. EbarKi does not file on your behalf. You control external submission.",
     "formal_notice_title": "Written Demand / Notice to Seller",
     "dnCRP_complaint_title": "DNCRP Official Consumer Complaint Form",
     "portal_fields_title": "Online Portal Quick-Copy Helper (dncrp.portal.gov.bd)",
@@ -222,6 +222,28 @@
     "retry": "Retry",
     "confirm": "Confirm",
     "cancel": "Cancel",
-    "independent_notice": "ClaimCraft BD is an independent consumer assistance tool, not a government body or court. Prepared complaints must be reviewed by the consumer prior to external submission."
+    "independent_notice": "EbarKi is an independent consumer assistance tool, not a government body or court. Prepared complaints must be reviewed by the consumer prior to external submission."
+  },
+  "auth": {
+    "login_title": "Sign In to EbarKi",
+    "login_subtitle": "Access your cases, evidence vault, and legal filings",
+    "judge_banner_title": "Hackathon Judge 1-Click Access",
+    "judge_banner_desc": "Instant evaluation mode with pre-seeded demo cases and full access",
+    "judge_banner_btn": "Judge 1-Click Access",
+    "email_label": "Email Address",
+    "password_label": "Password",
+    "full_name_label": "Full Name",
+    "phone_label": "Mobile Number (Optional)",
+    "sign_in_btn": "Sign In",
+    "register_title": "Create Consumer Account",
+    "register_subtitle": "Free, secure, and encrypted consumer dispute workspace",
+    "register_btn": "Create Free Account",
+    "dont_have_account": "Do not have an account?",
+    "already_have_account": "Already have an account?",
+    "register_here": "Sign up here",
+    "sign_in_here": "Sign in here",
+    "signing_in": "Signing in...",
+    "creating_account": "Creating account...",
+    "logout": "Log Out"
   }
 }

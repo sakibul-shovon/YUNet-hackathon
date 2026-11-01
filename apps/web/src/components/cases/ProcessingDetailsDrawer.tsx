@@ -58,8 +58,8 @@ export function ProcessingDetailsDrawer({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-end bg-black/60 backdrop-blur-xs">
-      <div className="w-full max-w-2xl h-full bg-background border-l border-border p-6 overflow-y-auto flex flex-col justify-between shadow-2xl">
+    <div className="fixed inset-0 z-50 flex items-center justify-end bg-black/60 backdrop-blur-sm transition-opacity">
+      <div className="w-full max-w-2xl h-full bg-surface border-l border-border p-6 overflow-y-auto flex flex-col justify-between shadow-2xl relative">
         <div className="space-y-6">
           {/* Header */}
           <div className="flex items-center justify-between pb-4 border-b border-border">

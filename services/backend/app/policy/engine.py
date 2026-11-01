@@ -461,6 +461,41 @@ class ProceduralAssessmentEngine:
             if s_route.status == RouteStatus.NEEDS_FACTS:
                 overall_status = "needs_clarification"
 
+        # Sort routes intelligently so supported and domain-relevant routes come first
+        def route_sort_key(r: AssessmentRouteOut) -> tuple:
+            status_order = {
+                RouteStatus.SUPPORTED: 0,
+                RouteStatus.SOURCE_CAUTION: 1,
+                RouteStatus.NEEDS_FACTS: 2,
+                RouteStatus.NOT_SUPPORTED: 3,
+                RouteStatus.EXCLUDED: 4,
+            }.get(r.status, 5)
+
+            is_relevant_domain = 1
+            is_ecommerce = facts_dict.get("purchase_channel") == "ecommerce" or bool(
+                case.merchant_name and not case.merchant_name.lower().startswith("govt")
+            )
+            if (
+                is_ecommerce
+                and r.issue_type
+                in (
+                    "ecommerce_delivery_failure",
+                    "defective_goods",
+                    "product_safety_hazard",
+                )
+            ) or (
+                (
+                    "mfs" in ((case.story_narrative or "") + (case.title or "")).lower()
+                    or facts_dict.get("transaction_unauthorized")
+                )
+                and r.issue_type == "mfs_unauthorized_charge"
+            ):
+                is_relevant_domain = 0
+
+            return (status_order, is_relevant_domain, r.rule_id)
+
+        routes_out.sort(key=route_sort_key)
+
         # 4. Next Best Question Selection (T32: safety priority, no OTP/PIN, skip semantics)
         nbq: NextBestQuestion | None = None
         priority_order = ["safety", "route_disambiguation", "materiality", "readiness"]

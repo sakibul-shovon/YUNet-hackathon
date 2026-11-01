@@ -83,3 +83,8 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
+# Graphify transient caches
+graphify-out/cache/
+graphify-out/.graphify_*
+
+

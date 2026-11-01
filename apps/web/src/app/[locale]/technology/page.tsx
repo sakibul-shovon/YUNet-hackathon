@@ -41,8 +41,8 @@ export default async function TechnologyPage({ params }: { params: Promise<{ loc
         </h1>
         <p className="text-muted-foreground text-base mb-10 leading-relaxed">
           {isBangla
-            ? 'ক্লেইমক্রাফট বিডি কীভাবে জেনারেটিভ এআই এবং ডিটারমিনিস্টিক পলিসি নিয়মের সমন্বয় করে নির্ভুল ফলাফল প্রদান করে।'
-            : 'How ClaimCraft BD bridges probabilistic generative models with deterministic, statutory rule execution.'}
+            ? 'এবার কি? (EbarKi) কীভাবে জেনারেটিভ এআই এবং ডিটারমিনিস্টিক পলিসি নিয়মের সমন্বয় করে নির্ভুল ফলাফল প্রদান করে।'
+            : 'How EbarKi bridges probabilistic generative models with deterministic, statutory rule execution.'}
         </p>
 
         <div className="space-y-6">
@@ -77,7 +77,7 @@ export default async function TechnologyPage({ params }: { params: Promise<{ loc
             </CardHeader>
             <CardContent className="text-xs text-muted-foreground space-y-2 leading-relaxed">
               <p>
-                Unlike generic LLMs that guess legal outcomes, ClaimCraft BD uses a deterministic AST engine with Kleene logic (`TRUE`, `FALSE`, `UNKNOWN`). An unknown fact is never coerced into false; missing facts explicitly trigger targeted Next Best Questions (NBQ) while statutory exclusions instantly block ineligible routes.
+                Unlike generic LLMs that guess legal outcomes, EbarKi uses a deterministic AST engine with Kleene logic (`TRUE`, `FALSE`, `UNKNOWN`). An unknown fact is never coerced into false; missing facts explicitly trigger targeted Next Best Questions (NBQ) while statutory exclusions instantly block ineligible routes.
               </p>
             </CardContent>
           </Card>

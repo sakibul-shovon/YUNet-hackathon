@@ -1,0 +1,16 @@
+# ClaimCraft BD — Cursor Rules
+
+## Knowledge Graph & Token-Saving Protocol (graphify)
+This repository maintains a pre-built knowledge graph at `graphify-out/` with AST structural maps, god nodes, community clusters, and cross-file relationships.
+
+**Mandatory Token-Saving Rules:**
+1. **Always query the graph before grepping or reading multiple source files:**
+   - Run `python scripts/tasks.py graphify query "<question>"` (or `graphify query "<question>"`) before your first broad grep, search, or multiple source-file read.
+   - Use `python scripts/tasks.py graphify path "<SymbolA>" "<SymbolB>"` to trace call chains and relationships.
+   - Use `python scripts/tasks.py graphify explain "<concept>"` to understand focused architectural components.
+   - Only open and read full source files for the exact line ranges/symbols returned by graph queries.
+2. **Never scan the whole repo into context when graphify can answer the architectural question with a ~2k token response.**
+3. **Keep the graph updated:**
+   - Git commit hooks are installed and auto-rebuild the graph after commits.
+   - If you make large architectural changes, run `python scripts/tasks.py graphify update` to re-extract without LLM cost.
+

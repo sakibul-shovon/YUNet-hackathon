@@ -23,7 +23,9 @@ class Settings(BaseSettings):
     SUPABASE_URL: str | None = None
     SUPABASE_JWKS_URL: str | None = None
 
-    # AI Models
+    # AI Models (Groq LLaMA 3.3 / Gemini)
+    GROQ_API_KEY: str | None = None
+    GROQ_MODEL: str = "llama-3.3-70b-versatile"
     GEMINI_API_KEY: str | None = None
     GEMINI_MODEL_FLASH: str = "gemini-3.8-flash"
     GEMINI_MODEL_STRONG: str | None = None

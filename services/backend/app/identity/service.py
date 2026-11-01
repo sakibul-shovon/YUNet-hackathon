@@ -1,4 +1,5 @@
 import datetime
+import hashlib
 import secrets
 import uuid
 
@@ -9,8 +10,16 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.cases.models import Case, OutboxMessage
 from app.core.config import settings
 from app.core.security import create_access_jwt, generate_session_token, hash_session_token
-from app.identity.models import ActorRole, Consent, DeletionRequest, Principal, WebSession
+from app.identity.models import (
+    ActorRole,
+    Consent,
+    DeletionRequest,
+    Principal,
+    UserAccount,
+    WebSession,
+)
 from app.identity.schemas import (
+    AuthUserOut,
     ConsentCreate,
     ConsentOut,
     DeletionRequestCreate,
@@ -19,7 +28,24 @@ from app.identity.schemas import (
     PrincipalOut,
     UpgradeRequest,
     UpgradeResponse,
+    UserLoginRequest,
+    UserRegisterRequest,
 )
+
+
+def hash_password(password: str) -> str:
+    salt = secrets.token_hex(16)
+    dk = hashlib.pbkdf2_hmac("sha256", password.encode("utf-8"), salt.encode("utf-8"), 100_000)
+    return f"{salt}${dk.hex()}"
+
+
+def verify_password(password: str, stored_hash: str) -> bool:
+    try:
+        salt, expected_hash = stored_hash.split("$", 1)
+        dk = hashlib.pbkdf2_hmac("sha256", password.encode("utf-8"), salt.encode("utf-8"), 100_000)
+        return secrets.compare_digest(dk.hex(), expected_hash)
+    except (ValueError, TypeError, AttributeError):
+        return False
 
 
 class IdentityService:
@@ -260,3 +286,264 @@ class IdentityService:
         await db.commit()
         await db.refresh(del_req)
         return DeletionRequestOut.model_validate(del_req, from_attributes=True)
+
+    @staticmethod
+    async def register_user(
+        req: UserRegisterRequest,
+        db: AsyncSession,
+        response: Response,
+    ) -> AuthUserOut:
+        """Registers a new permanent user account."""
+        now = datetime.datetime.now(datetime.UTC)
+        normalized_email = req.email.strip().lower()
+
+        stmt = select(UserAccount).where(UserAccount.email == normalized_email)
+        res = await db.execute(stmt)
+        if res.scalar_one_or_none():
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="An account with this email already exists. Please sign in instead.",
+            )
+
+        principal = Principal(
+            id=uuid.uuid4(),
+            kind="permanent",
+            locale="bn-BD",
+            consent_revision=1,
+        )
+        db.add(principal)
+        await db.flush()
+
+        role = ActorRole(
+            id=uuid.uuid4(),
+            principal_id=principal.id,
+            role="consumer",
+            grant_origin="user_register",
+            scope="global",
+        )
+        db.add(role)
+
+        user = UserAccount(
+            id=uuid.uuid4(),
+            principal_id=principal.id,
+            email=normalized_email,
+            full_name=req.full_name.strip(),
+            phone=req.phone.strip() if req.phone else None,
+            password_hash=hash_password(req.password),
+            is_demo_judge=False,
+        )
+        db.add(user)
+
+        raw_session_token = generate_session_token()
+        session_hash = hash_session_token(raw_session_token)
+        expires_at = now + datetime.timedelta(seconds=settings.SESSION_MAX_AGE_SECONDS)
+
+        session_record = WebSession(
+            id=uuid.uuid4(),
+            session_token_hash=session_hash,
+            principal_id=principal.id,
+            expires_at=expires_at,
+            last_seen_at=now,
+        )
+        db.add(session_record)
+        await db.commit()
+
+        response.set_cookie(
+            key=settings.SESSION_COOKIE_NAME,
+            value=raw_session_token,
+            max_age=settings.SESSION_MAX_AGE_SECONDS,
+            httponly=True,
+            secure=settings.APP_ENV == "production",
+            samesite="lax",
+            path="/",
+        )
+
+        access_jwt = create_access_jwt(principal_id=principal.id, kind="permanent")
+        return AuthUserOut(
+            logged_in=True,
+            principal_id=principal.id,
+            email=user.email,
+            full_name=user.full_name,
+            phone=user.phone,
+            is_demo_judge=False,
+            access_token=access_jwt,
+        )
+
+    @staticmethod
+    async def login_user(
+        req: UserLoginRequest,
+        db: AsyncSession,
+        response: Response,
+    ) -> AuthUserOut:
+        """Logs in an existing user with email and password."""
+        now = datetime.datetime.now(datetime.UTC)
+        stmt = select(UserAccount).where(UserAccount.email == req.email.strip().lower())
+        res = await db.execute(stmt)
+        user = res.scalar_one_or_none()
+
+        if not user or not verify_password(req.password, user.password_hash):
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Invalid email or password. Please verify and try again.",
+            )
+
+        raw_session_token = generate_session_token()
+        session_hash = hash_session_token(raw_session_token)
+        expires_at = now + datetime.timedelta(seconds=settings.SESSION_MAX_AGE_SECONDS)
+
+        session_record = WebSession(
+            id=uuid.uuid4(),
+            session_token_hash=session_hash,
+            principal_id=user.principal_id,
+            expires_at=expires_at,
+            last_seen_at=now,
+        )
+        db.add(session_record)
+        await db.commit()
+
+        response.set_cookie(
+            key=settings.SESSION_COOKIE_NAME,
+            value=raw_session_token,
+            max_age=settings.SESSION_MAX_AGE_SECONDS,
+            httponly=True,
+            secure=settings.APP_ENV == "production",
+            samesite="lax",
+            path="/",
+        )
+
+        access_jwt = create_access_jwt(principal_id=user.principal_id, kind="permanent")
+        return AuthUserOut(
+            logged_in=True,
+            principal_id=user.principal_id,
+            email=user.email,
+            full_name=user.full_name,
+            phone=user.phone,
+            is_demo_judge=user.is_demo_judge,
+            access_token=access_jwt,
+        )
+
+    @staticmethod
+    async def login_judge_demo(
+        db: AsyncSession,
+        response: Response,
+    ) -> AuthUserOut:
+        """1-Click Hackathon Judge Demo Login: creates or resumes demo judge account."""
+        now = datetime.datetime.now(datetime.UTC)
+        judge_email = "judge.demo@claimcraft.bd"
+
+        stmt = select(UserAccount).where(UserAccount.email == judge_email)
+        res = await db.execute(stmt)
+        user = res.scalar_one_or_none()
+
+        if not user:
+            principal = Principal(
+                id=uuid.uuid4(),
+                kind="permanent",
+                locale="bn-BD",
+                consent_revision=1,
+            )
+            db.add(principal)
+            await db.flush()
+
+            role = ActorRole(
+                id=uuid.uuid4(),
+                principal_id=principal.id,
+                role="consumer",
+                grant_origin="judge_demo_grant",
+                scope="global",
+            )
+            db.add(role)
+
+            user = UserAccount(
+                id=uuid.uuid4(),
+                principal_id=principal.id,
+                email=judge_email,
+                full_name="Honorable Hackathon Judge (বিচারক ডেমো)",
+                phone="+8801700000000",
+                password_hash=hash_password("Judge2026!Demo"),
+                is_demo_judge=True,
+            )
+            db.add(user)
+            await db.flush()
+
+            try:
+                from app.scenarios.service import ScenarioService
+                await ScenarioService.launch_scenario("scenario_a", principal, db, locale="bn")
+            except (RuntimeError, ValueError, OSError):
+                pass
+        else:
+            stmt_p = select(Principal).where(Principal.id == user.principal_id)
+            res_p = await db.execute(stmt_p)
+            principal = res_p.scalar_one_or_none()
+            if not principal:
+                principal = Principal(
+                    id=user.principal_id,
+                    kind="permanent",
+                    locale="bn-BD",
+                    consent_revision=1,
+                )
+                db.add(principal)
+                await db.flush()
+
+        raw_session_token = generate_session_token()
+        session_hash = hash_session_token(raw_session_token)
+        expires_at = now + datetime.timedelta(seconds=settings.SESSION_MAX_AGE_SECONDS)
+
+        session_record = WebSession(
+            id=uuid.uuid4(),
+            session_token_hash=session_hash,
+            principal_id=user.principal_id,
+            expires_at=expires_at,
+            last_seen_at=now,
+        )
+        db.add(session_record)
+        await db.commit()
+
+        response.set_cookie(
+            key=settings.SESSION_COOKIE_NAME,
+            value=raw_session_token,
+            max_age=settings.SESSION_MAX_AGE_SECONDS,
+            httponly=True,
+            secure=settings.APP_ENV == "production",
+            samesite="lax",
+            path="/",
+        )
+
+        access_jwt = create_access_jwt(principal_id=user.principal_id, kind="permanent")
+        return AuthUserOut(
+            logged_in=True,
+            principal_id=user.principal_id,
+            email=user.email,
+            full_name=user.full_name,
+            phone=user.phone,
+            is_demo_judge=True,
+            access_token=access_jwt,
+        )
+
+    @staticmethod
+    async def get_current_user_profile(
+        principal: Principal,
+        db: AsyncSession,
+    ) -> AuthUserOut:
+        """Returns the logged in user profile if exists, or guest info."""
+        stmt = select(UserAccount).where(UserAccount.principal_id == principal.id)
+        res = await db.execute(stmt)
+        user = res.scalar_one_or_none()
+
+        if user:
+            return AuthUserOut(
+                logged_in=True,
+                principal_id=principal.id,
+                email=user.email,
+                full_name=user.full_name,
+                phone=user.phone,
+                is_demo_judge=user.is_demo_judge,
+            )
+        return AuthUserOut(
+            logged_in=False,
+            principal_id=principal.id,
+            email="guest@claimcraft.local",
+            full_name="Guest Consumer",
+            phone=None,
+            is_demo_judge=False,
+        )

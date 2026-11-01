@@ -3,6 +3,9 @@ import { getMessages, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { locales } from '@/lib/i18n/config';
 import type { ReactNode } from 'react';
+import '@/app/globals.css';
+import { AICopilotDrawer } from '@/components/ai/AICopilotDrawer';
+import { AgentCommandPalette } from '@/components/ai/AgentCommandPalette';
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -35,6 +38,8 @@ export default async function LocaleLayout({
         </a>
         <NextIntlClientProvider messages={messages} locale={locale}>
           {children}
+          <AICopilotDrawer locale={locale} />
+          <AgentCommandPalette locale={locale} />
         </NextIntlClientProvider>
       </body>
     </html>

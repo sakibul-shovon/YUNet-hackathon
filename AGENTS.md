@@ -16,7 +16,25 @@ python scripts/tasks.py dev                    # Run local web and API services
 python scripts/tasks.py check --scope foundation # Run lint & typecheck
 python scripts/tasks.py check --scope core       # Run test suites
 python scripts/tasks.py contracts              # Regenerate OpenAPI & TypeScript client
+python scripts/tasks.py graphify query "<q>"   # Query codebase knowledge graph to save tokens
+python scripts/tasks.py graphify update        # Incremental update knowledge graph
 ```
+
+## Knowledge Graph & Token-Saving Protocol (graphify)
+This project maintains a persistent knowledge graph at `graphify-out/` with AST structural maps, god nodes, community clusters, and cross-file relationships.
+
+**Rules for AI & Coding Agents to Save Context Tokens:**
+1. **Always Check the Graph First:**
+   - Before executing broad repository grep searches, crawling directories, or reading multiple whole source files to answer codebase questions, consult the knowledge graph:
+     - Run `python scripts/tasks.py graphify query "<question>"` (or `graphify query "<question>"`) to fetch a tightly scoped subgraph (~2,000 tokens) covering relevant symbols, lines, and relations.
+     - Use `python scripts/tasks.py graphify path "<SymbolA>" "<SymbolB>"` to trace call chains and dependency flows.
+     - Use `python scripts/tasks.py graphify explain "<concept>"` to understand focused architectural nodes.
+   - Read raw source files **only** for the specific lines/symbols identified by the graph traversal.
+2. **Subagents:** Always include this graph-first rule in any delegated subagent prompt that explores code.
+3. **Graph Maintenance:**
+   - Git post-commit, post-checkout, and post-merge hooks automatically keep the graph up-to-date.
+   - When introducing structural or architectural changes, run `python scripts/tasks.py graphify update` to re-extract without LLM cost.
+   - `graphify-out/graph.json` diffs in PRs are expected when the graph refreshes.
 
 ## Execution Protocol
 1. Consult `.agent/state.json` and `.agent/handoff.md` to identify the active task.

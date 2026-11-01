@@ -1,26 +1,40 @@
 import time
 import uuid
+from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.actions.router import router as actions_router
+from app.admin.router import router as admin_router
 from app.cases.issue_router import router as issue_router
 from app.cases.router import router as cases_router
 from app.cases.timeline_router import router as timeline_router
+from app.community.router import router as community_router
+from app.copilot.router import router as copilot_router
 from app.core.config import settings
+from app.core.database import Base, engine
 from app.core.public_router import router as public_router
 from app.evidence.router import router as evidence_router
 from app.extraction.router import router as extraction_router
 from app.facts.router import router as facts_router
 from app.identity.router import router as identity_router
 from app.knowledge.router import router as knowledge_router
+from app.merchants.router import router as merchants_router
 from app.multimodal.audio.router import router as audio_router
 from app.multimodal.vision.router import router as vision_router
 from app.operations.router import router as operations_router
 from app.policy.router import router as policy_router
 from app.retrieval.router import router as retrieval_router
 from app.scenarios.router import router as scenarios_router
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
+    yield
+
 
 app = FastAPI(
     title="ClaimCraft BD API",
@@ -29,6 +43,7 @@ app = FastAPI(
     docs_url="/docs" if settings.APP_ENV != "production" else None,
     redoc_url="/redoc" if settings.APP_ENV != "production" else None,
     openapi_url="/openapi.json",
+    lifespan=lifespan,
 )
 
 # CORS configuration
@@ -102,6 +117,10 @@ app.include_router(retrieval_router)
 app.include_router(operations_router)
 app.include_router(timeline_router)
 app.include_router(scenarios_router)
+app.include_router(merchants_router)
+app.include_router(community_router)
+app.include_router(copilot_router)
+app.include_router(admin_router)
 
 app.include_router(public_router, prefix="/api")
 app.include_router(identity_router, prefix="/api")
@@ -119,3 +138,7 @@ app.include_router(retrieval_router, prefix="/api")
 app.include_router(operations_router, prefix="/api")
 app.include_router(timeline_router, prefix="/api")
 app.include_router(scenarios_router, prefix="/api")
+app.include_router(merchants_router, prefix="/api")
+app.include_router(community_router, prefix="/api")
+app.include_router(copilot_router, prefix="/api")
+app.include_router(admin_router, prefix="/api")

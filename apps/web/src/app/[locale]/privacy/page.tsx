@@ -38,7 +38,7 @@ export default async function PrivacyPage({ params }: { params: Promise<{ locale
         <p className="text-muted-foreground text-base mb-10 leading-relaxed">
           {isBangla
             ? 'আপনার বিরোধের নথিপত্র এবং ব্যক্তিগত আর্থিক লেনদেনের তথ্যের ওপর আপনার পূর্ণ নিয়ন্ত্রণ রয়েছে।'
-            : 'How ClaimCraft BD secures your dispute records, ensures tenant isolation, and provides absolute user control.'}
+            : 'How EbarKi secures your dispute records, ensures tenant isolation, and provides absolute user control.'}
         </p>
 
         <div className="space-y-6">
@@ -52,7 +52,7 @@ export default async function PrivacyPage({ params }: { params: Promise<{ locale
             <CardContent className="text-sm text-muted-foreground leading-relaxed">
               {isBangla
                 ? 'আমরা পেইড এন্টারপ্রাইজ এআই এডাপ্টার ব্যবহার করি যেখানে ব্যবহারকারীর কোনো বক্তব্য, রসিদ বা নথি ভিত্তি মডেলের প্রশিক্ষণে ব্যবহৃত হয় না।'
-                : 'ClaimCraft BD operates strictly under enterprise zero-data-retention agreements. Your prompts, receipts, voice recordings, and evidence are never used to train or fine-tune public foundation AI models.'}
+                : 'EbarKi operates strictly under enterprise zero-data-retention agreements. Your prompts, receipts, voice recordings, and evidence are never used to train or fine-tune public foundation AI models.'}
             </CardContent>
           </Card>
 

@@ -2,7 +2,7 @@ import datetime
 import uuid
 from typing import TYPE_CHECKING
 
-from sqlalchemy import DateTime, ForeignKey, Integer, String, Text, UniqueConstraint, Uuid
+from sqlalchemy import Boolean, DateTime, ForeignKey, Integer, String, Text, UniqueConstraint, Uuid
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.core.database import Base
@@ -224,3 +224,48 @@ class DeletionRequest(Base):
     )
     retries: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
     exceptional_retention_reason: Mapped[str | None] = mapped_column(Text, nullable=True)
+
+
+class UserAccount(Base):
+    __tablename__ = "user_accounts"
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        Uuid(as_uuid=True),
+        primary_key=True,
+        default=uuid.uuid4,
+    )
+    principal_id: Mapped[uuid.UUID] = mapped_column(
+        Uuid(as_uuid=True),
+        ForeignKey("principals.id", ondelete="CASCADE"),
+        unique=True,
+        index=True,
+        nullable=False,
+    )
+    email: Mapped[str] = mapped_column(
+        String(255),
+        unique=True,
+        index=True,
+        nullable=False,
+    )
+    full_name: Mapped[str] = mapped_column(
+        String(255),
+        nullable=False,
+    )
+    phone: Mapped[str | None] = mapped_column(
+        String(32),
+        nullable=True,
+    )
+    password_hash: Mapped[str] = mapped_column(
+        String(255),
+        nullable=False,
+    )
+    is_demo_judge: Mapped[bool] = mapped_column(
+        Boolean,
+        default=False,
+        nullable=False,
+    )
+    created_at: Mapped[datetime.datetime] = mapped_column(
+        DateTime(timezone=True),
+        default=lambda: datetime.datetime.now(datetime.UTC),
+        nullable=False,
+    )

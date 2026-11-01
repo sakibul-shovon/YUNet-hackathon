@@ -69,3 +69,26 @@ class DeletionRequestOut(BaseModel):
     requested_at: datetime.datetime
     access_revoked_at: datetime.datetime | None = None
     completed_at: datetime.datetime | None = None
+
+
+class UserRegisterRequest(BaseModel):
+    email: str = Field(..., min_length=3, max_length=255)
+    password: str = Field(..., min_length=6, max_length=128)
+    full_name: str = Field(..., min_length=2, max_length=255)
+    phone: str | None = Field(default=None, max_length=32)
+
+
+class UserLoginRequest(BaseModel):
+    email: str = Field(..., min_length=3, max_length=255)
+    password: str = Field(..., min_length=6, max_length=128)
+
+
+class AuthUserOut(BaseModel):
+    logged_in: bool
+    principal_id: uuid.UUID
+    email: str
+    full_name: str
+    phone: str | None = None
+    is_demo_judge: bool = False
+    access_token: str | None = None
+    token_type: str = "bearer"

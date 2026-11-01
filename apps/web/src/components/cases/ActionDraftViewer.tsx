@@ -1,10 +1,11 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Copy, Check, AlertTriangle, Shield, FileText, ArrowRight } from 'lucide-react';
+import { Copy, Check, AlertTriangle, Shield, FileText, ArrowRight, Printer, Download } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
+import { DemandNoticeStudio } from '@/components/ai/DemandNoticeStudio';
 import { apiFetch } from '@/lib/api';
 
 interface DraftData {
@@ -64,6 +65,10 @@ export function ActionDraftViewer({ caseId, initialLocale }: ActionDraftViewerPr
     }
   };
 
+  const handlePrint = () => {
+    window.print();
+  };
+
   return (
     <div className="space-y-6">
       {/* T26 Mandatory Unsubmitted Draft Banner */}
@@ -120,6 +125,16 @@ export function ActionDraftViewer({ caseId, initialLocale }: ActionDraftViewerPr
 
             <Button
               size="sm"
+              variant="outline"
+              onClick={handlePrint}
+              className="text-xs gap-1.5"
+            >
+              <Printer className="w-3.5 h-3.5" />
+              <span>{isBangla ? 'প্রিন্ট / PDF' : 'Print / PDF'}</span>
+            </Button>
+
+            <Button
+              size="sm"
               variant={copied ? 'primary' : 'outline'}
               onClick={handleCopy}
               className="text-xs gap-1.5"
@@ -130,7 +145,13 @@ export function ActionDraftViewer({ caseId, initialLocale }: ActionDraftViewerPr
           </div>
         </CardHeader>
 
-        <CardContent className="pt-4 space-y-4">
+        <CardContent className="pt-4 space-y-6">
+          {/* AI Generative Tone & Streaming Studio */}
+          <DemandNoticeStudio
+            merchantName={draft?.recipient || 'Gadget Palace BD'}
+            caseReference={caseId}
+          />
+
           {loading && (
             <div className="p-8 text-center text-xs text-muted-foreground animate-pulse">
               {isBangla ? 'খসড়া তৈরি হচ্ছে...' : 'Generating legal draft...'}
@@ -139,15 +160,35 @@ export function ActionDraftViewer({ caseId, initialLocale }: ActionDraftViewerPr
 
           {!loading && draft && (
             <div className="space-y-4">
-              <div className="space-y-1 text-xs">
-                <span className="text-[11px] font-bold text-muted-foreground uppercase block">
-                  {isBangla ? 'বিষয়:' : 'Subject:'}
-                </span>
-                <span className="font-semibold text-foreground">{draft.subject}</span>
-              </div>
+              <div className="p-6 rounded-xl bg-surface border-2 border-border/80 shadow-xs font-sans text-xs space-y-4 print:p-0 print:border-none print:shadow-none">
+                {/* Formal Letterhead Header */}
+                <div className="pb-4 border-b-2 border-border/60 flex items-start justify-between">
+                  <div className="space-y-0.5">
+                    <span className="font-extrabold text-sm text-foreground block">
+                      {isBangla ? 'গণপ্রজাতন্ত্রী বাংলাদেশ সরকার' : "People's Republic of Bangladesh"}
+                    </span>
+                    <span className="text-xs font-semibold text-primary block">
+                      {isBangla ? 'জাতীয় ভোক্তা অধিকার সংরক্ষণ অধিদপ্তর (DNCRP)' : 'Directorate of National Consumer Rights Protection'}
+                    </span>
+                    <span className="text-[10px] text-muted-foreground block">
+                      {isBangla ? 'ভোক্তা অধিকার সংরক্ষণ আইন, ২০০৯ (ধারা ৪৫, ৪১ ও ৭৬)' : "Consumers' Right Protection Act, 2009 (Sections 45, 41 & 76)"}
+                    </span>
+                  </div>
+                  <Badge variant="brand" className="font-mono text-[10px]">
+                    {isBangla ? 'অফিসিয়াল লিগ্যাল নোটিশ' : 'Formal Legal Notice'}
+                  </Badge>
+                </div>
 
-              <div className="p-4 rounded-lg bg-canvas border border-border font-mono text-xs text-foreground whitespace-pre-wrap leading-relaxed select-all">
-                {draft.body_text}
+                <div className="space-y-1 text-xs">
+                  <span className="text-[11px] font-bold text-muted-foreground uppercase block">
+                    {isBangla ? 'বিষয়:' : 'Subject:'}
+                  </span>
+                  <span className="font-bold text-foreground text-sm">{draft.subject}</span>
+                </div>
+
+                <div className="p-4 rounded-lg bg-canvas border border-border/60 font-mono text-xs text-foreground whitespace-pre-wrap leading-relaxed select-all">
+                  {draft.body_text}
+                </div>
               </div>
 
               {/* Citations Grounding */}

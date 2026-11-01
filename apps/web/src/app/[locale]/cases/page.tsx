@@ -13,9 +13,13 @@ async function fetchCases(): Promise<CaseOut[]> {
   try {
     const cookieStore = await cookies();
     const sessionCookie = cookieStore.get('cc_session');
+    const tokenCookie = cookieStore.get('cc_token');
     const headers: Record<string, string> = {};
     if (sessionCookie) {
       headers['Cookie'] = `cc_session=${sessionCookie.value}`;
+    }
+    if (tokenCookie) {
+      headers['Authorization'] = `Bearer ${tokenCookie.value}`;
     }
 
     const res = await fetch(`${BACKEND_API_URL}/v1/cases?limit=20`, {
@@ -98,29 +102,31 @@ export default async function CasesListPage({
             </Link>
           ))}
 
-          {/* Seed Demo Case */}
-          <Link href={`/${locale}/cases/case_demo_phone`} className="block group">
-            <Card className="hover:border-primary/50 transition-colors">
-              <CardHeader className="flex flex-row items-start justify-between pb-2">
-                <div className="space-y-1">
-                  <div className="flex items-center gap-2">
-                    <span className="font-mono text-xs font-bold text-muted-foreground">#case_demo_phone</span>
-                    <Badge variant="brand">{t('status_open')}</Badge>
+          {/* Seed Demo Case only if no user cases exist */}
+          {cases.length === 0 && (
+            <Link href={`/${locale}/cases/case_demo_phone`} className="block group">
+              <Card className="hover:border-primary/50 transition-colors border-dashed">
+                <CardHeader className="flex flex-row items-start justify-between pb-2">
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2">
+                      <span className="font-mono text-xs font-bold text-muted-foreground">#case_demo_phone</span>
+                      <Badge variant="neutral">{isBangla ? 'পরীক্ষামূলক ডেমো কেস' : 'Sample Sandbox Case'}</Badge>
+                    </div>
+                    <CardTitle className="text-base font-bold group-hover:text-primary transition-colors">
+                      {isBangla
+                        ? 'অনলাইন কেনাকাটা: টাকা পরিশোধ সত্ত্বেও পণ্য নিখোঁজ'
+                        : 'Prepaid purchase, non-delivery with ৳5,500 mismatch'}
+                    </CardTitle>
                   </div>
-                  <CardTitle className="text-base font-bold group-hover:text-primary transition-colors">
-                    {isBangla
-                      ? 'অনলাইন কেনাকাটা: টাকা পরিশোধ সত্ত্বেও পণ্য নিখোঁজ'
-                      : 'Prepaid purchase, non-delivery with ৳5,500 mismatch'}
-                  </CardTitle>
-                </div>
-                <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
-              </CardHeader>
-              <CardContent className="pt-2 text-xs text-muted-foreground flex items-center justify-between">
-                <span>E-Commerce • Gadget Zone BD • ৳5,500 BDT</span>
-                <span>15 Oct 2026</span>
-              </CardContent>
-            </Card>
-          </Link>
+                  <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                </CardHeader>
+                <CardContent className="pt-2 text-xs text-muted-foreground flex items-center justify-between">
+                  <span>E-Commerce • Gadget Zone BD • ৳5,500 BDT</span>
+                  <span>15 Oct 2026</span>
+                </CardContent>
+              </Card>
+            </Link>
+          )}
         </div>
       </main>
     </div>

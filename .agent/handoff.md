@@ -10,8 +10,55 @@
   - **P05 (Secure Evidence Vault & Provenance Graph):** 100% COMPLETE & VERIFIED (`f2b371aa607d1f1fd3261cecb754c0e783fe3600`)
   - **P06 (Multimodal Case Compiler):** 100% COMPLETE & VERIFIED (`3014eff5edc0b7248e3a960f611d9c061b99f382`)
   - **P07 (Genuine Hybrid Retrieval & Exact Citations):** 100% COMPLETE & VERIFIED (`1129970e554268f7fe2ffe8575009fa6450b1a5b`)
-  - **P08 (Complete Proof-to-Path and Multi-Issue Reasoning):** 100% COMPLETE & VERIFIED
-- **Active Phase:** P09 (Action studio, filing companion and export)
+  - **P08 (Complete Proof-to-Path and Multi-Issue Reasoning):** 100% COMPLETE & VERIFIED (`5779d8e7dc492bd7c13041eea11bed3b40f5c8dd`)
+  - **Major User Upgrade (UI Fixes, AI Copilot, Scam Radar, Community Forum & Realistic Evidence):** 100% COMPLETE & VERIFIED
+- **Active Dev Services:**
+  - Next.js Web: `http://localhost:3000`
+  - FastAPI Backend: `http://127.0.0.1:8000`
+  - Verification: Foundation (`tasks.py check --scope foundation`) PASS, Core (`tasks.py check --scope core`) 134/134 PASS.
+
+## Newly Delivered Features & Modules
+1. **Super Admin Oversight Command Center (P16 Upgrade):**
+   - Backend router & service `services/backend/app/admin/` with 7 modules: Global KPI analytics, Case audits, Merchant blacklist management with scam risk dial, Emergency scam warning broadcast system, System telemetry with API latencies and vector index counts, and Audit trails.
+   - Seeded Super Admin: `admin@claimcraft.bd` / `Admin@ClaimCraft2026!`.
+   - Frontend page `apps/web/src/app/[locale]/admin/page.tsx` & `AdminDashboardClient.tsx`.
+2. **Complete 2026 Visual Agentic AI Experience Suite:**
+   - **Multi-Agent Swarm Bar (`MultiAgentSwarmBar.tsx`):** 4 visible autonomous agents (Forensic VLM, Statutory Law, Procedural Strategist, Autonomous Draftsman) with live state pills and telemetry drawer.
+   - **Live Swarm Telemetry Ticker (`LiveAgentTelemetryTicker.tsx`):** Integrated in global `Header.tsx` displaying real-time stream with green pulse indicator, millisecond pings, and `⌘K` trigger.
+   - **Command+K Agent Palette (`AgentCommandPalette.tsx`):** Global Spotlight/Raycast modal listening for `Ctrl+K` / `⌘K` to execute natural language intent actions across dispute management.
+   - **Autonomy Dial (`AutonomyDial.tsx`):** 3-stage graduated slider (Copilot -> Semi-Autonomous -> Autonomous Advocate) with safety fence guarantees and audit logging.
+   - **Kinetic Action DAG (`KineticActionDAG.tsx`):** Animated SVG energy beam connecting prerequisite evidence lockdown, demand notice, DNCRP filing, and ADR hearing, featuring interactive unresponsiveness simulation.
+   - **Viability HUD Gauge (`ViabilityHUDGauge.tsx`):** Animated circular arc gauge with real-time statutory sub-factor breakdowns.
+   - **Kinetic Reasoning Trace (`AIReasoningTrace.tsx`):** DeepSeek/Perplexity-style collapsible legal deduction trace with timers and statutory citations.
+   - **Document Grounding Canvas (`DocumentGroundingCanvas.tsx`):** Dual-pane interactive visual OCR bounding box inspector for bKash statements and courier slips.
+   - **Demand Notice Studio (`DemandNoticeStudio.tsx`):** Generative multi-tone pre-action legal notice generator with typewriter streaming and 1-click PDF/copy export.
+3. **Realistic Consumer Protection & Direct Statutory Recovery Tools:**
+   - **Section 76(1) 25% Statutory Reward Calculator (`StatutoryCompensationCalculator.tsx`):** Interactive legal bounty estimator calculating the direct 25% cash payout awarded to the complainant upon DNCRP magistrate fines.
+   - **Emergency Consumer Hotlines & bKash Freeze Script (`EmergencyHelplinesBar.tsx`):** 1-Click direct dial to DNCRP (16121), National Cyber 999, Bangladesh Bank CIPC (16236), and bKash (16247) with pre-drafted call scripts to freeze merchant accounts before cashout.
+   - **DNCRP Official Schedule-1 Form Auto-Filler (`DncrpOfficialFormModal.tsx`):** Government-standard Bangla complaint dossier (ফরম-১) generator with 1-click A4 printing, PDF download, and direct email formatting to `dncrp@yahoo.com`.
+   - **Courier Parcel Fraud Protocol (`CourierDisputeProtocol.tsx`):** Steadfast, Pathao, and RedX evidentiary protocol with courier hub payout hold memos.
+4. **What-If Simulation UI & Color Token Fix:**
+   - Repaired `tailwind.config.ts` mapping for `background: 'var(--surface)'`.
+   - `WhatIfDrawer.tsx` and `ProcessingDetailsDrawer.tsx` now render with opaque solid background, dark blur backdrop, and zero background text bleed.
+   - Cleaned all developer test jargon (`T31`, `T32`) into human-friendly security badges.
+   - Built `apps/web/src/lib/formatters.ts` humanizing all 27 reason templates and statutory citations.
+2. **Dynamic Case Layout & 5-Step Resolution Stepper:**
+   - Dynamic case header fetching case title, merchant name, and disputed total from database.
+   - Added `CaseProgressStepper.tsx` on all case routes (`Overview -> Evidence -> Paths -> Actions -> Activity`).
+3. **Scam Merchant Radar ("Chor er Dashboard"):**
+   - Backend module `services/backend/app/merchants/` (`GET /v1/merchants/radar` & `GET /v1/merchants/intelligence`).
+   - Frontend page `apps/web/src/app/[locale]/merchants/page.tsx` with offender leaderboard and prevention tips.
+   - Added `MerchantScamAlertBanner.tsx` on active case views to warn users of repeat offender merchants.
+4. **Community Social Consumer Help Forum:**
+   - Backend module `services/backend/app/community/` (`GET /v1/community/posts`, `POST /v1/community/posts`, `POST /v1/community/posts/{id}/me-too`, `POST /v1/community/posts/{id}/comments`).
+   - Frontend page `apps/web/src/app/[locale]/community/page.tsx` with upvoting, discussion, and 1-click "Turn into Case".
+5. **Front & Center AI Features:**
+   - Floating AI Dispute Copilot drawer `AICopilotDrawer.tsx` on every page.
+   - Multimodal AI Vision Inspector card in `EvidenceVaultClient.tsx`.
+   - Backend copilot module `services/backend/app/copilot/` (`POST /v1/copilot/chat`) with statutory grounder and Gemini fallback.
+6. **Realistic Evidence Samples & Auto-Seeding:**
+   - Generated authentic Daraz bKash receipt, WhatsApp chat screenshot, and Steadfast courier memo.
+   - 1-click quick loader buttons in Evidence Vault and automatic database pre-seeding when launching Scenario A.
 - **Active Task:** P09.1 (Remedy/stage-aware action DAG and one primary next action UI)
 - **Last Completed Task:** P08.6 (Build owner-scoped Processing details/How this result was built view plus public Technology explanation)
 - **Required Tasks Progress:** 51 / 86 (59.3% complete, 0 blocked)

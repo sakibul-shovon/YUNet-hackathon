@@ -22,6 +22,15 @@ import { Badge } from '@/components/ui/Badge';
 import { WhatIfDrawer } from '@/components/paths/WhatIfDrawer';
 import { ProcessingDetailsDrawer } from '@/components/cases/ProcessingDetailsDrawer';
 import { apiFetch } from '@/lib/api';
+import {
+  formatReason,
+  formatStatutoryCitation,
+  formatIssueType,
+  formatRuleBadge,
+  formatRouteStatus,
+  formatFactName,
+} from '@/lib/formatters';
+import { MerchantScamAlertBanner } from '@/components/merchants/MerchantScamAlertBanner';
 
 interface ConditionTraceItem {
   node_type: string;
@@ -181,6 +190,9 @@ export function WhyWhyNotTraceView({ caseId, locale }: WhyWhyNotTraceViewProps) 
 
   return (
     <div className="space-y-6">
+      {/* Merchant Scam Radar Alert */}
+      <MerchantScamAlertBanner merchantName="Gadget Zone BD" locale={locale} />
+
       {/* Top action row */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
@@ -272,52 +284,37 @@ export function WhyWhyNotTraceView({ caseId, locale }: WhyWhyNotTraceViewProps) 
       <div className="space-y-4">
         {assessment.routes.map((route, idx) => {
           const isExpanded = !!expandedRoutes[route.route_id];
-          const isPrimary = idx === 0 && route.status === 'supported';
+          const isPrimary = route.status === 'supported' && idx === 0;
+          const statusInfo = formatRouteStatus(route.status, isBangla);
 
           return (
             <Card
               key={route.route_id}
               className={`transition-all ${
                 isPrimary
-                  ? 'border-2 border-primary/60 bg-gradient-to-br from-surface to-elevated/20 shadow-xs'
+                  ? 'border-2 border-primary/70 bg-gradient-to-br from-surface to-elevated/30 shadow-md ring-1 ring-primary/20'
                   : 'border border-border bg-surface'
               }`}
             >
               <CardHeader className="pb-3">
                 <div className="flex flex-wrap items-center justify-between gap-2 mb-1.5">
                   <div className="flex items-center gap-2">
-                    <Badge
-                      variant={
-                        route.status === 'supported'
-                          ? 'brand'
-                          : route.status === 'needs_facts'
-                          ? 'warning'
-                          : route.status === 'excluded'
-                          ? 'danger'
-                          : 'neutral'
-                      }
-                    >
-                      {route.status.toUpperCase()}
+                    <Badge variant={statusInfo.variant}>
+                      {statusInfo.label}
                     </Badge>
                     {isPrimary && (
-                      <Badge variant="brand">
-                        {isBangla ? 'সুপারিশকৃত পথ' : 'Recommended Route'}
+                      <Badge variant="brand" className="font-semibold">
+                        {isBangla ? '⭐ মূল সুপারিশকৃত পথ' : '⭐ Primary Recommended Route'}
                       </Badge>
                     )}
                   </div>
-                  <span className="text-xs text-muted-foreground font-mono">{route.rule_id}</span>
+                  <span className="text-[11px] font-medium px-2 py-0.5 rounded bg-muted/60 text-muted-foreground border border-border/50">
+                    {formatRuleBadge(route.rule_id, isBangla)}
+                  </span>
                 </div>
 
                 <CardTitle className="text-lg font-bold text-foreground">
-                  {route.issue_type === 'ecommerce_delivery_failure'
-                    ? (isBangla ? 'ভোক্তা অধিকার সংরক্ষণ অধিদপ্তর (DNCRP) — ধারা ৪৫ ও ৭৬' : 'DNCRP CCMS: Non-Delivery Complaint (Sec 45 & 76)')
-                    : route.issue_type === 'defective_goods'
-                    ? (isBangla ? 'বিক্রেতার রিপ্লেসমেন্ট নোটিশ ও ভোক্তা অধিকার অভিযোগ' : 'Defective Goods Remedy: Merchant Notice & CCMS Complaint')
-                    : route.issue_type === 'mfs_unauthorized_charge'
-                    ? (isBangla ? 'বাংলাদেশ ব্যাংক সিআইপিসি ও এমএফএস প্রোভাইডার গ্রিভেন্স' : 'Financial Dispute: Provider Stage 1 Grievance & BB CIPC')
-                    : route.issue_type === 'product_safety_hazard'
-                    ? (isBangla ? 'জরুরি ভোক্তা অধিকার হটলাইন ১৬১২১ অ্যালার্ট' : 'Emergency Safety Alert: DNCRP Hotline 16121')
-                    : route.issue_type}
+                  {formatIssueType(route.issue_type, isBangla)}
                 </CardTitle>
 
                 {/* Statutory Citations Chips */}
@@ -330,10 +327,10 @@ export function WhyWhyNotTraceView({ caseId, locale }: WhyWhyNotTraceViewProps) 
                       <Link
                         key={c}
                         href={`/${locale}/sources`}
-                        className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-mono bg-elevated border border-border/80 text-primary hover:underline"
+                        className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[11px] font-medium bg-elevated border border-border/80 text-primary hover:underline shadow-2xs"
                       >
-                        <Scale className="w-3 h-3" />
-                        <span>{c}</span>
+                        <Scale className="w-3 h-3 text-primary shrink-0" />
+                        <span>{formatStatutoryCitation(c, isBangla)}</span>
                         <ExternalLink className="w-2.5 h-2.5 opacity-60" />
                       </Link>
                     ))}
@@ -354,15 +351,15 @@ export function WhyWhyNotTraceView({ caseId, locale }: WhyWhyNotTraceViewProps) 
                 )}
 
                 {/* Reasons list */}
-                <div className="p-3 rounded-lg bg-elevated/40 border border-border/60 space-y-1">
+                <div className="p-3.5 rounded-xl bg-elevated/50 border border-border/70 space-y-1.5">
                   <span className="font-semibold text-foreground block">
                     {route.status === 'supported'
                       ? (isBangla ? 'কেন এই পথ প্রযোজ্য:' : 'Why this route applies:')
-                      : (isBangla ? 'বর্তমান পথের স্থিতি:' : 'Current route status:')}
+                      : (isBangla ? 'বর্তমান পথের স্থিতি ও প্রয়োজনীয় তথ্য:' : 'Current route status & required facts:')}
                   </span>
-                  <ul className="list-disc list-inside text-muted-foreground space-y-0.5">
+                  <ul className="list-disc list-inside text-muted-foreground space-y-1 leading-relaxed">
                     {route.reasons.map((r, i) => (
-                      <li key={i}>{r}</li>
+                      <li key={i}>{formatReason(r, isBangla)}</li>
                     ))}
                   </ul>
                 </div>
@@ -376,15 +373,15 @@ export function WhyWhyNotTraceView({ caseId, locale }: WhyWhyNotTraceViewProps) 
                     <span>
                       {isExpanded
                         ? (isBangla ? 'শর্তসমূহের ট্রেস লুকান' : 'Hide Condition Trace')
-                        : (isBangla ? 'শর্তসমূহের বিস্তারিত ট্রেস দেখুন (Why / Why-Not)' : 'Inspect Condition Trace (Why / Why-Not)')}
+                        : (isBangla ? 'শর্তসমূহের বিস্তারিত প্রমাণ দেখুন (Why / Why-Not)' : 'Inspect Condition Trace (Why / Why-Not)')}
                     </span>
                     {isExpanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
                   </button>
 
                   {isExpanded && (
-                    <div className="mt-3 p-3 rounded-xl border border-border bg-background space-y-2 text-xs">
+                    <div className="mt-3 p-3.5 rounded-xl border border-border bg-surface space-y-2 text-xs shadow-xs">
                       <div className="font-bold text-foreground text-[11px] uppercase tracking-wider text-muted-foreground">
-                        {isBangla ? 'ক্লিনি ৩-মান যুক্ত লজিক ট্রেস (Kleene 3-Valued Trace):' : 'Kleene 3-Valued Evaluation Trace:'}
+                        {isBangla ? 'ধাপভিত্তিক আইনি শর্ত যাচাই ও প্রমাণের স্থিতি:' : 'Step-by-Step Statutory Condition Verification:'}
                       </div>
                       <div className="space-y-1.5 divide-y divide-border/40">
                         {route.condition_trace.map((item, cIdx) => (
@@ -398,12 +395,14 @@ export function WhyWhyNotTraceView({ caseId, locale }: WhyWhyNotTraceViewProps) 
                                 <HelpCircle className="w-4 h-4 text-[var(--warning-ink)] shrink-0 mt-0.5" />
                               )}
                               <div>
-                                <span className="font-mono text-foreground font-semibold">{item.fact || item.node_type}</span>
+                                <span className="font-semibold text-foreground text-xs">
+                                  {item.fact ? formatFactName(item.fact, isBangla) : item.node_type}
+                                </span>
                                 {item.details && (
                                   <span className="text-muted-foreground ml-1.5 text-[11px]">({item.details})</span>
                                 )}
-                                <div className="text-[11px] text-muted-foreground font-mono">
-                                  Inspected: {item.inspected_value === null ? 'null (unknown)' : String(item.inspected_value)}
+                                <div className="text-[11px] text-muted-foreground font-mono mt-0.5">
+                                  {isBangla ? 'পরীক্ষিত মান:' : 'Inspected:'} {item.inspected_value === null ? (isBangla ? 'অজানা (null)' : 'null (unknown)') : String(item.inspected_value)}
                                 </div>
                               </div>
                             </div>

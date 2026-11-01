@@ -16,12 +16,13 @@ async function handleProxy(req: NextRequest, { params }: { params: Promise<{ pat
 
   const headers = new Headers(req.headers);
   headers.set('host', new URL(BACKEND_API_URL).host);
+  headers.delete('content-length');
 
   const correlationId = req.headers.get('x-correlation-id') || crypto.randomUUID();
   headers.set('x-correlation-id', correlationId);
 
   try {
-    const fetchOptions: RequestInit = {
+    const fetchOptions: any = {
       method: req.method,
       headers,
       cache: 'no-store',
@@ -29,6 +30,7 @@ async function handleProxy(req: NextRequest, { params }: { params: Promise<{ pat
 
     if (req.method !== 'GET' && req.method !== 'HEAD') {
       fetchOptions.body = await req.arrayBuffer();
+      fetchOptions.duplex = 'half';
     }
 
     const backendRes = await fetch(targetUrl.toString(), fetchOptions);

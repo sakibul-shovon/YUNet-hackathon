@@ -8,6 +8,7 @@ from app.core.database import get_db_session
 from app.core.security import get_current_principal
 from app.identity.models import DeletionRequest, Principal
 from app.identity.schemas import (
+    AuthUserOut,
     ConsentCreate,
     ConsentOut,
     DeletionRequestCreate,
@@ -16,6 +17,8 @@ from app.identity.schemas import (
     PrincipalOut,
     UpgradeRequest,
     UpgradeResponse,
+    UserLoginRequest,
+    UserRegisterRequest,
 )
 from app.identity.service import IdentityService
 
@@ -34,6 +37,7 @@ async def auth_guest(
 
 
 @router.post("/auth/upgrade", response_model=UpgradeResponse)
+@router.post("/v1/auth/upgrade", response_model=UpgradeResponse)
 async def auth_upgrade(
     req: UpgradeRequest,
     principal: Principal = Depends(get_current_principal),
@@ -43,7 +47,50 @@ async def auth_upgrade(
     return await IdentityService.upgrade_account(principal, req, db)
 
 
+@router.post("/auth/register", response_model=AuthUserOut, status_code=status.HTTP_201_CREATED)
+@router.post("/v1/auth/register", response_model=AuthUserOut, status_code=status.HTTP_201_CREATED)
+async def auth_register(
+    req: UserRegisterRequest,
+    response: Response,
+    db: AsyncSession = Depends(get_db_session),
+):
+    """Registers a new permanent user with email, password, and name."""
+    return await IdentityService.register_user(req, db, response)
+
+
+@router.post("/auth/login", response_model=AuthUserOut)
+@router.post("/v1/auth/login", response_model=AuthUserOut)
+async def auth_login(
+    req: UserLoginRequest,
+    response: Response,
+    db: AsyncSession = Depends(get_db_session),
+):
+    """Logs in an existing user with email and password."""
+    return await IdentityService.login_user(req, db, response)
+
+
+@router.post("/auth/judge-demo", response_model=AuthUserOut)
+@router.post("/v1/auth/judge-demo", response_model=AuthUserOut)
+async def auth_judge_demo(
+    response: Response,
+    db: AsyncSession = Depends(get_db_session),
+):
+    """1-Click Hackathon Judge Demo Login: creates or logs into demo judge account with pre-seeded cases."""
+    return await IdentityService.login_judge_demo(db, response)
+
+
+@router.get("/auth/me", response_model=AuthUserOut)
+@router.get("/v1/auth/me", response_model=AuthUserOut)
+async def get_auth_user(
+    principal: Principal = Depends(get_current_principal),
+    db: AsyncSession = Depends(get_db_session),
+):
+    """Returns current logged-in user profile, or guest fallback."""
+    return await IdentityService.get_current_user_profile(principal, db)
+
+
 @router.post("/auth/logout")
+@router.post("/v1/auth/logout")
 async def auth_logout(
     request: Request,
     response: Response,

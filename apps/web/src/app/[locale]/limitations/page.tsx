@@ -37,8 +37,8 @@ export default async function LimitationsPage({ params }: { params: Promise<{ lo
         </h1>
         <p className="text-muted-foreground text-base mb-10 leading-relaxed">
           {isBangla
-            ? 'ক্লেইমক্রাফট বিডি ব্যবহারের ক্ষেত্রে যা জানা অপরিহার্য।'
-            : 'Essential boundaries and non-negotiable operational commitments of ClaimCraft BD.'}
+            ? 'এবার কি? (EbarKi) ব্যবহারের ক্ষেত্রে যা জানা অপরিহার্য।'
+            : 'Essential boundaries and non-negotiable operational commitments of EbarKi.'}
         </p>
 
         <div className="space-y-6">
@@ -51,8 +51,8 @@ export default async function LimitationsPage({ params }: { params: Promise<{ lo
             </CardHeader>
             <CardContent className="text-sm text-muted-foreground leading-relaxed">
               {isBangla
-                ? 'ক্লেইমক্রাফট বিডি একটি নিরপেক্ষ ডিজিটাল অ্যাসিস্ট্যান্ট। এটি ভোক্তা অধিকার অধিদপ্তর বা বাংলাদেশ ব্যাংকের প্রতিনিধি নয়। এটি কোনো বাধ্যতামূলক আইনি রায় বা আদেশ প্রদান করে না।'
-                : 'ClaimCraft BD is an independent consumer dispute preparation copilot. It is not affiliated with the Directorate of National Consumer Rights Protection (DNCRP), Bangladesh Bank, or any judicial body. It does not provide licensed legal representation or adjudicate disputes.'}
+                ? 'এবার কি? (EbarKi) একটি নিরপেক্ষ ডিজিটাল অ্যাসিস্ট্যান্ট। এটি ভোক্তা অধিকার অধিদপ্তর বা বাংলাদেশ ব্যাংকের প্রতিনিধি নয়। এটি কোনো বাধ্যতামূলক আইনি রায় বা আদেশ প্রদান করে না।'
+                : 'EbarKi is an independent consumer dispute preparation copilot. It is not affiliated with the Directorate of National Consumer Rights Protection (DNCRP), Bangladesh Bank, or any judicial body. It does not provide licensed legal representation or adjudicate disputes.'}
             </CardContent>
           </Card>
 

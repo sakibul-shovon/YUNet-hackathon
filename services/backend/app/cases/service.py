@@ -37,19 +37,43 @@ class CaseService:
         ref = cls.generate_display_reference()
         now = datetime.datetime.now(datetime.UTC)
 
+        merchant = data.merchant_name
+        incident_date = data.incident_date
+        title = data.title
+
+        proposal_set = None
+        if data.story_narrative and data.story_narrative.strip():
+            from app.extraction.adapter import CaseExtractor
+
+            proposal_set = CaseExtractor.propose(data.story_narrative.strip())
+
+            # Infer merchant if not explicitly provided
+            if not merchant:
+                for prop in proposal_set.proposals:
+                    if prop.field_name == "merchant_name" and prop.raw_value:
+                        merchant = str(prop.raw_value)
+                        break
+
+            # Infer purchase / incident date if not explicitly provided
+            if not incident_date:
+                for prop in proposal_set.proposals:
+                    if prop.field_name == "purchase_date" and prop.raw_value:
+                        incident_date = str(prop.raw_value)
+                        break
+
         new_case = Case(
             id=case_id,
             principal_id=principal.id,
             display_reference=ref,
-            title=data.title,
+            title=title,
             jurisdiction=data.jurisdiction,
             locale=data.locale,
             desired_outcomes=data.desired_outcomes,
             lifecycle_status="draft",
             row_version=1,
             is_demo=data.is_demo,
-            incident_date=data.incident_date,
-            merchant_name=data.merchant_name,
+            incident_date=incident_date,
+            merchant_name=merchant,
             story_narrative=data.story_narrative,
             created_at=now,
             updated_at=now,
@@ -68,7 +92,7 @@ class CaseService:
             actor_id=principal.id,
             schema_version=1,
             payload={
-                "title": data.title,
+                "title": title,
                 "jurisdiction": data.jurisdiction,
                 "locale": data.locale,
                 "desired_outcomes": data.desired_outcomes,
@@ -76,6 +100,45 @@ class CaseService:
             created_at=now,
         )
         db.add(initial_event)
+
+        # Snapshot version 1
+        canonical_content = json.dumps(
+            {
+                "title": title,
+                "jurisdiction": data.jurisdiction,
+                "locale": data.locale,
+                "story": data.story_narrative or "",
+            },
+            sort_keys=True,
+        )
+        canonical_hash = hashlib.sha256(canonical_content.encode("utf-8")).hexdigest()
+
+        initial_snapshot = CaseSnapshot(
+            id=uuid.uuid4(),
+            case_id=new_case.id,
+            principal_id=principal.id,
+            version=1,
+            canonical_input_hash=canonical_hash,
+            fact_assertion_ids=[],
+            issue_state={},
+            created_at=now,
+        )
+        db.add(initial_snapshot)
+
+        # Outbox event
+        outbox = OutboxMessage(
+            id=uuid.uuid4(),
+            event_type="case.created",
+            aggregate_type="case",
+            aggregate_id=new_case.id,
+            payload={"case_id": str(new_case.id), "principal_id": str(principal.id)},
+            created_at=now,
+        )
+        db.add(outbox)
+
+        await db.commit()
+        await db.refresh(new_case)
+        return CaseOut.model_validate(new_case, from_attributes=True)
 
         # Snapshot version 1
         canonical_content = json.dumps(

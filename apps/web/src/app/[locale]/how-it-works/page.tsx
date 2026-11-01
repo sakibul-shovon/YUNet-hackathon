@@ -32,7 +32,7 @@ export default async function HowItWorksPage({ params }: { params: Promise<{ loc
         </Link>
 
         <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-4">
-          {isBangla ? 'ক্লেইমক্রাফট বিডি যেভাবে কাজ করে' : 'How ClaimCraft BD Works'}
+          {isBangla ? 'এবার কি? (EbarKi) যেভাবে কাজ করে' : 'How EbarKi Works'}
         </h1>
         <p className="text-muted-foreground text-base mb-10 leading-relaxed">
           {isBangla

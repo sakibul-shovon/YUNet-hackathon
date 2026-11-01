@@ -608,7 +608,9 @@ class EvidenceService:
         stmt_facts = select(FactAssertion).where(
             FactAssertion.case_id == case_id,
             FactAssertion.is_active == True,
-            FactAssertion.field_name.in_(["claimed_amount", "transaction_amount", "goods_value"]),
+            FactAssertion.field_name.in_(
+                ["claimed_amount", "transaction_amount", "goods_value", "amount_paid"]
+            ),
         )
         facts_res = await db.execute(stmt_facts)
         amount_facts = facts_res.scalars().all()
@@ -665,22 +667,35 @@ class EvidenceService:
         for item_id, item in accepted_items.items():
             if not item.accepted_path:
                 continue
-            item_bytes = storage.read_accepted(item.accepted_path)
-            parsed = (
-                DocumentParser.parse_pdf_bytes(item.id, item_bytes)
-                if item.detected_mime_type == "application/pdf"
-                else None
-            )
+            try:
+                item_bytes = storage.read_accepted(item.accepted_path)
+            except (FileNotFoundError, OSError):
+                item_bytes = b""
+            if item.detected_mime_type == "application/pdf" and item_bytes:
+                parsed = DocumentParser.parse_pdf_bytes(item.id, item_bytes)
+            elif item.detected_mime_type and item.detected_mime_type.startswith("image/") and item_bytes:
+                parsed = DocumentParser.parse_image_bytes(item.id, item_bytes, filename=item.original_filename)
+            else:
+                parsed = None
 
             extracted_minor = 0
+            bn_trans = str.maketrans("০১২৩৪৫৬৭৮৯", "0123456789")
             if parsed and parsed.regions:
                 for r in parsed.regions:
                     if r.is_critical_token and r.critical_token_type == "money":
-                        nums = re.findall(r"\d+", r.text.replace(",", ""))
+                        nums = re.findall(r"\d+", r.text.translate(bn_trans).replace(",", ""))
                         if nums:
                             val = int(nums[0])
                             extracted_minor = val * 100
                             break
+
+            if extracted_minor == 0 and parsed and parsed.full_text:
+                matches = DocumentParser.MONEY_PAT.findall(parsed.full_text)
+                for m in matches:
+                    nums = re.findall(r"\d+", m.translate(bn_trans).replace(",", ""))
+                    if nums and int(nums[0]) > 0:
+                        extracted_minor = int(nums[0]) * 100
+                        break
 
             is_dup = item.sha256_hash in seen_hashes if item.sha256_hash else False
             if item.sha256_hash:
@@ -874,6 +889,8 @@ class EvidenceService:
 
         if item.detected_mime_type == "application/pdf":
             return DocumentParser.parse_pdf_bytes(item.id, data)
+        elif item.detected_mime_type and item.detected_mime_type.startswith("image/"):
+            return DocumentParser.parse_image_bytes(item.id, data, filename=item.original_filename)
         else:
             return DocumentParseResult(
                 evidence_id=item.id,

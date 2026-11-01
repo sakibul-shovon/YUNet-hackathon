@@ -27,17 +27,26 @@ from app.multimodal.audio.stt_adapter import STTAdapter
 router = APIRouter(tags=["Multimodal Audio & Voice Notes"])
 
 
+NIL_UUID = uuid.UUID("00000000-0000-0000-0000-000000000000")
+
+
 @router.post(
     "/v1/cases/{case_id}/audio/transcribe",
     response_model=AudioTranscriptOut,
     status_code=status.HTTP_200_OK,
 )
+@router.post(
+    "/v1/audio/transcribe",
+    response_model=AudioTranscriptOut,
+    status_code=status.HTTP_200_OK,
+)
 async def transcribe_case_audio(
-    case_id: uuid.UUID,
+    case_id: uuid.UUID = NIL_UUID,
     audio_file: UploadFile = File(..., description="Recorded audio payload"),
     consent_granted: bool = Form(..., description="Explicit consumer consent for voice processing"),
     language_hint: str = Form("auto", description="Optional language hint: bn-BD, en-BD, auto"),
     client_duration: float = Form(0.0, description="Client measured duration in seconds"),
+    client_transcript: str = Form("", description="Optional client transcribed text"),
     principal: Principal = Depends(get_current_principal),
     db: AsyncSession = Depends(get_db_session),
 ):
@@ -49,8 +58,11 @@ async def transcribe_case_audio(
             detail="Explicit consumer consent is mandatory before processing voice recordings.",
         )
 
-    # 2. Authorize case ownership (T01)
-    await FactService.get_authorized_case(case_id, principal, db)
+    # 2. Check if this is an intake voice note or an existing persisted case
+    is_nil_case = case_id == NIL_UUID or case_id.int == 0
+    if not is_nil_case:
+        # Authorize case ownership (T01)
+        await FactService.get_authorized_case(case_id, principal, db)
 
     # 3. Read audio bytes
     audio_bytes = await audio_file.read()
@@ -60,43 +72,47 @@ async def transcribe_case_audio(
             detail="Uploaded audio file is empty.",
         )
 
-    # 4. Save audio recording in evidence vault storage
-    now = datetime.datetime.now(datetime.UTC)
-    storage = get_storage_backend()
-    storage_key = f"audio_{uuid.uuid4().hex[:12]}_{Path(audio_file.filename or 'note.webm').name}"
-    q_path = storage.save_quarantine(storage_key, audio_bytes)
-    acc_path, sha_hash, actual_size = storage.promote_to_accepted(q_path, storage_key)
+    ev_item_id = None
+    if not is_nil_case:
+        # 4. Save audio recording in evidence vault storage for existing case
+        now = datetime.datetime.now(datetime.UTC)
+        storage = get_storage_backend()
+        storage_key = f"audio_{uuid.uuid4().hex[:12]}_{Path(audio_file.filename or 'note.webm').name}"
+        q_path = storage.save_quarantine(storage_key, audio_bytes)
+        acc_path, sha_hash, actual_size = storage.promote_to_accepted(q_path, storage_key)
 
-    ev_item = EvidenceItem(
-        case_id=case_id,
-        principal_id=principal.id,
-        storage_kind="local_disk",
-        quarantine_path=q_path,
-        accepted_path=acc_path,
-        original_filename=audio_file.filename or "voice_note.webm",
-        declared_mime_type=audio_file.content_type or "audio/webm",
-        detected_mime_type=audio_file.content_type or "audio/webm",
-        byte_size=actual_size,
-        quota_reserved_bytes=actual_size,
-        sha256_hash=sha_hash,
-        upload_token=uuid.uuid4().hex,
-        token_expires_at=now + datetime.timedelta(hours=2),
-        intent_consumed=True,
-        status="accepted",
-        is_quarantined=False,
-    )
-    db.add(ev_item)
-    await db.commit()
-    await db.refresh(ev_item)
+        ev_item = EvidenceItem(
+            case_id=case_id,
+            principal_id=principal.id,
+            storage_kind="local_disk",
+            quarantine_path=q_path,
+            accepted_path=acc_path,
+            original_filename=audio_file.filename or "voice_note.webm",
+            declared_mime_type=audio_file.content_type or "audio/webm",
+            detected_mime_type=audio_file.content_type or "audio/webm",
+            byte_size=actual_size,
+            quota_reserved_bytes=actual_size,
+            sha256_hash=sha_hash,
+            upload_token=uuid.uuid4().hex,
+            token_expires_at=now + datetime.timedelta(hours=2),
+            intent_consumed=True,
+            status="accepted",
+            is_quarantined=False,
+        )
+        db.add(ev_item)
+        await db.commit()
+        await db.refresh(ev_item)
+        ev_item_id = ev_item.id
 
-    # 4. Transcribe audio
+    # 5. Transcribe audio
     return await STTAdapter.transcribe_audio_bytes(
         case_id=case_id,
         audio_bytes=audio_bytes,
         declared_mime=audio_file.content_type or "audio/webm",
         consent_granted=consent_granted,
         language_hint=language_hint,
-        audio_evidence_id=ev_item.id,
+        client_transcript=client_transcript,
+        audio_evidence_id=ev_item_id,
         duration_seconds=client_duration,
     )
 

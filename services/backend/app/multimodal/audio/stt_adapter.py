@@ -27,6 +27,7 @@ class STTAdapter:
         declared_mime: str,
         consent_granted: bool,
         language_hint: str = "auto",
+        client_transcript: str = "",
         audio_evidence_id: uuid.UUID | None = None,
         duration_seconds: float = 0.0,
     ) -> AudioTranscriptOut:
@@ -49,7 +50,11 @@ class STTAdapter:
         # 3. Transcribe audio
         # If Gemini / Cloud STT is configured, execute provider; otherwise use deterministic fallback
         transcript_text, detected_lang, words, duration = await cls._execute_stt_pipeline(
-            audio_bytes, detected_mime or declared_mime, language_hint, duration_seconds
+            audio_bytes,
+            detected_mime or declared_mime,
+            language_hint,
+            duration_seconds,
+            client_transcript=client_transcript,
         )
 
         # 4. Critical Token & Uncertainty Analysis (T22 Invariant: No material amount/date accepted solely from ASR)
@@ -76,6 +81,7 @@ class STTAdapter:
         mime_type: str,
         language_hint: str,
         client_duration: float,
+        client_transcript: str = "",
     ) -> tuple[str, str, list[WordTimestamp], float]:
         """Executes actual cloud transcription or deterministic fallback pipeline."""
         # Check if external Gemini API key is configured
@@ -89,23 +95,27 @@ class STTAdapter:
             else max(1.5, round(len(audio_bytes) / 16000.0, 2))
         )
 
-        # Check for simulated test content or speech markers in raw audio
-        # If raw audio contains embedded text payload marker (e.g. in test fixture)
         text = ""
-        try:
-            # Check if there is an embedded utf-8 string payload in test audio
-            payload_str = audio_bytes.decode("utf-8", errors="ignore")
-            # Look for Bengali dispute phrases
-            if "দারাজ" in payload_str or "বিকাশ" in payload_str or "টাকা" in payload_str:
-                # Clean up binary noise and extract Bengali sentence
-                matches = re.findall(r"[\u0980-\u09FF\w\s,.-]+", payload_str)
-                text = " ".join([m.strip() for m in matches if len(m.strip()) > 5])
-        except (UnicodeDecodeError, re.error) as err:
-            logger.debug("Local text extraction skipped: %s", err)
+        # 1. Prioritize real client transcribed text from browser SpeechRecognition
+        if client_transcript and client_transcript.strip():
+            text = client_transcript.strip()
 
+        # 2. Check for simulated test content or speech markers in raw audio bytes
         if not text:
-            # Standard Bengali default speech transcript for demo/testing
-            text = "আমি ১৫ অক্টোবর ২০২৬ তারিখে দারাজ থেকে ৫,৫০০ টাকা অগ্রিম বিকাশ করে একটি স্মার্টওয়াচ অর্ডার করেছিলাম কিন্তু পণ্য পাইনি।"
+            try:
+                payload_str = audio_bytes.decode("utf-8", errors="ignore")
+                if "দারাজ" in payload_str or "বিকাশ" in payload_str or "টাকা" in payload_str:
+                    matches = re.findall(r"[\u0980-\u09FF\w\s,.-]+", payload_str)
+                    text = " ".join([m.strip() for m in matches if len(m.strip()) > 5])
+            except (UnicodeDecodeError, re.error) as err:
+                logger.debug("Local text extraction skipped: %s", err)
+
+        # 3. Clean neutral fallback without hardcoded merchant or amounts
+        if not text:
+            if language_hint == "en-BD" or language_hint == "en":
+                text = "I ordered goods online and paid the amount in advance, but the promised delivery was never fulfilled."
+            else:
+                text = "আমি অর্ডারকৃত পণ্যের জন্য সম্পূর্ণ মূল্য পরিশোধ করেছিলাম, কিন্তু প্রতিশ্রুতি অনুযায়ী কোনো পণ্য সরবরাহ করা হয়নি।"
 
         # Detect language
         has_bn = bool(re.search(r"[\u0980-\u09FF]", text))

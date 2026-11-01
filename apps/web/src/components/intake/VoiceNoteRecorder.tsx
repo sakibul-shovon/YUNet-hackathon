@@ -36,12 +36,19 @@ export function VoiceNoteRecorder({
   const audioChunksRef = useRef<Blob[]>([]);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const audioElementRef = useRef<HTMLAudioElement | null>(null);
+  const recognitionRef = useRef<any>(null);
+  const liveTranscriptRef = useRef<string>('');
 
   // Clean up timers and object URLs on unmount
   useEffect(() => {
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
       if (audioUrl) URL.revokeObjectURL(audioUrl);
+      if (recognitionRef.current) {
+        try {
+          recognitionRef.current.stop();
+        } catch {}
+      }
     };
   }, [audioUrl]);
 
@@ -58,6 +65,7 @@ export function VoiceNoteRecorder({
     setPermissionError(null);
     setTranscribeError(null);
     audioChunksRef.current = [];
+    liveTranscriptRef.current = '';
 
     try {
       if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
@@ -65,6 +73,32 @@ export function VoiceNoteRecorder({
       }
 
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+
+      // Start browser native SpeechRecognition in parallel if available
+      const Win = typeof window !== 'undefined' ? (window as any) : null;
+      const SpeechRec = Win?.webkitSpeechRecognition || Win?.SpeechRecognition;
+      if (SpeechRec) {
+        try {
+          const rec = new SpeechRec();
+          rec.continuous = true;
+          rec.interimResults = true;
+          rec.lang = isBangla ? 'bn-BD' : 'en-US';
+          rec.onresult = (event: any) => {
+            let aggregated = '';
+            for (let i = 0; i < event.results.length; i++) {
+              aggregated += event.results[i][0].transcript + ' ';
+            }
+            if (aggregated.trim()) {
+              liveTranscriptRef.current = aggregated.trim();
+            }
+          };
+          rec.onerror = (e: any) => console.debug('Live SpeechRec notice:', e);
+          rec.start();
+          recognitionRef.current = rec;
+        } catch (sErr) {
+          console.debug('SpeechRec init skipped:', sErr);
+        }
+      }
 
       // Determine supported MIME format across browsers (Chrome vs Safari vs Firefox)
       let mimeType = 'audio/webm;codecs=opus';
@@ -135,6 +169,11 @@ export function VoiceNoteRecorder({
   };
 
   const stopRecording = () => {
+    if (recognitionRef.current) {
+      try {
+        recognitionRef.current.stop();
+      } catch {}
+    }
     if (mediaRecorderRef.current && isRecording) {
       mediaRecorderRef.current.stop();
       setIsRecording(false);
@@ -184,6 +223,9 @@ export function VoiceNoteRecorder({
       formData.append('consent_granted', String(consentGranted));
       formData.append('language_hint', isBangla ? 'bn-BD' : 'en-BD');
       formData.append('client_duration', String(duration));
+      if (liveTranscriptRef.current) {
+        formData.append('client_transcript', liveTranscriptRef.current);
+      }
 
       const res = await apiFetch(`/api/v1/cases/${targetCaseId}/audio/transcribe`, {
         method: 'POST',
@@ -191,6 +233,11 @@ export function VoiceNoteRecorder({
       });
 
       if (!res.ok) {
+        // If client transcribed live words, use them as seamless fallback
+        if (liveTranscriptRef.current && liveTranscriptRef.current.trim()) {
+          onTranscribeSuccess(liveTranscriptRef.current.trim(), [], []);
+          return;
+        }
         const errData = await res.json().catch(() => ({}));
         throw new Error(
           errData.detail ||
@@ -203,7 +250,11 @@ export function VoiceNoteRecorder({
       const result = await res.json();
       onTranscribeSuccess(result.transcript_text, result.words, result.uncertain_spans);
     } catch (err: any) {
-      setTranscribeError(err.message || 'Failed to process audio');
+      if (liveTranscriptRef.current && liveTranscriptRef.current.trim()) {
+        onTranscribeSuccess(liveTranscriptRef.current.trim(), [], []);
+      } else {
+        setTranscribeError(err.message || 'Failed to process audio');
+      }
     } finally {
       setIsTranscribing(false);
     }
