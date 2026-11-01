@@ -2213,11 +2213,11 @@
       "phase_id": "P12",
       "implementation_status": "COMPLETE",
       "validation_status": "PASSED",
-      "push_status": "ready",
+      "push_status": "pushed_and_verified",
       "intended_remote": "origin",
       "intended_branch": "main",
-      "completion_commit_sha": null,
-      "verified_remote_sha": null,
+      "completion_commit_sha": "d5980b29e6e2004b8ea29e8240c23b82c4b5988b",
+      "verified_remote_sha": "d5980b29e6e2004b8ea29e8240c23b82c4b5988b",
       "last_attempt_or_error": null
     },
     "P13": {
