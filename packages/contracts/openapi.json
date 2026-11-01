@@ -974,6 +974,414 @@
         }
       }
     },
+    "/v1/cases/{case_id}/facts": {
+      "get": {
+        "tags": [
+          "Case Facts & Normalization"
+        ],
+        "summary": "List Case Facts",
+        "description": "Retrieves all active factual assertions for the authorized case.",
+        "operationId": "list_case_facts_v1_cases__case_id__facts_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FactAssertionOut"
+                  },
+                  "title": "Response List Case Facts V1 Cases  Case Id  Facts Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Case Facts & Normalization"
+        ],
+        "summary": "Create Case Fact",
+        "description": "Creates a normalized factual assertion (money/date/boolean/string) bound to the case.",
+        "operationId": "create_case_fact_v1_cases__case_id__facts_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FactAssertionCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FactAssertionOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/cases/{case_id}/facts/{assertion_id}/review": {
+      "post": {
+        "tags": [
+          "Case Facts & Normalization"
+        ],
+        "summary": "Review Case Fact",
+        "description": "Submits user review (accept/correct/reject/unsure) for an extracted or asserted fact.",
+        "operationId": "review_case_fact_v1_cases__case_id__facts__assertion_id__review_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "assertion_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Assertion Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FactReviewSubmission"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FactReviewOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/cases/{case_id}/extract": {
+      "post": {
+        "tags": [
+          "Case Text Extraction"
+        ],
+        "summary": "Extract Case Narrative",
+        "description": "T08: Extracts structured fact proposals and verbatim text spans from the case story narrative.",
+        "operationId": "extract_case_narrative_v1_cases__case_id__extract_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "auto_persist",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "description": "Whether to automatically persist extracted proposals as draft assertions",
+              "default": false,
+              "title": "Auto Persist"
+            },
+            "description": "Whether to automatically persist extracted proposals as draft assertions"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FactProposalSet"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/cases/{case_id}/assessment": {
+      "get": {
+        "tags": [
+          "Case Procedural Assessment"
+        ],
+        "summary": "Get Case Assessment",
+        "description": "T19/T20: Computes deterministic procedural assessment, condition traces, NBQ, and next actions.",
+        "operationId": "get_case_assessment_v1_cases__case_id__assessment_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProceduralAssessmentOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/cases/{case_id}/assess": {
+      "post": {
+        "tags": [
+          "Case Procedural Assessment"
+        ],
+        "summary": "Trigger Case Assessment",
+        "description": "Recomputes procedural assessment against the latest active facts.",
+        "operationId": "trigger_case_assessment_v1_cases__case_id__assess_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProceduralAssessmentOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/cases/{case_id}/draft": {
+      "get": {
+        "tags": [
+          "Case Actions & Drafts"
+        ],
+        "summary": "Get Case Draft Request",
+        "description": "T26: Generates a respectful, legally grounded, unsubmitted dispute request draft.",
+        "operationId": "get_case_draft_request_v1_cases__case_id__draft_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "locale",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "pattern": "^(en|bn)$",
+              "default": "en",
+              "title": "Locale"
+            }
+          },
+          {
+            "name": "remedy",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "full_refund",
+              "title": "Remedy"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DraftRequestOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/capabilities": {
       "get": {
         "tags": [
@@ -1882,10 +2290,478 @@
           }
         }
       }
+    },
+    "/api/v1/cases/{case_id}/facts": {
+      "get": {
+        "tags": [
+          "Case Facts & Normalization"
+        ],
+        "summary": "List Case Facts",
+        "description": "Retrieves all active factual assertions for the authorized case.",
+        "operationId": "list_case_facts_api_v1_cases__case_id__facts_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FactAssertionOut"
+                  },
+                  "title": "Response List Case Facts Api V1 Cases  Case Id  Facts Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Case Facts & Normalization"
+        ],
+        "summary": "Create Case Fact",
+        "description": "Creates a normalized factual assertion (money/date/boolean/string) bound to the case.",
+        "operationId": "create_case_fact_api_v1_cases__case_id__facts_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FactAssertionCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FactAssertionOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{case_id}/facts/{assertion_id}/review": {
+      "post": {
+        "tags": [
+          "Case Facts & Normalization"
+        ],
+        "summary": "Review Case Fact",
+        "description": "Submits user review (accept/correct/reject/unsure) for an extracted or asserted fact.",
+        "operationId": "review_case_fact_api_v1_cases__case_id__facts__assertion_id__review_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "assertion_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Assertion Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FactReviewSubmission"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FactReviewOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{case_id}/extract": {
+      "post": {
+        "tags": [
+          "Case Text Extraction"
+        ],
+        "summary": "Extract Case Narrative",
+        "description": "T08: Extracts structured fact proposals and verbatim text spans from the case story narrative.",
+        "operationId": "extract_case_narrative_api_v1_cases__case_id__extract_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "auto_persist",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "description": "Whether to automatically persist extracted proposals as draft assertions",
+              "default": false,
+              "title": "Auto Persist"
+            },
+            "description": "Whether to automatically persist extracted proposals as draft assertions"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FactProposalSet"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{case_id}/assessment": {
+      "get": {
+        "tags": [
+          "Case Procedural Assessment"
+        ],
+        "summary": "Get Case Assessment",
+        "description": "T19/T20: Computes deterministic procedural assessment, condition traces, NBQ, and next actions.",
+        "operationId": "get_case_assessment_api_v1_cases__case_id__assessment_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProceduralAssessmentOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{case_id}/assess": {
+      "post": {
+        "tags": [
+          "Case Procedural Assessment"
+        ],
+        "summary": "Trigger Case Assessment",
+        "description": "Recomputes procedural assessment against the latest active facts.",
+        "operationId": "trigger_case_assessment_api_v1_cases__case_id__assess_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProceduralAssessmentOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{case_id}/draft": {
+      "get": {
+        "tags": [
+          "Case Actions & Drafts"
+        ],
+        "summary": "Get Case Draft Request",
+        "description": "T26: Generates a respectful, legally grounded, unsubmitted dispute request draft.",
+        "operationId": "get_case_draft_request_api_v1_cases__case_id__draft_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "locale",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "pattern": "^(en|bn)$",
+              "default": "en",
+              "title": "Locale"
+            }
+          },
+          {
+            "name": "remedy",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "full_refund",
+              "title": "Remedy"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DraftRequestOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
+      "AssessmentRouteOut": {
+        "properties": {
+          "route_id": {
+            "type": "string",
+            "title": "Route Id"
+          },
+          "rule_id": {
+            "type": "string",
+            "title": "Rule Id"
+          },
+          "issue_type": {
+            "type": "string",
+            "title": "Issue Type"
+          },
+          "status": {
+            "$ref": "#/components/schemas/RouteStatus"
+          },
+          "reasons": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Reasons"
+          },
+          "allowed_actions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Allowed Actions"
+          },
+          "source_dependencies": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Source Dependencies"
+          },
+          "condition_trace": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Condition Trace"
+          }
+        },
+        "type": "object",
+        "required": [
+          "route_id",
+          "rule_id",
+          "issue_type",
+          "status",
+          "reasons",
+          "allowed_actions",
+          "source_dependencies",
+          "condition_trace"
+        ],
+        "title": "AssessmentRouteOut"
+      },
       "CaseCreate": {
         "properties": {
           "title": {
@@ -2441,6 +3317,425 @@
         ],
         "title": "DeletionRequestOut"
       },
+      "DraftRequestOut": {
+        "properties": {
+          "document_type": {
+            "type": "string",
+            "title": "Document Type",
+            "default": "pre_filing_merchant_notice"
+          },
+          "locale": {
+            "type": "string",
+            "title": "Locale",
+            "default": "en"
+          },
+          "subject": {
+            "type": "string",
+            "title": "Subject"
+          },
+          "recipient": {
+            "type": "string",
+            "title": "Recipient"
+          },
+          "body_text": {
+            "type": "string",
+            "title": "Body Text"
+          },
+          "citations": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Citations"
+          },
+          "lifecycle_state": {
+            "type": "string",
+            "title": "Lifecycle State",
+            "default": "unsubmitted_draft"
+          },
+          "is_sent": {
+            "type": "boolean",
+            "title": "Is Sent",
+            "default": false
+          },
+          "is_filed": {
+            "type": "boolean",
+            "title": "Is Filed",
+            "default": false
+          },
+          "unsubmitted_banner_notice_en": {
+            "type": "string",
+            "title": "Unsubmitted Banner Notice En",
+            "default": "UNSUBMITTED DRAFT \u2014 Prepared for your personal review. ClaimCraft BD does NOT send or file communications on your behalf. Copying or viewing this draft does not change external filing status."
+          },
+          "unsubmitted_banner_notice_bn": {
+            "type": "string",
+            "title": "Unsubmitted Banner Notice Bn",
+            "default": "\u0985\u09a8\u09a8\u09c1\u09ae\u09cb\u09a6\u09bf\u09a4 \u0996\u09b8\u09dc\u09be \u2014 \u09b6\u09c1\u09a7\u09c1\u09ae\u09be\u09a4\u09cd\u09b0 \u0986\u09aa\u09a8\u09be\u09b0 \u09ac\u09cd\u09af\u0995\u09cd\u09a4\u09bf\u0997\u09a4 \u09aa\u09b0\u09cd\u09af\u09be\u09b2\u09cb\u099a\u09a8\u09be\u09b0 \u099c\u09a8\u09cd\u09af \u09aa\u09cd\u09b0\u09b8\u09cd\u09a4\u09c1\u09a4\u0964 \u0995\u09cd\u09b2\u09c7\u09ae\u0995\u09cd\u09b0\u09cd\u09af\u09be\u09ab\u099f \u09ac\u09bf\u09a1\u09bf \u0995\u09cb\u09a8\u09cb \u09b8\u09cd\u09ac\u09df\u0982\u0995\u09cd\u09b0\u09bf\u09df \u09ae\u09c7\u09b8\u09c7\u099c \u09ac\u09be \u09ae\u09be\u09ae\u09b2\u09be \u09aa\u09be\u09a0\u09be\u09df \u09a8\u09be\u0964 \u098f\u0987 \u0996\u09b8\u09dc\u09be \u09a6\u09c7\u0996\u09be \u09ac\u09be \u0995\u09aa\u09bf \u0995\u09b0\u09be \u09ae\u09be\u09a8\u09c7\u0987 \u098f\u099f\u09bf \u0986\u09a8\u09c1\u09b7\u09cd\u09a0\u09be\u09a8\u09bf\u0995\u09ad\u09be\u09ac\u09c7 \u09aa\u09cd\u09b0\u09c7\u09b0\u09bf\u09a4 \u09ac\u09be \u09a6\u09be\u09df\u09c7\u09b0\u0995\u09c3\u09a4 \u09a8\u09df\u0964"
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "subject",
+          "recipient",
+          "body_text",
+          "created_at"
+        ],
+        "title": "DraftRequestOut"
+      },
+      "FactAssertionCreate": {
+        "properties": {
+          "field_name": {
+            "type": "string",
+            "maxLength": 128,
+            "title": "Field Name"
+          },
+          "field_type": {
+            "type": "string",
+            "pattern": "^(money|date|boolean|string|select)$",
+            "title": "Field Type"
+          },
+          "raw_value": {
+            "title": "Raw Value"
+          },
+          "original_text": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Original Text"
+          },
+          "origin": {
+            "type": "string",
+            "maxLength": 64,
+            "title": "Origin",
+            "default": "user_statement"
+          },
+          "issue_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Issue Id"
+          },
+          "span_start": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Span Start"
+          },
+          "span_end": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Span End"
+          }
+        },
+        "type": "object",
+        "required": [
+          "field_name",
+          "field_type",
+          "raw_value"
+        ],
+        "title": "FactAssertionCreate"
+      },
+      "FactAssertionOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "case_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Case Id"
+          },
+          "issue_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Issue Id"
+          },
+          "field_name": {
+            "type": "string",
+            "title": "Field Name"
+          },
+          "field_type": {
+            "type": "string",
+            "title": "Field Type"
+          },
+          "typed_value": {
+            "title": "Typed Value"
+          },
+          "original_text": {
+            "type": "string",
+            "title": "Original Text"
+          },
+          "origin": {
+            "type": "string",
+            "title": "Origin"
+          },
+          "created_case_version": {
+            "type": "integer",
+            "title": "Created Case Version"
+          },
+          "is_active": {
+            "type": "boolean",
+            "title": "Is Active"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "case_id",
+          "field_name",
+          "field_type",
+          "typed_value",
+          "original_text",
+          "origin",
+          "created_case_version",
+          "is_active",
+          "created_at"
+        ],
+        "title": "FactAssertionOut"
+      },
+      "FactProposal": {
+        "properties": {
+          "field_name": {
+            "type": "string",
+            "title": "Field Name"
+          },
+          "field_type": {
+            "type": "string",
+            "title": "Field Type"
+          },
+          "raw_value": {
+            "title": "Raw Value"
+          },
+          "original_text": {
+            "type": "string",
+            "maxLength": 1000,
+            "title": "Original Text"
+          },
+          "span_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Span Ids"
+          },
+          "confidence": {
+            "type": "number",
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Confidence",
+            "default": 1.0
+          },
+          "uncertainty_rationale": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Uncertainty Rationale"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "field_name",
+          "field_type",
+          "raw_value",
+          "original_text"
+        ],
+        "title": "FactProposal"
+      },
+      "FactProposalSet": {
+        "properties": {
+          "schema_version": {
+            "type": "string",
+            "title": "Schema Version",
+            "default": "extraction.v1"
+          },
+          "detected_domain": {
+            "type": "string",
+            "title": "Detected Domain"
+          },
+          "detected_issue": {
+            "type": "string",
+            "title": "Detected Issue"
+          },
+          "spans": {
+            "items": {
+              "$ref": "#/components/schemas/TextSpan"
+            },
+            "type": "array",
+            "title": "Spans"
+          },
+          "proposals": {
+            "items": {
+              "$ref": "#/components/schemas/FactProposal"
+            },
+            "type": "array",
+            "title": "Proposals"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "detected_domain",
+          "detected_issue"
+        ],
+        "title": "FactProposalSet"
+      },
+      "FactReviewOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "assertion_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Assertion Id"
+          },
+          "reviewer_principal_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Reviewer Principal Id"
+          },
+          "review_outcome": {
+            "type": "string",
+            "title": "Review Outcome"
+          },
+          "correction_assertion_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Correction Assertion Id"
+          },
+          "reviewed_case_version": {
+            "type": "integer",
+            "title": "Reviewed Case Version"
+          },
+          "rationale": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rationale"
+          },
+          "reviewed_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Reviewed At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "assertion_id",
+          "reviewer_principal_id",
+          "review_outcome",
+          "reviewed_case_version",
+          "reviewed_at"
+        ],
+        "title": "FactReviewOut"
+      },
+      "FactReviewSubmission": {
+        "properties": {
+          "review_outcome": {
+            "type": "string",
+            "pattern": "^(accepted|corrected|rejected|unsure)$",
+            "title": "Review Outcome"
+          },
+          "corrected_value": {
+            "anyOf": [
+              {},
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Corrected Value"
+          },
+          "corrected_original_text": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Corrected Original Text"
+          },
+          "rationale": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rationale"
+          }
+        },
+        "type": "object",
+        "required": [
+          "review_outcome"
+        ],
+        "title": "FactReviewSubmission"
+      },
       "GuestSessionResponse": {
         "properties": {
           "principal_id": {
@@ -2540,6 +3835,66 @@
         ],
         "title": "KnowledgeReleaseOut"
       },
+      "NextBestQuestion": {
+        "properties": {
+          "question_key": {
+            "type": "string",
+            "title": "Question Key"
+          },
+          "fact_field": {
+            "type": "string",
+            "title": "Fact Field"
+          },
+          "prompt_en": {
+            "type": "string",
+            "title": "Prompt En"
+          },
+          "prompt_bn": {
+            "type": "string",
+            "title": "Prompt Bn"
+          },
+          "question_type": {
+            "type": "string",
+            "title": "Question Type"
+          },
+          "options": {
+            "anyOf": [
+              {
+                "items": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Options"
+          },
+          "priority": {
+            "type": "string",
+            "title": "Priority"
+          },
+          "relevance_rationale": {
+            "type": "string",
+            "title": "Relevance Rationale"
+          }
+        },
+        "type": "object",
+        "required": [
+          "question_key",
+          "fact_field",
+          "prompt_en",
+          "prompt_bn",
+          "question_type",
+          "priority",
+          "relevance_rationale"
+        ],
+        "title": "NextBestQuestion"
+      },
       "PrincipalOut": {
         "properties": {
           "id": {
@@ -2581,6 +3936,78 @@
           "created_at"
         ],
         "title": "PrincipalOut"
+      },
+      "ProceduralAssessmentOut": {
+        "properties": {
+          "case_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Case Id"
+          },
+          "overall_status": {
+            "type": "string",
+            "title": "Overall Status"
+          },
+          "primary_action": {
+            "type": "string",
+            "title": "Primary Action"
+          },
+          "primary_action_title_en": {
+            "type": "string",
+            "title": "Primary Action Title En"
+          },
+          "primary_action_title_bn": {
+            "type": "string",
+            "title": "Primary Action Title Bn"
+          },
+          "secondary_actions": {
+            "items": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Secondary Actions"
+          },
+          "routes": {
+            "items": {
+              "$ref": "#/components/schemas/AssessmentRouteOut"
+            },
+            "type": "array",
+            "title": "Routes"
+          },
+          "next_best_question": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/NextBestQuestion"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "source_cards": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Source Cards"
+          }
+        },
+        "type": "object",
+        "required": [
+          "case_id",
+          "overall_status",
+          "primary_action",
+          "primary_action_title_en",
+          "primary_action_title_bn",
+          "secondary_actions",
+          "routes",
+          "source_cards"
+        ],
+        "title": "ProceduralAssessmentOut"
       },
       "ReleaseBuildRequest": {
         "properties": {
@@ -2697,6 +4124,18 @@
         ],
         "title": "ReviewSubmission"
       },
+      "RouteStatus": {
+        "type": "string",
+        "enum": [
+          "supported",
+          "excluded",
+          "needs_facts",
+          "needs_review",
+          "source_caution",
+          "not_supported"
+        ],
+        "title": "RouteStatus"
+      },
       "SourceCandidateOut": {
         "properties": {
           "id": {
@@ -2798,6 +4237,40 @@
           "created_at"
         ],
         "title": "SourceProvisionOut"
+      },
+      "TextSpan": {
+        "properties": {
+          "span_id": {
+            "type": "string",
+            "pattern": "^span_\\d+$",
+            "title": "Span Id"
+          },
+          "text": {
+            "type": "string",
+            "maxLength": 1000,
+            "minLength": 1,
+            "title": "Text"
+          },
+          "start_offset": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Start Offset"
+          },
+          "end_offset": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "End Offset"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "span_id",
+          "text",
+          "start_offset",
+          "end_offset"
+        ],
+        "title": "TextSpan"
       },
       "UpgradeRequest": {
         "properties": {

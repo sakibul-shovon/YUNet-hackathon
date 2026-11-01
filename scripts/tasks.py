@@ -228,6 +228,13 @@ def cmd_contracts(args):
     print("Contracts generation verified.")
 
 
+def cmd_seed_demo(args):
+    print("Seeding synthetic demo case fixture...")
+    backend_dir = ROOT_DIR / "services" / "backend"
+    subprocess.check_call(["uv", "run", "python", str(ROOT_DIR / "scripts" / "seed_demo.py")], cwd=backend_dir)
+    print("Demo seed complete.")
+
+
 def cmd_dev(args):
     print("==================================================")
     print(" ClaimCraft BD — Local Development Stack")
@@ -261,6 +268,9 @@ def main():
 
     contracts_parser = subparsers.add_parser("contracts", help="Export OpenAPI and regenerate TypeScript contracts")
     contracts_parser.set_defaults(func=cmd_contracts)
+
+    seed_demo_parser = subparsers.add_parser("seed-demo", help="Idempotently seed synthetic demo case fixtures")
+    seed_demo_parser.set_defaults(func=cmd_seed_demo)
 
     dev_parser = subparsers.add_parser("dev", help="Show instructions for running development servers")
     dev_parser.set_defaults(func=cmd_dev)

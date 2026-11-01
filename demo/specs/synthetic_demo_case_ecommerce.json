@@ -1,0 +1,79 @@
+{
+  "fixture_version": "1.0",
+  "is_demo": true,
+  "synthetic_fixture": true,
+  "case_title": "Daraz Smart Watch Delivery Failure (Synthetic Demo)",
+  "jurisdiction": "BD",
+  "locale": "en-BD",
+  "merchant_name": "Daraz Bangladesh",
+  "incident_date": "2026-10-15",
+  "desired_outcomes": [
+    "full_refund"
+  ],
+  "story_narrative": "আমি ১৫ অক্টোবর ২০২৬ তারিখে দারাজ থেকে ৫,৫০০ টাকা অগ্রিম বিকাশ করে একটি স্মার্টওয়াচ অর্ডার করেছিলাম। তারা ৭২ ঘণ্টার মধ্যে ডেলিভারির প্রতিশ্রুতি দিয়েছিল। কিন্তু আজ পর্যন্ত পণ্যটি পাইনি এবং বিক্রেতা মেসেজের উত্তর দেওয়া বন্ধ করে দিয়েছে।",
+  "assertions": [
+    {
+      "field_name": "merchant_name",
+      "field_type": "string",
+      "raw_value": "Daraz Bangladesh",
+      "original_text": "দারাজ",
+      "origin": "document_extraction"
+    },
+    {
+      "field_name": "amount_paid",
+      "field_type": "money",
+      "raw_value": "৫,৫০০ টাকা",
+      "original_text": "৫,৫০০ টাকা অগ্রিম বিকাশ করে",
+      "origin": "document_extraction"
+    },
+    {
+      "field_name": "incident_date",
+      "field_type": "date",
+      "raw_value": "2026-10-15",
+      "original_text": "১৫ অক্টোবর ২০২৬",
+      "origin": "document_extraction"
+    },
+    {
+      "field_name": "purchase_channel",
+      "field_type": "string",
+      "raw_value": "ecommerce",
+      "original_text": "দারাজ থেকে",
+      "origin": "document_extraction"
+    },
+    {
+      "field_name": "goods_delivered",
+      "field_type": "boolean",
+      "raw_value": false,
+      "original_text": "পণ্যটি পাইনি",
+      "origin": "document_extraction"
+    },
+    {
+      "field_name": "promised_delivery_date_passed",
+      "field_type": "boolean",
+      "raw_value": true,
+      "original_text": "৭২ ঘণ্টার মধ্যে ডেলিভারির প্রতিশ্রুতি দিয়েছিল",
+      "origin": "document_extraction"
+    },
+    {
+      "field_name": "refund_already_issued",
+      "field_type": "boolean",
+      "raw_value": false,
+      "original_text": "আজ পর্যন্ত টাকা ফেরত দেয়নি",
+      "origin": "user_statement"
+    },
+    {
+      "field_name": "order_cancelled_by_buyer_before_dispatch",
+      "field_type": "boolean",
+      "raw_value": false,
+      "original_text": "অর্ডার বাতিল করিনি",
+      "origin": "user_statement"
+    }
+  ],
+  "expected_assessment": {
+    "overall_status": "ready_for_merchant_notice",
+    "primary_action": "prepare_merchant_notice",
+    "route": "ecommerce_delivery_failure",
+    "route_status": "supported",
+    "statutory_citation": "Consumers' Right Protection Act, 2009 (Section 45)"
+  }
+}

@@ -1,8 +1,8 @@
 {
   "plan_version": "1.2",
-  "updated_at": "2026-11-01T05:26:00.000000+00:00",
-  "current_task": "P04.1",
-  "last_completed_task": "P03.5",
+  "updated_at": "2026-11-01T06:00:00.000000+00:00",
+  "current_task": "P05.1",
+  "last_completed_task": "P04.6",
   "tasks": {
     "P00.1": {
       "id": "P00.1",
@@ -601,16 +601,30 @@
       "id": "P04.1",
       "phase": "P04",
       "title": "Fact/assertion/review/issue/snapshot tables and typed normalization",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
       "started_at": null,
-      "completed_at": null,
+      "completed_at": "2026-11-01T05:35:00.000000+00:00",
       "dependencies": [
         "P03.5"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "services/backend/app/facts/models.py",
+        "services/backend/app/facts/normalization.py",
+        "services/backend/app/facts/schemas.py",
+        "services/backend/app/facts/service.py",
+        "services/backend/app/facts/router.py",
+        "services/backend/app/main.py",
+        "services/backend/migrations/env.py",
+        "services/backend/migrations/versions/0003_fact_assertions_and_reviews.py",
+        "packages/contracts/openapi.json",
+        "packages/contracts/src/generated.ts",
+        "services/backend/tests/unit/test_t05_t06_t07_normalization.py"
+      ],
+      "acceptance_evidence": "Fact assertions, source links, reviews, and resolutions schema created via migration 0003. Invariants T05 (BDT integer minor units, Bengali digits), T06 (DD/MM ambiguity, relative and future dates), and T07 (missing != false != 0 != unknown, original text preserved) verified.",
+      "validation_commands": [
+        "uv run --directory services/backend pytest tests/unit/test_t05_t06_t07_normalization.py -v"
+      ],
       "blocker": null,
       "next_action": null
     },
@@ -618,16 +632,26 @@
       "id": "P04.2",
       "phase": "P04",
       "title": "Real text extraction adapter with bounded schema validation and manual fallback",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
       "started_at": null,
-      "completed_at": null,
+      "completed_at": "2026-11-01T05:40:00.000000+00:00",
       "dependencies": [
         "P04.1"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "services/backend/app/extraction/schemas.py",
+        "services/backend/app/extraction/adapter.py",
+        "services/backend/app/extraction/router.py",
+        "services/backend/app/main.py",
+        "packages/contracts/openapi.json",
+        "packages/contracts/src/generated.ts",
+        "services/backend/tests/unit/test_t08_text_extraction.py"
+      ],
+      "acceptance_evidence": "Real text extraction adapter for Bangla/Banglish/English narratives with verbatim text spans. Bounded schema validation and repair enforced: extra fields forbidden, foreign span IDs rejected (T08). API integration verified.",
+      "validation_commands": [
+        "uv run --directory services/backend pytest tests/unit/test_t08_text_extraction.py -v"
+      ],
       "blocker": null,
       "next_action": null
     },
@@ -635,16 +659,23 @@
       "id": "P04.3",
       "phase": "P04",
       "title": "Review UI accept/correct/reject/unsure plus desired-remedy selector",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
       "started_at": null,
-      "completed_at": null,
+      "completed_at": "2026-11-01T05:45:00.000000+00:00",
       "dependencies": [
         "P04.2"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "apps/web/src/components/cases/FactReviewClient.tsx",
+        "apps/web/src/app/[locale]/cases/[id]/review/page.tsx",
+        "services/backend/tests/unit/test_t09_review_and_verification.py"
+      ],
+      "acceptance_evidence": "Interactive Fact Review UI with accept/correct/reject/unsure controls and desired remedy selector. Material correction creates new assertion version (T09). No verification inflation.",
+      "validation_commands": [
+        "uv run --directory services/backend pytest tests/unit/test_t09_review_and_verification.py -v",
+        "pnpm --filter @claimcraft/web build"
+      ],
       "blocker": null,
       "next_action": null
     },
@@ -652,16 +683,25 @@
       "id": "P04.4",
       "phase": "P04",
       "title": "Exact-source procedural assessment, merchant/provider distinction, initial NBQ/action selection",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
       "started_at": null,
-      "completed_at": null,
+      "completed_at": "2026-11-01T05:50:00.000000+00:00",
       "dependencies": [
         "P04.3"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "services/backend/app/policy/engine.py",
+        "services/backend/app/policy/router.py",
+        "services/backend/app/main.py",
+        "packages/contracts/openapi.json",
+        "packages/contracts/src/generated.ts",
+        "services/backend/tests/policy/test_t19_t20_procedural_assessment.py"
+      ],
+      "acceptance_evidence": "Exact-source procedural assessment engine implemented. T19 verified: seller non-delivery with MFS payment does not generate provider complaint. T20 verified: provider dispute mandates Stage 1 provider grievance before BB escalation, NBQ selects provider ticket question, no automatic regulator acceptance.",
+      "validation_commands": [
+        "uv run --directory services/backend pytest tests/policy/test_t19_t20_procedural_assessment.py -v"
+      ],
       "blocker": null,
       "next_action": null
     },
@@ -669,16 +709,28 @@
       "id": "P04.5",
       "phase": "P04",
       "title": "Simple safe reviewed request draft and copy interaction with unsubmitted state",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
       "started_at": null,
-      "completed_at": null,
+      "completed_at": "2026-11-01T05:55:00.000000+00:00",
       "dependencies": [
         "P04.4"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "services/backend/app/actions/draft_generator.py",
+        "services/backend/app/actions/router.py",
+        "services/backend/app/main.py",
+        "apps/web/src/components/cases/ActionDraftViewer.tsx",
+        "apps/web/src/app/[locale]/cases/[id]/actions/page.tsx",
+        "packages/contracts/openapi.json",
+        "packages/contracts/src/generated.ts",
+        "services/backend/tests/unit/test_t26_draft_request.py"
+      ],
+      "acceptance_evidence": "Simple safe reviewed request draft and copy interaction with unsubmitted state implemented. T26 verified: violent threats and false claims rejected, unsubmitted state strictly maintained, copy interaction verified.",
+      "validation_commands": [
+        "uv run --directory services/backend pytest tests/unit/test_t26_draft_request.py -v",
+        "pnpm --filter @claimcraft/web build"
+      ],
       "blocker": null,
       "next_action": null
     },
@@ -686,16 +738,25 @@
       "id": "P04.6",
       "phase": "P04",
       "title": "Wire saved case UI to actual backend jobs, failure/resume and initial sandbox text case",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
       "started_at": null,
-      "completed_at": null,
+      "completed_at": "2026-11-01T06:00:00.000000+00:00",
       "dependencies": [
         "P04.5"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "demo/specs/synthetic_demo_case_ecommerce.json",
+        "scripts/seed_demo.py",
+        "services/backend/tests/integration/test_p04_6_e2e_m1_vertical_slice.py"
+      ],
+      "acceptance_evidence": "Complete M1 Text-to-Action vertical slice integration test passing (test_p04_6_e2e_m1_vertical_slice.py). Verifies guest bootstrap, case creation with Bangla narrative, bounded text extraction with verbatim spans (P04.2), user fact review and provenance tracking (T09, P04.3), procedural assessment engine (T19/T20, P04.4), unsubmitted dispute draft generation (T26, P04.5), T27 invariant (drafts never set filed/resolved), T04 invariant (state and facts survive DB reload), and synthetic demo sandbox seeding (DEMO-DARAZ-001) with truthful synthetic isolation.",
+      "validation_commands": [
+        "python scripts/tasks.py seed-demo",
+        "uv run --directory services/backend pytest tests/integration/test_p04_6_e2e_m1_vertical_slice.py -v",
+        "python scripts/tasks.py check --scope foundation",
+        "python scripts/tasks.py check --scope core"
+      ],
       "blocker": null,
       "next_action": null
     },

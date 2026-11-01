@@ -4,11 +4,15 @@ import uuid
 from fastapi import FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.actions.router import router as actions_router
 from app.cases.router import router as cases_router
 from app.core.config import settings
 from app.core.public_router import router as public_router
+from app.extraction.router import router as extraction_router
+from app.facts.router import router as facts_router
 from app.identity.router import router as identity_router
 from app.knowledge.router import router as knowledge_router
+from app.policy.router import router as policy_router
 
 app = FastAPI(
     title="ClaimCraft BD API",
@@ -78,8 +82,16 @@ app.include_router(public_router)
 app.include_router(identity_router)
 app.include_router(cases_router)
 app.include_router(knowledge_router)
+app.include_router(facts_router)
+app.include_router(extraction_router)
+app.include_router(policy_router)
+app.include_router(actions_router)
 
 app.include_router(public_router, prefix="/api")
 app.include_router(identity_router, prefix="/api")
 app.include_router(cases_router, prefix="/api")
 app.include_router(knowledge_router, prefix="/api")
+app.include_router(facts_router, prefix="/api")
+app.include_router(extraction_router, prefix="/api")
+app.include_router(policy_router, prefix="/api")
+app.include_router(actions_router, prefix="/api")
