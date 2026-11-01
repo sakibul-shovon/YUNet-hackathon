@@ -11,7 +11,7 @@
   - **P06 (Multimodal Case Compiler):** 100% COMPLETE & VERIFIED (`3014eff5edc0b7248e3a960f611d9c061b99f382`)
   - **P07 (Genuine Hybrid Retrieval & Exact Citations):** 100% COMPLETE & VERIFIED (`1129970e554268f7fe2ffe8575009fa6450b1a5b`)
   - **P08 (Complete Proof-to-Path and Multi-Issue Reasoning):** 100% COMPLETE & VERIFIED (`5779d8e7dc492bd7c13041eea11bed3b40f5c8dd`)
-  - **P09 (Action Studio, Filing Companion and Export):** 100% COMPLETE & VERIFIED
+  - **P09 (Action Studio, Filing Companion and Export):** 100% COMPLETE & VERIFIED (`229cc5c97d4097b58cea9e36370dd7020b40ac2d`)
 - **Active Phase:** P10 (Living Case, follow-up and decision changes)
 - **Active Task:** P10.1 (User-reported response/submission/outcome update UI and private references)
 - **Last Completed Task:** P09.7 (Implement official complaint destination cards, direct public references and link-health fallback)
@@ -26,7 +26,7 @@
   - P06 SHA: `3014eff5edc0b7248e3a960f611d9c061b99f382` (Verified on `origin/main`)
   - P07 SHA: `1129970e554268f7fe2ffe8575009fa6450b1a5b` (Verified on `origin/main`)
   - P08 SHA: `5779d8e7dc492bd7c13041eea11bed3b40f5c8dd` (Verified on `origin/main`)
-  - P09 SHA: *(Pending commit & push)*
+  - P09 SHA: `229cc5c97d4097b58cea9e36370dd7020b40ac2d` (Verified on `origin/main`)
 
 ## What Works
 - **Phase P09 (Action Studio, Filing Companion and Export):**
