@@ -13,7 +13,7 @@
   - **P08 (Complete Proof-to-Path and Multi-Issue Reasoning):** 100% COMPLETE & VERIFIED (`5779d8e7dc492bd7c13041eea11bed3b40f5c8dd`, docs `5a00713`)
   - **P09 (Action Studio, Filing Companion and Export):** 100% COMPLETE & VERIFIED (`229cc5c97d4097b58cea9e36370dd7020b40ac2d`, docs `7d6cadd`)
   - **P10 (Living Case, Follow-Up and Decision Changes):** 100% COMPLETE & VERIFIED (`c9a5d01c35ee3951bbebb3bd640d1be3163b1ea7`, docs `aa572b2`)
-  - **P11 (Monitored official updates and safe release operations):** 100% COMPLETE & VERIFIED (tasks P11.1–P11.5)
+  - **P11 (Monitored official updates and safe release operations):** 100% COMPLETE & VERIFIED (`facdc2537968e266f0361869097abce622b3c32a`)
 - **Active Phase:** P12 (Telecom, insurance and secondary GRS completeness)
 - **Active Task:** P12.1 (Telecom/ISP taxonomy, reviewed sources/procedure, conditions, form map and templates)
 - **Overall Ledger Progress:** 69 / 86 required tasks completed (80.2%). Zero blocked.
