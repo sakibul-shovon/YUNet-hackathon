@@ -17,7 +17,9 @@ class CaseCreate(BaseModel):
 
 
 class CaseUpdate(BaseModel):
-    expected_version: int = Field(..., description="Mandatory expected row_version for optimistic concurrency")
+    expected_version: int = Field(
+        ..., description="Mandatory expected row_version for optimistic concurrency"
+    )
     title: str | None = Field(None, min_length=3, max_length=255)
     desired_outcomes: list[str] | None = None
     merchant_name: str | None = None

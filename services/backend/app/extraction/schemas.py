@@ -79,7 +79,9 @@ class TextSpan(BaseModel):
     @model_validator(mode="after")
     def check_offsets(self) -> "TextSpan":
         if self.end_offset < self.start_offset:
-            raise ValueError(f"end_offset ({self.end_offset}) cannot be less than start_offset ({self.start_offset})")
+            raise ValueError(
+                f"end_offset ({self.end_offset}) cannot be less than start_offset ({self.start_offset})"
+            )
         return self
 
 
@@ -105,7 +107,9 @@ class FactProposal(BaseModel):
     @classmethod
     def validate_field_type(cls, v: str) -> str:
         if v not in ALLOWED_FIELD_TYPES:
-            raise ValueError(f"Field type '{v}' is not in allowed field types ({ALLOWED_FIELD_TYPES})")
+            raise ValueError(
+                f"Field type '{v}' is not in allowed field types ({ALLOWED_FIELD_TYPES})"
+            )
         return v
 
 
@@ -139,5 +143,7 @@ class FactProposalSet(BaseModel):
         for prop in self.proposals:
             for s_id in prop.span_ids:
                 if s_id not in valid_span_ids:
-                    raise ValueError(f"Foreign or unknown span ID '{s_id}' not found in authorized span set (T08).")
+                    raise ValueError(
+                        f"Foreign or unknown span ID '{s_id}' not found in authorized span set (T08)."
+                    )
         return self

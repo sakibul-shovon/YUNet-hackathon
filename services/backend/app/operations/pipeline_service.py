@@ -72,64 +72,92 @@ class PipelineRunService:
 
         # 1. Text Extraction
         has_narrative = bool(case.story_narrative and len(case.story_narrative.strip()) > 0)
-        stages.append(PipelineStageReceipt(
-            stage_name="text_extraction",
-            status="completed" if has_narrative else "skipped",
-            provider="gemini_adapter" if has_narrative else "not_applicable",
-            model_or_algorithm="gemini-3.8-flash (structured Pydantic)",
-            duration_ms=420 if has_narrative else None,
-            details={
-                "narrative_characters": len(case.story_narrative) if case.story_narrative else 0,
-                "facts_extracted": len(facts),
-            },
-        ))
+        stages.append(
+            PipelineStageReceipt(
+                stage_name="text_extraction",
+                status="completed" if has_narrative else "skipped",
+                provider="gemini_adapter" if has_narrative else "not_applicable",
+                model_or_algorithm="gemini-3.8-flash (structured Pydantic)",
+                duration_ms=420 if has_narrative else None,
+                details={
+                    "narrative_characters": len(case.story_narrative)
+                    if case.story_narrative
+                    else 0,
+                    "facts_extracted": len(facts),
+                },
+            )
+        )
 
         # 2. Layout Detection (VLM)
-        stages.append(PipelineStageReceipt(
-            stage_name="layout_detection",
-            status="completed" if has_image else "not_applicable",
-            provider="gemini_vlm" if has_image else "none",
-            model_or_algorithm="gemini-3.8-flash (VLM corner luminance + bounding box)",
-            duration_ms=680 if has_image else None,
-            details={"image_evidence_count": sum(1 for e in evidence if e.declared_mime_type.startswith("image/"))},
-        ))
+        stages.append(
+            PipelineStageReceipt(
+                stage_name="layout_detection",
+                status="completed" if has_image else "not_applicable",
+                provider="gemini_vlm" if has_image else "none",
+                model_or_algorithm="gemini-3.8-flash (VLM corner luminance + bounding box)",
+                duration_ms=680 if has_image else None,
+                details={
+                    "image_evidence_count": sum(
+                        1 for e in evidence if e.declared_mime_type.startswith("image/")
+                    )
+                },
+            )
+        )
 
         # 3. Speech-to-Text (STT)
-        stages.append(PipelineStageReceipt(
-            stage_name="stt_audio",
-            status="completed" if has_audio else "not_applicable",
-            provider="gcp_stt_v2" if has_audio else "none",
-            model_or_algorithm="chirp_2 (bn-BD)",
-            duration_ms=1250 if has_audio else None,
-            details={"audio_evidence_count": sum(1 for e in evidence if e.declared_mime_type.startswith("audio/"))},
-        ))
+        stages.append(
+            PipelineStageReceipt(
+                stage_name="stt_audio",
+                status="completed" if has_audio else "not_applicable",
+                provider="gcp_stt_v2" if has_audio else "none",
+                model_or_algorithm="chirp_2 (bn-BD)",
+                duration_ms=1250 if has_audio else None,
+                details={
+                    "audio_evidence_count": sum(
+                        1 for e in evidence if e.declared_mime_type.startswith("audio/")
+                    )
+                },
+            )
+        )
 
         # 4. Hybrid Retrieval
-        stages.append(PipelineStageReceipt(
-            stage_name="hybrid_retrieval",
-            status="completed",
-            provider="local_hybrid_retriever",
-            model_or_algorithm="Dense(intfloat/multilingual-e5-small) + BM25s(Bengali) + RRF(k=60)",
-            duration_ms=65,
-            details={
-                "dense_dimensions": 384,
-                "lexical_tokenizer": "bm25s Unicode NFC",
-                "exact_citation_match": "active",
-            },
-        ))
+        stages.append(
+            PipelineStageReceipt(
+                stage_name="hybrid_retrieval",
+                status="completed",
+                provider="local_hybrid_retriever",
+                model_or_algorithm="Dense(intfloat/multilingual-e5-small) + BM25s(Bengali) + RRF(k=60)",
+                duration_ms=65,
+                details={
+                    "dense_dimensions": 384,
+                    "lexical_tokenizer": "bm25s Unicode NFC",
+                    "exact_citation_match": "active",
+                },
+            )
+        )
 
         # 5. Deterministic Policy Assessment
-        stages.append(PipelineStageReceipt(
-            stage_name="deterministic_policy",
-            status="completed",
-            provider="claimcraft_policy_engine",
-            model_or_algorithm="Kleene 3-Valued AST Evaluator (TRUE, FALSE, UNKNOWN)",
-            duration_ms=15,
-            details={
-                "evaluated_rules": ["bd.shopping.ecommerce_delivery_failure", "bd.shopping.defective_goods", "bd.finance.mfs_unauthorized_charge", "bd.safety.hazardous_product"],
-                "statutory_statutes": ["Consumer Rights Protection Act 2009", "Bangladesh Bank CIPC Directives"],
-            },
-        ))
+        stages.append(
+            PipelineStageReceipt(
+                stage_name="deterministic_policy",
+                status="completed",
+                provider="claimcraft_policy_engine",
+                model_or_algorithm="Kleene 3-Valued AST Evaluator (TRUE, FALSE, UNKNOWN)",
+                duration_ms=15,
+                details={
+                    "evaluated_rules": [
+                        "bd.shopping.ecommerce_delivery_failure",
+                        "bd.shopping.defective_goods",
+                        "bd.finance.mfs_unauthorized_charge",
+                        "bd.safety.hazardous_product",
+                    ],
+                    "statutory_statutes": [
+                        "Consumer Rights Protection Act 2009",
+                        "Bangladesh Bank CIPC Directives",
+                    ],
+                },
+            )
+        )
 
         tech_inventory = {
             "web_framework": "Next.js 16 (App Router, Strict TypeScript)",

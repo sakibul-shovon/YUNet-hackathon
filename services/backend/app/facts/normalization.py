@@ -26,18 +26,30 @@ BN_MONTHS = {
 }
 
 EN_MONTHS = {
-    "january": 1, "jan": 1,
-    "february": 2, "feb": 2,
-    "march": 3, "mar": 3,
-    "april": 4, "apr": 4,
+    "january": 1,
+    "jan": 1,
+    "february": 2,
+    "feb": 2,
+    "march": 3,
+    "mar": 3,
+    "april": 4,
+    "apr": 4,
     "may": 5,
-    "june": 6, "jun": 6,
-    "july": 7, "jul": 7,
-    "august": 8, "aug": 8,
-    "september": 9, "sep": 9, "sept": 9,
-    "october": 10, "oct": 10,
-    "november": 11, "nov": 11,
-    "december": 12, "dec": 12,
+    "june": 6,
+    "jun": 6,
+    "july": 7,
+    "jul": 7,
+    "august": 8,
+    "aug": 8,
+    "september": 9,
+    "sep": 9,
+    "sept": 9,
+    "october": 10,
+    "oct": 10,
+    "november": 11,
+    "nov": 11,
+    "december": 12,
+    "dec": 12,
 }
 
 
@@ -56,7 +68,9 @@ def ascii_to_bengali_digits(text: str) -> str:
 
 class MoneyValue(BaseModel):
     currency: str = "BDT"
-    minor_units: int = Field(..., description="Integer minor units (poisha), e.g. 550000 for 5,500.00 BDT")
+    minor_units: int = Field(
+        ..., description="Integer minor units (poisha), e.g. 550000 for 5,500.00 BDT"
+    )
     original_text: str | None = None
 
     def to_bdt_float_str(self) -> str:
@@ -87,7 +101,11 @@ def normalize_bdt_money(val: Any, original_text: str | None = None) -> MoneyValu
             original_text=original_text or val.get("original_text"),
         )
 
-    orig = original_text if original_text is not None else (str(val).strip() if val is not None else "")
+    orig = (
+        original_text
+        if original_text is not None
+        else (str(val).strip() if val is not None else "")
+    )
 
     # If original_text is provided and distinct from raw val, check if val was already minor units matching original_text
     if original_text and original_text != str(val):
@@ -143,7 +161,9 @@ def normalize_bdt_money(val: Any, original_text: str | None = None) -> MoneyValu
 
 
 class DateValue(BaseModel):
-    date: str = Field(..., pattern=r"^\d{4}-\d{2}-\d{2}$", description="ISO 8601 Date string YYYY-MM-DD")
+    date: str = Field(
+        ..., pattern=r"^\d{4}-\d{2}-\d{2}$", description="ISO 8601 Date string YYYY-MM-DD"
+    )
     original_text: str | None = None
     is_relative: bool = False
     is_future: bool = False

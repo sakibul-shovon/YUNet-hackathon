@@ -1,4 +1,3 @@
-
 # Allowlisted MIME types for evidence ingestion
 ALLOWED_MIME_TYPES = {
     # Documents
@@ -65,7 +64,7 @@ def detect_mime_from_bytes(data: bytes) -> str | None:
 
 def validate_file_signature(declared_mime: str, data: bytes) -> tuple[bool, str | None, str | None]:
     """T10: Validates that declared MIME matches the inspected file bytes.
-    
+
     Returns: (is_valid, detected_mime, error_message)
     """
     # 1. Reject active content/executables immediately
@@ -79,7 +78,11 @@ def validate_file_signature(declared_mime: str, data: bytes) -> tuple[bool, str 
 
     detected = detect_mime_from_bytes(data)
     if not detected:
-        return False, None, f"Unknown or unsupported binary signature for declared type '{declared_mime}'"
+        return (
+            False,
+            None,
+            f"Unknown or unsupported binary signature for declared type '{declared_mime}'",
+        )
 
     # Canonicalize declared
     declared = declared_mime.strip().lower()
@@ -101,4 +104,8 @@ def validate_file_signature(declared_mime: str, data: bytes) -> tuple[bool, str 
         if detected in grp and declared in grp:
             return True, detected, None
 
-    return False, detected, f"MIME spoof detected: declared '{declared_mime}' but actual bytes are '{detected}'"
+    return (
+        False,
+        detected,
+        f"MIME spoof detected: declared '{declared_mime}' but actual bytes are '{detected}'",
+    )

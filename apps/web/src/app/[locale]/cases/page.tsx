@@ -1,4 +1,5 @@
 import { getTranslations } from 'next-intl/server';
+import { cookies } from 'next/headers';
 import Link from 'next/link';
 import { Plus, ArrowRight, FolderOpen } from 'lucide-react';
 import { Header } from '@/components/layout/Header';
@@ -10,8 +11,16 @@ const BACKEND_API_URL = process.env.BACKEND_API_URL || 'http://127.0.0.1:8000';
 
 async function fetchCases(): Promise<CaseOut[]> {
   try {
+    const cookieStore = await cookies();
+    const sessionCookie = cookieStore.get('cc_session');
+    const headers: Record<string, string> = {};
+    if (sessionCookie) {
+      headers['Cookie'] = `cc_session=${sessionCookie.value}`;
+    }
+
     const res = await fetch(`${BACKEND_API_URL}/v1/cases?limit=20`, {
       cache: 'no-store',
+      headers,
     });
     if (res.ok) {
       const data = await res.json();

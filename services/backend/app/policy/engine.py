@@ -153,7 +153,14 @@ class ProceduralAssessmentEngine:
 
     # Forbidden credential terms (T32)
     FORBIDDEN_CREDENTIAL_TERMS: ClassVar[set[str]] = {
-        "otp", "pin", "password", "cvv", "secret", "cvv2", "mfs_pin", "card_cvv",
+        "otp",
+        "pin",
+        "password",
+        "cvv",
+        "secret",
+        "cvv2",
+        "mfs_pin",
+        "card_cvv",
     }
     _CACHED_STARTER_RULES: ClassVar[list[PolicyRule] | None] = None
 
@@ -166,7 +173,6 @@ class ProceduralAssessmentEngine:
         from pathlib import Path
 
         import yaml
-
 
         repo_root = Path(__file__).resolve().parents[4]
         packs_dir = repo_root / "knowledge" / "packs" / "bd"
@@ -241,13 +247,15 @@ class ProceduralAssessmentEngine:
             route_unknown_facts: list[str] = []
 
             for tr in eval_res.trace:
-                trace_dicts.append({
-                    "node_type": tr.node_type,
-                    "fact": tr.fact,
-                    "inspected_value": tr.inspected_value,
-                    "outcome": tr.outcome.value,
-                    "details": tr.details,
-                })
+                trace_dicts.append(
+                    {
+                        "node_type": tr.node_type,
+                        "fact": tr.fact,
+                        "inspected_value": tr.inspected_value,
+                        "outcome": tr.outcome.value,
+                        "details": tr.details,
+                    }
+                )
                 if tr.outcome.value == "TRUE":
                     has_any_true_condition = True
                 elif tr.outcome.value == "UNKNOWN" and tr.fact:
@@ -257,12 +265,29 @@ class ProceduralAssessmentEngine:
             if rule.issue_type == "product_safety_hazard":
                 story = ((case.story_narrative if case else "") or "").lower()
                 title = ((case.title if case else "") or "").lower()
-                hazard_keywords = {"hazard", "danger", "explod", "fire", "burn", "shock", "electric", "toxic", "poison", "harm", "injury", "safety"}
-                if any(k in story or k in title for k in hazard_keywords) or facts_dict.get("alleged_safety_hazard"):
+                hazard_keywords = {
+                    "hazard",
+                    "danger",
+                    "explod",
+                    "fire",
+                    "burn",
+                    "shock",
+                    "electric",
+                    "toxic",
+                    "poison",
+                    "harm",
+                    "injury",
+                    "safety",
+                }
+                if any(k in story or k in title for k in hazard_keywords) or facts_dict.get(
+                    "alleged_safety_hazard"
+                ):
                     is_safety_candidate = True
 
             # Only consider unknown facts as candidates if the route is an active hypothesis or safety candidate
-            if (has_any_true_condition or is_safety_candidate) and eval_res.status == RouteStatus.NEEDS_FACTS:
+            if (
+                has_any_true_condition or is_safety_candidate
+            ) and eval_res.status == RouteStatus.NEEDS_FACTS:
                 for uf in route_unknown_facts:
                     needed_facts.add(uf)
 
@@ -275,20 +300,22 @@ class ProceduralAssessmentEngine:
                         f"Supported remedies are: {', '.join(rule.supported_remedies)}."
                     )
 
-            routes_out.append(AssessmentRouteOut(
-                route_id=f"route_{rule.rule_id}",
-                rule_id=rule.rule_id,
-                issue_type=rule.issue_type,
-                status=eval_res.status,
-                reasons=eval_res.reasons,
-                allowed_actions=eval_res.allowed_actions,
-                source_dependencies=rule.source_dependencies,
-                statutory_citations=rule.statutory_citations,
-                supported_remedies=rule.supported_remedies,
-                unsupported_remedies=rule.unsupported_remedies,
-                unsupported_remedy_warnings=unsupported_warnings,
-                condition_trace=trace_dicts,
-            ))
+            routes_out.append(
+                AssessmentRouteOut(
+                    route_id=f"route_{rule.rule_id}",
+                    rule_id=rule.rule_id,
+                    issue_type=rule.issue_type,
+                    status=eval_res.status,
+                    reasons=eval_res.reasons,
+                    allowed_actions=eval_res.allowed_actions,
+                    source_dependencies=rule.source_dependencies,
+                    statutory_citations=rule.statutory_citations,
+                    supported_remedies=rule.supported_remedies,
+                    unsupported_remedies=rule.unsupported_remedies,
+                    unsupported_remedy_warnings=unsupported_warnings,
+                    condition_trace=trace_dicts,
+                )
+            )
 
         return routes_out, needed_facts
 
@@ -347,12 +374,8 @@ class ProceduralAssessmentEngine:
                 return None, None, days_remaining, False
 
         except (ValueError, TypeError):
-            warning_en = (
-                "Incident date format is uncertain; exact statutory cutoff cannot be safely verified. Prompt action advised."
-            )
-            warning_bn = (
-                "ঘটনার তারিখের ফরম্যাট স্পষ্ট নয়; আইনি ডেডলাইন সঠিকভাবে গণনা করা যাচ্ছে না। অনতিবিলম্বে অভিযোগ দায়ের করুন।"
-            )
+            warning_en = "Incident date format is uncertain; exact statutory cutoff cannot be safely verified. Prompt action advised."
+            warning_bn = "ঘটনার তারিখের ফরম্যাট স্পষ্ট নয়; আইনি ডেডলাইন সঠিকভাবে গণনা করা যাচ্ছে না। অনতিবিলম্বে অভিযোগ দায়ের করুন।"
             return warning_en, warning_bn, None, True
 
     @classmethod
@@ -390,7 +413,11 @@ class ProceduralAssessmentEngine:
         # Check for safety hazard first (urgent priority)
         safety_routes = [r for r in routes_out if r.issue_type == "product_safety_hazard"]
         finance_routes = [r for r in routes_out if r.issue_type == "mfs_unauthorized_charge"]
-        shopping_routes = [r for r in routes_out if r.issue_type in ("ecommerce_delivery_failure", "defective_goods")]
+        shopping_routes = [
+            r
+            for r in routes_out
+            if r.issue_type in ("ecommerce_delivery_failure", "defective_goods")
+        ]
         supported_shopping = [r for r in shopping_routes if r.status == RouteStatus.SUPPORTED]
 
         if safety_routes and safety_routes[0].status == RouteStatus.SUPPORTED:
@@ -422,11 +449,13 @@ class ProceduralAssessmentEngine:
             primary_action = "prepare_merchant_notice"
             primary_title_en = "Prepare Formal Merchant Notice"
             primary_title_bn = "বিক্রেতার কাছে আনুষ্ঠানিক নোটিশ প্রস্তুত করুন"
-            secondary_actions.append({
-                "action_id": "prepare_dncrp_complaint",
-                "title_en": "Prepare DNCRP CCMS Portal Complaint",
-                "title_bn": "ভোক্তা অধিকার সিসিএমএস অভিযোগ প্রস্তুত করুন",
-            })
+            secondary_actions.append(
+                {
+                    "action_id": "prepare_dncrp_complaint",
+                    "title_en": "Prepare DNCRP CCMS Portal Complaint",
+                    "title_bn": "ভোক্তা অধিকার সিসিএমএস অভিযোগ প্রস্তুত করুন",
+                }
+            )
         elif shopping_routes:
             s_route = shopping_routes[0]
             if s_route.status == RouteStatus.NEEDS_FACTS:
@@ -446,7 +475,11 @@ class ProceduralAssessmentEngine:
                     continue
 
                 candidate = cls.QUESTION_CATALOGUE.get(f_key)
-                if candidate and candidate.priority == p_level and candidate.question_key not in skips:
+                if (
+                    candidate
+                    and candidate.priority == p_level
+                    and candidate.question_key not in skips
+                ):
                     nbq = candidate
                     break
             if nbq:
@@ -469,17 +502,19 @@ class ProceduralAssessmentEngine:
         for s_id in referenced_sources:
             entry = get_source_by_id(s_id)
             if entry:
-                source_cards.append({
-                    "id": entry.id,
-                    "title_en": entry.title_en,
-                    "title_bn": entry.title_bn,
-                    "issuer": entry.issuer,
-                    "official_url": entry.official_url,
-                    "document_type": entry.document_type,
-                    "procedural_scope": entry.procedural_scope,
-                    "status": entry.status,
-                    "is_authoritative_for_penalties": entry.is_authoritative_for_penalties,
-                })
+                source_cards.append(
+                    {
+                        "id": entry.id,
+                        "title_en": entry.title_en,
+                        "title_bn": entry.title_bn,
+                        "issuer": entry.issuer,
+                        "official_url": entry.official_url,
+                        "document_type": entry.document_type,
+                        "procedural_scope": entry.procedural_scope,
+                        "status": entry.status,
+                        "is_authoritative_for_penalties": entry.is_authoritative_for_penalties,
+                    }
+                )
 
         return ProceduralAssessmentOut(
             case_id=case.id,
@@ -545,32 +580,38 @@ class ProceduralAssessmentEngine:
             changed = b_status != sr.status
             if changed:
                 is_material_change = True
-            route_diff.append(RouteDiffItem(
-                route_id=sr.route_id,
-                issue_type=sr.issue_type,
-                baseline_status=b_status,
-                simulated_status=sr.status,
-                changed=changed,
-            ))
+            route_diff.append(
+                RouteDiffItem(
+                    route_id=sr.route_id,
+                    issue_type=sr.issue_type,
+                    baseline_status=b_status,
+                    simulated_status=sr.status,
+                    changed=changed,
+                )
+            )
 
         # Check for unreferenced/new routes
         sim_ids = {sr.route_id for sr in simulated_routes}
         for br in baseline.routes:
             if br.route_id not in sim_ids:
                 is_material_change = True
-                route_diff.append(RouteDiffItem(
-                    route_id=br.route_id,
-                    issue_type=br.issue_type,
-                    baseline_status=br.status,
-                    simulated_status=RouteStatus.NOT_SUPPORTED,
-                    changed=True,
-                ))
+                route_diff.append(
+                    RouteDiffItem(
+                        route_id=br.route_id,
+                        issue_type=br.issue_type,
+                        baseline_status=br.status,
+                        simulated_status=RouteStatus.NOT_SUPPORTED,
+                        changed=True,
+                    )
+                )
 
         if is_material_change:
             summary_en = f"Simulation produced a material route change across {sum(1 for d in route_diff if d.changed)} route(s)."
             summary_bn = f"সিমুলেশনে {sum(1 for d in route_diff if d.changed)}টি রুটে গুরুত্বপূর্ণ পরিবর্তন দেখা গেছে।"
         else:
-            summary_en = "Simulation produced no material change in procedural eligibility or routing."
+            summary_en = (
+                "Simulation produced no material change in procedural eligibility or routing."
+            )
             summary_bn = "এই তথ্যের পরিবর্তনে মূল আইনি বা প্রক্রিয়াগত রুটে কোনো পরিবর্তন ঘটেনি।"
 
         return WhatIfSimulationResult(
@@ -589,6 +630,7 @@ def select_facts(case_id: uuid.UUID):
     from sqlalchemy import select
 
     from app.facts.models import FactAssertion
+
     return select(FactAssertion).where(
         FactAssertion.case_id == case_id,
         FactAssertion.is_active.is_(True),

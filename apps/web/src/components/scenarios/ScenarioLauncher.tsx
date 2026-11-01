@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Play, Loader2, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
+import { apiFetch, getClientSessionToken } from '@/lib/api';
 
 interface ScenarioLauncherProps {
   scenarioId: string;
@@ -19,20 +20,14 @@ export function ScenarioLauncher({ scenarioId, locale, isBangla }: ScenarioLaunc
     try {
       setLoading(true);
 
-      // Authenticate as guest if needed to establish session
-      const authRes = await fetch('/api/v1/auth/guest', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-      });
-      const authData = await authRes.json();
-      const token = authData.access_token;
+      // Authenticate as guest if needed and persist token
+      const token = await getClientSessionToken();
 
       // Launch fresh isolated scenario
-      const launchRes = await fetch(`/api/v1/scenarios/${scenarioId}/launch?locale=${locale}`, {
+      const launchRes = await apiFetch(`/api/v1/scenarios/${scenarioId}/launch?locale=${locale}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
         },
       });
 

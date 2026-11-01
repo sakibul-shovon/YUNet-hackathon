@@ -213,6 +213,7 @@ async def get_current_principal(
 
 def require_role(required_role: str):
     """Enforces specific actor role (e.g., 'reviewer', 'publisher', 'operator')."""
+
     async def role_checker(
         principal: Principal = Depends(get_current_principal),
         db: AsyncSession = Depends(get_db_session),
@@ -235,4 +236,5 @@ def require_role(required_role: str):
                 },
             )
         return principal
+
     return role_checker

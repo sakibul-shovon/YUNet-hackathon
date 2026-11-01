@@ -93,7 +93,9 @@ class SourceVersion(Base):
         index=True,
         nullable=False,
     )
-    version_tag: Mapped[str] = mapped_column(String(64), nullable=False)  # e.g. "2009-enacted", "2026-v1"
+    version_tag: Mapped[str] = mapped_column(
+        String(64), nullable=False
+    )  # e.g. "2009-enacted", "2026-v1"
     raw_bytes_hash: Mapped[str] = mapped_column(String(64), nullable=False)
     text_content: Mapped[str] = mapped_column(Text, nullable=False)
     clean_text_hash: Mapped[str] = mapped_column(String(64), nullable=False)
@@ -145,7 +147,9 @@ class SourceProvision(Base):
         index=True,
         nullable=False,
     )
-    provision_path: Mapped[str] = mapped_column(String(64), index=True, nullable=False)  # e.g. "sec:45", "sec:45(2)"
+    provision_path: Mapped[str] = mapped_column(
+        String(64), index=True, nullable=False
+    )  # e.g. "sec:45", "sec:45(2)"
     title: Mapped[str] = mapped_column(String(255), nullable=False)
     text_content: Mapped[str] = mapped_column(Text, nullable=False)
     normalized_text: Mapped[str] = mapped_column(Text, nullable=False)
@@ -161,7 +165,9 @@ class SourceProvision(Base):
         nullable=False,
     )
 
-    source_version: Mapped["SourceVersion"] = relationship("SourceVersion", back_populates="provisions")
+    source_version: Mapped["SourceVersion"] = relationship(
+        "SourceVersion", back_populates="provisions"
+    )
     chunks: Mapped[list["RetrievalChunk"]] = relationship(
         "RetrievalChunk",
         back_populates="provision",
@@ -207,7 +213,9 @@ class SourceApproval(Base):
         nullable=False,
     )
 
-    source_version: Mapped["SourceVersion"] = relationship("SourceVersion", back_populates="approvals")
+    source_version: Mapped["SourceVersion"] = relationship(
+        "SourceVersion", back_populates="approvals"
+    )
 
 
 class KnowledgeRelease(Base):

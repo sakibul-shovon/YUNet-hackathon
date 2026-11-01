@@ -22,4 +22,3 @@ async def get_case_pipeline_runs(
 ):
     """P08.6 & T53: Returns durable execution receipts and technology inventory for a case."""
     return await PipelineRunService.get_pipeline_runs(case_id, principal, db)
-

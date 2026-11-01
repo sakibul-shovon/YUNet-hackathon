@@ -197,7 +197,9 @@ class PolicyRule(BaseModel):
     status: str = Field("active", pattern="^(active|test_only|draft)$")
     jurisdiction: str = "BD"
     issue_type: str
-    date_basis: str = Field("assessment_date", pattern="^(conduct_date|filing_date|assessment_date|review_required)$")
+    date_basis: str = Field(
+        "assessment_date", pattern="^(conduct_date|filing_date|assessment_date|review_required)$"
+    )
     statutory_citations: list[str] = Field(default_factory=list)
     statutory_limitation_days: int | None = None
     supported_remedies: list[str] = Field(default_factory=list)

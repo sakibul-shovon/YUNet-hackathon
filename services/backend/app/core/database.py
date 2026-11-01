@@ -49,7 +49,9 @@ async def get_db_session() -> AsyncGenerator[AsyncSession, None]:
 
 
 @asynccontextmanager
-async def scoped_tenant_session(principal_id: uuid.UUID | str) -> AsyncGenerator[AsyncSession, None]:
+async def scoped_tenant_session(
+    principal_id: uuid.UUID | str,
+) -> AsyncGenerator[AsyncSession, None]:
     """Context manager for establishing a session scoped to a specific tenant/principal.
 
     Sets transaction-local tenant context for RLS in PostgreSQL, and ensures

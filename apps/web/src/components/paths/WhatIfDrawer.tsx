@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { X, Sparkles, Check, AlertTriangle, ArrowRight, ShieldAlert } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
+import { apiFetch } from '@/lib/api';
 
 interface RouteDiffItem {
   route_id: string;
@@ -62,7 +63,7 @@ export function WhatIfDrawer({
       if (goodsReceivedDefective !== null) overrides.goods_received_defective = goodsReceivedDefective;
       if (productHazard !== null) overrides.product_presents_immediate_hazard = productHazard;
 
-      const res = await fetch(`/api/v1/cases/${caseId}/what-if`, {
+      const res = await apiFetch(`/api/v1/cases/${caseId}/what-if`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ overrides }),
@@ -87,7 +88,7 @@ export function WhatIfDrawer({
     setApplyLoading(true);
     setErrorMsg(null);
     try {
-      const res = await fetch(`/api/v1/cases/${caseId}/what-if/apply`, {
+      const res = await apiFetch(`/api/v1/cases/${caseId}/what-if/apply`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ overrides: simResult.overrides }),

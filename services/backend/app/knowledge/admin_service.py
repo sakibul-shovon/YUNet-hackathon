@@ -65,7 +65,12 @@ class AdminKnowledgeService:
         if not candidate:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
-                detail={"error": {"code": "CANDIDATE_NOT_FOUND", "message": f"Candidate '{candidate_id}' not found"}},
+                detail={
+                    "error": {
+                        "code": "CANDIDATE_NOT_FOUND",
+                        "message": f"Candidate '{candidate_id}' not found",
+                    }
+                },
             )
 
         # Get family slug
@@ -88,7 +93,9 @@ class AdminKnowledgeService:
 
         approved_provisions: list[SourceProvision] = []
         if approved_version:
-            p_stmt = select(SourceProvision).where(SourceProvision.source_version_id == approved_version.id)
+            p_stmt = select(SourceProvision).where(
+                SourceProvision.source_version_id == approved_version.id
+            )
             p_res = await db.execute(p_stmt)
             approved_provisions = list(p_res.scalars().all())
 
@@ -142,7 +149,12 @@ class AdminKnowledgeService:
         if not candidate:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
-                detail={"error": {"code": "CANDIDATE_NOT_FOUND", "message": f"Candidate '{candidate_id}' not found"}},
+                detail={
+                    "error": {
+                        "code": "CANDIDATE_NOT_FOUND",
+                        "message": f"Candidate '{candidate_id}' not found",
+                    }
+                },
             )
 
         # Get family
@@ -240,7 +252,12 @@ class AdminKnowledgeService:
         if not version:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
-                detail={"error": {"code": "SOURCE_VERSION_NOT_FOUND", "message": "Source version not found"}},
+                detail={
+                    "error": {
+                        "code": "SOURCE_VERSION_NOT_FOUND",
+                        "message": "Source version not found",
+                    }
+                },
             )
 
         reviewer_name = f"Reviewer-{str(reviewer.id)[:8]}"
@@ -298,12 +315,22 @@ class AdminKnowledgeService:
                 if not v:
                     raise HTTPException(
                         status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-                        detail={"error": {"code": "SOURCE_VERSION_MISSING", "message": f"Source version {sv_id} not found."}},
+                        detail={
+                            "error": {
+                                "code": "SOURCE_VERSION_MISSING",
+                                "message": f"Source version {sv_id} not found.",
+                            }
+                        },
                     )
                 if v.applicability_status != "approved":
                     raise HTTPException(
                         status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-                        detail={"error": {"code": "UNAPPROVED_SOURCE_VERSION", "message": f"Source version {sv_id} is not approved."}},
+                        detail={
+                            "error": {
+                                "code": "UNAPPROVED_SOURCE_VERSION",
+                                "message": f"Source version {sv_id} is not approved.",
+                            }
+                        },
                     )
 
         # 3. Canonical Manifest Hash
@@ -384,7 +411,12 @@ class AdminKnowledgeService:
         if not target:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
-                detail={"error": {"code": "TARGET_RELEASE_NOT_FOUND", "message": f"Rollback target '{target_release_id}' not found"}},
+                detail={
+                    "error": {
+                        "code": "TARGET_RELEASE_NOT_FOUND",
+                        "message": f"Rollback target '{target_release_id}' not found",
+                    }
+                },
             )
 
         # Deactivate all releases of this mode

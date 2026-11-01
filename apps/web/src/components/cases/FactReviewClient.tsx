@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { Input } from '@/components/ui/Input';
+import { apiFetch } from '@/lib/api';
 
 interface FactItem {
   id: string;
@@ -46,7 +47,7 @@ export function FactReviewClient({ caseId, locale, initialRemedy = 'full_refund'
   const fetchFacts = async () => {
     try {
       setLoading(true);
-      const res = await fetch(`/api/v1/cases/${caseId}/facts`);
+      const res = await apiFetch(`/api/v1/cases/${caseId}/facts`);
       if (res.ok) {
         const data = await res.json();
         setFacts(data);
@@ -71,7 +72,7 @@ export function FactReviewClient({ caseId, locale, initialRemedy = 'full_refund'
         payload.rationale = correctionRationale || 'User manual correction';
       }
 
-      const res = await fetch(`/api/v1/cases/${caseId}/facts/${assertionId}/review`, {
+      const res = await apiFetch(`/api/v1/cases/${caseId}/facts/${assertionId}/review`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
@@ -98,7 +99,7 @@ export function FactReviewClient({ caseId, locale, initialRemedy = 'full_refund'
     setDesiredRemedy(remedyId);
     setSavingRemedy(true);
     try {
-      await fetch(`/api/v1/cases/${caseId}`, {
+      await apiFetch(`/api/v1/cases/${caseId}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ desired_outcomes: [remedyId] }),

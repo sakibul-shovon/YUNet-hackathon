@@ -70,7 +70,9 @@ class MultimodalFactProposal(BaseModel):
     field_type: str = Field(..., pattern="^(money|date|boolean|string|select)$")
     raw_value: Any
     original_text: str
-    origin: str = Field("user_statement", max_length=64)  # 'voice_transcript', 'document_extraction', 'chat_screenshot'
+    origin: str = Field(
+        "user_statement", max_length=64
+    )  # 'voice_transcript', 'document_extraction', 'chat_screenshot'
     source_type: str = Field("evidence_span", max_length=64)
     locator_meta: dict[str, Any] | None = None
 

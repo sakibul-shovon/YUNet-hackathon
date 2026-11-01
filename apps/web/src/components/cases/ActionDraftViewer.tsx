@@ -5,6 +5,7 @@ import { Copy, Check, AlertTriangle, Shield, FileText, ArrowRight } from 'lucide
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
+import { apiFetch } from '@/lib/api';
 
 interface DraftData {
   document_type: string;
@@ -36,7 +37,7 @@ export function ActionDraftViewer({ caseId, initialLocale }: ActionDraftViewerPr
   const fetchDraft = async (loc: string) => {
     try {
       setLoading(true);
-      const res = await fetch(`/api/v1/cases/${caseId}/draft?locale=${loc}`);
+      const res = await apiFetch(`/api/v1/cases/${caseId}/draft?locale=${loc}`);
       if (res.ok) {
         const data = await res.json();
         setDraft(data);

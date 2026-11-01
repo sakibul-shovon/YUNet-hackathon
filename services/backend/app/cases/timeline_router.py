@@ -99,4 +99,3 @@ async def cancel_case_reminder(
 ):
     """P10.4 & T40: Cancels a personal reminder."""
     await TimelineService.cancel_reminder(case_id, reminder_id, principal, db)
-

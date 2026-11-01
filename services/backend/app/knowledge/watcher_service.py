@@ -22,13 +22,17 @@ class WatcherFetchResult(BaseModel):
     source_id: str
     target_url: str
     status: str  # 'fetched', 'no_change', 'cosmetic_diff', 'quarantined', 'temporarily_unavailable'
-    change_type: str | None = None  # 'new_document', 'content_change', 'cosmetic_whitespace', 'none'
+    change_type: str | None = (
+        None  # 'new_document', 'content_change', 'cosmetic_whitespace', 'none'
+    )
     raw_hash: str | None = None
     clean_text_hash: str | None = None
     quarantine_reason: str | None = None
     error_message: str | None = None
     candidate_id: uuid.UUID | None = None
-    fetched_at: datetime.datetime = Field(default_factory=lambda: datetime.datetime.now(datetime.UTC))
+    fetched_at: datetime.datetime = Field(
+        default_factory=lambda: datetime.datetime.now(datetime.UTC)
+    )
 
 
 class OfficialSourceWatcher:
@@ -98,11 +102,21 @@ class OfficialSourceWatcher:
         if simulate_fixture == "redirect_untrusted":
             # Simulate a 302 redirect to an untrusted external host
             untrusted_target = "http://phishing-portal.com/fake-crpa.pdf"
-            return 302, b"", untrusted_target, "Redirect to non-allowlisted host phishing-portal.com"
+            return (
+                302,
+                b"",
+                untrusted_target,
+                "Redirect to non-allowlisted host phishing-portal.com",
+            )
 
         if simulate_fixture == "ssrf_private_ip":
             # Simulate a target attempting loopback or metadata fetch
-            return 400, b"", "http://169.254.169.254/latest/meta-data", "Host resolved to link-local metadata address"
+            return (
+                400,
+                b"",
+                "http://169.254.169.254/latest/meta-data",
+                "Host resolved to link-local metadata address",
+            )
 
         # 3. Live HTTP request if no simulation fixture
         try:
@@ -117,10 +131,19 @@ class OfficialSourceWatcher:
 
                     # Parse redirect location
                     parsed_red = urlparse(redirect_location)
-                    target_url = redirect_location if parsed_red.scheme else f"{url.rstrip('/')}/{redirect_location.lstrip('/')}"
+                    target_url = (
+                        redirect_location
+                        if parsed_red.scheme
+                        else f"{url.rstrip('/')}/{redirect_location.lstrip('/')}"
+                    )
                     is_red_allowed, red_reason = is_url_allowlisted(target_url, resolve_dns=True)
                     if not is_red_allowed:
-                        return 302, b"", target_url, f"Redirect to untrusted destination quarantined: {red_reason}"
+                        return (
+                            302,
+                            b"",
+                            target_url,
+                            f"Redirect to untrusted destination quarantined: {red_reason}",
+                        )
 
                     # If redirect is safe, fetch the redirected location
                     resp2 = await client.get(target_url)
@@ -142,7 +165,12 @@ class OfficialSourceWatcher:
         if not source_entry:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
-                detail={"error": {"code": "UNKNOWN_SOURCE", "message": f"Source '{source_id}' not found in registry"}},
+                detail={
+                    "error": {
+                        "code": "UNKNOWN_SOURCE",
+                        "message": f"Source '{source_id}' not found in registry",
+                    }
+                },
             )
 
         # 1. Fetch raw bytes
@@ -154,7 +182,9 @@ class OfficialSourceWatcher:
         # 2. Check for Quarantine or Outage
         if quarantine_reason:
             # Create a quarantined candidate record
-            family = await cls._get_or_create_family(source_entry.id, source_entry.title_en, source_entry.issuer, db)
+            family = await cls._get_or_create_family(
+                source_entry.id, source_entry.title_en, source_entry.issuer, db
+            )
             candidate = SourceCandidate(
                 id=uuid.uuid4(),
                 family_id=family.id,
@@ -194,7 +224,9 @@ class OfficialSourceWatcher:
         clean_hash = hashlib.sha256(clean_text.encode("utf-8")).hexdigest()
 
         # Query existing approved version for this source family
-        family = await cls._get_or_create_family(source_entry.id, source_entry.title_en, source_entry.issuer, db)
+        family = await cls._get_or_create_family(
+            source_entry.id, source_entry.title_en, source_entry.issuer, db
+        )
         stmt = (
             select(SourceVersion)
             .where(

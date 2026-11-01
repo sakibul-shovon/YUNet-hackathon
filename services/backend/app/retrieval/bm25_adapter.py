@@ -23,7 +23,19 @@ BN_TO_EN_DIGITS = str.maketrans("০১২৩৪৫৬৭৮৯", "0123456789")
 EN_TO_BN_DIGITS = str.maketrans("0123456789", "০১২৩৪৫৬৭৮৯")
 
 # Explicit negation tokens that MUST NEVER be pruned
-NEGATION_TOKENS = {"না", "নাই", "নহে", "নয়", "ছাড়া", "ব্যতীত", "ব্যতিরেকে", "not", "no", "never", "without"}
+NEGATION_TOKENS = {
+    "না",
+    "নাই",
+    "নহে",
+    "নয়",
+    "ছাড়া",
+    "ব্যতীত",
+    "ব্যতিরেকে",
+    "not",
+    "no",
+    "never",
+    "without",
+}
 
 
 class BengaliBM25Adapter:
@@ -41,13 +53,15 @@ class BengaliBM25Adapter:
         for sm in section_matches:
             en_ver = sm.translate(BN_TO_EN_DIGITS)
             bn_ver = sm.translate(EN_TO_BN_DIGITS)
-            extra_aliases.extend([
-                sm.lower(),
-                en_ver.lower(),
-                bn_ver.lower(),
-                f"sec:{en_ver}".lower(),
-                f"ধারা:{bn_ver}".lower(),
-            ])
+            extra_aliases.extend(
+                [
+                    sm.lower(),
+                    en_ver.lower(),
+                    bn_ver.lower(),
+                    f"sec:{en_ver}".lower(),
+                    f"ধারা:{bn_ver}".lower(),
+                ]
+            )
 
         # 3. Match Bengali Unicode words (letters \u0985-\u09B9, signs \u09BE-\u09CD, digits \u09E6-\u09EF)
         # and standard alphanumeric words [a-zA-Z0-9]+
@@ -155,11 +169,13 @@ class BengaliBM25Adapter:
                     continue
 
             if score > 0.001:  # Non-trivial lexical relevance
-                scored_candidates.append({
-                    "citation_handle": handle,
-                    "score": score,
-                    "provision": item,
-                })
+                scored_candidates.append(
+                    {
+                        "citation_handle": handle,
+                        "score": score,
+                        "provision": item,
+                    }
+                )
 
         # Sort by BM25 score descending and select top_k
         scored_candidates.sort(key=lambda x: x["score"], reverse=True)

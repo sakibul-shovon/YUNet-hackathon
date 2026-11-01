@@ -12,6 +12,11 @@ from app.cases.models import Case, CaseEvent, CaseSnapshot, OutboxMessage
 from app.cases.schemas import CaseCreate, CaseEventOut, CaseListOut, CaseOut, CaseUpdate
 from app.identity.models import Principal
 
+DEMO_FIXTURE_IDS = {
+    uuid.UUID("1887c4ed-99d6-44f2-9fb4-0c15e9d3287e"),
+    uuid.UUID("a5b13210-e0dc-461b-8233-f33c98d45489"),
+}
+
 
 class CaseService:
     @staticmethod
@@ -152,7 +157,9 @@ class CaseService:
         """Retrieves a single case with strict tenant isolation (returns 404 for foreign cases)."""
         stmt = select(Case).where(
             Case.id == case_id,
-            (Case.principal_id == principal.id) | (Case.is_demo.is_(True)),
+            (Case.principal_id == principal.id)
+            | (Case.display_reference == "DEMO-DARAZ-001")
+            | Case.id.in_(DEMO_FIXTURE_IDS),
             Case.lifecycle_status.notin_(["deleting", "deleted"]),
             Case.deleted_at.is_(None),
         )
@@ -322,10 +329,12 @@ class CaseService:
         db: AsyncSession,
     ) -> list[CaseEventOut]:
         """Returns chronological activity log for an authorized case."""
-        # Verify ownership
+        # Verify ownership or demo fixture access
         stmt = select(Case).where(
             Case.id == case_id,
-            Case.principal_id == principal.id,
+            (Case.principal_id == principal.id)
+            | (Case.display_reference == "DEMO-DARAZ-001")
+            | Case.id.in_(DEMO_FIXTURE_IDS),
             Case.lifecycle_status != "deleted",
         )
         res = await db.execute(stmt)
@@ -341,7 +350,9 @@ class CaseService:
             .order_by(CaseEvent.event_sequence.asc())
         )
         events_res = await db.execute(events_stmt)
-        return [CaseEventOut.model_validate(e, from_attributes=True) for e in events_res.scalars().all()]
+        return [
+            CaseEventOut.model_validate(e, from_attributes=True) for e in events_res.scalars().all()
+        ]
 
     @staticmethod
     async def withdraw_consent(

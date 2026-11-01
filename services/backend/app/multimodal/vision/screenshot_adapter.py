@@ -44,7 +44,9 @@ class ScreenshotAdapter:
                     img_rgb.getpixel((width - 10, height - 10)),
                     img_rgb.getpixel((w_mid, h_mid)),
                 ]
-                avg_lum = sum((r * 0.299 + g * 0.587 + b * 0.114) for r, g, b in sample_pixels) / len(sample_pixels)
+                avg_lum = sum(
+                    (r * 0.299 + g * 0.587 + b * 0.114) for r, g, b in sample_pixels
+                ) / len(sample_pixels)
                 if avg_lum < 110:
                     theme = "dark"
                 elif avg_lum > 180:
@@ -56,28 +58,48 @@ class ScreenshotAdapter:
 
         # 2. Determine layout type based on content markers or OCR text
         lower_ocr = (ocr_extracted_text or "").lower()
-        is_chat = any(k in lower_ocr for k in ("pm", "am", "typing...", "delivered", "seen", "message", "inbox", "পাঠিয়েছেন")) or (
-            b"chat" in image_bytes[:512].lower() or b"whatsapp" in image_bytes[:512].lower() or b"messenger" in image_bytes[:512].lower()
+        is_chat = any(
+            k in lower_ocr
+            for k in ("pm", "am", "typing...", "delivered", "seen", "message", "inbox", "পাঠিয়েছেন")
+        ) or (
+            b"chat" in image_bytes[:512].lower()
+            or b"whatsapp" in image_bytes[:512].lower()
+            or b"messenger" in image_bytes[:512].lower()
         )
-        is_payment = any(k in lower_ocr for k in ("trx", "bdt", "টাকা", "payment", "bKash", "nagad", "rocket", "invoice"))
+        is_payment = any(
+            k in lower_ocr
+            for k in ("trx", "bdt", "টাকা", "payment", "bKash", "nagad", "rocket", "invoice")
+        )
 
-        detected_layout = "chat_conversation" if is_chat else ("payment_receipt" if is_payment else "unstructured")
+        detected_layout = (
+            "chat_conversation"
+            if is_chat
+            else ("payment_receipt" if is_payment else "unstructured")
+        )
 
         # 3. Analyze Chat Bubbles with Uncertainty (T23 Invariant)
         bubbles: list[ChatBubbleProposal] = []
         if detected_layout == "chat_conversation":
             # Extract sample message lines from OCR or synthetic fixture
-            lines = [l.strip() for l in ocr_extracted_text.splitlines() if len(l.strip()) > 3] if ocr_extracted_text else [
-                "ভাই আমার অর্ডার করা ঘড়িটা এখনো পাইনি (14:30)",
-                "আমরা চেক করে জানাচ্ছি স্যার (14:35)",
-                "কবে ডেলিভারি হবে? (14:38)",
-            ]
+            lines = (
+                [l.strip() for l in ocr_extracted_text.splitlines() if len(l.strip()) > 3]
+                if ocr_extracted_text
+                else [
+                    "ভাই আমার অর্ডার করা ঘড়িটা এখনো পাইনি (14:30)",
+                    "আমরা চেক করে জানাচ্ছি স্যার (14:35)",
+                    "কবে ডেলিভারি হবে? (14:38)",
+                ]
+            )
 
             for idx, line in enumerate(lines[:6]):
                 # Check alignment / speech direction
                 # Right aligned -> consumer, Left aligned -> merchant
-                is_consumer_tone = any(q in line for q in ("কবে", "পাইনি", "কোথায়", "অর্ডার", "টাকা দিয়েছি"))
-                is_merchant_tone = any(m in line for m in ("স্যার", "জানাচ্ছি", "অপেক্ষা", "পাঠানো হয়েছে", "চেক"))
+                is_consumer_tone = any(
+                    q in line for q in ("কবে", "পাইনি", "কোথায়", "অর্ডার", "টাকা দিয়েছি")
+                )
+                is_merchant_tone = any(
+                    m in line for m in ("স্যার", "জানাচ্ছি", "অপেক্ষা", "পাঠানো হয়েছে", "চেক")
+                )
 
                 # Invariant T23: If alignment is ambiguous or cropped, speaker_role must be ambiguous with low confidence
                 if is_consumer_tone:
@@ -96,7 +118,12 @@ class ScreenshotAdapter:
                         text=line,
                         speaker_role=role,
                         speaker_role_confidence=conf,
-                        normalized_box=[0.1, round(0.15 * idx, 2), 0.9, round(0.15 * idx + 0.12, 2)],
+                        normalized_box=[
+                            0.1,
+                            round(0.15 * idx, 2),
+                            0.9,
+                            round(0.15 * idx + 0.12, 2),
+                        ],
                     )
                 )
 
@@ -106,13 +133,15 @@ class ScreenshotAdapter:
             # VLM visual extraction proposal
             # Check for money token
             vlm_amount = 550000 if "5500" in lower_ocr or "৫,৫০০" in lower_ocr else 500000
-            proposed_facts.append({
-                "field_name": "transaction_amount",
-                "field_type": "money",
-                "value": {"currency": "BDT", "minor_units": vlm_amount},
-                "confidence": 0.85,
-                "provenance": "vlm_layout_extraction",
-            })
+            proposed_facts.append(
+                {
+                    "field_name": "transaction_amount",
+                    "field_type": "money",
+                    "value": {"currency": "BDT", "minor_units": vlm_amount},
+                    "confidence": 0.85,
+                    "provenance": "vlm_layout_extraction",
+                }
+            )
 
         # 5. OCR vs VLM Disagreement Reconciliation (T23 Invariant)
         ocr_disagreements: list[OCRDisagreement] = []

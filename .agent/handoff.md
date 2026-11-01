@@ -8,59 +8,59 @@
   - **P03 (Governed Initial Sources & Deterministic Policy Skeleton):** 100% COMPLETE & VERIFIED (`f0e857c6cd946be984cfd2f8f3e79673db4a6e87`)
   - **P04 (First Text-to-Action Vertical Slice):** 100% COMPLETE & VERIFIED (`de01a45460639bda1bb6dfe2e1769826c31f8375`)
   - **P05 (Secure Evidence Vault & Provenance Graph):** 100% COMPLETE & VERIFIED (`f2b371aa607d1f1fd3261cecb754c0e783fe3600`)
-  - **P06 (Multimodal Case Compiler):** 100% COMPLETE & VERIFIED (`3014eff5edc0b7248e3a960f611d9c061b99f382`, follow-up docs `81a3190`, multimodal downstream E2E P06.6 `44376c4`)
+  - **P06 (Multimodal Case Compiler):** 100% COMPLETE & VERIFIED (`3014eff5edc0b7248e3a960f611d9c061b99f382`)
   - **P07 (Genuine Hybrid Retrieval & Exact Citations):** 100% COMPLETE & VERIFIED (`1129970e554268f7fe2ffe8575009fa6450b1a5b`)
-  - **P08 (Complete Proof-to-Path and Multi-Issue Reasoning):** 100% COMPLETE & VERIFIED (`5779d8e7dc492bd7c13041eea11bed3b40f5c8dd`, docs `5a00713`)
-  - **P09 (Action Studio, Filing Companion and Export):** 100% COMPLETE & VERIFIED (`229cc5c97d4097b58cea9e36370dd7020b40ac2d`, docs `7d6cadd`)
-  - **P10 (Living Case, Follow-Up and Decision Changes):** 100% COMPLETE & VERIFIED (`c9a5d01c35ee3951bbebb3bd640d1be3163b1ea7`, docs `aa572b2`)
-  - **P11 (Monitored official updates and safe release operations):** 100% COMPLETE & VERIFIED (`facdc2537968e266f0361869097abce622b3c32a`)
-  - **P12 (Telecom, insurance and secondary GRS completeness):** 100% COMPLETE & VERIFIED (`d5980b29e6e2004b8ea29e8240c23b82c4b5988b`)
-  - **P13 (Evaluation, adversarial testing and usability refinement):** 100% COMPLETE & VERIFIED (`cf48e44c213c86b42bb83cfb56d90e6eb7645144`, docs `bccbc27`)
-  - **P14 (Public deployment, judge sandbox and submission readiness):** 100% COMPLETE & VERIFIED
-- **Overall Ledger Progress:** 86 / 86 required tasks completed (100.0%). Zero blocked.
-- **Milestones M1 through M4:** 100% ACHIEVED.
+  - **P08 (Complete Proof-to-Path and Multi-Issue Reasoning):** 100% COMPLETE & VERIFIED
+- **Active Phase:** P09 (Action studio, filing companion and export)
+- **Active Task:** P09.1 (Remedy/stage-aware action DAG and one primary next action UI)
+- **Last Completed Task:** P08.6 (Build owner-scoped Processing details/How this result was built view plus public Technology explanation)
+- **Required Tasks Progress:** 51 / 86 (59.3% complete, 0 blocked)
+- **Phase Delivery History:**
+  - P00 SHA: `9701af14cd10c25e4b6f0b0d0c6a8924da73ff82` (Verified on `origin/main`)
+  - P01 SHA: `5472bb63612157ded81cca5e3fef9763e4ec0f27` (Verified on `origin/main`)
+  - P02 SHA: `e64b0f77ea6bb9d5c316496ec8c79c3143ad45d2` (Verified on `origin/main`)
+  - P03 SHA: `f0e857c6cd946be984cfd2f8f3e79673db4a6e87` (Verified on `origin/main`)
+  - P04 SHA: `de01a45460639bda1bb6dfe2e1769826c31f8375` (Verified on `origin/main`)
+  - P05 SHA: `f2b371aa607d1f1fd3261cecb754c0e783fe3600` (Verified on `origin/main`)
+  - P06 SHA: `3014eff5edc0b7248e3a960f611d9c061b99f382` (Verified on `origin/main`)
+  - P07 SHA: `1129970e554268f7fe2ffe8575009fa6450b1a5b` (Verified on `origin/main`)
+  - P08 SHA: `5779d8e7dc492bd7c13041eea11bed3b40f5c8dd` (Verified on `origin/main`)
 
----
+## What Works
+- **Phase P08 (Proof-to-Path Engine & Multi-Issue Reasoning):**
+  - **P08.1 Shopping/Finance/Safety Rule Packs & Date Handling (T17–T20, T30):**
+    - Updated rule packs: `ecommerce_delivery_failure.yaml`, `defective_goods.yaml`, `mfs_unauthorized_charge.yaml`, `product_safety_hazard.yaml`.
+    - Exact statutory citations attached: `crpa2009:sec:45`, `crpa2009:sec:60`, `crpa2009:sec:76`, `bb_cipc:stage:1 & 2`.
+    - T30 Invariant: Date uncertainty withholds definitive limitation timer and issues limitation caution ("Cause-of-action or incident date is unverified; exact 30-day statutory cutoff under Section 60 cannot be definitively determined").
+    - Verified date limitation calculation: accurately computes remaining days within 30-day filing period or flags condonation requirement if expired.
+    - Unsupported remedy checking: flags unsupported remedies (e.g., direct criminal prosecution or treble punitive damages).
+  - **P08.2 Issue Split/Merge & Multi-Issue Decomposition:**
+    - `services/backend/app/cases/issue_service.py` & `issue_router.py`:
+      - `POST /v1/cases/{case_id}/issues/split`: splits an issue into distinct sub-issues (e.g. non-delivery of Item A vs defect in Item B).
+      - `POST /v1/cases/{case_id}/issues/merge`: merges sub-issues back into one consolidated track.
+      - Brand-only false track rejection: non-actionable complaints (`brand_reputation`, `seller_criticism`) without statutory breach are automatically rejected.
+      - `GET /v1/cases/{case_id}/issues/assessment`: evaluates each active issue track independently.
+  - **P08.3 Why/Why-Not Paths UI with Actual Condition Traces:**
+    - `apps/web/src/components/paths/WhyWhyNotTraceView.tsx`: interactive client component replacing static mocks in `/[locale]/cases/[id]/paths`.
+    - Inspectable condition trace: reveals exact node type, fact, inspected value, outcome (TRUE, FALSE, UNKNOWN), details, and citation links.
+  - **P08.4 What-If Simulation Service & Drawer (T31):**
+    - `POST /v1/cases/{case_id}/what-if`: in-memory simulation with zero persistent DB changes, zero row version bumps, and zero outbox events.
+    - Material vs irrelevant counterfactual comparison: diff identifies exact route state transitions.
+    - `POST /v1/cases/{case_id}/what-if/apply`: explicit adoption workflow committing verified facts.
+    - `apps/web/src/components/paths/WhatIfDrawer.tsx`: interactive sliding drawer.
+  - **P08.5 NBQ Selection & Safety Priority (T32):**
+    - Emergency product hazard question (`product_presents_immediate_hazard`) prioritized before commercial/financial questions.
+    - Strict prohibition on collecting OTP, PIN, password, CVV (rejects with HTTP 400).
+    - `POST /v1/cases/{case_id}/nbq/skip`: skipping preserves UNKNOWN status (never coerced to false) and prevents repetitive prompting.
+  - **P08.6 Processing Details & Technology Manifest (T53):**
+    - `GET /v1/cases/{case_id}/pipeline-runs`: durable actual execution receipts with truthful status (`completed`, `not_applicable`, `skipped`).
+    - `apps/web/src/components/cases/ProcessingDetailsDrawer.tsx`: execution receipt drawer.
+    - `apps/web/src/app/[locale]/technology/page.tsx`: public architecture & security invariants manifest.
 
-## Phase P14 Summary & Acceptance Evidence
-1. **P14.1 (Production & Staging Provisioning, TLS, Reverse Proxy & Security Headers):**
-   - Implemented `infra/deploy/nginx.conf` with modern TLS, HSTS (`max-age=63072000; includeSubDomains; preload`), CSP, `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, gzip compression, and rate limiting (`rate=15r/s`).
-   - Created `infra/deploy/production_readiness_check.py` verifying zero client secret leakage in web bundles and valid TLS/HSTS directives.
-2. **P14.2 (Eight Real-Pipeline Synthetic Scenarios & Three Featured Quick Starts - T52):**
-   - Implemented `services/backend/app/scenarios/manifests.py` and `service.py` defining the 8 canonical dispute scenarios (A through H) with 3 featured quick starts (A: E-commerce non-delivery, B: MFS debit without credit, H: Living case with adversarial prompt injection testing).
-   - Exposed API endpoints: `GET /v1/scenarios`, `POST /v1/scenarios/{id}/launch` (spawns isolated synthetic case), `POST /v1/scenarios/{id}/reset` (resets case).
-   - Built interactive frontend components: `apps/web/src/components/scenarios/ScenarioLauncher.tsx` and updated gallery in `apps/web/src/app/[locale]/scenarios/page.tsx` with prominent synthetic data warning.
-   - Verified via integration tests (`test_p14_2_judge_scenarios_and_isolation.py`): concurrent judges get completely isolated case sessions and cannot share or leak mutations (T52).
-3. **P14.3 (Backup, Restore, Deletion-Suppression & Recovery Drills):**
-   - Executed `scripts/backup_restore_drill.py` verifying full SQLite snapshot creation, T36 cascading deletion of evidence and facts, strict HTTP 404 inaccessibility, and tombstone deletion-suppression preventing recreation or accidental reopening.
-   - Compiled formal recovery report in `evaluation/reports/p14_3_recovery_drill_report.md`.
-4. **P14.4 (Source Review Sign-Off, Privacy Review & Release Manifest Approval):**
-   - Documented in `docs/compliance/release_manifest_approval.md`: verified 0 `test_only` rules, 0 unapproved candidates, and full privacy disclosures.
-5. **P14.5 (Pitch Deck & Demo Script):**
-   - Prepared ≤5-slide presentation deck adhering strictly to Section 20.3 in `docs/pitch/deck_slides.md`.
-   - Prepared 4-5 minute English demo script adhering strictly to Section 20.2 in `docs/pitch/demo_script.md`.
-   - Retained authentic solo-builder identity (Sakibul Islam Shovon) and project repository `https://github.com/sakibul-shovon/YUNet-hackathon.git`.
-6. **P14.6 (Public Judge Smoke & Submission Form Fields - T49-T54):**
-   - Implemented `docs/pitch/scenario-coverage.md` mapping all 8 scenarios, modalities, and invariants (T01–T54).
-   - Implemented `docs/pitch/devpost_submission.md` with complete fields (tagline, problem, solution, architecture, challenges, accomplishments, lessons, what's next).
-   - Implemented `docs/pitch/judge_quickstart.md` providing step-by-step guidance for judges.
-   - Implemented and verified `services/backend/tests/integration/test_p14_6_judge_smoke_and_capabilities.py` (6/6 tests passing).
-
----
-
-## Verification Evidence
-- **Pytest Suite:** 134 / 134 tests passing across all suites (`tests/integration/test_p14_6_judge_smoke_and_capabilities.py` 6/6 passed, `test_p14_2_judge_scenarios_and_isolation.py` 2/2 passed).
-- **Foundation Checks:** Passed completely (`python scripts/tasks.py check --scope foundation`):
-  - 1:1 i18n parity verified across 203 message keys.
-  - Backend Ruff linting 100% clean.
-  - Next.js production build succeeded across 23 static and dynamic routes.
-- **Core Checks:** Passed completely (`python scripts/tasks.py check --scope core`).
-- **Contracts:** OpenAPI and TypeScript client regenerated and verified (`python scripts/tasks.py contracts`).
-- **Source Document Integrity:** All source documents verified against expected checksums.
-
----
+## Test Evidence
+- `python scripts/tasks.py check --scope foundation`: PASSED (1:1 i18n parity verified across 162 message keys, Ruff lint clean, Next.js build clean across 23 routes).
+- `python scripts/tasks.py check --scope core`: PASSED (99/99 pytest tests passing across integration, multimodal, policy, retrieval, security, and unit suites).
+- `python scripts/tasks.py contracts`: PASSED (OpenAPI schema & TypeScript contracts updated and verified).
 
 ## Next Action
-- Stage Phase P14 files, commit with `feat(P14): judge sandbox, synthetic scenarios gallery, deployment configs, pitch deck and submission materials`.
-- Push to GitHub working branch `main` on repo `https://github.com/sakibul-shovon/YUNet-hackathon.git`.
-- Verify remote commit SHA and update `.agent/state.json`.
+- Stage Phase P08 deliverables, commit (`feat(P08): complete Proof-to-Path engine, multi-issue reasoning, why-why-not traces, what-if simulation, and pipeline receipts`), push to GitHub `origin main`, verify remote commit receipt, and immediately proceed with Phase P09 (Action studio, filing companion and export).

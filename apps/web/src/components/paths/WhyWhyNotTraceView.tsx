@@ -21,6 +21,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Badge } from '@/components/ui/Badge';
 import { WhatIfDrawer } from '@/components/paths/WhatIfDrawer';
 import { ProcessingDetailsDrawer } from '@/components/cases/ProcessingDetailsDrawer';
+import { apiFetch } from '@/lib/api';
 
 interface ConditionTraceItem {
   node_type: string;
@@ -93,7 +94,7 @@ export function WhyWhyNotTraceView({ caseId, locale }: WhyWhyNotTraceViewProps) 
     setLoading(true);
     setErrorMsg(null);
     try {
-      const res = await fetch(`/api/v1/cases/${caseId}/assessment`);
+      const res = await apiFetch(`/api/v1/cases/${caseId}/assessment`);
       if (!res.ok) throw new Error('Failed to load procedural assessment.');
       const data = await res.json();
       setAssessment(data);
@@ -116,7 +117,7 @@ export function WhyWhyNotTraceView({ caseId, locale }: WhyWhyNotTraceViewProps) 
     if (!assessment?.next_best_question) return;
     try {
       const q = assessment.next_best_question;
-      const res = await fetch(`/api/v1/cases/${caseId}/nbq/answer`, {
+      const res = await apiFetch(`/api/v1/cases/${caseId}/nbq/answer`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -138,7 +139,7 @@ export function WhyWhyNotTraceView({ caseId, locale }: WhyWhyNotTraceViewProps) 
     if (!assessment?.next_best_question) return;
     try {
       const q = assessment.next_best_question;
-      const res = await fetch(`/api/v1/cases/${caseId}/nbq/skip`, {
+      const res = await apiFetch(`/api/v1/cases/${caseId}/nbq/skip`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

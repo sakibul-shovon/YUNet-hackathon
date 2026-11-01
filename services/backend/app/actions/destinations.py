@@ -162,4 +162,3 @@ class ComplaintDestinationService:
     @classmethod
     def list_destinations(cls) -> list[ComplaintDestinationOut]:
         return [ComplaintDestinationOut.model_validate(d) for d in DESTINATION_REGISTRY.values()]
-

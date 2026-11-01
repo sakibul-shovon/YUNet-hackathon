@@ -67,10 +67,13 @@ async def validate_statutory_citations(req: CitationValidationRequest):
     status_code=status.HTTP_200_OK,
 )
 async def lookup_provision_by_exact_section(
-    q: str = Query(..., description="Exact section reference in Bengali or Latin (e.g. 'sec:45', 'ধারা ৪৫(২)', 'sec:60')"),
+    q: str = Query(
+        ...,
+        description="Exact section reference in Bengali or Latin (e.g. 'sec:45', 'ধারা ৪৫(২)', 'sec:60')",
+    ),
 ):
     """T24: Exact Bengali/Latin section lookup.
-    
+
     Preserves parent context, subsection exceptions, and qualifications.
     Returns match_found=False without inventing missing provisions.
     """

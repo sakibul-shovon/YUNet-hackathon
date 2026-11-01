@@ -64,13 +64,15 @@ class PolicyEvaluator:
             else:
                 res = Kleene.TRUE if fact_val == node.value else Kleene.FALSE
             if trace is not None:
-                trace.append(EvaluationTraceItem(
-                    node_type="eq",
-                    fact=node.fact,
-                    inspected_value=fact_val,
-                    outcome=res,
-                    details=f"expected {node.value}",
-                ))
+                trace.append(
+                    EvaluationTraceItem(
+                        node_type="eq",
+                        fact=node.fact,
+                        inspected_value=fact_val,
+                        outcome=res,
+                        details=f"expected {node.value}",
+                    )
+                )
             return res
 
         elif isinstance(node, InNode):
@@ -80,24 +82,28 @@ class PolicyEvaluator:
             else:
                 res = Kleene.TRUE if fact_val in node.values else Kleene.FALSE
             if trace is not None:
-                trace.append(EvaluationTraceItem(
-                    node_type="in",
-                    fact=node.fact,
-                    inspected_value=fact_val,
-                    outcome=res,
-                ))
+                trace.append(
+                    EvaluationTraceItem(
+                        node_type="in",
+                        fact=node.fact,
+                        inspected_value=fact_val,
+                        outcome=res,
+                    )
+                )
             return res
 
         elif isinstance(node, ExistsNode):
             fact_val = facts.get(node.fact)
             res = Kleene.TRUE if fact_val is not None else Kleene.FALSE
             if trace is not None:
-                trace.append(EvaluationTraceItem(
-                    node_type="exists",
-                    fact=node.fact,
-                    inspected_value=fact_val,
-                    outcome=res,
-                ))
+                trace.append(
+                    EvaluationTraceItem(
+                        node_type="exists",
+                        fact=node.fact,
+                        inspected_value=fact_val,
+                        outcome=res,
+                    )
+                )
             return res
 
         elif isinstance(node, DateCompareNode):
@@ -119,12 +125,14 @@ class PolicyEvaluator:
                 else:
                     res = Kleene.TRUE if v_str == node.value else Kleene.FALSE
             if trace is not None:
-                trace.append(EvaluationTraceItem(
-                    node_type="date_compare",
-                    fact=node.fact,
-                    inspected_value=fact_val,
-                    outcome=res,
-                ))
+                trace.append(
+                    EvaluationTraceItem(
+                        node_type="date_compare",
+                        fact=node.fact,
+                        inspected_value=fact_val,
+                        outcome=res,
+                    )
+                )
             return res
 
         elif isinstance(node, MoneyCompareNode):
@@ -133,7 +141,9 @@ class PolicyEvaluator:
                 res = Kleene.UNKNOWN
             else:
                 # Assume minor_units in fact or dict
-                val_units = fact_val if isinstance(fact_val, int) else fact_val.get("minor_units", 0)
+                val_units = (
+                    fact_val if isinstance(fact_val, int) else fact_val.get("minor_units", 0)
+                )
                 op = node.op
                 if op == "<":
                     res = Kleene.TRUE if val_units < node.minor_units else Kleene.FALSE
@@ -146,24 +156,28 @@ class PolicyEvaluator:
                 else:
                     res = Kleene.TRUE if val_units == node.minor_units else Kleene.FALSE
             if trace is not None:
-                trace.append(EvaluationTraceItem(
-                    node_type="money_compare",
-                    fact=node.fact,
-                    inspected_value=fact_val,
-                    outcome=res,
-                ))
+                trace.append(
+                    EvaluationTraceItem(
+                        node_type="money_compare",
+                        fact=node.fact,
+                        inspected_value=fact_val,
+                        outcome=res,
+                    )
+                )
             return res
 
         elif isinstance(node, SourceApprovedNode):
             sources = approved_sources or []
             res = Kleene.TRUE if node.source_id in sources else Kleene.FALSE
             if trace is not None:
-                trace.append(EvaluationTraceItem(
-                    node_type="source_approved",
-                    fact=node.source_id,
-                    inspected_value=sources,
-                    outcome=res,
-                ))
+                trace.append(
+                    EvaluationTraceItem(
+                        node_type="source_approved",
+                        fact=node.source_id,
+                        inspected_value=sources,
+                        outcome=res,
+                    )
+                )
             return res
 
         elif isinstance(node, ReviewAcceptedNode):
@@ -173,12 +187,14 @@ class PolicyEvaluator:
             else:
                 res = Kleene.TRUE if review_state == "accepted" else Kleene.FALSE
             if trace is not None:
-                trace.append(EvaluationTraceItem(
-                    node_type="review_accepted",
-                    fact=node.assertion_field,
-                    inspected_value=review_state,
-                    outcome=res,
-                ))
+                trace.append(
+                    EvaluationTraceItem(
+                        node_type="review_accepted",
+                        fact=node.assertion_field,
+                        inspected_value=review_state,
+                        outcome=res,
+                    )
+                )
             return res
 
         elif isinstance(node, NotNode):
@@ -186,17 +202,11 @@ class PolicyEvaluator:
             return Kleene.not_val(child_res)
 
         elif isinstance(node, AllNode):
-            child_results = [
-                cls.evaluate_node(c, facts, approved_sources, trace)
-                for c in node.all
-            ]
+            child_results = [cls.evaluate_node(c, facts, approved_sources, trace) for c in node.all]
             return Kleene.and_all(child_results)
 
         elif isinstance(node, AnyNode):
-            child_results = [
-                cls.evaluate_node(c, facts, approved_sources, trace)
-                for c in node.any
-            ]
+            child_results = [cls.evaluate_node(c, facts, approved_sources, trace) for c in node.any]
             return Kleene.or_any(child_results)
 
         raise ValueError(f"Unknown condition node type: {type(node)}")
@@ -213,7 +223,9 @@ class PolicyEvaluator:
         """Evaluates a policy rule against facts, checking exclusions, 3-valued conditions, and source health."""
         # T18: test_only rules cannot run in live production release
         if rule.status == "test_only" and not allow_test_only:
-            raise ValueError(f"Rule '{rule.rule_id}' is marked test_only and cannot be activated in live release (T18).")
+            raise ValueError(
+                f"Rule '{rule.rule_id}' is marked test_only and cannot be activated in live release (T18)."
+            )
 
         trace: list[EvaluationTraceItem] = []
         reasons: list[str] = []
@@ -251,22 +263,30 @@ class PolicyEvaluator:
 
         else:  # Kleene.TRUE
             if has_unresolved_exclusion:
-                reasons.append(rule.reason_templates.get("exclusion_uncertain", "unresolved_exclusion_needs_clarification"))
+                reasons.append(
+                    rule.reason_templates.get(
+                        "exclusion_uncertain", "unresolved_exclusion_needs_clarification"
+                    )
+                )
                 status = RouteStatus.NEEDS_FACTS
                 actions = rule.allowed_actions
             else:
                 # Check source health overlay (T17)
                 s_health = source_health or {}
                 unhealthy = [
-                    src for src in rule.source_dependencies
-                    if s_health.get(src) in ("temporarily_unavailable", "conflicted", "emergency_disabled")
+                    src
+                    for src in rule.source_dependencies
+                    if s_health.get(src)
+                    in ("temporarily_unavailable", "conflicted", "emergency_disabled")
                 ]
                 if unhealthy:
                     reasons.append(f"source_health_caution: {', '.join(unhealthy)}")
                     status = RouteStatus.SOURCE_CAUTION
                     actions = rule.allowed_actions
                 else:
-                    reasons.append(rule.reason_templates.get("supported", "procedural_pathway_supported"))
+                    reasons.append(
+                        rule.reason_templates.get("supported", "procedural_pathway_supported")
+                    )
                     status = RouteStatus.SUPPORTED
                     actions = rule.allowed_actions
 

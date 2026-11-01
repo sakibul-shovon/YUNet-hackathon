@@ -41,7 +41,12 @@ class ScenarioService:
         if not manifest:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
-                detail={"error": {"code": "SCENARIO_NOT_FOUND", "message": f"Scenario '{scenario_id}' not found."}},
+                detail={
+                    "error": {
+                        "code": "SCENARIO_NOT_FOUND",
+                        "message": f"Scenario '{scenario_id}' not found.",
+                    }
+                },
             )
 
         now = datetime.datetime.now(datetime.UTC)
@@ -92,7 +97,11 @@ class ScenarioService:
         # 3. Pre-seed initial facts
         fact_count = 0
         for field_name, value in manifest.initial_facts.items():
-            field_type = "boolean" if isinstance(value, bool) else ("number" if isinstance(value, (int, float)) else "string")
+            field_type = (
+                "boolean"
+                if isinstance(value, bool)
+                else ("number" if isinstance(value, (int, float)) else "string")
+            )
             assertion = FactAssertion(
                 id=uuid.uuid4(),
                 case_id=case_id,
@@ -139,7 +148,12 @@ class ScenarioService:
         if not case:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
-                detail={"error": {"code": "DEMO_CASE_NOT_FOUND", "message": "Demo case not found or not owned by principal."}},
+                detail={
+                    "error": {
+                        "code": "DEMO_CASE_NOT_FOUND",
+                        "message": "Demo case not found or not owned by principal.",
+                    }
+                },
             )
 
         # Reset row_version
@@ -151,5 +165,5 @@ class ScenarioService:
         return {
             "case_id": str(case_id),
             "status": "reset_successful",
-            "message": "Demo case state reset to original checkpoint."
+            "message": "Demo case state reset to original checkpoint.",
         }

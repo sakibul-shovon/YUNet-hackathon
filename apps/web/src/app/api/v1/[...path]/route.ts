@@ -10,40 +10,15 @@ async function handleProxy(req: NextRequest, { params }: { params: Promise<{ pat
   const mappedPath = path.map((segment) => (segment === 'case_demo_phone' ? DEMO_CASE_UUID : segment));
   const targetPath = mappedPath.join('/');
 
-  // Forward to /v1/...
-  const targetUrl = new URL(`/v1/${targetPath}${req.nextUrl.search}`, BACKEND_API_URL);
+  // If path begins with 'auth/', route directly to /auth/ (identity router root)
+  const prefix = targetPath.startsWith('auth/') ? '' : '/v1/';
+  const targetUrl = new URL(`${prefix}${targetPath}${req.nextUrl.search}`, BACKEND_API_URL);
 
   const headers = new Headers(req.headers);
   headers.set('host', new URL(BACKEND_API_URL).host);
 
   const correlationId = req.headers.get('x-correlation-id') || crypto.randomUUID();
   headers.set('x-correlation-id', correlationId);
-
-  // Auto-bootstrap guest session if client has neither Authorization header nor session cookie
-  let guestCookieToSet: string | null = null;
-  const hasAuth = headers.get('authorization');
-  const hasCookie = headers.get('cookie')?.includes('claimcraft_session');
-
-  if (!hasAuth && !hasCookie) {
-    try {
-      const guestRes = await fetch(`${BACKEND_API_URL}/auth/guest`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-      });
-      if (guestRes.ok) {
-        const guestData = await guestRes.json();
-        if (guestData.access_token) {
-          headers.set('authorization', `Bearer ${guestData.access_token}`);
-        }
-        const setCookie = guestRes.headers.get('set-cookie');
-        if (setCookie) {
-          guestCookieToSet = setCookie;
-        }
-      }
-    } catch {
-      // Proceed without guest bootstrap
-    }
-  }
 
   try {
     const fetchOptions: RequestInit = {
@@ -61,15 +36,25 @@ async function handleProxy(req: NextRequest, { params }: { params: Promise<{ pat
 
     const responseHeaders = new Headers(backendRes.headers);
     responseHeaders.set('x-correlation-id', correlationId);
-    if (guestCookieToSet) {
-      responseHeaders.append('set-cookie', guestCookieToSet);
-    }
 
-    return new NextResponse(body, {
+    const res = new NextResponse(body, {
       status: backendRes.status,
       statusText: backendRes.statusText,
       headers: responseHeaders,
     });
+
+    // Forward Set-Cookie headers properly in Next.js
+    const setCookieHeaders = backendRes.headers.getSetCookie
+      ? backendRes.headers.getSetCookie()
+      : [backendRes.headers.get('set-cookie')].filter(Boolean);
+
+    for (const cookieStr of setCookieHeaders) {
+      if (cookieStr) {
+        res.headers.append('set-cookie', cookieStr);
+      }
+    }
+
+    return res;
   } catch (err: any) {
     return NextResponse.json(
       {

@@ -34,7 +34,9 @@ async def get_capabilities():
         ],
         "providers": {
             "ai_multimodal": "gemini" if settings.GEMINI_API_KEY else "synthetic_development",
-            "speech_to_text": "google_cloud_stt" if settings.GOOGLE_APPLICATION_CREDENTIALS else "browser_native_fallback",
+            "speech_to_text": "google_cloud_stt"
+            if settings.GOOGLE_APPLICATION_CREDENTIALS
+            else "browser_native_fallback",
             "dense_embeddings": "intfloat/multilingual-e5-small",
             "lexical_search": "bm25s",
         },

@@ -43,7 +43,9 @@ class ReviewResultOut(BaseModel):
 
 class ReleaseBuildRequest(BaseModel):
     release_id: str = Field(..., pattern="^[A-Za-z0-9_.-]+$")
-    release_mode: str = Field("procedure_guidance", pattern="^(procedure_guidance|reviewed_statutory_guidance)$")
+    release_mode: str = Field(
+        "procedure_guidance", pattern="^(procedure_guidance|reviewed_statutory_guidance)$"
+    )
     source_version_ids: list[uuid.UUID]
     rules: list[dict] = Field(default_factory=list)
     portal_maps: list[dict] = Field(default_factory=list)

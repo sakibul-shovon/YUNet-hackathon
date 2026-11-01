@@ -13,7 +13,9 @@ class TextRegion(BaseModel):
     region_id: str
     page_number: int
     text: str
-    normalized_box: list[float] = Field(..., description="[x1, y1, x2, y2] strictly normalized in [0.0, 1.0]")
+    normalized_box: list[float] = Field(
+        ..., description="[x1, y1, x2, y2] strictly normalized in [0.0, 1.0]"
+    )
     origin: str = "native_text"  # 'native_text' or 'ocr'
     confidence: float = 1.0
     is_critical_token: bool = False
@@ -36,9 +38,18 @@ class DocumentParseResult(BaseModel):
 class DocumentParser:
     """T13, T14: Page-aware native and OCR extraction with rotation normalization and reading order."""
 
-    MONEY_PAT = re.compile(r"(?:[৳]|bdt|tk\.?|টাকা)\s*[\d,০-৯]+(?:\.[\d০-৯]+)?|[\d,০-৯]+(?:\.[\d০-৯]+)?\s*(?:টাকা|টাকার|tk\.?|bdt)", re.IGNORECASE)
-    DATE_PAT = re.compile(r"\b(?:\d{1,2}[/-]\d{1,2}[/-]\d{2,4}|\d{1,2}\s+(?:জানুয়ারি|ফেব্রুয়ারি|মার্চ|এপ্রিল|মে|জুন|জুলাই|আগস্ট|সেপ্টেম্বর|অক্টোবর|নভেম্বর|ডিসেম্বর|jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\s+\d{2,4})\b", re.IGNORECASE)
-    REF_PAT = re.compile(r"\b(?:trx(?:id)?|txid|order\s*(?:id|#|no\.?)|invoice\s*(?:id|#|no\.?)|ইনভয়েস|অর্ডার)\s*[:#-]?\s*[A-Za-z0-9-]+", re.IGNORECASE)
+    MONEY_PAT = re.compile(
+        r"(?:[৳]|bdt|tk\.?|টাকা)\s*[\d,০-৯]+(?:\.[\d০-৯]+)?|[\d,০-৯]+(?:\.[\d০-৯]+)?\s*(?:টাকা|টাকার|tk\.?|bdt)",
+        re.IGNORECASE,
+    )
+    DATE_PAT = re.compile(
+        r"\b(?:\d{1,2}[/-]\d{1,2}[/-]\d{2,4}|\d{1,2}\s+(?:জানুয়ারি|ফেব্রুয়ারি|মার্চ|এপ্রিল|মে|জুন|জুলাই|আগস্ট|সেপ্টেম্বর|অক্টোবর|নভেম্বর|ডিসেম্বর|jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\s+\d{2,4})\b",
+        re.IGNORECASE,
+    )
+    REF_PAT = re.compile(
+        r"\b(?:trx(?:id)?|txid|order\s*(?:id|#|no\.?)|invoice\s*(?:id|#|no\.?)|ইনভয়েস|অর্ডার)\s*[:#-]?\s*[A-Za-z0-9-]+",
+        re.IGNORECASE,
+    )
 
     @classmethod
     def normalize_coordinates(
@@ -109,19 +120,26 @@ class DocumentParser:
         # Amount with adjacent currency token (e.g. "5500" followed by "BDT" or preceded by "৳")
         if re.match(r"^[\d,০-৯]+(?:\.[\d০-৯]+)?$", text):
             adjacent = " ".join(filter(None, [prev_word, next_word])).lower()
-            if any(curr in adjacent for curr in ("bdt", "tk", "টাকা", "৳", "paid", "total", "amount", "মূল্য")):
+            if any(
+                curr in adjacent
+                for curr in ("bdt", "tk", "টাকা", "৳", "paid", "total", "amount", "মূল্য")
+            ):
                 return True, "money"
 
         if cls.DATE_PAT.search(text):
             return True, "date"
 
-        if cls.REF_PAT.search(text) or re.match(r"^(?:order|inv|invoice|trx|txid|txn|ref)[-_:#]?[A-Za-z0-9-]+$", text, re.IGNORECASE):
+        if cls.REF_PAT.search(text) or re.match(
+            r"^(?:order|inv|invoice|trx|txid|txn|ref)[-_:#]?[A-Za-z0-9-]+$", text, re.IGNORECASE
+        ):
             return True, "reference"
 
         return False, None
 
     @classmethod
-    def sort_reading_order(cls, words: list[dict[str, Any]], page_width: float) -> list[dict[str, Any]]:
+    def sort_reading_order(
+        cls, words: list[dict[str, Any]], page_width: float
+    ) -> list[dict[str, Any]]:
         """T14: Sorts words respecting multicolumn reading order (left column before right column)."""
         if not words:
             return []
@@ -132,7 +150,11 @@ class DocumentParser:
         right_words = [w for w in words if w["x0"] >= mid - 15]
 
         # If both left and right contain substantial words and span vertical extent, sort column by column
-        if len(left_words) >= 5 and len(right_words) >= 5 and len(left_words) + len(right_words) >= len(words) * 0.85:
+        if (
+            len(left_words) >= 5
+            and len(right_words) >= 5
+            and len(left_words) + len(right_words) >= len(words) * 0.85
+        ):
             # Two-column layout detected
             left_sorted = sorted(left_words, key=lambda w: (round(w["top"] / 10), w["x0"]))
             right_sorted = sorted(right_words, key=lambda w: (round(w["top"] / 10), w["x0"]))
@@ -164,12 +186,14 @@ class DocumentParser:
                 if rotation != 0:
                     quality_flags.append(f"ROTATED_PAGE_{rotation}_NORMALIZED_P{page_num}")
 
-                page_dimensions.append({
-                    "page_number": page_num,
-                    "width": w,
-                    "height": h,
-                    "rotation": rotation,
-                })
+                page_dimensions.append(
+                    {
+                        "page_number": page_num,
+                        "width": w,
+                        "height": h,
+                        "rotation": rotation,
+                    }
+                )
 
                 extracted_words = page.extract_words(
                     x_tolerance=3,
@@ -197,7 +221,9 @@ class DocumentParser:
                     next_w = sorted_words[idx + 1]["text"] if idx + 1 < len(sorted_words) else None
 
                     # Check critical token (T13)
-                    is_crit, crit_type = cls.check_critical_token(word_text, prev_word=prev_w, next_word=next_w)
+                    is_crit, crit_type = cls.check_critical_token(
+                        word_text, prev_word=prev_w, next_word=next_w
+                    )
 
                     norm_box = cls.normalize_coordinates(
                         float(word["x0"]),

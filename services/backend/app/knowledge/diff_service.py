@@ -7,8 +7,13 @@ from pydantic import BaseModel, Field
 from app.knowledge.models import SourceProvision
 
 # Provision regex patterns for English and Bengali legislative texts
-SECTION_REGEX_EN = re.compile(r"(?:Section|Sec\.)\s+(\d+(?:\([0-9a-zA-Z]+\))?)[:.\s]+(.*?)(?=(?:Section|Sec\.)\s+\d+|$)", re.DOTALL | re.IGNORECASE)
-SECTION_REGEX_BN = re.compile(r"ধারা\s+([০-৯\d]+(?:\([০-৯a-zA-Z\d]+\))?)[:.\s]+(.*?)(?=ধারা\s+[০-৯\d]+|$)", re.DOTALL)
+SECTION_REGEX_EN = re.compile(
+    r"(?:Section|Sec\.)\s+(\d+(?:\([0-9a-zA-Z]+\))?)[:.\s]+(.*?)(?=(?:Section|Sec\.)\s+\d+|$)",
+    re.DOTALL | re.IGNORECASE,
+)
+SECTION_REGEX_BN = re.compile(
+    r"ধারা\s+([০-৯\d]+(?:\([০-৯a-zA-Z\d]+\))?)[:.\s]+(.*?)(?=ধারা\s+[০-৯\d]+|$)", re.DOTALL
+)
 
 
 class ParsedProvision(BaseModel):
@@ -221,7 +226,15 @@ class SectionAwareDiffService:
         else:
             # Check if candidate mentions deferred commencement
             lowered_text = candidate_raw_text.lower()
-            if any(term in lowered_text for term in ["সরকারি গেজেটে প্রজ্ঞাপন দ্বারা", "shall come into force on such date", "appointed day", "notification in the official gazette"]):
+            if any(
+                term in lowered_text
+                for term in [
+                    "সরকারি গেজেটে প্রজ্ঞাপন দ্বারা",
+                    "shall come into force on such date",
+                    "appointed day",
+                    "notification in the official gazette",
+                ]
+            ):
                 commencement_status = "deferred_pending_gazette"
             else:
                 commencement_status = "unknown"
@@ -230,9 +243,14 @@ class SectionAwareDiffService:
         has_transitional = False
         transitional_notes = []
         lowered_text = candidate_raw_text.lower()
-        if any(term in lowered_text for term in ["savings", "repeal and savings", "রহিতকরণ ও হেফাজত", "transitional"]):
+        if any(
+            term in lowered_text
+            for term in ["savings", "repeal and savings", "রহিতকরণ ও হেফাজত", "transitional"]
+        ):
             has_transitional = True
-            transitional_notes.append("Transitional or savings provisions detected; historical acts remain governed under prior version.")
+            transitional_notes.append(
+                "Transitional or savings provisions detected; historical acts remain governed under prior version."
+            )
 
         return CandidateImpactProposal(
             candidate_id=candidate_id,

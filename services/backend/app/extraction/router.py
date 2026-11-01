@@ -21,7 +21,10 @@ router = APIRouter(tags=["Case Text Extraction"])
 )
 async def extract_case_narrative(
     case_id: uuid.UUID,
-    auto_persist: bool = Query(False, description="Whether to automatically persist extracted proposals as draft assertions"),
+    auto_persist: bool = Query(
+        False,
+        description="Whether to automatically persist extracted proposals as draft assertions",
+    ),
     principal: Principal = Depends(get_current_principal),
     db: AsyncSession = Depends(get_db_session),
 ):
@@ -31,7 +34,12 @@ async def extract_case_narrative(
     if getattr(c, "consent_status", "active") == "withdrawn":
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail={"error": {"code": "CONSENT_WITHDRAWN", "message": "External processing consent has been withdrawn by user (T37)"}},
+            detail={
+                "error": {
+                    "code": "CONSENT_WITHDRAWN",
+                    "message": "External processing consent has been withdrawn by user (T37)",
+                }
+            },
         )
 
     narrative = c.story_narrative or ""
@@ -52,7 +60,9 @@ async def extract_case_narrative(
             create_in = FactAssertionCreate(
                 field_name=prop.field_name,
                 field_type=prop.field_type,
-                raw_value=prop.original_text if (prop.field_type == "money" and prop.original_text) else prop.raw_value,
+                raw_value=prop.original_text
+                if (prop.field_type == "money" and prop.original_text)
+                else prop.raw_value,
                 original_text=prop.original_text,
                 origin="document_extraction",
                 span_start=span_start,

@@ -378,4 +378,3 @@ CANONICAL_PROVISIONS: list[dict[str, Any]] = [
         "effective_to": None,
     },
 ]
-

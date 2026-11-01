@@ -89,14 +89,20 @@ class HybridRetriever:
         # Exact match gets rank 0 boost if present
         if exact_matched_handle and exact_item:
             rrf_scores[exact_matched_handle] = 1.0 / (K + 0)
-            channel_ranks[exact_matched_handle] = {"exact_match": True, "dense_rank": None, "lexical_rank": None}
+            channel_ranks[exact_matched_handle] = {
+                "exact_match": True,
+                "dense_rank": None,
+                "lexical_rank": None,
+            }
             provisions_map[exact_matched_handle] = exact_item
 
         # Dense ranks
         for rank, res in enumerate(dense_results, start=1):
             h = res["citation_handle"]
             rrf_scores[h] = rrf_scores.get(h, 0.0) + (1.0 / (K + rank))
-            channel_ranks.setdefault(h, {"exact_match": False, "dense_rank": None, "lexical_rank": None})
+            channel_ranks.setdefault(
+                h, {"exact_match": False, "dense_rank": None, "lexical_rank": None}
+            )
             channel_ranks[h]["dense_rank"] = rank
             provisions_map[h] = res["provision"]
 
@@ -104,7 +110,9 @@ class HybridRetriever:
         for rank, res in enumerate(lexical_results, start=1):
             h = res["citation_handle"]
             rrf_scores[h] = rrf_scores.get(h, 0.0) + (1.0 / (K + rank))
-            channel_ranks.setdefault(h, {"exact_match": False, "dense_rank": None, "lexical_rank": None})
+            channel_ranks.setdefault(
+                h, {"exact_match": False, "dense_rank": None, "lexical_rank": None}
+            )
             channel_ranks[h]["lexical_rank"] = rank
             provisions_map[h] = res["provision"]
 
@@ -114,19 +122,25 @@ class HybridRetriever:
         ranked_items = []
         for h in sorted_handles[:top_k]:
             prov = provisions_map[h]
-            ranked_items.append({
-                "citation_handle": h,
-                "provision_path": prov.get("provision_path"),
-                "title_en": prov.get("title_en"),
-                "title_bn": prov.get("title_bn"),
-                "rrf_score": round(rrf_scores[h], 5),
-                "ranks": channel_ranks[h],
-                "canonical_text_bn": prov.get("canonical_text_bn"),
-                "qualifications": prov.get("qualifications_and_exceptions", []),
-            })
+            ranked_items.append(
+                {
+                    "citation_handle": h,
+                    "provision_path": prov.get("provision_path"),
+                    "title_en": prov.get("title_en"),
+                    "title_bn": prov.get("title_bn"),
+                    "rrf_score": round(rrf_scores[h], 5),
+                    "ranks": channel_ranks[h],
+                    "canonical_text_bn": prov.get("canonical_text_bn"),
+                    "qualifications": prov.get("qualifications_and_exceptions", []),
+                }
+            )
 
         is_degraded = not dense_enabled or not lexical_enabled
-        status_mode = "hybrid" if (dense_enabled and lexical_enabled) else ("dense_only" if dense_enabled else "lexical_only")
+        status_mode = (
+            "hybrid"
+            if (dense_enabled and lexical_enabled)
+            else ("dense_only" if dense_enabled else "lexical_only")
+        )
 
         return {
             "query": query,
@@ -136,4 +150,3 @@ class HybridRetriever:
             "total_candidates": len(ranked_items),
             "results": ranked_items,
         }
-

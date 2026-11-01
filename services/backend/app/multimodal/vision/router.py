@@ -53,4 +53,3 @@ async def analyze_screenshot_layout(
         image_bytes=data,
         ocr_extracted_text=ocr_hint,
     )
-

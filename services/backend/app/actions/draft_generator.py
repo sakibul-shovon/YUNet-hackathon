@@ -58,10 +58,14 @@ class DraftRequestGenerator:
         lower = text.lower()
         for kw in FORBIDDEN_THREAT_KEYWORDS:
             if kw in lower:
-                raise ValueError(f"Draft violates safety policy: Contains aggressive threat or extortion phrase '{kw}' (T26).")
+                raise ValueError(
+                    f"Draft violates safety policy: Contains aggressive threat or extortion phrase '{kw}' (T26)."
+                )
         for fc in FORBIDDEN_FALSE_CLAIMS:
             if fc in lower:
-                raise ValueError(f"Draft violates safety policy: Falsely claims official filing or adjudicated guilt '{fc}' (T26).")
+                raise ValueError(
+                    f"Draft violates safety policy: Falsely claims official filing or adjudicated guilt '{fc}' (T26)."
+                )
 
     @classmethod
     def generate_draft(
@@ -146,7 +150,9 @@ class DraftRequestGenerator:
                 dispute_reason_en = "the promised goods have not been delivered despite the passing of the committed timeline"
                 dispute_reason_bn = "প্রতিশ্রুত সময়সীমা অতিক্রান্ত হওয়া সত্ত্বেও পণ্যটি এখনও ডেলিভারি দেওয়া হয়নি"
             elif is_defective:
-                dispute_reason_en = "the delivered goods were found defective/non-conforming upon arrival"
+                dispute_reason_en = (
+                    "the delivered goods were found defective/non-conforming upon arrival"
+                )
                 dispute_reason_bn = "ডেলিভারিকৃত পণ্যটি ত্রুটিপূর্ণ ও অকার্যকর অবস্থায় পাওয়া গেছে"
             else:
                 dispute_reason_en = "the contractual service commitment was not fulfilled"
@@ -158,9 +164,7 @@ class DraftRequestGenerator:
                 else "an immediate replacement of the product"
             )
             remedy_text_bn = (
-                f"{amount_str_bn} সম্পূর্ণ মূল্য ফেরত"
-                if remedy == "full_refund"
-                else "দ্রুত পণ্য প্রতিস্থাপন"
+                f"{amount_str_bn} সম্পূর্ণ মূল্য ফেরত" if remedy == "full_refund" else "দ্রুত পণ্য প্রতিস্থাপন"
             )
 
             if locale == "bn":

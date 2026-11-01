@@ -19,7 +19,9 @@ class Principal(Base):
         primary_key=True,
         default=uuid.uuid4,
     )
-    kind: Mapped[str] = mapped_column(String(32), default="anonymous", nullable=False)  # 'anonymous', 'permanent'
+    kind: Mapped[str] = mapped_column(
+        String(32), default="anonymous", nullable=False
+    )  # 'anonymous', 'permanent'
     locale: Mapped[str] = mapped_column(String(16), default="en-BD", nullable=False)
     consent_revision: Mapped[int] = mapped_column(Integer, default=1, nullable=False)
     created_at: Mapped[datetime.datetime] = mapped_column(
@@ -135,7 +137,9 @@ class ActorRole(Base):
     principal: Mapped["Principal"] = relationship("Principal", back_populates="roles")
 
     __table_args__ = (
-        UniqueConstraint("principal_id", "role", "scope", name="uq_actor_roles_principal_role_scope"),
+        UniqueConstraint(
+            "principal_id", "role", "scope", name="uq_actor_roles_principal_role_scope"
+        ),
     )
 
 

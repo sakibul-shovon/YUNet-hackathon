@@ -19,7 +19,7 @@ class StorageBackend(ABC):
     @abstractmethod
     def promote_to_accepted(self, quarantine_path: str, accepted_key: str) -> tuple[str, str, int]:
         """Atomically copies verified data from quarantine to accepted.
-        
+
         Returns: (accepted_path, sha256_hash, byte_size)
         """
 
@@ -87,7 +87,10 @@ class LocalDiskStorageBackend(StorageBackend):
         hasher = hashlib.sha256()
         total_bytes = 0
 
-        with open(q_path, "rb") as src, tempfile.NamedTemporaryFile(dir=self.accepted_dir, delete=False) as dst:
+        with (
+            open(q_path, "rb") as src,
+            tempfile.NamedTemporaryFile(dir=self.accepted_dir, delete=False) as dst,
+        ):
             while chunk := src.read(65536):
                 hasher.update(chunk)
                 total_bytes += len(chunk)

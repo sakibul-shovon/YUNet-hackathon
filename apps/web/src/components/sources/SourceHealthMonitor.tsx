@@ -15,6 +15,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
+import { apiFetch } from '@/lib/api';
 
 interface SourceHealthItem {
   source_id: string;
@@ -46,7 +47,7 @@ export function SourceHealthMonitor({ locale }: { locale: string }) {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch('/api/v1/knowledge/source-health');
+      const res = await apiFetch('/api/v1/knowledge/source-health');
       if (!res.ok) {
         throw new Error(`Failed to fetch source health: ${res.status}`);
       }

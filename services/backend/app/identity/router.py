@@ -72,7 +72,9 @@ async def record_consent(
     return await IdentityService.record_consent(principal, data, db)
 
 
-@router.post("/v1/deletions", response_model=DeletionRequestOut, status_code=status.HTTP_202_ACCEPTED)
+@router.post(
+    "/v1/deletions", response_model=DeletionRequestOut, status_code=status.HTTP_202_ACCEPTED
+)
 async def request_deletion(
     data: DeletionRequestCreate,
     principal: Principal = Depends(get_current_principal),

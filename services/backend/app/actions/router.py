@@ -206,12 +206,15 @@ async def redact_evidence_attachment(
     res = await db.execute(stmt)
     item = res.scalar_one_or_none()
     if not item:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Evidence item not found.")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Evidence item not found."
+        )
 
     # Generate a dummy 200x200 sample image for redaction test or load bytes
     import io
 
     from PIL import Image as PILImage
+
     dummy = PILImage.new("RGB", (200, 200), color=(255, 255, 255))
     buf = io.BytesIO()
     dummy.save(buf, format="PNG")

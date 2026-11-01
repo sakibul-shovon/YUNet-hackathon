@@ -32,7 +32,9 @@ class ScreenshotAnalysisResult(BaseModel):
     case_id: uuid.UUID
     detected_layout: str  # 'chat_conversation', 'payment_receipt', 'order_status', 'unstructured'
     theme: str  # 'light', 'dark', 'mixed'
-    authenticity_guarantee: bool = False  # T23 Invariant: Always False, visually plausible receipt never certified authentic
+    authenticity_guarantee: bool = (
+        False  # T23 Invariant: Always False, visually plausible receipt never certified authentic
+    )
     bubbles: list[ChatBubbleProposal] = Field(default_factory=list)
     proposed_facts: list[dict[str, Any]] = Field(default_factory=list)
     ocr_disagreements: list[OCRDisagreement] = Field(default_factory=list)

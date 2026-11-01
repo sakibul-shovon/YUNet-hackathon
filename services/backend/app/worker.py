@@ -7,4 +7,3 @@ from app.core.config import settings
 
 # Worker definition and task registration placeholder
 print(f"ClaimCraft Worker initialized for environment: {settings.APP_ENV}")
-

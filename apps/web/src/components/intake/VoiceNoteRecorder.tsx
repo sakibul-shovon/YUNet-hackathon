@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Mic, Square, Play, Pause, RotateCcw, Check, AlertCircle, Shield, FileText, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
+import { apiFetch } from '@/lib/api';
 
 export interface VoiceNoteRecorderProps {
   caseId?: string;
@@ -184,7 +185,7 @@ export function VoiceNoteRecorder({
       formData.append('language_hint', isBangla ? 'bn-BD' : 'en-BD');
       formData.append('client_duration', String(duration));
 
-      const res = await fetch(`/api/v1/cases/${targetCaseId}/audio/transcribe`, {
+      const res = await apiFetch(`/api/v1/cases/${targetCaseId}/audio/transcribe`, {
         method: 'POST',
         body: formData,
       });

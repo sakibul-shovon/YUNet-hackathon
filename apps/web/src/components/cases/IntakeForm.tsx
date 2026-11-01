@@ -9,6 +9,7 @@ import { Textarea } from '@/components/ui/Textarea';
 import { Input } from '@/components/ui/Input';
 import { Badge } from '@/components/ui/Badge';
 import { VoiceNoteRecorder } from '@/components/intake/VoiceNoteRecorder';
+import { apiFetch, getClientSessionToken } from '@/lib/api';
 
 interface IntakeFormProps {
   locale: string;
@@ -50,13 +51,8 @@ export function IntakeForm({ locale, labels }: IntakeFormProps) {
     setErrorMsg(null);
 
     try {
-      // 1. Ensure active guest session
-      const authRes = await fetch('/api/v1/auth/guest', { method: 'POST' });
-      let token = '';
-      if (authRes.ok) {
-        const authData = await authRes.json();
-        token = authData.access_token || '';
-      }
+      // 1. Ensure active guest session and persist token in localStorage
+      const token = await getClientSessionToken();
 
       // 2. Submit case to backend
       const headers: Record<string, string> = {
@@ -66,7 +62,7 @@ export function IntakeForm({ locale, labels }: IntakeFormProps) {
         headers['Authorization'] = `Bearer ${token}`;
       }
 
-      const caseRes = await fetch('/api/v1/cases', {
+      const caseRes = await apiFetch('/api/v1/cases', {
         method: 'POST',
         headers,
         body: JSON.stringify({

@@ -103,7 +103,9 @@ class FactSourceLink(Base):
         nullable=False,
     )
 
-    assertion: Mapped["FactAssertion"] = relationship("FactAssertion", back_populates="source_links")
+    assertion: Mapped["FactAssertion"] = relationship(
+        "FactAssertion", back_populates="source_links"
+    )
 
 
 class FactReview(Base):
@@ -143,7 +145,9 @@ class FactReview(Base):
         nullable=False,
     )
 
-    assertion: Mapped["FactAssertion"] = relationship("FactAssertion", foreign_keys=[assertion_id], back_populates="reviews")
+    assertion: Mapped["FactAssertion"] = relationship(
+        "FactAssertion", foreign_keys=[assertion_id], back_populates="reviews"
+    )
 
 
 class FactResolution(Base):
@@ -178,4 +182,3 @@ class FactResolution(Base):
         default=lambda: datetime.datetime.now(datetime.UTC),
         nullable=False,
     )
-

@@ -113,7 +113,8 @@ class IssueService:
         rejection_reason = (
             "Brand reputation grievances or generalized dissatisfaction without specific "
             "statutory non-delivery, product defect, or unauthorized debit cannot form an actionable legal track (P08.2)."
-            if is_brand_track else None
+            if is_brand_track
+            else None
         )
 
         issue = IssueTrack(
@@ -132,6 +133,7 @@ class IssueService:
 
         # Get next event sequence
         from sqlalchemy import func
+
         seq_stmt = select(func.coalesce(func.max(CaseEvent.event_sequence), 0)).where(
             CaseEvent.case_id == case.id
         )
@@ -302,7 +304,9 @@ class IssueService:
         res = await db.execute(stmt)
         issue = res.scalar_one_or_none()
         if not issue:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Issue track not found.")
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail="Issue track not found."
+            )
 
         now = datetime.datetime.now(datetime.UTC)
         issue.user_review = data.user_review
@@ -335,9 +339,13 @@ class IssueService:
         allowed actions, and procedural pathways per track.
         """
         case = await FactService.get_authorized_case(case_id, principal, db)
-        stmt_issues = select(IssueTrack).where(
-            IssueTrack.case_id == case.id,
-        ).order_by(IssueTrack.created_at.asc())
+        stmt_issues = (
+            select(IssueTrack)
+            .where(
+                IssueTrack.case_id == case.id,
+            )
+            .order_by(IssueTrack.created_at.asc())
+        )
         issues_res = await db.execute(stmt_issues)
         all_issues = issues_res.scalars().all()
 
@@ -356,10 +364,7 @@ class IssueService:
 
         for issue in active_issues:
             # Gather facts relevant to this issue (issue-scoped or unassigned case-wide facts)
-            issue_facts = [
-                a for a in assertions
-                if a.issue_id == issue.id or a.issue_id is None
-            ]
+            issue_facts = [a for a in assertions if a.issue_id == issue.id or a.issue_id is None]
             facts_dict = ProceduralAssessmentEngine.extract_facts_from_db_records(issue_facts, case)
 
             # Evaluate matching rule for issue's taxonomy
@@ -370,20 +375,26 @@ class IssueService:
             routes_out, _ = ProceduralAssessmentEngine.evaluate_all_rules(
                 target_rules,
                 facts_dict,
-                desired_outcomes=[issue.desired_remedy] if issue.desired_remedy else case.desired_outcomes,
+                desired_outcomes=[issue.desired_remedy]
+                if issue.desired_remedy
+                else case.desired_outcomes,
             )
 
             matching_routes = [r for r in routes_out if r.issue_type == issue.canonical_taxonomy]
-            primary_route = matching_routes[0] if matching_routes else (routes_out[0] if routes_out else None)
+            primary_route = (
+                matching_routes[0] if matching_routes else (routes_out[0] if routes_out else None)
+            )
 
-            independent_paths.append({
-                "issue_id": str(issue.id),
-                "canonical_taxonomy": issue.canonical_taxonomy,
-                "hypothesis_state": issue.hypothesis_state,
-                "desired_remedy": issue.desired_remedy,
-                "evaluated_route": primary_route.model_dump() if primary_route else None,
-                "all_applicable_routes": [r.model_dump() for r in routes_out],
-            })
+            independent_paths.append(
+                {
+                    "issue_id": str(issue.id),
+                    "canonical_taxonomy": issue.canonical_taxonomy,
+                    "hypothesis_state": issue.hypothesis_state,
+                    "desired_remedy": issue.desired_remedy,
+                    "evaluated_route": primary_route.model_dump() if primary_route else None,
+                    "all_applicable_routes": [r.model_dump() for r in routes_out],
+                }
+            )
 
         return MultiIssueAssessmentOut(
             case_id=case.id,

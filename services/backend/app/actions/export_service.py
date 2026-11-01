@@ -52,14 +52,22 @@ class ExportService:
         lines.append(f"**Date:** {doc.created_at} | **Status:** {doc.lifecycle_state.upper()}\n")
 
         lines.append("> [!IMPORTANT]")
-        lines.append(f"> {doc.unsubmitted_disclaimer_bn if is_bn else doc.unsubmitted_disclaimer_en}\n")
+        lines.append(
+            f"> {doc.unsubmitted_disclaimer_bn if is_bn else doc.unsubmitted_disclaimer_en}\n"
+        )
 
         for sec in doc.sections:
             title = sec.section_title_bn if is_bn else sec.section_title_en
             lines.append(f"## {title}")
             for sent in sec.sentences:
-                badge = f" `[{sent.statement_type}]`" if sent.statement_type != "reviewed_fact" else ""
-                citation = f" *(Statutory Ref: {sent.supporting_citation})*" if sent.supporting_citation else ""
+                badge = (
+                    f" `[{sent.statement_type}]`" if sent.statement_type != "reviewed_fact" else ""
+                )
+                citation = (
+                    f" *(Statutory Ref: {sent.supporting_citation})*"
+                    if sent.supporting_citation
+                    else ""
+                )
                 lines.append(f"- {sent.text}{citation}{badge}")
             lines.append("")
 
@@ -69,7 +77,9 @@ class ExportService:
                 lines.append(f"- **{ev['filename']}** ({ev['mime_type']}) — Verified")
             lines.append("")
 
-        lines.append("## " + ("দাখিল পূর্ববর্তী চেকলিস্ট" if is_bn else "Pre-Filing Verification Checklist"))
+        lines.append(
+            "## " + ("দাখিল পূর্ববর্তী চেকলিস্ট" if is_bn else "Pre-Filing Verification Checklist")
+        )
         for chk in doc.preparation_checklist:
             lines.append(f"- [ ] {chk}")
         lines.append("")
@@ -118,18 +128,28 @@ class ExportService:
         disclaimer = doc.unsubmitted_disclaimer_bn if is_bn else doc.unsubmitted_disclaimer_en
         html_parts.append(f"<div class='disclaimer'>⚠️ {disclaimer}</div>")
         html_parts.append(f"<h1>{doc.title}</h1>")
-        html_parts.append(f"<p><small>Date: {doc.created_at} | Status: {doc.lifecycle_state.upper()}</small></p>")
+        html_parts.append(
+            f"<p><small>Date: {doc.created_at} | Status: {doc.lifecycle_state.upper()}</small></p>"
+        )
 
         for sec in doc.sections:
             title = sec.section_title_bn if is_bn else sec.section_title_en
             html_parts.append(f"<h2>{title}</h2><ul>")
             for sent in sec.sentences:
-                badge = f" <span class='tag'>{sent.statement_type}</span>" if sent.statement_type != "reviewed_fact" else ""
-                citation = f" <em>({sent.supporting_citation})</em>" if sent.supporting_citation else ""
+                badge = (
+                    f" <span class='tag'>{sent.statement_type}</span>"
+                    if sent.statement_type != "reviewed_fact"
+                    else ""
+                )
+                citation = (
+                    f" <em>({sent.supporting_citation})</em>" if sent.supporting_citation else ""
+                )
                 html_parts.append(f"<li>{sent.text}{citation}{badge}</li>")
             html_parts.append("</ul>")
 
-        html_parts.append("<div class='footer'>ClaimCraft BD — Deterministic Consumer Resolution Copilot.</div>")
+        html_parts.append(
+            "<div class='footer'>ClaimCraft BD — Deterministic Consumer Resolution Copilot.</div>"
+        )
         html_parts.append("</body></html>")
 
         content_str = "\n".join(html_parts)
@@ -165,6 +185,7 @@ class ExportService:
 
         # Create drawing context
         from PIL import ImageDraw
+
         draw = ImageDraw.Draw(img)
 
         for box in bounding_boxes:
@@ -183,4 +204,3 @@ class ExportService:
         out_buf = io.BytesIO()
         img.save(out_buf, format="PNG", optimize=True)
         return out_buf.getvalue()
-

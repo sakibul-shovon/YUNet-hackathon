@@ -18,13 +18,17 @@ from app.policy.engine import ProceduralAssessmentEngine
 
 
 class ExternalUpdateCreate(BaseModel):
-    update_type: str  # 'seller_response', 'portal_submission', 'hearing_notice', 'settlement_reached'
+    update_type: (
+        str  # 'seller_response', 'portal_submission', 'hearing_notice', 'settlement_reached'
+    )
     authority_or_channel: str  # e.g., 'merchant_direct', 'dncrp_ccms', 'bb_cipc'
     description: str
     reference_number: str | None = None
     outcome_status: str | None = None  # 'agreed', 'refused', 'under_review', 'resolved'
     additional_facts: dict[str, Any] = Field(default_factory=dict)
-    expected_version: int = Field(..., description="Mandatory expected row_version for optimistic concurrency (T41)")
+    expected_version: int = Field(
+        ..., description="Mandatory expected row_version for optimistic concurrency (T41)"
+    )
 
 
 class SemanticDecisionDiff(BaseModel):
@@ -69,7 +73,9 @@ class CaseSnapshotOut(BaseModel):
 class ReminderCreate(BaseModel):
     reminder_title: str
     remind_at: str  # ISO 8601 UTC
-    category: str = "personal_follow_up"  # 'personal_follow_up', 'seller_response_sla', 'portal_check'
+    category: str = (
+        "personal_follow_up"  # 'personal_follow_up', 'seller_response_sla', 'portal_check'
+    )
     notes: str | None = None
 
 
@@ -83,7 +89,9 @@ class ReminderOut(BaseModel):
     category: str
     notes: str | None = None
     is_completed: bool
-    is_legal_caution: bool = False  # T40 Invariant: personal timer is distinct from statutory caution
+    is_legal_caution: bool = (
+        False  # T40 Invariant: personal timer is distinct from statutory caution
+    )
     disclaimer_notice: str = (
         "Personal reminder for tracking convenience only. "
         "Does not alter or guarantee statutory limitation periods under CRPA 2009 Section 60 (T40)."
@@ -134,7 +142,11 @@ class TimelineService:
 
         # 4. Apply Additional Facts if present
         for k, v in payload.additional_facts.items():
-            f_type = "boolean" if isinstance(v, bool) else ("number" if isinstance(v, (int, float)) else "string")
+            f_type = (
+                "boolean"
+                if isinstance(v, bool)
+                else ("number" if isinstance(v, (int, float)) else "string")
+            )
             existing_f = await db.execute(
                 select(FactAssertion).where(
                     FactAssertion.case_id == case.id,
@@ -175,11 +187,13 @@ class TimelineService:
         for issue_type, new_r in new_routes.items():
             old_r = prior_routes.get(issue_type)
             if not old_r or old_r.status != new_r.status or old_r.reasons != new_r.reasons:
-                changed_routes.append({
-                    "issue_type": issue_type,
-                    "old_status": old_r.status if old_r else None,
-                    "new_status": new_r.status,
-                })
+                changed_routes.append(
+                    {
+                        "issue_type": issue_type,
+                        "old_status": old_r.status if old_r else None,
+                        "new_status": new_r.status,
+                    }
+                )
             else:
                 unchanged_routes.append(issue_type)
 
@@ -190,15 +204,19 @@ class TimelineService:
         unchanged_actions = []
         for action_id, new_act in new_actions.items():
             old_act = prior_actions.get(action_id)
-            if not old_act or old_act.status != new_act.status or old_act.is_primary != new_act.is_primary:
+            if (
+                not old_act
+                or old_act.status != new_act.status
+                or old_act.is_primary != new_act.is_primary
+            ):
                 changed_actions.append(action_id)
             else:
                 unchanged_actions.append(action_id)
 
         is_decision_changed = (
-            prior_dag.primary_action_id != new_dag.primary_action_id or
-            len(changed_routes) > 0 or
-            len(changed_actions) > 0
+            prior_dag.primary_action_id != new_dag.primary_action_id
+            or len(changed_routes) > 0
+            or len(changed_actions) > 0
         )
 
         diff = SemanticDecisionDiff(
@@ -214,7 +232,9 @@ class TimelineService:
         )
 
         # 6. Save Immutable Snapshot
-        stmt_f = select(FactAssertion.id).where(FactAssertion.case_id == case.id, FactAssertion.is_active.is_(True))
+        stmt_f = select(FactAssertion.id).where(
+            FactAssertion.case_id == case.id, FactAssertion.is_active.is_(True)
+        )
         res_f = await db.execute(stmt_f)
         fact_ids = [str(fid) for fid in res_f.scalars().all()]
 
@@ -236,7 +256,9 @@ class TimelineService:
         db.add(snapshot)
 
         # 7. Record Case Event
-        seq_stmt = select(func.coalesce(func.max(CaseEvent.event_sequence), 0)).where(CaseEvent.case_id == case.id)
+        seq_stmt = select(func.coalesce(func.max(CaseEvent.event_sequence), 0)).where(
+            CaseEvent.case_id == case.id
+        )
         next_seq = (await db.scalar(seq_stmt)) + 1
 
         event_payload = {
@@ -287,7 +309,11 @@ class TimelineService:
     ) -> list[TimelineEventOut]:
         case = await FactService.get_authorized_case(case_id, principal, db)
 
-        stmt = select(CaseEvent).where(CaseEvent.case_id == case.id).order_by(CaseEvent.event_sequence.desc())
+        stmt = (
+            select(CaseEvent)
+            .where(CaseEvent.case_id == case.id)
+            .order_by(CaseEvent.event_sequence.desc())
+        )
         res = await db.execute(stmt)
         events = res.scalars().all()
 
@@ -297,19 +323,21 @@ class TimelineService:
             diff_dict = p.get("decision_diff")
             diff_obj = SemanticDecisionDiff(**diff_dict) if diff_dict else None
 
-            timeline.append(TimelineEventOut(
-                id=e.id,
-                case_id=e.case_id,
-                event_sequence=e.event_sequence,
-                event_type=e.event_type,
-                actor_type=e.actor_type,
-                origin=p.get("origin", "system_event"),
-                title=p.get("title", e.event_type.replace("_", " ").title()),
-                description=p.get("description", ""),
-                reference_number=p.get("reference_number"),
-                created_at=e.created_at.isoformat(),
-                decision_diff=diff_obj,
-            ))
+            timeline.append(
+                TimelineEventOut(
+                    id=e.id,
+                    case_id=e.case_id,
+                    event_sequence=e.event_sequence,
+                    event_type=e.event_type,
+                    actor_type=e.actor_type,
+                    origin=p.get("origin", "system_event"),
+                    title=p.get("title", e.event_type.replace("_", " ").title()),
+                    description=p.get("description", ""),
+                    reference_number=p.get("reference_number"),
+                    created_at=e.created_at.isoformat(),
+                    decision_diff=diff_obj,
+                )
+            )
 
         return timeline
 
@@ -322,7 +350,11 @@ class TimelineService:
     ) -> list[CaseSnapshotOut]:
         case = await FactService.get_authorized_case(case_id, principal, db)
 
-        stmt = select(CaseSnapshot).where(CaseSnapshot.case_id == case.id).order_by(CaseSnapshot.version.desc())
+        stmt = (
+            select(CaseSnapshot)
+            .where(CaseSnapshot.case_id == case.id)
+            .order_by(CaseSnapshot.version.desc())
+        )
         res = await db.execute(stmt)
         snapshots = res.scalars().all()
 
@@ -383,10 +415,14 @@ class TimelineService:
     ) -> list[ReminderOut]:
         case = await FactService.get_authorized_case(case_id, principal, db)
 
-        stmt = select(CaseReminder).where(
-            CaseReminder.case_id == case.id,
-            CaseReminder.is_completed.is_(False),
-        ).order_by(CaseReminder.created_at.desc())
+        stmt = (
+            select(CaseReminder)
+            .where(
+                CaseReminder.case_id == case.id,
+                CaseReminder.is_completed.is_(False),
+            )
+            .order_by(CaseReminder.created_at.desc())
+        )
         res = await db.execute(stmt)
         reminders = res.scalars().all()
 

@@ -280,7 +280,9 @@ class EvidenceService:
             )
 
         # Invariant T10: Validate file signature against declared MIME
-        is_valid, detected_mime, error_msg = validate_file_signature(item.declared_mime_type, raw_data)
+        is_valid, detected_mime, error_msg = validate_file_signature(
+            item.declared_mime_type, raw_data
+        )
         if not is_valid:
             item.status = "rejected"
             item.rejection_code = "MIME_SPOOF"
@@ -292,11 +294,14 @@ class EvidenceService:
             await db.commit()
             raise HTTPException(
                 status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-                detail=error_msg or "MIME spoof detected: file contents do not match declared type.",
+                detail=error_msg
+                or "MIME spoof detected: file contents do not match declared type.",
             )
 
         # Invariant T12: Deep parser probe (pixel bombs, page bombs, encryption, active content, scanner outage)
-        probe = ParserProbe.probe_file(raw_data, detected_mime, simulate_scanner_outage=simulate_scanner_outage)
+        probe = ParserProbe.probe_file(
+            raw_data, detected_mime, simulate_scanner_outage=simulate_scanner_outage
+        )
         if not probe.is_safe:
             item.rejection_code = probe.rejection_code
             item.rejection_reason = probe.error_message
@@ -661,7 +666,11 @@ class EvidenceService:
             if not item.accepted_path:
                 continue
             item_bytes = storage.read_accepted(item.accepted_path)
-            parsed = DocumentParser.parse_pdf_bytes(item.id, item_bytes) if item.detected_mime_type == "application/pdf" else None
+            parsed = (
+                DocumentParser.parse_pdf_bytes(item.id, item_bytes)
+                if item.detected_mime_type == "application/pdf"
+                else None
+            )
 
             extracted_minor = 0
             if parsed and parsed.regions:

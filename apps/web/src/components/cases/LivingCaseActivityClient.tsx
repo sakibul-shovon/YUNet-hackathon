@@ -23,6 +23,7 @@ import {
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
+import { apiFetch } from '@/lib/api';
 
 interface SemanticDiff {
   prior_version: number;
@@ -99,9 +100,9 @@ export function LivingCaseActivityClient({ caseId, locale }: Props) {
     setStaleTabError(null);
     try {
       const [caseRes, timelineRes, remindersRes] = await Promise.all([
-        fetch(`/api/v1/cases/${caseId}`),
-        fetch(`/api/v1/cases/${caseId}/activity/timeline`),
-        fetch(`/api/v1/cases/${caseId}/reminders`),
+        apiFetch(`/api/v1/cases/${caseId}`),
+        apiFetch(`/api/v1/cases/${caseId}/activity/timeline`),
+        apiFetch(`/api/v1/cases/${caseId}/reminders`),
       ]);
 
       if (caseRes.ok) {
@@ -135,7 +136,7 @@ export function LivingCaseActivityClient({ caseId, locale }: Props) {
     }
 
     try {
-      const res = await fetch(`/api/v1/cases/${caseId}/activity/updates`, {
+      const res = await apiFetch(`/api/v1/cases/${caseId}/activity/updates`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -177,7 +178,7 @@ export function LivingCaseActivityClient({ caseId, locale }: Props) {
     setIsSubmittingReminder(true);
 
     try {
-      const res = await fetch(`/api/v1/cases/${caseId}/reminders`, {
+      const res = await apiFetch(`/api/v1/cases/${caseId}/reminders`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -204,7 +205,7 @@ export function LivingCaseActivityClient({ caseId, locale }: Props) {
 
   const handleDeleteReminder = async (id: string) => {
     try {
-      const res = await fetch(`/api/v1/cases/${caseId}/reminders/${id}`, {
+      const res = await apiFetch(`/api/v1/cases/${caseId}/reminders/${id}`, {
         method: 'DELETE',
       });
       if (res.ok) {

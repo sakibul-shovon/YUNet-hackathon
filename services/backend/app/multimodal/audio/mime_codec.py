@@ -8,8 +8,6 @@ Validates audio headers for:
 - Standard: audio/mpeg (ID3 or MPEG frame sync)
 """
 
-
-
 ALLOWED_AUDIO_MIMES = {
     "audio/webm": [b"\x1a\x45\xdf\xa3"],
     "audio/mp4": [b"ftyp"],
@@ -63,9 +61,7 @@ def detect_audio_mime_from_bytes(data: bytes) -> str | None:
     return None
 
 
-def validate_audio_file(
-    data: bytes, declared_mime: str
-) -> tuple[bool, str | None, str | None]:
+def validate_audio_file(data: bytes, declared_mime: str) -> tuple[bool, str | None, str | None]:
     """T22: Validates actual audio payload against declared MIME and security limits.
 
     Returns: (is_valid, detected_mime, error_detail)

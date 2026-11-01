@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { X, Cpu, CheckCircle2, AlertCircle, Clock, Database, Layers } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
+import { apiFetch } from '@/lib/api';
 
 interface PipelineStageReceipt {
   stage_name: string;
@@ -44,7 +45,7 @@ export function ProcessingDetailsDrawer({
   useEffect(() => {
     if (!isOpen) return;
     setLoading(true);
-    fetch(`/api/v1/cases/${caseId}/pipeline-runs`)
+    apiFetch(`/api/v1/cases/${caseId}/pipeline-runs`)
       .then((res) => {
         if (!res.ok) throw new Error('Failed to fetch pipeline runs');
         return res.json();

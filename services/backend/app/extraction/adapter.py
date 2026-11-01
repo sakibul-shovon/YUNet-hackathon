@@ -47,13 +47,93 @@ class CaseExtractor:
 
         # 1. Detect Domain & Issue with T19 distinction
         lower_text = text.lower()
-        is_order_delivery = any(w in lower_text for w in ("order", "অর্ডার", "delivery", "ডেলিভারি", "daraz", "দারাজ", "evaly", "ইভ্যালি", "chaldal", "চালডাল", "পণ্য", "product", "মার্চেন্ট", "বিক্রেতা", "দোকান"))
-        is_unauthorized_mfs = any(w in lower_text for w in ("unauthorized", "টাকা কাটা", "টাকা কেটে", "কাটা গেছে", "হ্যাক", "fraud", "scam", "না জানিয়ে কাটা", "অননুমোদিত"))
-        is_defective = any(w in lower_text for w in ("নষ্ট", "ভাঙা", "ত্রুটিপূর্ণ", "defective", "damaged", "broken", "faulty"))
-        is_hazard = any(w in lower_text for w in ("বিষাক্ত", "কেমিক্যাল", "বিপজ্জনক", "poison", "toxic", "hazard", "fire", "danger"))
-        is_telecom = any(w in lower_text for w in ("grameenphone", "gp", "robi", "banglalink", "teletalk", "broadband", "isp", "sim", "telecom", "টেলিকম", "ইন্টারনেট", "সিম", "নেটওয়ার্ক", "কলড্রপ"))
-        is_insurance = any(w in lower_text for w in ("insurance", "বীমা", "বিমা", "idra", "policy", "পলিসি", "claim", "প্রিমিয়াম", "premium"))
-        is_grs = any(w in lower_text for w in ("grs", "জিআরএস", "সরকারি সেবা", "সিটিজেন চার্টার", "citizen charter", "পাসপোর্ট অফিস", "মন্ত্রণালয়"))
+        is_order_delivery = any(
+            w in lower_text
+            for w in (
+                "order",
+                "অর্ডার",
+                "delivery",
+                "ডেলিভারি",
+                "daraz",
+                "দারাজ",
+                "evaly",
+                "ইভ্যালি",
+                "chaldal",
+                "চালডাল",
+                "পণ্য",
+                "product",
+                "মার্চেন্ট",
+                "বিক্রেতা",
+                "দোকান",
+            )
+        )
+        is_unauthorized_mfs = any(
+            w in lower_text
+            for w in (
+                "unauthorized",
+                "টাকা কাটা",
+                "টাকা কেটে",
+                "কাটা গেছে",
+                "হ্যাক",
+                "fraud",
+                "scam",
+                "না জানিয়ে কাটা",
+                "অননুমোদিত",
+            )
+        )
+        is_defective = any(
+            w in lower_text
+            for w in ("নষ্ট", "ভাঙা", "ত্রুটিপূর্ণ", "defective", "damaged", "broken", "faulty")
+        )
+        is_hazard = any(
+            w in lower_text
+            for w in ("বিষাক্ত", "কেমিক্যাল", "বিপজ্জনক", "poison", "toxic", "hazard", "fire", "danger")
+        )
+        is_telecom = any(
+            w in lower_text
+            for w in (
+                "grameenphone",
+                "gp",
+                "robi",
+                "banglalink",
+                "teletalk",
+                "broadband",
+                "isp",
+                "sim",
+                "telecom",
+                "টেলিকম",
+                "ইন্টারনেট",
+                "সিম",
+                "নেটওয়ার্ক",
+                "কলড্রপ",
+            )
+        )
+        is_insurance = any(
+            w in lower_text
+            for w in (
+                "insurance",
+                "বীমা",
+                "বিমা",
+                "idra",
+                "policy",
+                "পলিসি",
+                "claim",
+                "প্রিমিয়াম",
+                "premium",
+            )
+        )
+        is_grs = any(
+            w in lower_text
+            for w in (
+                "grs",
+                "জিআরএস",
+                "সরকারি সেবা",
+                "সিটিজেন চার্টার",
+                "citizen charter",
+                "পাসপোর্ট অফিস",
+                "মন্ত্রণালয়",
+            )
+        )
 
         if is_hazard:
             detected_domain = "product_safety"
@@ -67,7 +147,12 @@ class CaseExtractor:
         elif is_grs:
             detected_domain = "government_grs"
             detected_issue = "public_service_grievance"
-        elif is_unauthorized_mfs or (not is_order_delivery and any(w in lower_text for w in ("bkash", "বিকাশ", "nagad", "নগদ", "rocket", "রকেট", "bank"))):
+        elif is_unauthorized_mfs or (
+            not is_order_delivery
+            and any(
+                w in lower_text for w in ("bkash", "বিকাশ", "nagad", "নগদ", "rocket", "রকেট", "bank")
+            )
+        ):
             detected_domain = "financial_services"
             detected_issue = "mfs_unauthorized_charge"
         elif is_defective:
@@ -94,20 +179,24 @@ class CaseExtractor:
                 matched_str = matched_str.strip()
                 span_id = f"span_{span_counter}"
                 span_counter += 1
-                spans_out.append(TextSpan(
-                    span_id=span_id,
-                    text=matched_str,
-                    start_offset=m.start(),
-                    end_offset=m.end(),
-                ))
-                proposals_out.append(FactProposal(
-                    field_name="merchant_name",
-                    field_type="string",
-                    raw_value=matched_str,
-                    original_text=matched_str,
-                    span_ids=[span_id],
-                    confidence=0.95,
-                ))
+                spans_out.append(
+                    TextSpan(
+                        span_id=span_id,
+                        text=matched_str,
+                        start_offset=m.start(),
+                        end_offset=m.end(),
+                    )
+                )
+                proposals_out.append(
+                    FactProposal(
+                        field_name="merchant_name",
+                        field_type="string",
+                        raw_value=matched_str,
+                        original_text=matched_str,
+                        span_ids=[span_id],
+                        confidence=0.95,
+                    )
+                )
                 break
 
         # 2b. Extract Payment Instrument if present
@@ -117,20 +206,24 @@ class CaseExtractor:
             matched_str = m_mfs.group(0).strip()
             span_id = f"span_{span_counter}"
             span_counter += 1
-            spans_out.append(TextSpan(
-                span_id=span_id,
-                text=matched_str,
-                start_offset=m_mfs.start(),
-                end_offset=m_mfs.end(),
-            ))
-            proposals_out.append(FactProposal(
-                field_name="payment_instrument_kind",
-                field_type="string",
-                raw_value="mfs_wallet",
-                original_text=matched_str,
-                span_ids=[span_id],
-                confidence=0.95,
-            ))
+            spans_out.append(
+                TextSpan(
+                    span_id=span_id,
+                    text=matched_str,
+                    start_offset=m_mfs.start(),
+                    end_offset=m_mfs.end(),
+                )
+            )
+            proposals_out.append(
+                FactProposal(
+                    field_name="payment_instrument_kind",
+                    field_type="string",
+                    raw_value="mfs_wallet",
+                    original_text=matched_str,
+                    span_ids=[span_id],
+                    confidence=0.95,
+                )
+            )
 
         # 3. Extract Amount Paid
         amount_patterns = [
@@ -144,22 +237,26 @@ class CaseExtractor:
                 matched_str = m.group(0).strip()
                 span_id = f"span_{span_counter}"
                 span_counter += 1
-                spans_out.append(TextSpan(
-                    span_id=span_id,
-                    text=matched_str,
-                    start_offset=m.start(),
-                    end_offset=m.end(),
-                ))
+                spans_out.append(
+                    TextSpan(
+                        span_id=span_id,
+                        text=matched_str,
+                        start_offset=m.start(),
+                        end_offset=m.end(),
+                    )
+                )
                 try:
                     norm_money = normalize_bdt_money(matched_str)
-                    proposals_out.append(FactProposal(
-                        field_name="amount_paid",
-                        field_type="money",
-                        raw_value=norm_money.minor_units,
-                        original_text=matched_str,
-                        span_ids=[span_id],
-                        confidence=0.98,
-                    ))
+                    proposals_out.append(
+                        FactProposal(
+                            field_name="amount_paid",
+                            field_type="money",
+                            raw_value=norm_money.minor_units,
+                            original_text=matched_str,
+                            span_ids=[span_id],
+                            confidence=0.98,
+                        )
+                    )
                 except (ValueError, TypeError, ValidationError):
                     pass
                 break
@@ -176,22 +273,26 @@ class CaseExtractor:
                 matched_str = m.group(0).strip()
                 span_id = f"span_{span_counter}"
                 span_counter += 1
-                spans_out.append(TextSpan(
-                    span_id=span_id,
-                    text=matched_str,
-                    start_offset=m.start(),
-                    end_offset=m.end(),
-                ))
+                spans_out.append(
+                    TextSpan(
+                        span_id=span_id,
+                        text=matched_str,
+                        start_offset=m.start(),
+                        end_offset=m.end(),
+                    )
+                )
                 try:
                     norm_date = normalize_bd_date(matched_str)
-                    proposals_out.append(FactProposal(
-                        field_name="incident_date",
-                        field_type="date",
-                        raw_value=norm_date.date,
-                        original_text=matched_str,
-                        span_ids=[span_id],
-                        confidence=0.90,
-                    ))
+                    proposals_out.append(
+                        FactProposal(
+                            field_name="incident_date",
+                            field_type="date",
+                            raw_value=norm_date.date,
+                            original_text=matched_str,
+                            span_ids=[span_id],
+                            confidence=0.90,
+                        )
+                    )
                 except (ValueError, TypeError, ValidationError):
                     pass
                 break
@@ -203,28 +304,34 @@ class CaseExtractor:
             matched_str = m_del.group(0).strip()
             span_id = f"span_{span_counter}"
             span_counter += 1
-            spans_out.append(TextSpan(
-                span_id=span_id,
-                text=matched_str,
-                start_offset=m_del.start(),
-                end_offset=m_del.end(),
-            ))
-            proposals_out.append(FactProposal(
-                field_name="goods_delivered",
-                field_type="boolean",
-                raw_value=False,
-                original_text=matched_str,
-                span_ids=[span_id],
-                confidence=0.99,
-            ))
-            proposals_out.append(FactProposal(
-                field_name="purchase_channel",
-                field_type="string",
-                raw_value="ecommerce",
-                original_text=matched_str,
-                span_ids=[span_id],
-                confidence=0.95,
-            ))
+            spans_out.append(
+                TextSpan(
+                    span_id=span_id,
+                    text=matched_str,
+                    start_offset=m_del.start(),
+                    end_offset=m_del.end(),
+                )
+            )
+            proposals_out.append(
+                FactProposal(
+                    field_name="goods_delivered",
+                    field_type="boolean",
+                    raw_value=False,
+                    original_text=matched_str,
+                    span_ids=[span_id],
+                    confidence=0.99,
+                )
+            )
+            proposals_out.append(
+                FactProposal(
+                    field_name="purchase_channel",
+                    field_type="string",
+                    raw_value="ecommerce",
+                    original_text=matched_str,
+                    span_ids=[span_id],
+                    confidence=0.95,
+                )
+            )
 
         defect_pat = r"(?:নষ্ট|ভাঙা|ত্রুটিপূর্ণ|defective|damaged|broken|faulty)"
         m_def = re.search(defect_pat, text, re.IGNORECASE)
@@ -232,20 +339,24 @@ class CaseExtractor:
             matched_str = m_def.group(0).strip()
             span_id = f"span_{span_counter}"
             span_counter += 1
-            spans_out.append(TextSpan(
-                span_id=span_id,
-                text=matched_str,
-                start_offset=m_def.start(),
-                end_offset=m_def.end(),
-            ))
-            proposals_out.append(FactProposal(
-                field_name="goods_received_defective",
-                field_type="boolean",
-                raw_value=True,
-                original_text=matched_str,
-                span_ids=[span_id],
-                confidence=0.95,
-            ))
+            spans_out.append(
+                TextSpan(
+                    span_id=span_id,
+                    text=matched_str,
+                    start_offset=m_def.start(),
+                    end_offset=m_def.end(),
+                )
+            )
+            proposals_out.append(
+                FactProposal(
+                    field_name="goods_received_defective",
+                    field_type="boolean",
+                    raw_value=True,
+                    original_text=matched_str,
+                    span_ids=[span_id],
+                    confidence=0.95,
+                )
+            )
 
         return FactProposalSet(
             detected_domain=detected_domain,
@@ -255,7 +366,9 @@ class CaseExtractor:
         )
 
     @classmethod
-    def repair_and_validate(cls, raw_payload: dict[str, Any], allowed_spans: list[TextSpan]) -> FactProposalSet:
+    def repair_and_validate(
+        cls, raw_payload: dict[str, Any], allowed_spans: list[TextSpan]
+    ) -> FactProposalSet:
         """T08: Performs bounded schema repair on unvalidated model/LLM outputs.
 
         - Rejects foreign span IDs.

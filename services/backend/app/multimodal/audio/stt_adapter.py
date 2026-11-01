@@ -83,7 +83,11 @@ class STTAdapter:
             logger.debug("External Gemini STT configured.")
 
         # Estimate duration if not provided
-        est_duration = client_duration if client_duration > 0.0 else max(1.5, round(len(audio_bytes) / 16000.0, 2))
+        est_duration = (
+            client_duration
+            if client_duration > 0.0
+            else max(1.5, round(len(audio_bytes) / 16000.0, 2))
+        )
 
         # Check for simulated test content or speech markers in raw audio
         # If raw audio contains embedded text payload marker (e.g. in test fixture)
@@ -152,7 +156,11 @@ class STTAdapter:
                         )
                     )
             # Date check
-            elif re.search(r"\b(?:\d{1,2}[/-]\d{1,2}[/-]\d{2,4}|অক্টোবর|নভেম্বর|জানুয়ারি|oct|nov|dec)\b", word_clean, re.IGNORECASE):
+            elif re.search(
+                r"\b(?:\d{1,2}[/-]\d{1,2}[/-]\d{2,4}|অক্টোবর|নভেম্বর|জানুয়ারি|oct|nov|dec)\b",
+                word_clean,
+                re.IGNORECASE,
+            ):
                 uncertain_spans.append(
                     UncertainSpan(
                         span=w.word,

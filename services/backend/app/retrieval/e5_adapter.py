@@ -77,7 +77,7 @@ class E5EmbeddingAdapter:
         """Computes cosine similarity between two unit vectors."""
         a = np.array(vec_a, dtype=np.float32)
         b = np.array(vec_b, dtype=np.float32)
-        denom = (np.linalg.norm(a) * np.linalg.norm(b))
+        denom = np.linalg.norm(a) * np.linalg.norm(b)
         if denom == 0:
             return 0.0
         return float(np.dot(a, b) / denom)
@@ -92,7 +92,7 @@ class E5EmbeddingAdapter:
         top_k: int = 10,
     ) -> list[dict[str, Any]]:
         """T25: Dense retrieval with allowed-ID and temporal filtering BEFORE top-k selection.
-        
+
         Invariant T25: Obsolete or candidate versions never crowd out applicable results.
         """
         query_vec = cls.embed_text(query, is_query=True)
@@ -126,11 +126,13 @@ class E5EmbeddingAdapter:
                 item["dense_vector"] = doc_vec
 
             score = cls.cosine_similarity(query_vec, doc_vec)
-            scored.append({
-                "citation_handle": item["citation_handle"],
-                "score": score,
-                "provision": item,
-            })
+            scored.append(
+                {
+                    "citation_handle": item["citation_handle"],
+                    "score": score,
+                    "provision": item,
+                }
+            )
 
         # 3. Sort by score descending and take top-k
         scored.sort(key=lambda x: x["score"], reverse=True)

@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { EvidenceItemRejectionBanner } from './EvidenceItemRejectionBanner';
+import { apiFetch } from '@/lib/api';
 
 export interface EvidenceItemData {
   id: string;
@@ -83,7 +84,7 @@ export function EvidenceVaultClient({
 
   const loadData = async () => {
     try {
-      const res = await fetch(`/v1/cases/${caseId}/evidence`);
+      const res = await apiFetch(`/api/v1/cases/${caseId}/evidence`);
       if (res.ok) {
         const data = await res.json();
         setItems(data);
@@ -92,7 +93,7 @@ export function EvidenceVaultClient({
         }
       }
 
-      const recRes = await fetch(`/v1/cases/${caseId}/evidence/reconciliation`);
+      const recRes = await apiFetch(`/api/v1/cases/${caseId}/evidence/reconciliation`);
       if (recRes.ok) {
         const recData = await recRes.json();
         setReconciliation(recData);
@@ -111,7 +112,7 @@ export function EvidenceVaultClient({
 
     try {
       // 1. Init upload intent
-      const initRes = await fetch('/v1/uploads/init', {
+      const initRes = await apiFetch('/api/v1/uploads/init', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -130,7 +131,7 @@ export function EvidenceVaultClient({
       const intent = await initRes.json();
 
       // 2. Upload raw file to quarantine
-      const rawRes = await fetch(`/v1/uploads/${intent.intent_id}/raw?token=${intent.upload_token}`, {
+      const rawRes = await apiFetch(`/api/v1/uploads/${intent.intent_id}/raw?token=${intent.upload_token}`, {
         method: 'PUT',
         body: file,
       });
@@ -140,7 +141,7 @@ export function EvidenceVaultClient({
       }
 
       // 3. Complete and probe upload
-      const compRes = await fetch(`/v1/uploads/${intent.intent_id}/complete`, {
+      const compRes = await apiFetch(`/api/v1/uploads/${intent.intent_id}/complete`, {
         method: 'POST',
       });
 
@@ -167,7 +168,7 @@ export function EvidenceVaultClient({
     }
 
     try {
-      const res = await fetch(`/v1/cases/${caseId}/evidence/${evidenceId}`, {
+      const res = await apiFetch(`/api/v1/cases/${caseId}/evidence/${evidenceId}`, {
         method: 'DELETE',
       });
       if (res.ok) {

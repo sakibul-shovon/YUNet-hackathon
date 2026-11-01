@@ -155,7 +155,10 @@ async def answer_next_best_question(
     case = await FactService.get_authorized_case(case_id, principal, db)
 
     # T32 Invariant: Strictly forbid OTP / PIN collection
-    if any(c in payload.fact_field.lower() for c in ProceduralAssessmentEngine.FORBIDDEN_CREDENTIAL_TERMS):
+    if any(
+        c in payload.fact_field.lower()
+        for c in ProceduralAssessmentEngine.FORBIDDEN_CREDENTIAL_TERMS
+    ):
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Collection of OTP, PIN, password, or security credentials is strictly prohibited (T32).",
@@ -230,4 +233,6 @@ async def check_domain_support(
     jurisdiction: str = "BD",
 ):
     """P12.4: Checks domain support and enforces unsupported-jurisdiction fallback."""
-    return DomainCatalogueService.check_domain_support(domain_id=domain_id, jurisdiction=jurisdiction)
+    return DomainCatalogueService.check_domain_support(
+        domain_id=domain_id, jurisdiction=jurisdiction
+    )

@@ -24,6 +24,7 @@ import {
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
+import { apiFetch } from '@/lib/api';
 
 interface ActionNode {
   action_id: string;
@@ -150,9 +151,9 @@ export function ActionStudioClient({ caseId, locale }: Props) {
       setIsLoading(true);
       try {
         const [dagRes, astRes, destRes] = await Promise.all([
-          fetch(`/api/v1/cases/${caseId}/actions/dag`),
-          fetch(`/api/v1/cases/${caseId}/documents/ast?locale=${locale}`),
-          fetch('/api/v1/actions/destinations'),
+          apiFetch(`/api/v1/cases/${caseId}/actions/dag`),
+          apiFetch(`/api/v1/cases/${caseId}/documents/ast?locale=${locale}`),
+          apiFetch('/api/v1/actions/destinations'),
         ]);
 
         if (dagRes.ok) setDag(await dagRes.json());
@@ -170,7 +171,7 @@ export function ActionStudioClient({ caseId, locale }: Props) {
   useEffect(() => {
     async function loadPortalFields() {
       try {
-        const res = await fetch(`/api/v1/cases/${caseId}/portals/${selectedPortal}/fields`);
+        const res = await apiFetch(`/api/v1/cases/${caseId}/portals/${selectedPortal}/fields`);
         if (res.ok) {
           setPortalMap(await res.json());
         }
@@ -191,7 +192,7 @@ export function ActionStudioClient({ caseId, locale }: Props) {
     if (!editingSentence || !docAst) return;
 
     try {
-      const res = await fetch(`/api/v1/cases/${caseId}/documents/edit`, {
+      const res = await apiFetch(`/api/v1/cases/${caseId}/documents/edit`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -214,7 +215,7 @@ export function ActionStudioClient({ caseId, locale }: Props) {
 
   const handleExport = async (format: 'markdown' | 'html') => {
     try {
-      const res = await fetch(`/api/v1/cases/${caseId}/export/${format}?locale=${locale}`, {
+      const res = await apiFetch(`/api/v1/cases/${caseId}/export/${format}?locale=${locale}`, {
         method: 'POST',
       });
       if (res.ok) {

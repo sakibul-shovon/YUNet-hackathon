@@ -62,7 +62,12 @@ async def get_active_release(
     if not active:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail={"error": {"code": "NO_ACTIVE_RELEASE", "message": "No active knowledge release configured"}},
+            detail={
+                "error": {
+                    "code": "NO_ACTIVE_RELEASE",
+                    "message": "No active knowledge release configured",
+                }
+            },
         )
     return KnowledgeReleaseOut.model_validate(active, from_attributes=True)
 

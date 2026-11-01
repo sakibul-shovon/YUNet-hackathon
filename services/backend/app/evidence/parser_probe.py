@@ -58,7 +58,7 @@ class ParserProbe:
     def probe_pdf(cls, data: bytes) -> ProbeResult:
         """T12: Inspects PDF structure for active JavaScript, password encryption, and page bombs."""
         # 1. Search for active content / JavaScript / Launch actions
-        lower_sample = data[:min(len(data), 500_000)].lower()
+        lower_sample = data[: min(len(data), 500_000)].lower()
         if b"/javascript" in lower_sample or b"/js " in lower_sample or b"/launch" in lower_sample:
             return ProbeResult(
                 is_safe=False,
@@ -109,7 +109,9 @@ class ParserProbe:
             )
 
     @classmethod
-    def probe_file(cls, data: bytes, detected_mime: str, simulate_scanner_outage: bool = False) -> ProbeResult:
+    def probe_file(
+        cls, data: bytes, detected_mime: str, simulate_scanner_outage: bool = False
+    ) -> ProbeResult:
         """T12: Dispatches to type-specific probe and checks scanner availability."""
         # Check scanner outage simulation (T12)
         if simulate_scanner_outage:

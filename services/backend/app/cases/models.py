@@ -346,4 +346,3 @@ class CaseReminder(Base):
     )
 
     case: Mapped["Case"] = relationship("Case", back_populates="reminders")
-

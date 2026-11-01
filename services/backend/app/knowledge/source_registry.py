@@ -68,7 +68,10 @@ def is_url_allowlisted(url: str, resolve_dns: bool = False) -> tuple[bool, str]:
             for item in addr_info:
                 ip_addr = item[4][0]
                 if is_private_or_restricted_ip(ip_addr):
-                    return False, f"Resolved IP {ip_addr} for {hostname} is in a restricted/private network."
+                    return (
+                        False,
+                        f"Resolved IP {ip_addr} for {hostname} is in a restricted/private network.",
+                    )
         except socket.gaierror as e:
             return False, f"DNS resolution failed for {hostname}: {e}"
 
@@ -82,13 +85,19 @@ class SourceRegistryEntry(BaseModel):
     issuer: str
     issuer_bn: str
     official_url: str
-    document_type: str  # 'statute', 'circular', 'procedure_guide', 'portal_map', 'emergency_contact'
+    document_type: (
+        str  # 'statute', 'circular', 'procedure_guide', 'portal_map', 'emergency_contact'
+    )
     status: str = Field("candidate", description="'candidate', 'observed', 'unavailable'")
     applicable_domains: list[str]
     fetch_cadence_hours: int = 24
     last_checked_at: datetime.datetime | None = None
-    health_status: str = "current_check_passed"  # 'current_check_passed', 'check_overdue', 'temporarily_unavailable'
-    procedural_scope: str = "procedure_guidance"  # 'procedure_guidance' or 'reviewed_statutory_guidance'
+    health_status: str = (
+        "current_check_passed"  # 'current_check_passed', 'check_overdue', 'temporarily_unavailable'
+    )
+    procedural_scope: str = (
+        "procedure_guidance"  # 'procedure_guidance' or 'reviewed_statutory_guidance'
+    )
     is_authoritative_for_penalties: bool = False
     notes: str | None = None
 

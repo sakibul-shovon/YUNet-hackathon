@@ -37,7 +37,12 @@ class ReassessmentQueueService:
         if not release:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
-                detail={"error": {"code": "RELEASE_NOT_FOUND", "message": f"Release '{release_id}' not found"}},
+                detail={
+                    "error": {
+                        "code": "RELEASE_NOT_FOUND",
+                        "message": f"Release '{release_id}' not found",
+                    }
+                },
             )
 
         manifest = release.manifest_data or {}
@@ -75,22 +80,31 @@ class ReassessmentQueueService:
             for track in tracks:
                 issue_type = (track.canonical_taxonomy or "").lower()
                 # Check if issue matches modified rule domains
-                if (
-                    any(r in ["R-CRPA-S45-MISLEADING-PRICE", "R-CRPA-S45-OVERCHARGING", "R-CRPA-S60-LIMITATION-30D"] for r in impacted_rules)
-                    and issue_type in ["pricing_deception", "delivery_failure", "damaged_goods", "counterfeit_fake"]
-                ):
+                if any(
+                    r
+                    in [
+                        "R-CRPA-S45-MISLEADING-PRICE",
+                        "R-CRPA-S45-OVERCHARGING",
+                        "R-CRPA-S60-LIMITATION-30D",
+                    ]
+                    for r in impacted_rules
+                ) and issue_type in [
+                    "pricing_deception",
+                    "delivery_failure",
+                    "damaged_goods",
+                    "counterfeit_fake",
+                ]:
                     is_dependent = True
                     break
-                if (
-                    any(r == "R-BB-CIPC-STAGE1-MANDATORY" for r in impacted_rules)
-                    and issue_type in ["unauthorized_transaction", "mfs_fraud"]
-                ):
+                if any(
+                    r == "R-BB-CIPC-STAGE1-MANDATORY" for r in impacted_rules
+                ) and issue_type in ["unauthorized_transaction", "mfs_fraud"]:
                     is_dependent = True
                     break
-                if (
-                    any(r == "R-BTRC-STAGE1-MANDATORY" for r in impacted_rules)
-                    and issue_type in ["billing_dispute", "service_outage"]
-                ):
+                if any(r == "R-BTRC-STAGE1-MANDATORY" for r in impacted_rules) and issue_type in [
+                    "billing_dispute",
+                    "service_outage",
+                ]:
                     is_dependent = True
                     break
 
@@ -100,7 +114,9 @@ class ReassessmentQueueService:
 
                 # Check max event sequence
                 max_seq_res = await db.execute(
-                    select(func.coalesce(func.max(CaseEvent.event_sequence), 0)).where(CaseEvent.case_id == case.id)
+                    select(func.coalesce(func.max(CaseEvent.event_sequence), 0)).where(
+                        CaseEvent.case_id == case.id
+                    )
                 )
                 seq = (max_seq_res.scalar() or 0) + 1
 
@@ -150,7 +166,9 @@ class ReassessmentQueueService:
         if not case:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
-                detail={"error": {"code": "CASE_NOT_FOUND", "message": f"Case '{case_id}' not found"}},
+                detail={
+                    "error": {"code": "CASE_NOT_FOUND", "message": f"Case '{case_id}' not found"}
+                },
             )
 
         if case.principal_id != principal.id and principal.kind != "system":
@@ -176,7 +194,9 @@ class ReassessmentQueueService:
 
         prior_primary_action = None
         if latest_snapshot and latest_snapshot.issue_state:
-            prior_primary_action = latest_snapshot.issue_state.get("primary_action") or latest_snapshot.issue_state.get("primary_action_id")
+            prior_primary_action = latest_snapshot.issue_state.get(
+                "primary_action"
+            ) or latest_snapshot.issue_state.get("primary_action_id")
 
         # 4. Assess case under current active rules
         assessment = await ProceduralAssessmentEngine.assess_case(case=case, db=db)
@@ -205,11 +225,15 @@ class ReassessmentQueueService:
             "primary_action": new_primary_action,
             "assessment_summary": {
                 "routes_count": len(assessment.routes),
-                "supported_count": sum(1 for r in assessment.routes if r.status.value == "supported"),
+                "supported_count": sum(
+                    1 for r in assessment.routes if r.status.value == "supported"
+                ),
             },
         }
 
-        canonical_hash = hashlib.sha256(f"{case.id}:{new_primary_action}:{next_version}:{active_release_id}".encode()).hexdigest()
+        canonical_hash = hashlib.sha256(
+            f"{case.id}:{new_primary_action}:{next_version}:{active_release_id}".encode()
+        ).hexdigest()
 
         new_snapshot = CaseSnapshot(
             id=uuid.uuid4(),
@@ -224,7 +248,9 @@ class ReassessmentQueueService:
 
         # 8. Record timeline event
         max_seq_res = await db.execute(
-            select(func.coalesce(func.max(CaseEvent.event_sequence), 0)).where(CaseEvent.case_id == case.id)
+            select(func.coalesce(func.max(CaseEvent.event_sequence), 0)).where(
+                CaseEvent.case_id == case.id
+            )
         )
         seq = (max_seq_res.scalar() or 0) + 1
 

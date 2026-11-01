@@ -267,16 +267,18 @@ class PortalFieldMapService:
                 else:
                     prep_val = str(val)
 
-            fields_out.append(PortalFieldDef(
-                field_key=f["field_key"],
-                label_en=f["label_en"],
-                label_bn=f["label_bn"],
-                fact_source=f["fact_source"],
-                required=f.get("required", True),
-                prepared_value=prep_val,
-                transformation=f.get("transformation"),
-                notes=f.get("notes"),
-            ))
+            fields_out.append(
+                PortalFieldDef(
+                    field_key=f["field_key"],
+                    label_en=f["label_en"],
+                    label_bn=f["label_bn"],
+                    fact_source=f["fact_source"],
+                    required=f.get("required", True),
+                    prepared_value=prep_val,
+                    transformation=f.get("transformation"),
+                    notes=f.get("notes"),
+                )
+            )
 
         return PortalFieldMapOut(
             portal_id=raw_map["portal_id"],
@@ -288,4 +290,3 @@ class PortalFieldMapService:
             stale_reason=raw_map.get("stale_reason"),
             fields=fields_out,
         )
-

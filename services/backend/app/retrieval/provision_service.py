@@ -52,7 +52,9 @@ class ProvisionService:
         clean = re.sub(r"^(?:crpa2009|crpa|bd_crpa_2009|bb_cipc|bb)[:\s]+", "", translated)
 
         # 1. Section with subsection: "sec:45(2)", "ধারা ৪৫(২)", "ধারা ৪৫ এর ২", "45(2)"
-        m_sub = re.search(r"(?:(?:ধারা|sec(?:tion)?)\s*[:\s]*)?(\d+)\s*(?:\((\d+)\)|এর\s*(\d+))", clean)
+        m_sub = re.search(
+            r"(?:(?:ধারা|sec(?:tion)?)\s*[:\s]*)?(\d+)\s*(?:\((\d+)\)|এর\s*(\d+))", clean
+        )
         if m_sub and (m_sub.group(2) or m_sub.group(3)):
             sec_num = m_sub.group(1)
             sub_num = m_sub.group(2) or m_sub.group(3)
@@ -74,7 +76,7 @@ class ProvisionService:
     @classmethod
     def lookup_exact_provision(cls, query: str) -> ProvisionLookupResult:
         """T24: Exact Bengali/Latin section lookup.
-        
+
         Guarantees:
         - Preserves subsections, parent context, and long Bengali qualifications/exceptions.
         - Never invents or hallucinates non-existent statutory provisions.
