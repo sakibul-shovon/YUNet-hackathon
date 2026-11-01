@@ -24,6 +24,7 @@
   - P05 SHA: `f2b371aa607d1f1fd3261cecb754c0e783fe3600` (Verified on `origin/main`)
   - P06 SHA: `3014eff5edc0b7248e3a960f611d9c061b99f382` (Verified on `origin/main`)
   - P07 SHA: `1129970e554268f7fe2ffe8575009fa6450b1a5b` (Verified on `origin/main`)
+  - P08 SHA: `5779d8e7dc492bd7c13041eea11bed3b40f5c8dd` (Verified on `origin/main`)
 
 ## What Works
 - **Phase P08 (Proof-to-Path Engine & Multi-Issue Reasoning):**
