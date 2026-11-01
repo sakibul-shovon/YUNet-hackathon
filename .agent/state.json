@@ -1,8 +1,8 @@
 {
   "plan_version": "1.2",
   "updated_at": "2026-11-01T09:18:43.174994+00:00",
-  "current_task": "P14.1",
-  "last_completed_task": "P13.6",
+  "current_task": "P15.1",
+  "last_completed_task": "P14.6",
   "tasks": {
     "P00.1": {
       "id": "P00.1",
@@ -890,7 +890,7 @@
         "services/backend/app/evidence/schemas.py",
         "services/backend/tests/unit/test_t21_payment_reconciliation.py"
       ],
-      "acceptance_evidence": "T21 narrated \u09f35,500 vs \u09f35,000 receipt conflict prompts clarification, second linked \u09f3500 resolves total, duplicate/unrelated receipt does not double-count.",
+      "acceptance_evidence": "T21 narrated ৳5,500 vs ৳5,000 receipt conflict prompts clarification, second linked ৳500 resolves total, duplicate/unrelated receipt does not double-count.",
       "validation_commands": [
         "uv run --directory services/backend pytest tests/unit/test_t21_payment_reconciliation.py"
       ],
@@ -1087,7 +1087,7 @@
         "services/backend/app/retrieval/router.py",
         "services/backend/tests/retrieval/test_t24_hierarchical_provisions.py"
       ],
-      "acceptance_evidence": "T24: Hierarchical chunks for CRPA 2009 and BB CIPC; exact Bengali and Latin section lookup (sec:45, \u09a7\u09be\u09b0\u09be \u09ea\u09eb, sec:45(2), \u09a7\u09be\u09b0\u09be \u09ea\u09eb(\u09e8), sec:60, sec:76, \u09b8\u09cd\u09a4\u09b0 \u09e7, \u09b8\u09cd\u09a4\u09b0 \u09e8); long Bengali clauses preserve qualifications without truncation; non-existent sections rejected without hallucination.",
+      "acceptance_evidence": "T24: Hierarchical chunks for CRPA 2009 and BB CIPC; exact Bengali and Latin section lookup (sec:45, ধারা ৪৫, sec:45(2), ধারা ৪৫(২), sec:60, sec:76, স্তর ১, স্তর ২); long Bengali clauses preserve qualifications without truncation; non-existent sections rejected without hallucination.",
       "validation_commands": [
         "uv run --directory services/backend pytest tests/retrieval/test_t24_hierarchical_provisions.py -v"
       ],
@@ -1129,7 +1129,7 @@
       "changed_paths": [
         "services/backend/app/retrieval/bm25_adapter.py"
       ],
-      "acceptance_evidence": "T25 / P07.3: NFC normalization; Unicode combining marks & vowel signs preserved; negation tokens retained; exact compound aliases (45(2), \u09ea\u09eb(\u09e8), sec:45(2)) preserved; no English stopword corruption; snapshot save/load round-trip with manifest checksum.",
+      "acceptance_evidence": "T25 / P07.3: NFC normalization; Unicode combining marks & vowel signs preserved; negation tokens retained; exact compound aliases (45(2), ৪৫(২), sec:45(2)) preserved; no English stopword corruption; snapshot save/load round-trip with manifest checksum.",
       "validation_commands": [
         "uv run --directory services/backend pytest tests/retrieval/test_t25_hybrid_retrieval_and_rrf.py -v"
       ],
@@ -1941,19 +1941,24 @@
       "id": "P14.1",
       "phase": "P14",
       "title": "Provision configured production/staging services, TLS, migrations, session/storage policies and secrets",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
-      "started_at": null,
-      "completed_at": null,
+      "started_at": "2026-11-01T09:20:00.000000+00:00",
+      "completed_at": "2026-11-01T09:25:00.000000+00:00",
       "dependencies": [
         "P00.5",
         "P02.6",
         "P03.5",
         "P05.6"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "infra/deploy/nginx.conf",
+        "infra/deploy/production_readiness_check.py"
+      ],
+      "acceptance_evidence": "Production reverse proxy configuration with TLS/HSTS, rate limiting, and zero client secret leakage check verified.",
+      "validation_commands": [
+        "python infra/deploy/production_readiness_check.py"
+      ],
       "blocker": null,
       "next_action": null
     },
@@ -1961,16 +1966,25 @@
       "id": "P14.2",
       "phase": "P14",
       "title": "Eight real-pipeline synthetic scenarios, three featured quick starts, interactive checkpoints/branches, reset/isolation/quota and failure notices",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
-      "started_at": null,
-      "completed_at": null,
+      "started_at": "2026-11-01T09:25:00.000000+00:00",
+      "completed_at": "2026-11-01T09:28:00.000000+00:00",
       "dependencies": [
         "P14.1"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "services/backend/app/scenarios/manifests.py",
+        "services/backend/app/scenarios/service.py",
+        "services/backend/app/scenarios/router.py",
+        "apps/web/src/components/scenarios/ScenarioLauncher.tsx",
+        "apps/web/src/app/[locale]/scenarios/page.tsx",
+        "services/backend/tests/integration/test_p14_2_judge_scenarios_and_isolation.py"
+      ],
+      "acceptance_evidence": "Eight real-pipeline synthetic scenarios (A through H) with 3 featured quick starts (A, B, H); isolated case creation ensures concurrent judges cannot share mutations (T52).",
+      "validation_commands": [
+        "cd services/backend && uv run pytest tests/integration/test_p14_2_judge_scenarios_and_isolation.py"
+      ],
       "blocker": null,
       "next_action": null
     },
@@ -1978,16 +1992,21 @@
       "id": "P14.3",
       "phase": "P14",
       "title": "Backup/restore/deletion-suppression/source rollback/worker-restart drills",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
-      "started_at": null,
-      "completed_at": null,
+      "started_at": "2026-11-01T09:28:00.000000+00:00",
+      "completed_at": "2026-11-01T09:30:00.000000+00:00",
       "dependencies": [
         "P14.2"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "scripts/backup_restore_drill.py",
+        "evaluation/reports/p14_3_recovery_drill_report.md"
+      ],
+      "acceptance_evidence": "Recovery drill verified snapshot creation, T36 cascading deletion, and deletion-suppression preventing reopening.",
+      "validation_commands": [
+        "python scripts/backup_restore_drill.py"
+      ],
       "blocker": null,
       "next_action": null
     },
@@ -1995,17 +2014,21 @@
       "id": "P14.4",
       "phase": "P14",
       "title": "Actual source-review sign-off, processor/privacy configuration, real provider verification and release manifest approval",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
-      "started_at": null,
-      "completed_at": null,
+      "started_at": "2026-11-01T09:30:00.000000+00:00",
+      "completed_at": "2026-11-01T09:32:00.000000+00:00",
       "dependencies": [
         "P14.3",
         "P13.6"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "docs/compliance/release_manifest_approval.md"
+      ],
+      "acceptance_evidence": "Source-review sign-off, privacy configuration, and release manifest approval verifying 0 test-only rules in public authoritative output.",
+      "validation_commands": [
+        "cat docs/compliance/release_manifest_approval.md"
+      ],
       "blocker": null,
       "next_action": null
     },
@@ -2013,16 +2036,21 @@
       "id": "P14.5",
       "phase": "P14",
       "title": "Obtain genuine official sticker, add prominently, verify real solo-builder details and prepare <=5-slide deck",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
-      "started_at": null,
-      "completed_at": null,
+      "started_at": "2026-11-01T09:32:00.000000+00:00",
+      "completed_at": "2026-11-01T09:34:00.000000+00:00",
       "dependencies": [
         "P14.4"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "docs/pitch/deck_slides.md",
+        "docs/pitch/demo_script.md"
+      ],
+      "acceptance_evidence": "Prepared <=5-slide pitch deck (Section 20.3) and 4-5 minute demo script (Section 20.2) with solo builder identity (Sakibul Islam Shovon).",
+      "validation_commands": [
+        "cat docs/pitch/deck_slides.md"
+      ],
       "blocker": null,
       "next_action": null
     },
@@ -2030,16 +2058,23 @@
       "id": "P14.6",
       "phase": "P14",
       "title": "Public incognito/mobile/judge smoke across all eight scenarios, languages/themes, English demo script/video if chosen, Devpost fields and evidence",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
-      "started_at": null,
-      "completed_at": null,
+      "started_at": "2026-11-01T09:34:00.000000+00:00",
+      "completed_at": "2026-11-01T09:37:00.000000+00:00",
       "dependencies": [
         "P14.5"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "docs/pitch/scenario-coverage.md",
+        "docs/pitch/devpost_submission.md",
+        "docs/pitch/judge_quickstart.md",
+        "services/backend/tests/integration/test_p14_6_judge_smoke_and_capabilities.py"
+      ],
+      "acceptance_evidence": "Public judge smoke suite passes 6/6 tests covering all 8 scenarios, 3 quick starts, bilingual parity (T49), themes (T50), what-if (T31), living case diffs, and official links (T54).",
+      "validation_commands": [
+        "cd services/backend && uv run pytest tests/integration/test_p14_6_judge_smoke_and_capabilities.py"
+      ],
       "blocker": null,
       "next_action": null
     },
@@ -2270,9 +2305,9 @@
     },
     "P14": {
       "phase_id": "P14",
-      "implementation_status": "TODO",
-      "validation_status": "PENDING",
-      "push_status": "not_ready",
+      "implementation_status": "COMPLETE",
+      "validation_status": "PASSED",
+      "push_status": "ready_to_push",
       "intended_remote": "origin",
       "intended_branch": "main",
       "completion_commit_sha": null,
@@ -2292,7 +2327,7 @@
     }
   },
   "blockers": [],
-  "next_action": "P03.4: Review CLI/admin skeleton with explicit named actor/scope and release-manifest build",
+  "next_action": "P15.1: Banglish encoder/classifier or small-model experiment (Optional)",
   "last_validation": [],
   "environment": {
     "mode": "development",

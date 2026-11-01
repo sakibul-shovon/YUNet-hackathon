@@ -4485,6 +4485,145 @@
         }
       }
     },
+    "/v1/scenarios": {
+      "get": {
+        "tags": [
+          "Judge Scenarios Sandbox"
+        ],
+        "summary": "List Scenarios",
+        "description": "Section 20.1: Returns eight synthetic dispute scenarios with featured quick starts.",
+        "operationId": "list_scenarios_v1_scenarios_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/SyntheticScenarioManifest"
+                  },
+                  "type": "array",
+                  "title": "Response List Scenarios V1 Scenarios Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/scenarios/{scenario_id}/launch": {
+      "post": {
+        "tags": [
+          "Judge Scenarios Sandbox"
+        ],
+        "summary": "Launch Scenario",
+        "description": "T52: Spawns an isolated synthetic case in the database for the judge to test.",
+        "operationId": "launch_scenario_v1_scenarios__scenario_id__launch_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "scenario_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Scenario Id"
+            }
+          },
+          {
+            "name": "locale",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "Locale for created case",
+              "default": "en-BD",
+              "title": "Locale"
+            },
+            "description": "Locale for created case"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Launch Scenario V1 Scenarios  Scenario Id  Launch Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/scenarios/{case_id}/reset": {
+      "post": {
+        "tags": [
+          "Judge Scenarios Sandbox"
+        ],
+        "summary": "Reset Scenario",
+        "description": "T52: Resets a demo scenario case back to its original baseline state.",
+        "operationId": "reset_scenario_v1_scenarios__case_id__reset_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Reset Scenario V1 Scenarios  Case Id  Reset Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/capabilities": {
       "get": {
         "tags": [
@@ -8891,6 +9030,145 @@
         "responses": {
           "204": {
             "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/scenarios": {
+      "get": {
+        "tags": [
+          "Judge Scenarios Sandbox"
+        ],
+        "summary": "List Scenarios",
+        "description": "Section 20.1: Returns eight synthetic dispute scenarios with featured quick starts.",
+        "operationId": "list_scenarios_api_v1_scenarios_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/SyntheticScenarioManifest"
+                  },
+                  "type": "array",
+                  "title": "Response List Scenarios Api V1 Scenarios Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/scenarios/{scenario_id}/launch": {
+      "post": {
+        "tags": [
+          "Judge Scenarios Sandbox"
+        ],
+        "summary": "Launch Scenario",
+        "description": "T52: Spawns an isolated synthetic case in the database for the judge to test.",
+        "operationId": "launch_scenario_api_v1_scenarios__scenario_id__launch_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "scenario_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Scenario Id"
+            }
+          },
+          {
+            "name": "locale",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "Locale for created case",
+              "default": "en-BD",
+              "title": "Locale"
+            },
+            "description": "Locale for created case"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Launch Scenario Api V1 Scenarios  Scenario Id  Launch Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/scenarios/{case_id}/reset": {
+      "post": {
+        "tags": [
+          "Judge Scenarios Sandbox"
+        ],
+        "summary": "Reset Scenario",
+        "description": "T52: Resets a demo scenario case back to its original baseline state.",
+        "operationId": "reset_scenario_api_v1_scenarios__case_id__reset_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Reset Scenario Api V1 Scenarios  Case Id  Reset Post"
+                }
+              }
+            }
           },
           "422": {
             "description": "Validation Error",
@@ -13497,6 +13775,90 @@
           "canonical_taxonomy"
         ],
         "title": "SubIssueData"
+      },
+      "SyntheticScenarioManifest": {
+        "properties": {
+          "scenario_id": {
+            "type": "string",
+            "title": "Scenario Id"
+          },
+          "scenario_letter": {
+            "type": "string",
+            "title": "Scenario Letter"
+          },
+          "is_featured": {
+            "type": "boolean",
+            "title": "Is Featured"
+          },
+          "title_en": {
+            "type": "string",
+            "title": "Title En"
+          },
+          "title_bn": {
+            "type": "string",
+            "title": "Title Bn"
+          },
+          "domain": {
+            "type": "string",
+            "title": "Domain"
+          },
+          "inputs_en": {
+            "type": "string",
+            "title": "Inputs En"
+          },
+          "inputs_bn": {
+            "type": "string",
+            "title": "Inputs Bn"
+          },
+          "description_en": {
+            "type": "string",
+            "title": "Description En"
+          },
+          "description_bn": {
+            "type": "string",
+            "title": "Description Bn"
+          },
+          "differentiator_en": {
+            "type": "string",
+            "title": "Differentiator En"
+          },
+          "differentiator_bn": {
+            "type": "string",
+            "title": "Differentiator Bn"
+          },
+          "sample_story": {
+            "type": "string",
+            "title": "Sample Story"
+          },
+          "merchant_name": {
+            "type": "string",
+            "title": "Merchant Name"
+          },
+          "initial_facts": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Initial Facts"
+          }
+        },
+        "type": "object",
+        "required": [
+          "scenario_id",
+          "scenario_letter",
+          "is_featured",
+          "title_en",
+          "title_bn",
+          "domain",
+          "inputs_en",
+          "inputs_bn",
+          "description_en",
+          "description_bn",
+          "differentiator_en",
+          "differentiator_bn",
+          "sample_story",
+          "merchant_name",
+          "initial_facts"
+        ],
+        "title": "SyntheticScenarioManifest"
       },
       "TextRegion": {
         "properties": {

@@ -881,6 +881,24 @@ export interface SubIssueData {
   assigned_fact_ids?: unknown[];
 }
 
+export interface SyntheticScenarioManifest {
+  scenario_id: string;
+  scenario_letter: string;
+  is_featured: boolean;
+  title_en: string;
+  title_bn: string;
+  domain: string;
+  inputs_en: string;
+  inputs_bn: string;
+  description_en: string;
+  description_bn: string;
+  differentiator_en: string;
+  differentiator_bn: string;
+  sample_story: string;
+  merchant_name: string;
+  initial_facts: Record<string, unknown>;
+}
+
 export interface TextRegion {
   region_id: string;
   page_number: number;
