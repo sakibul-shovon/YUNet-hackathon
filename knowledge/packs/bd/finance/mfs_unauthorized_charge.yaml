@@ -1,0 +1,32 @@
+schema_version: policy.v1
+rule_id: bd.finance.mfs_unauthorized_charge
+status: draft
+jurisdiction: BD
+issue_type: mfs_unauthorized_charge
+date_basis: conduct_date
+source_dependencies:
+  - bb_cipc_procedure
+  - bb_mfs_regulations_2022
+conditions:
+  all:
+    - eq:
+        fact: payment_instrument_kind
+        value: mfs_wallet
+    - eq:
+        fact: transaction_unauthorized
+        value: true
+    - eq:
+        fact: provider_ticket_filed
+        value: true
+exclusions:
+  - eq:
+      fact: otp_pin_voluntarily_shared_to_fraudster
+      value: true
+unknown_behavior: ask_material_question
+reason_templates:
+  eligible: reasons.finance.mfs_charge_eligible_for_bb_escalation
+  excluded: reasons.finance.mfs_charge_excluded_pin_sharing
+  unknown: reasons.finance.mfs_charge_needs_ticket
+allowed_actions:
+  - prepare_provider_formal_letter
+  - prepare_bb_cipc_escalation

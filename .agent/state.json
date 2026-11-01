@@ -1,8 +1,8 @@
 {
   "plan_version": "1.2",
-  "updated_at": "2026-10-31T21:53:13.534254+00:00",
-  "current_task": "P03.1",
-  "last_completed_task": "P02.6",
+  "updated_at": "2026-11-01T05:26:00.000000+00:00",
+  "current_task": "P04.1",
+  "last_completed_task": "P03.5",
   "tasks": {
     "P00.1": {
       "id": "P00.1",
@@ -471,16 +471,21 @@
       "id": "P03.1",
       "phase": "P03",
       "title": "Create source registry from blueprint, official host allowlist, feed metadata and actual check results",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
-      "started_at": null,
-      "completed_at": null,
+      "started_at": "2026-11-01T05:10:17.824345+00:00",
+      "completed_at": "2026-11-01T05:11:38.835269+00:00",
       "dependencies": [
         "P02.6"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "services/backend/app/knowledge/source_registry.py",
+        "services/backend/tests/unit/test_p03_1_source_registry.py"
+      ],
+      "acceptance_evidence": "Official host allowlist defined with SSRF protection against private/loopback/cloud metadata. Registry populated with initial candidates (CRPA 2009, CCMS, DNCRP portal, CIPC procedure, MFS guidelines, BTRC, 16121). All labelled observed/candidate with zero inherited fake verified flags. 4/4 tests pass.",
+      "validation_commands": [
+        "uv run --directory services/backend pytest tests/unit/test_p03_1_source_registry.py"
+      ],
       "blocker": null,
       "next_action": null
     },
@@ -488,16 +493,24 @@
       "id": "P03.2",
       "phase": "P03",
       "title": "Source/version/provision/approval/release migrations plus immutable snapshot storage",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
       "started_at": null,
-      "completed_at": null,
+      "completed_at": "2026-11-01T05:13:42.358396+00:00",
       "dependencies": [
         "P03.1"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "services/backend/app/knowledge/models.py",
+        "services/backend/app/knowledge/service.py",
+        "services/backend/migrations/versions/0002_knowledge_sources_and_releases.py",
+        "services/backend/tests/unit/test_t16_source_governance.py"
+      ],
+      "acceptance_evidence": "Database schema and Alembic migration 0002 created for source families, candidates, versions, provisions, approvals, releases, and retrieval chunks. Immutable snapshot text/byte hashing verified. Test T16 verified: candidate sources strictly excluded from approved searches until explicit human review and approval.",
+      "validation_commands": [
+        "uv run --directory services/backend alembic upgrade head",
+        "uv run --directory services/backend pytest tests/unit/test_t16_source_governance.py"
+      ],
       "blocker": null,
       "next_action": null
     },
@@ -505,16 +518,22 @@
       "id": "P03.3",
       "phase": "P03",
       "title": "Implement typed policy AST, three-valued evaluator and reason templates",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
       "started_at": null,
-      "completed_at": null,
+      "completed_at": "2026-11-01T05:15:41.993694+00:00",
       "dependencies": [
         "P03.2"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "services/backend/app/policy/ast.py",
+        "services/backend/app/policy/evaluator.py",
+        "services/backend/tests/policy/test_t17_t18_policy_evaluator.py"
+      ],
+      "acceptance_evidence": "Typed policy AST with Pydantic validation and Kleene three-valued logic. Missing facts strictly evaluate to UNKNOWN (never false/0). Exclusions logic verified (TRUE exclusion -> EXCLUDED, UNKNOWN exclusion -> NEEDS_FACTS). Source-health caution overlay implemented. Security injection (eval/exec/__import__) and test_only rules rejected in live release (T17, T18 pass).",
+      "validation_commands": [
+        "uv run --directory services/backend pytest tests/policy/test_t17_t18_policy_evaluator.py"
+      ],
       "blocker": null,
       "next_action": null
     },
@@ -522,16 +541,23 @@
       "id": "P03.4",
       "phase": "P03",
       "title": "Review CLI/admin skeleton with explicit named actor/scope and release-manifest build",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
       "started_at": null,
-      "completed_at": null,
+      "completed_at": "2026-11-01T05:20:00.000000+00:00",
       "dependencies": [
         "P03.3"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "services/backend/app/knowledge/admin_service.py",
+        "services/backend/app/knowledge/schemas.py",
+        "services/backend/app/knowledge/router.py",
+        "services/backend/tests/security/test_t44_admin_review_authorization.py"
+      ],
+      "acceptance_evidence": "Admin review endpoints, role authorization (reviewer vs publisher vs consumer), and release manifest builder implemented. T44 passes.",
+      "validation_commands": [
+        "uv run --directory services/backend pytest tests/security/test_t44_admin_review_authorization.py -v"
+      ],
       "blocker": null,
       "next_action": null
     },
@@ -539,16 +565,35 @@
       "id": "P03.5",
       "phase": "P03",
       "title": "Prepare shopping/finance/safety starter candidates, exact dependencies and source cards",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
       "started_at": null,
-      "completed_at": null,
+      "completed_at": "2026-11-01T05:25:00.000000+00:00",
       "dependencies": [
         "P03.4"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "docs/knowledge/source_cards/bd_crpa_2009.md",
+        "docs/knowledge/source_cards/dncrp_ccms.md",
+        "docs/knowledge/source_cards/bb_cipc.md",
+        "docs/knowledge/source_cards/bb_mfs_2022.md",
+        "docs/knowledge/source_cards/dncrp_hotline_16121.md",
+        "docs/knowledge/human_procedure_review_packet.md",
+        "knowledge/registry/source_cards/bd_crpa_2009.md",
+        "knowledge/registry/source_cards/dncrp_ccms.md",
+        "knowledge/registry/source_cards/bb_cipc.md",
+        "knowledge/registry/source_cards/bb_mfs_2022.md",
+        "knowledge/registry/source_cards/dncrp_hotline_16121.md",
+        "knowledge/packs/bd/shopping/ecommerce_delivery_failure.yaml",
+        "knowledge/packs/bd/shopping/defective_goods.yaml",
+        "knowledge/packs/bd/finance/mfs_unauthorized_charge.yaml",
+        "knowledge/packs/bd/safety/product_safety_hazard.yaml",
+        "services/backend/tests/unit/test_p03_5_starter_rules_and_cards.py"
+      ],
+      "acceptance_evidence": "Starter rules for shopping, finance, and safety in typed YAML AST, candidate source cards, and human procedure review packet prepared. Unit tests pass.",
+      "validation_commands": [
+        "uv run --directory services/backend pytest tests/unit/test_p03_5_starter_rules_and_cards.py -v"
+      ],
       "blocker": null,
       "next_action": null
     },
@@ -1906,7 +1951,7 @@
     }
   },
   "blockers": [],
-  "next_action": "P03.1: Create source registry from blueprint, official host allowlist, feed metadata and actual check results",
+  "next_action": "P03.4: Review CLI/admin skeleton with explicit named actor/scope and release-manifest build",
   "last_validation": [],
   "environment": {
     "mode": "development",

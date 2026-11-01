@@ -1,0 +1,23 @@
+schema_version: policy.v1
+rule_id: bd.safety.hazardous_product
+status: draft
+jurisdiction: BD
+issue_type: product_safety_hazard
+date_basis: conduct_date
+source_dependencies:
+  - bd_crpa_2009
+  - dncrp_hotline_16121
+conditions:
+  all:
+    - eq:
+        fact: product_presents_immediate_hazard
+        value: true
+exclusions: []
+unknown_behavior: ask_material_question
+reason_templates:
+  eligible: reasons.safety.immediate_hotline_alert
+  excluded: reasons.safety.no_hazard_identified
+  unknown: reasons.safety.needs_hazard_facts
+allowed_actions:
+  - call_dncrp_hotline_16121
+  - preserve_hazardous_sample

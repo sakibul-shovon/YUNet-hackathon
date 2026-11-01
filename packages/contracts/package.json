@@ -4,3 +4,4 @@
   "main": "src/generated.ts",
   "types": "src/generated.ts"
 }
+

@@ -674,6 +674,1214 @@
           }
         }
       }
+    },
+    "/v1/sources/{id}": {
+      "get": {
+        "tags": [
+          "Knowledge & Sources"
+        ],
+        "summary": "Get Source Provision",
+        "description": "Retrieves an approved public statutory or procedural provision.",
+        "operationId": "get_source_provision_v1_sources__id__get",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SourceProvisionOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/knowledge/release": {
+      "get": {
+        "tags": [
+          "Knowledge & Sources"
+        ],
+        "summary": "Get Active Release",
+        "description": "Returns metadata and manifest hash for the active compatible knowledge release.",
+        "operationId": "get_active_release_v1_knowledge_release_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KnowledgeReleaseOut"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/source-candidates": {
+      "get": {
+        "tags": [
+          "Knowledge & Sources"
+        ],
+        "summary": "List Source Candidates",
+        "description": "Reviewer only: inspect discovered and unapproved candidate source versions.",
+        "operationId": "list_source_candidates_v1_admin_source_candidates_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/SourceCandidateOut"
+                  },
+                  "type": "array",
+                  "title": "Response List Source Candidates V1 Admin Source Candidates Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/v1/admin/source-versions/{id}/review": {
+      "post": {
+        "tags": [
+          "Knowledge & Sources"
+        ],
+        "summary": "Review Source Version",
+        "description": "Reviewer only: records explicit named review scope and promotes candidate to approved.",
+        "operationId": "review_source_version_v1_admin_source_versions__id__review_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReviewSubmission"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReviewResultOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/releases/build": {
+      "post": {
+        "tags": [
+          "Knowledge & Sources"
+        ],
+        "summary": "Build Release",
+        "description": "Publisher only: constructs an immutable release manifest; rejects test_only rules (T18).",
+        "operationId": "build_release_v1_admin_releases_build_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReleaseBuildRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KnowledgeReleaseOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/v1/admin/releases/{id}/promote": {
+      "post": {
+        "tags": [
+          "Knowledge & Sources"
+        ],
+        "summary": "Promote Release",
+        "description": "Publisher only: performs atomic active release pointer swap.",
+        "operationId": "promote_release_v1_admin_releases__id__promote_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KnowledgeReleaseOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/releases/{id}/disable": {
+      "post": {
+        "tags": [
+          "Knowledge & Sources"
+        ],
+        "summary": "Disable Release",
+        "description": "Publisher only: disables active release in an emergency.",
+        "operationId": "disable_release_v1_admin_releases__id__disable_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KnowledgeReleaseOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/capabilities": {
+      "get": {
+        "tags": [
+          "System & Capabilities"
+        ],
+        "summary": "Get Capabilities",
+        "description": "Returns enabled domain packs, supported languages, provider readiness, and release mode.",
+        "operationId": "get_capabilities_api_v1_capabilities_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/technology": {
+      "get": {
+        "tags": [
+          "System & Capabilities"
+        ],
+        "summary": "Get Technology",
+        "description": "Returns sanitized build inventory and capability status without disclosing secrets.",
+        "operationId": "get_technology_api_v1_technology_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/guest": {
+      "post": {
+        "tags": [
+          "Identity & Sessions"
+        ],
+        "summary": "Auth Guest",
+        "description": "Initializes or resumes an isolated anonymous guest session with HttpOnly cookie & JWT.",
+        "operationId": "auth_guest_api_auth_guest_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GuestSessionResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/upgrade": {
+      "post": {
+        "tags": [
+          "Identity & Sessions"
+        ],
+        "summary": "Auth Upgrade",
+        "description": "Upgrades an anonymous guest account to a permanent verified account, retaining cases.",
+        "operationId": "auth_upgrade_api_auth_upgrade_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpgradeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpgradeResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/auth/logout": {
+      "post": {
+        "tags": [
+          "Identity & Sessions"
+        ],
+        "summary": "Auth Logout",
+        "description": "Terminates the current session and clears session cookie.",
+        "operationId": "auth_logout_api_auth_logout_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/me": {
+      "get": {
+        "tags": [
+          "Identity & Sessions"
+        ],
+        "summary": "Get Me",
+        "description": "Returns authenticated principal profile and roles with Cache-Control: private, no-store.",
+        "operationId": "get_me_api_v1_me_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PrincipalOut"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/consents": {
+      "post": {
+        "tags": [
+          "Identity & Sessions"
+        ],
+        "summary": "Record Consent",
+        "description": "Records affirmative user consent for processing purposes.",
+        "operationId": "record_consent_api_v1_consents_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConsentCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConsentOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/deletions": {
+      "post": {
+        "tags": [
+          "Identity & Sessions"
+        ],
+        "summary": "Request Deletion",
+        "description": "Revokes access immediately and schedules complete background deletion.",
+        "operationId": "request_deletion_api_v1_deletions_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeletionRequestCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeletionRequestOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/deletions/{id}": {
+      "get": {
+        "tags": [
+          "Identity & Sessions"
+        ],
+        "summary": "Get Deletion Status",
+        "description": "Retrieves non-content status of an active or completed deletion request.",
+        "operationId": "get_deletion_status_api_v1_deletions__id__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeletionRequestOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases": {
+      "post": {
+        "tags": [
+          "Cases"
+        ],
+        "summary": "Create Case",
+        "description": "Creates a new case owned by the authenticated principal.",
+        "operationId": "create_case_api_v1_cases_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CaseCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CaseOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Cases"
+        ],
+        "summary": "List Cases",
+        "description": "Lists non-deleted cases belonging to the calling principal.",
+        "operationId": "list_cases_api_v1_cases_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "default": 20,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CaseListOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{id}": {
+      "get": {
+        "tags": [
+          "Cases"
+        ],
+        "summary": "Get Case",
+        "description": "Fetches case details with strict tenant isolation (returns 404 for foreign cases).",
+        "operationId": "get_case_api_v1_cases__id__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CaseOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Cases"
+        ],
+        "summary": "Update Case",
+        "description": "Updates case fields with optimistic concurrency check (returns 409 on version conflict).",
+        "operationId": "update_case_api_v1_cases__id__patch",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CaseUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CaseOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Cases"
+        ],
+        "summary": "Delete Case",
+        "description": "Revokes access and queues case for complete asynchronous deletion.",
+        "operationId": "delete_case_api_v1_cases__id__delete",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Id"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{id}/activity": {
+      "get": {
+        "tags": [
+          "Cases"
+        ],
+        "summary": "Get Case Activity",
+        "description": "Retrieves chronological activity log and history for an authorized case.",
+        "operationId": "get_case_activity_api_v1_cases__id__activity_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CaseEventOut"
+                  },
+                  "title": "Response Get Case Activity Api V1 Cases  Id  Activity Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/sources/{id}": {
+      "get": {
+        "tags": [
+          "Knowledge & Sources"
+        ],
+        "summary": "Get Source Provision",
+        "description": "Retrieves an approved public statutory or procedural provision.",
+        "operationId": "get_source_provision_api_v1_sources__id__get",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SourceProvisionOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/knowledge/release": {
+      "get": {
+        "tags": [
+          "Knowledge & Sources"
+        ],
+        "summary": "Get Active Release",
+        "description": "Returns metadata and manifest hash for the active compatible knowledge release.",
+        "operationId": "get_active_release_api_v1_knowledge_release_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KnowledgeReleaseOut"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/admin/source-candidates": {
+      "get": {
+        "tags": [
+          "Knowledge & Sources"
+        ],
+        "summary": "List Source Candidates",
+        "description": "Reviewer only: inspect discovered and unapproved candidate source versions.",
+        "operationId": "list_source_candidates_api_v1_admin_source_candidates_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/SourceCandidateOut"
+                  },
+                  "type": "array",
+                  "title": "Response List Source Candidates Api V1 Admin Source Candidates Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/admin/source-versions/{id}/review": {
+      "post": {
+        "tags": [
+          "Knowledge & Sources"
+        ],
+        "summary": "Review Source Version",
+        "description": "Reviewer only: records explicit named review scope and promotes candidate to approved.",
+        "operationId": "review_source_version_api_v1_admin_source_versions__id__review_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReviewSubmission"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReviewResultOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/admin/releases/build": {
+      "post": {
+        "tags": [
+          "Knowledge & Sources"
+        ],
+        "summary": "Build Release",
+        "description": "Publisher only: constructs an immutable release manifest; rejects test_only rules (T18).",
+        "operationId": "build_release_api_v1_admin_releases_build_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReleaseBuildRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KnowledgeReleaseOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/admin/releases/{id}/promote": {
+      "post": {
+        "tags": [
+          "Knowledge & Sources"
+        ],
+        "summary": "Promote Release",
+        "description": "Publisher only: performs atomic active release pointer swap.",
+        "operationId": "promote_release_api_v1_admin_releases__id__promote_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KnowledgeReleaseOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/admin/releases/{id}/disable": {
+      "post": {
+        "tags": [
+          "Knowledge & Sources"
+        ],
+        "summary": "Disable Release",
+        "description": "Publisher only: disables active release in an emergency.",
+        "operationId": "disable_release_api_v1_admin_releases__id__disable_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KnowledgeReleaseOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1280,6 +2488,58 @@
         "type": "object",
         "title": "HTTPValidationError"
       },
+      "KnowledgeReleaseOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "release_id": {
+            "type": "string",
+            "title": "Release Id"
+          },
+          "release_mode": {
+            "type": "string",
+            "title": "Release Mode"
+          },
+          "manifest_hash": {
+            "type": "string",
+            "title": "Manifest Hash"
+          },
+          "is_active": {
+            "type": "boolean",
+            "title": "Is Active"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "promoted_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Promoted At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "release_id",
+          "release_mode",
+          "manifest_hash",
+          "is_active",
+          "created_at"
+        ],
+        "title": "KnowledgeReleaseOut"
+      },
       "PrincipalOut": {
         "properties": {
           "id": {
@@ -1321,6 +2581,223 @@
           "created_at"
         ],
         "title": "PrincipalOut"
+      },
+      "ReleaseBuildRequest": {
+        "properties": {
+          "release_id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_.-]+$",
+            "title": "Release Id"
+          },
+          "release_mode": {
+            "type": "string",
+            "pattern": "^(procedure_guidance|reviewed_statutory_guidance)$",
+            "title": "Release Mode",
+            "default": "procedure_guidance"
+          },
+          "source_version_ids": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array",
+            "title": "Source Version Ids"
+          },
+          "rules": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Rules"
+          }
+        },
+        "type": "object",
+        "required": [
+          "release_id",
+          "source_version_ids"
+        ],
+        "title": "ReleaseBuildRequest"
+      },
+      "ReviewResultOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "source_version_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Source Version Id"
+          },
+          "reviewer_name": {
+            "type": "string",
+            "title": "Reviewer Name"
+          },
+          "scope": {
+            "type": "string",
+            "title": "Scope"
+          },
+          "decision": {
+            "type": "string",
+            "title": "Decision"
+          },
+          "approved_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Approved At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "source_version_id",
+          "reviewer_name",
+          "scope",
+          "decision",
+          "approved_at"
+        ],
+        "title": "ReviewResultOut"
+      },
+      "ReviewSubmission": {
+        "properties": {
+          "scope": {
+            "type": "string",
+            "pattern": "^(origin_and_procedure|statutory_interpretation)$",
+            "title": "Scope"
+          },
+          "decision": {
+            "type": "string",
+            "pattern": "^(approved|rejected|conditional)$",
+            "title": "Decision",
+            "default": "approved"
+          },
+          "rationale": {
+            "type": "string",
+            "minLength": 10,
+            "title": "Rationale"
+          },
+          "limitations": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Limitations"
+          }
+        },
+        "type": "object",
+        "required": [
+          "scope",
+          "rationale"
+        ],
+        "title": "ReviewSubmission"
+      },
+      "SourceCandidateOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "family_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Family Id"
+          },
+          "version_tag": {
+            "type": "string",
+            "title": "Version Tag"
+          },
+          "issuer": {
+            "type": "string",
+            "title": "Issuer"
+          },
+          "document_type": {
+            "type": "string",
+            "title": "Document Type"
+          },
+          "applicability_status": {
+            "type": "string",
+            "title": "Applicability Status"
+          },
+          "clean_text_hash": {
+            "type": "string",
+            "title": "Clean Text Hash"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "family_id",
+          "version_tag",
+          "issuer",
+          "document_type",
+          "applicability_status",
+          "clean_text_hash",
+          "created_at"
+        ],
+        "title": "SourceCandidateOut"
+      },
+      "SourceProvisionOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "provision_path": {
+            "type": "string",
+            "title": "Provision Path"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "text_content": {
+            "type": "string",
+            "title": "Text Content"
+          },
+          "normalized_text": {
+            "type": "string",
+            "title": "Normalized Text"
+          },
+          "page_number": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Page Number"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "provision_path",
+          "title",
+          "text_content",
+          "normalized_text",
+          "created_at"
+        ],
+        "title": "SourceProvisionOut"
       },
       "UpgradeRequest": {
         "properties": {

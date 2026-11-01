@@ -101,3 +101,4 @@ async def test_p02_5_consent_and_deletion_revocation(client: AsyncClient, db_ses
     # 6. Verify case is immediately inaccessible via standard API (returns 404)
     case_check = await client.get(f"/v1/cases/{case_id}", headers=headers)
     assert case_check.status_code == 404
+

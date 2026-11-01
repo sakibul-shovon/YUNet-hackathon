@@ -1,0 +1,35 @@
+schema_version: policy.v1
+rule_id: bd.shopping.ecommerce_delivery_failure
+status: draft
+jurisdiction: BD
+issue_type: ecommerce_delivery_failure
+date_basis: conduct_date
+source_dependencies:
+  - bd_crpa_2009
+  - dncrp_ccms_portal
+conditions:
+  all:
+    - eq:
+        fact: purchase_channel
+        value: ecommerce
+    - eq:
+        fact: goods_delivered
+        value: false
+    - eq:
+        fact: promised_delivery_date_passed
+        value: true
+exclusions:
+  - eq:
+      fact: refund_already_issued
+      value: true
+  - eq:
+      fact: order_cancelled_by_buyer_before_dispatch
+      value: true
+unknown_behavior: ask_material_question
+reason_templates:
+  eligible: reasons.shopping.delivery_failure_eligible
+  excluded: reasons.shopping.delivery_failure_excluded
+  unknown: reasons.shopping.delivery_failure_needs_facts
+allowed_actions:
+  - prepare_merchant_notice
+  - prepare_dncrp_complaint

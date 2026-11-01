@@ -8,6 +8,7 @@ from app.cases.router import router as cases_router
 from app.core.config import settings
 from app.core.public_router import router as public_router
 from app.identity.router import router as identity_router
+from app.knowledge.router import router as knowledge_router
 
 app = FastAPI(
     title="ClaimCraft BD API",
@@ -76,7 +77,9 @@ async def api_ping():
 app.include_router(public_router)
 app.include_router(identity_router)
 app.include_router(cases_router)
+app.include_router(knowledge_router)
 
 app.include_router(public_router, prefix="/api")
 app.include_router(identity_router, prefix="/api")
 app.include_router(cases_router, prefix="/api")
+app.include_router(knowledge_router, prefix="/api")

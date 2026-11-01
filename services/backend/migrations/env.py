@@ -11,6 +11,7 @@ from app.core.database import Base
 # Import all models to ensure metadata is populated
 import app.identity.models  # noqa: F401
 import app.cases.models  # noqa: F401
+import app.knowledge.models  # noqa: F401
 
 config = context.config
 

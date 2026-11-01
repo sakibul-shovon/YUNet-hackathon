@@ -243,3 +243,4 @@ export function IntakeForm({ locale, labels }: IntakeFormProps) {
     </form>
   );
 }
+

@@ -87,3 +87,4 @@ async def test_t04_case_crud_persistence_and_version_conflict(client: AsyncClien
     assert events[1]["event_type"] == "case.updated"
     assert events[2]["event_sequence"] == 3
     assert events[2]["event_type"] == "case.updated"
+

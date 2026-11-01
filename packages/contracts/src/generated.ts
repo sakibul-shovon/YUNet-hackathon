@@ -137,6 +137,16 @@ export interface HTTPValidationError {
   detail?: unknown[];
 }
 
+export interface KnowledgeReleaseOut {
+  id: string;
+  release_id: string;
+  release_mode: string;
+  manifest_hash: string;
+  is_active: boolean;
+  created_at: string;
+  promoted_at?: unknown;
+}
+
 export interface PrincipalOut {
   id: string;
   kind: string;
@@ -144,6 +154,50 @@ export interface PrincipalOut {
   consent_revision: number;
   created_at: string;
   roles?: unknown[];
+}
+
+export interface ReleaseBuildRequest {
+  release_id: string;
+  release_mode?: string;
+  source_version_ids: unknown[];
+  rules?: unknown[];
+}
+
+export interface ReviewResultOut {
+  id: string;
+  source_version_id: string;
+  reviewer_name: string;
+  scope: string;
+  decision: string;
+  approved_at: string;
+}
+
+export interface ReviewSubmission {
+  scope: string;
+  decision?: string;
+  rationale: string;
+  limitations?: unknown;
+}
+
+export interface SourceCandidateOut {
+  id: string;
+  family_id: string;
+  version_tag: string;
+  issuer: string;
+  document_type: string;
+  applicability_status: string;
+  clean_text_hash: string;
+  created_at: string;
+}
+
+export interface SourceProvisionOut {
+  id: string;
+  provision_path: string;
+  title: string;
+  text_content: string;
+  normalized_text: string;
+  page_number?: unknown;
+  created_at: string;
 }
 
 export interface UpgradeRequest {

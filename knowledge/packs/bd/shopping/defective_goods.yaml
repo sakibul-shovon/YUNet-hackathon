@@ -1,0 +1,29 @@
+schema_version: policy.v1
+rule_id: bd.shopping.defective_goods
+status: draft
+jurisdiction: BD
+issue_type: defective_goods
+date_basis: conduct_date
+source_dependencies:
+  - bd_crpa_2009
+  - dncrp_ccms_portal
+conditions:
+  all:
+    - eq:
+        fact: goods_received_defective
+        value: true
+    - eq:
+        fact: seller_notified_within_warranty
+        value: true
+exclusions:
+  - eq:
+      fact: user_inflicted_damage
+      value: true
+unknown_behavior: ask_material_question
+reason_templates:
+  eligible: reasons.shopping.defective_goods_eligible
+  excluded: reasons.shopping.defective_goods_excluded
+  unknown: reasons.shopping.defective_goods_needs_facts
+allowed_actions:
+  - prepare_merchant_replacement_request
+  - prepare_dncrp_complaint
