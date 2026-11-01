@@ -16,6 +16,7 @@ from app.knowledge.router import router as knowledge_router
 from app.multimodal.audio.router import router as audio_router
 from app.multimodal.vision.router import router as vision_router
 from app.policy.router import router as policy_router
+from app.retrieval.router import router as retrieval_router
 
 app = FastAPI(
     title="ClaimCraft BD API",
@@ -92,6 +93,7 @@ app.include_router(actions_router)
 app.include_router(evidence_router)
 app.include_router(audio_router)
 app.include_router(vision_router)
+app.include_router(retrieval_router)
 
 app.include_router(public_router, prefix="/api")
 app.include_router(identity_router, prefix="/api")
@@ -104,3 +106,4 @@ app.include_router(actions_router, prefix="/api")
 app.include_router(evidence_router, prefix="/api")
 app.include_router(audio_router, prefix="/api")
 app.include_router(vision_router, prefix="/api")
+app.include_router(retrieval_router, prefix="/api")

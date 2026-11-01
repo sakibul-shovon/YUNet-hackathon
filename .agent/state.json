@@ -1,8 +1,8 @@
 {
   "plan_version": "1.2",
-  "updated_at": "2026-11-01T07:01:37.095813+00:00",
-  "current_task": "P07.1",
-  "last_completed_task": "P06.5",
+  "updated_at": "2026-11-01T07:15:14.415380+00:00",
+  "current_task": "P08.1",
+  "last_completed_task": "P07.6",
   "tasks": {
     "P00.1": {
       "id": "P00.1",
@@ -1067,105 +1067,138 @@
       "id": "P07.1",
       "phase": "P07",
       "title": "Hierarchical provision chunks, definitions/exceptions and stable citation spans",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
-      "started_at": null,
-      "completed_at": null,
+      "started_at": "2026-11-01T07:02:00+00:00",
+      "completed_at": "2026-11-01T07:07:00+00:00",
       "dependencies": [
         "P03.5",
         "P05.3",
         "P05.4"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "services/backend/app/retrieval/provisions_data.py",
+        "services/backend/app/retrieval/provision_service.py",
+        "services/backend/app/retrieval/schemas.py",
+        "services/backend/app/retrieval/router.py",
+        "services/backend/tests/retrieval/test_t24_hierarchical_provisions.py"
+      ],
+      "acceptance_evidence": "T24: Hierarchical chunks for CRPA 2009 and BB CIPC; exact Bengali and Latin section lookup (sec:45, ধারা ৪৫, sec:45(2), ধারা ৪৫(২), sec:60, sec:76, স্তর ১, স্তর ২); long Bengali clauses preserve qualifications without truncation; non-existent sections rejected without hallucination.",
+      "validation_commands": [
+        "uv run --directory services/backend pytest tests/retrieval/test_t24_hierarchical_provisions.py -v"
+      ],
       "blocker": null,
-      "next_action": null
+      "next_action": "P07.2"
     },
     "P07.2": {
       "id": "P07.2",
       "phase": "P07",
       "title": "Pinned E5 embedding adapter, pgvector storage and date/scope filtering",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
-      "started_at": null,
-      "completed_at": null,
+      "started_at": "2026-11-01T07:07:00+00:00",
+      "completed_at": "2026-11-01T07:08:00+00:00",
       "dependencies": [
         "P07.1"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "services/backend/app/retrieval/e5_adapter.py"
+      ],
+      "acceptance_evidence": "T25: Pinned multilingual-e5-small (384d) with query: and passage: prefixes; allowed-ID and temporal validity filters applied BEFORE top-k cosine ranking; obsolete/repealed laws excluded before selection.",
+      "validation_commands": [
+        "uv run --directory services/backend pytest tests/retrieval/test_t25_hybrid_retrieval_and_rrf.py -v"
+      ],
       "blocker": null,
-      "next_action": null
+      "next_action": "P07.3"
     },
     "P07.3": {
       "id": "P07.3",
       "phase": "P07",
       "title": "Bengali-aware bm25s tokenizer/snapshot save-load and allowed-ID scoring",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
-      "started_at": null,
-      "completed_at": null,
+      "started_at": "2026-11-01T07:08:00+00:00",
+      "completed_at": "2026-11-01T07:09:00+00:00",
       "dependencies": [
         "P07.2"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "services/backend/app/retrieval/bm25_adapter.py"
+      ],
+      "acceptance_evidence": "T25 / P07.3: NFC normalization; Unicode combining marks & vowel signs preserved; negation tokens retained; exact compound aliases (45(2), ৪৫(২), sec:45(2)) preserved; no English stopword corruption; snapshot save/load round-trip with manifest checksum.",
+      "validation_commands": [
+        "uv run --directory services/backend pytest tests/retrieval/test_t25_hybrid_retrieval_and_rrf.py -v"
+      ],
       "blocker": null,
-      "next_action": null
+      "next_action": "P07.4"
     },
     "P07.4": {
       "id": "P07.4",
       "phase": "P07",
       "title": "Parallel dense/lexical retrieval, exact-ID lookup, RRF and deterministic context assembly",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
-      "started_at": null,
-      "completed_at": null,
+      "started_at": "2026-11-01T07:09:00+00:00",
+      "completed_at": "2026-11-01T07:10:00+00:00",
       "dependencies": [
         "P07.3"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "services/backend/app/retrieval/hybrid_retriever.py"
+      ],
+      "acceptance_evidence": "T25: Exact section lookup given rank 0 boost; parallel dense cosine + lexical BM25 fused with RRF (k=60); deduplicated by citation handle; untruncated qualifications preserved in output context.",
+      "validation_commands": [
+        "uv run --directory services/backend pytest tests/retrieval/test_t25_hybrid_retrieval_and_rrf.py -v"
+      ],
       "blocker": null,
-      "next_action": null
+      "next_action": "P07.5"
     },
     "P07.5": {
       "id": "P07.5",
       "phase": "P07",
       "title": "Statement/citation validator, reviewed legal/procedure templates and source drawer",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
-      "started_at": null,
-      "completed_at": null,
+      "started_at": "2026-11-01T07:10:00+00:00",
+      "completed_at": "2026-11-01T07:12:00+00:00",
       "dependencies": [
         "P07.4"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "services/backend/app/retrieval/citation_validator.py",
+        "apps/web/src/components/sources/StatutorySourceDrawer.tsx",
+        "apps/web/src/app/[locale]/sources/page.tsx"
+      ],
+      "acceptance_evidence": "T28 / T29: CitationValidator blocks fabricated or non-existent citations (CITATION_NON_EXISTENT) and outdated/repealed provisions (CITATION_OUTDATED_OR_REPEALED); bilingual interactive StatutorySourceDrawer integrated in web app.",
+      "validation_commands": [
+        "uv run --directory services/backend pytest tests/retrieval/test_t25_hybrid_retrieval_and_rrf.py -v"
+      ],
       "blocker": null,
-      "next_action": null
+      "next_action": "P07.6"
     },
     "P07.6": {
       "id": "P07.6",
       "phase": "P07",
       "title": "Retrieval ablations and labeled query report; integrate full pipeline in workspace",
-      "status": "TODO",
+      "status": "DONE",
       "is_optional": false,
-      "started_at": null,
-      "completed_at": null,
+      "started_at": "2026-11-01T07:12:00+00:00",
+      "completed_at": "2026-11-01T07:14:00+00:00",
       "dependencies": [
         "P07.5"
       ],
-      "changed_paths": [],
-      "acceptance_evidence": null,
-      "validation_commands": [],
+      "changed_paths": [
+        "docs/benchmarks/retrieval_ablation_benchmark_report.md",
+        "services/backend/app/main.py",
+        "packages/contracts/openapi.json",
+        "packages/contracts/src/generated.ts"
+      ],
+      "acceptance_evidence": "Reproducible 12-query benchmark across Bengali, English, and negative queries; 100% exact recall, 0% hallucination rate on non-existent sections; truthful degraded mode when channel disabled; full pipeline integrated and verified.",
+      "validation_commands": [
+        "uv run --directory services/backend pytest tests/retrieval -v"
+      ],
       "blocker": null,
-      "next_action": null
+      "next_action": "P08.1"
     },
     "P08.1": {
       "id": "P08.1",

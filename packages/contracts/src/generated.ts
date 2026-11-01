@@ -135,6 +135,18 @@ export interface ChatBubbleProposal {
   normalized_box?: unknown;
 }
 
+export interface CitationValidationRequest {
+  citation_handles: unknown[];
+  date_context?: unknown;
+  allowed_source_ids?: unknown;
+}
+
+export interface CitationValidationResponse {
+  is_valid: boolean;
+  valid_citations: unknown[];
+  invalid_citations?: unknown[];
+}
+
 export interface ConsentCreate {
   purpose: string;
   policy_version: string;
@@ -307,6 +319,15 @@ export interface HTTPValidationError {
   detail?: unknown[];
 }
 
+export interface HybridSearchRequest {
+  query: string;
+  allowed_ids?: unknown;
+  date_context?: unknown;
+  top_k?: number;
+  dense_enabled?: boolean;
+  lexical_enabled?: boolean;
+}
+
 export interface KnowledgeReleaseOut {
   id: string;
   release_id: string;
@@ -390,6 +411,46 @@ export interface ProceduralAssessmentOut {
   routes: unknown[];
   next_best_question?: unknown;
   source_cards: unknown[];
+}
+
+export interface ProvisionLookupResult {
+  query: string;
+  normalized_query: string;
+  match_found: boolean;
+  provision?: unknown;
+  preserves_qualification?: boolean;
+  context_note_en?: string;
+  context_note_bn?: string;
+}
+
+export interface ProvisionOut {
+  citation_handle: string;
+  source_id: string;
+  provision_path: string;
+  section_number: string;
+  section_bn: string;
+  title_en: string;
+  title_bn: string;
+  parent_path?: unknown;
+  document_type: string;
+  canonical_text_en: string;
+  canonical_text_bn: string;
+  qualifications_and_exceptions?: unknown[];
+  key_definitions?: Record<string, unknown>;
+  penalties?: unknown;
+  aliases?: unknown[];
+  effective_from?: unknown;
+  effective_to?: unknown;
+  parent_provision?: unknown;
+}
+
+export interface ProvisionTreeItem {
+  provision_path: string;
+  citation_handle: string;
+  title_en: string;
+  title_bn: string;
+  section_number: string;
+  children?: unknown[];
 }
 
 export interface ReconciliationItem {

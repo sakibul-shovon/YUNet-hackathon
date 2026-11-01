@@ -2324,6 +2324,223 @@
         }
       }
     },
+    "/v1/retrieval/search": {
+      "post": {
+        "tags": [
+          "Knowledge & Retrieval"
+        ],
+        "summary": "Hybrid Search Provisions",
+        "description": "T25: Executes parallel dense E5 and BM25 search with allowed-ID filtering and RRF.",
+        "operationId": "hybrid_search_provisions_v1_retrieval_search_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HybridSearchRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/retrieval/citations/validate": {
+      "post": {
+        "tags": [
+          "Knowledge & Retrieval"
+        ],
+        "summary": "Validate Statutory Citations",
+        "description": "T28: Validates statutory citations against existence, scope, and temporal interval.",
+        "operationId": "validate_statutory_citations_v1_retrieval_citations_validate_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CitationValidationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CitationValidationResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/retrieval/provisions/lookup": {
+      "get": {
+        "tags": [
+          "Knowledge & Retrieval"
+        ],
+        "summary": "Lookup Provision By Exact Section",
+        "description": "T24: Exact Bengali/Latin section lookup.\n\nPreserves parent context, subsection exceptions, and qualifications.\nReturns match_found=False without inventing missing provisions.",
+        "operationId": "lookup_provision_by_exact_section_v1_retrieval_provisions_lookup_get",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "Exact section reference in Bengali or Latin (e.g. 'sec:45', '\u09a7\u09be\u09b0\u09be \u09ea\u09eb(\u09e8)', 'sec:60')",
+              "title": "Q"
+            },
+            "description": "Exact section reference in Bengali or Latin (e.g. 'sec:45', '\u09a7\u09be\u09b0\u09be \u09ea\u09eb(\u09e8)', 'sec:60')"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProvisionLookupResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/retrieval/provisions/{citation_handle}": {
+      "get": {
+        "tags": [
+          "Knowledge & Retrieval"
+        ],
+        "summary": "Get Provision By Citation Handle",
+        "description": "T24: Retrieves verified statutory provision by stable citation handle.",
+        "operationId": "get_provision_by_citation_handle_v1_retrieval_provisions__citation_handle__get",
+        "parameters": [
+          {
+            "name": "citation_handle",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Citation Handle"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProvisionOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/retrieval/sources/{source_id}/provisions": {
+      "get": {
+        "tags": [
+          "Knowledge & Retrieval"
+        ],
+        "summary": "Get Source Provisions Tree",
+        "description": "Returns the hierarchical provision tree for an official source.",
+        "operationId": "get_source_provisions_tree_v1_retrieval_sources__source_id__provisions_get",
+        "parameters": [
+          {
+            "name": "source_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Source Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProvisionTreeItem"
+                  },
+                  "title": "Response Get Source Provisions Tree V1 Retrieval Sources  Source Id  Provisions Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/capabilities": {
       "get": {
         "tags": [
@@ -4582,6 +4799,223 @@
           }
         }
       }
+    },
+    "/api/v1/retrieval/search": {
+      "post": {
+        "tags": [
+          "Knowledge & Retrieval"
+        ],
+        "summary": "Hybrid Search Provisions",
+        "description": "T25: Executes parallel dense E5 and BM25 search with allowed-ID filtering and RRF.",
+        "operationId": "hybrid_search_provisions_api_v1_retrieval_search_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HybridSearchRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/retrieval/citations/validate": {
+      "post": {
+        "tags": [
+          "Knowledge & Retrieval"
+        ],
+        "summary": "Validate Statutory Citations",
+        "description": "T28: Validates statutory citations against existence, scope, and temporal interval.",
+        "operationId": "validate_statutory_citations_api_v1_retrieval_citations_validate_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CitationValidationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CitationValidationResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/retrieval/provisions/lookup": {
+      "get": {
+        "tags": [
+          "Knowledge & Retrieval"
+        ],
+        "summary": "Lookup Provision By Exact Section",
+        "description": "T24: Exact Bengali/Latin section lookup.\n\nPreserves parent context, subsection exceptions, and qualifications.\nReturns match_found=False without inventing missing provisions.",
+        "operationId": "lookup_provision_by_exact_section_api_v1_retrieval_provisions_lookup_get",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "Exact section reference in Bengali or Latin (e.g. 'sec:45', '\u09a7\u09be\u09b0\u09be \u09ea\u09eb(\u09e8)', 'sec:60')",
+              "title": "Q"
+            },
+            "description": "Exact section reference in Bengali or Latin (e.g. 'sec:45', '\u09a7\u09be\u09b0\u09be \u09ea\u09eb(\u09e8)', 'sec:60')"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProvisionLookupResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/retrieval/provisions/{citation_handle}": {
+      "get": {
+        "tags": [
+          "Knowledge & Retrieval"
+        ],
+        "summary": "Get Provision By Citation Handle",
+        "description": "T24: Retrieves verified statutory provision by stable citation handle.",
+        "operationId": "get_provision_by_citation_handle_api_v1_retrieval_provisions__citation_handle__get",
+        "parameters": [
+          {
+            "name": "citation_handle",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Citation Handle"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProvisionOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/retrieval/sources/{source_id}/provisions": {
+      "get": {
+        "tags": [
+          "Knowledge & Retrieval"
+        ],
+        "summary": "Get Source Provisions Tree",
+        "description": "Returns the hierarchical provision tree for an official source.",
+        "operationId": "get_source_provisions_tree_api_v1_retrieval_sources__source_id__provisions_get",
+        "parameters": [
+          {
+            "name": "source_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Source Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProvisionTreeItem"
+                  },
+                  "title": "Response Get Source Provisions Tree Api V1 Retrieval Sources  Source Id  Provisions Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -5168,6 +5602,76 @@
           "text"
         ],
         "title": "ChatBubbleProposal"
+      },
+      "CitationValidationRequest": {
+        "properties": {
+          "citation_handles": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Citation Handles"
+          },
+          "date_context": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Date Context"
+          },
+          "allowed_source_ids": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Allowed Source Ids"
+          }
+        },
+        "type": "object",
+        "required": [
+          "citation_handles"
+        ],
+        "title": "CitationValidationRequest"
+      },
+      "CitationValidationResponse": {
+        "properties": {
+          "is_valid": {
+            "type": "boolean",
+            "title": "Is Valid"
+          },
+          "valid_citations": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Valid Citations"
+          },
+          "invalid_citations": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Invalid Citations"
+          }
+        },
+        "type": "object",
+        "required": [
+          "is_valid",
+          "valid_citations"
+        ],
+        "title": "CitationValidationResponse"
       },
       "ConsentCreate": {
         "properties": {
@@ -6159,6 +6663,59 @@
         "type": "object",
         "title": "HTTPValidationError"
       },
+      "HybridSearchRequest": {
+        "properties": {
+          "query": {
+            "type": "string",
+            "title": "Query"
+          },
+          "allowed_ids": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Allowed Ids"
+          },
+          "date_context": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Date Context"
+          },
+          "top_k": {
+            "type": "integer",
+            "title": "Top K",
+            "default": 5
+          },
+          "dense_enabled": {
+            "type": "boolean",
+            "title": "Dense Enabled",
+            "default": true
+          },
+          "lexical_enabled": {
+            "type": "boolean",
+            "title": "Lexical Enabled",
+            "default": true
+          }
+        },
+        "type": "object",
+        "required": [
+          "query"
+        ],
+        "title": "HybridSearchRequest"
+      },
       "KnowledgeReleaseOut": {
         "properties": {
           "id": {
@@ -6603,6 +7160,230 @@
           "source_cards"
         ],
         "title": "ProceduralAssessmentOut"
+      },
+      "ProvisionLookupResult": {
+        "properties": {
+          "query": {
+            "type": "string",
+            "title": "Query"
+          },
+          "normalized_query": {
+            "type": "string",
+            "title": "Normalized Query"
+          },
+          "match_found": {
+            "type": "boolean",
+            "title": "Match Found"
+          },
+          "provision": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ProvisionOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "preserves_qualification": {
+            "type": "boolean",
+            "title": "Preserves Qualification",
+            "default": true
+          },
+          "context_note_en": {
+            "type": "string",
+            "title": "Context Note En",
+            "default": "Official statutory reference verified against enacted gazette."
+          },
+          "context_note_bn": {
+            "type": "string",
+            "title": "Context Note Bn",
+            "default": "\u0997\u09c7\u099c\u09c7\u099f\u09ad\u09c1\u0995\u09cd\u09a4 \u0985\u09ab\u09bf\u09b8\u09bf\u09af\u09bc\u09be\u09b2 \u09b8\u0982\u09ac\u09bf\u09a7\u09bf\u09ac\u09a6\u09cd\u09a7 \u09ac\u09bf\u09a7\u09be\u09a8\u09c7\u09b0 \u09b8\u09be\u09a5\u09c7 \u09af\u09be\u099a\u09be\u0987\u0995\u09c3\u09a4\u0964"
+          }
+        },
+        "type": "object",
+        "required": [
+          "query",
+          "normalized_query",
+          "match_found"
+        ],
+        "title": "ProvisionLookupResult"
+      },
+      "ProvisionOut": {
+        "properties": {
+          "citation_handle": {
+            "type": "string",
+            "title": "Citation Handle"
+          },
+          "source_id": {
+            "type": "string",
+            "title": "Source Id"
+          },
+          "provision_path": {
+            "type": "string",
+            "title": "Provision Path"
+          },
+          "section_number": {
+            "type": "string",
+            "title": "Section Number"
+          },
+          "section_bn": {
+            "type": "string",
+            "title": "Section Bn"
+          },
+          "title_en": {
+            "type": "string",
+            "title": "Title En"
+          },
+          "title_bn": {
+            "type": "string",
+            "title": "Title Bn"
+          },
+          "parent_path": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Parent Path"
+          },
+          "document_type": {
+            "type": "string",
+            "title": "Document Type"
+          },
+          "canonical_text_en": {
+            "type": "string",
+            "title": "Canonical Text En"
+          },
+          "canonical_text_bn": {
+            "type": "string",
+            "title": "Canonical Text Bn"
+          },
+          "qualifications_and_exceptions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Qualifications And Exceptions"
+          },
+          "key_definitions": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Key Definitions"
+          },
+          "penalties": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Penalties"
+          },
+          "aliases": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Aliases"
+          },
+          "effective_from": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Effective From"
+          },
+          "effective_to": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Effective To"
+          },
+          "parent_provision": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Parent Provision"
+          }
+        },
+        "type": "object",
+        "required": [
+          "citation_handle",
+          "source_id",
+          "provision_path",
+          "section_number",
+          "section_bn",
+          "title_en",
+          "title_bn",
+          "document_type",
+          "canonical_text_en",
+          "canonical_text_bn"
+        ],
+        "title": "ProvisionOut"
+      },
+      "ProvisionTreeItem": {
+        "properties": {
+          "provision_path": {
+            "type": "string",
+            "title": "Provision Path"
+          },
+          "citation_handle": {
+            "type": "string",
+            "title": "Citation Handle"
+          },
+          "title_en": {
+            "type": "string",
+            "title": "Title En"
+          },
+          "title_bn": {
+            "type": "string",
+            "title": "Title Bn"
+          },
+          "section_number": {
+            "type": "string",
+            "title": "Section Number"
+          },
+          "children": {
+            "items": {
+              "$ref": "#/components/schemas/ProvisionTreeItem"
+            },
+            "type": "array",
+            "title": "Children"
+          }
+        },
+        "type": "object",
+        "required": [
+          "provision_path",
+          "citation_handle",
+          "title_en",
+          "title_bn",
+          "section_number"
+        ],
+        "title": "ProvisionTreeItem"
       },
       "ReconciliationItem": {
         "properties": {

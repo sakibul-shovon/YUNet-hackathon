@@ -1,9 +1,10 @@
 import { getTranslations } from 'next-intl/server';
 import Link from 'next/link';
-import { ArrowLeft, ExternalLink, ShieldCheck, BookOpen } from 'lucide-react';
+import { ArrowLeft, ExternalLink } from 'lucide-react';
 import { Header } from '@/components/layout/Header';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
+import { StatutorySourceDrawer } from '@/components/sources/StatutorySourceDrawer';
 
 export default async function SourcesPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -41,6 +42,10 @@ export default async function SourcesPage({ params }: { params: Promise<{ locale
             ? 'আমাদের সকল আইনি বিশ্লেষণ ও সুপারিশ বাংলাদেশ সরকারের অফিশিয়াল গেজেট ও বিধি দ্বারা সমর্থিত।'
             : 'All statutory citations in ClaimCraft BD correspond to verified official legislation and gazettes published by the Government of Bangladesh.'}
         </p>
+
+        <div className="mb-10">
+          <StatutorySourceDrawer locale={locale} />
+        </div>
 
         <div className="space-y-4">
           <Card>
