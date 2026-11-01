@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import { AlertCircle, RefreshCw } from 'lucide-react';
 import { Button } from './Button';
 
@@ -6,6 +7,7 @@ export interface ErrorStateProps {
   title?: string;
   message?: string;
   errorCode?: string;
+  retryHref?: string;
   onRetry?: () => void;
 }
 
@@ -13,6 +15,7 @@ export function ErrorState({
   title = 'Something went wrong',
   message = 'We could not load this case view. Your saved progress has not been lost.',
   errorCode,
+  retryHref,
   onRetry,
 }: ErrorStateProps) {
   return (
@@ -32,7 +35,18 @@ export function ErrorState({
           )}
         </div>
       </div>
-      {onRetry && (
+      {retryHref && (
+        <div className="pt-1">
+          <Link
+            href={retryHref}
+            className="inline-flex items-center justify-center font-medium transition-colors rounded-[var(--radius-control)] border border-border bg-surface text-foreground hover:bg-elevated text-xs px-3 py-1.5 min-h-[38px] cursor-pointer gap-1.5"
+          >
+            <RefreshCw className="w-3.5 h-3.5" />
+            <span>Try Again</span>
+          </Link>
+        </div>
+      )}
+      {!retryHref && onRetry && (
         <div className="pt-1">
           <Button size="sm" variant="outline" onClick={onRetry} className="gap-1.5 text-xs">
             <RefreshCw className="w-3.5 h-3.5" />
@@ -43,4 +57,3 @@ export function ErrorState({
     </div>
   );
 }
-

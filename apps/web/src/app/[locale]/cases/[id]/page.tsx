@@ -34,13 +34,13 @@ export default async function CaseOverviewPage({
             id: 'add_receipt',
             label: isBangla ? 'দ্বিতীয় রসিদ যোগ করুন (+৳৫০০)' : 'Add second receipt (+৳500)',
             primary: true,
-            onClick: () => {},
+            href: `/${locale}/cases/${id}/evidence`,
           },
           {
             id: 'edit_amount',
             label: isBangla ? 'টাকার পরিমাণ সংশোধন করুন' : 'Correct my amount',
             primary: false,
-            onClick: () => {},
+            href: `/${locale}/cases/${id}/review`,
           },
         ]}
       />
