@@ -8,7 +8,7 @@ Enforces T52:
 
 import datetime
 import uuid
-from typing import Any
+from typing import Any, ClassVar
 
 from fastapi import HTTPException, status
 from sqlalchemy import select
@@ -26,6 +26,143 @@ from app.scenarios.manifests import (
 
 
 class ScenarioService:
+    DETERMINISTIC_FIXTURE_MAP: ClassVar[dict[uuid.UUID, str]] = {
+        uuid.UUID("1887c4ed-99d6-44f2-9fb4-0c15e9d3287e"): "scenario_a",
+        uuid.UUID("2887c4ed-99d6-44f2-9fb4-0c15e9d3287f"): "scenario_b",
+        uuid.UUID("3887c4ed-99d6-44f2-9fb4-0c15e9d3287a"): "scenario_h",
+    }
+
+    @classmethod
+    async def ensure_deterministic_demo_case(
+        cls,
+        case_id: uuid.UUID,
+        db: AsyncSession,
+    ) -> Case | None:
+        """Idempotently ensures pre-seeded demo fixtures exist for Scenario A, B, and H."""
+        scenario_id = cls.DETERMINISTIC_FIXTURE_MAP.get(case_id)
+        if not scenario_id:
+            return None
+
+        stmt = select(Case).where(Case.id == case_id)
+        existing = (await db.execute(stmt)).scalar_one_or_none()
+        if existing:
+            return existing
+
+        manifest = get_scenario_manifest(scenario_id)
+        if not manifest:
+            return None
+
+        # Ensure synthetic principal exists
+        demo_principal_id = uuid.UUID("e6912376-465e-4b35-b142-a7f74f200bde")
+        stmt_p = select(Principal).where(Principal.id == demo_principal_id)
+        principal = (await db.execute(stmt_p)).scalar_one_or_none()
+        if not principal:
+            principal = Principal(id=demo_principal_id, kind="anonymous", locale="en-BD")
+            db.add(principal)
+            await db.flush()
+
+        now = datetime.datetime.now(datetime.UTC)
+        ref = f"DEMO-{manifest.scenario_letter}-001"
+
+        case = Case(
+            id=case_id,
+            principal_id=principal.id,
+            display_reference=ref,
+            title=manifest.title_en,
+            jurisdiction="BD",
+            locale="en-BD",
+            desired_outcomes=["full_refund"],
+            lifecycle_status="active",
+            consent_status="active",
+            is_demo=True,
+            incident_date=now.date().isoformat(),
+            merchant_name=manifest.merchant_name,
+            story_narrative=manifest.sample_story,
+            created_at=now,
+            updated_at=now,
+            row_version=1,
+        )
+        db.add(case)
+
+        event = CaseEvent(
+            id=uuid.uuid4(),
+            case_id=case_id,
+            principal_id=principal.id,
+            event_sequence=1,
+            event_type="case.created",
+            actor_type="consumer",
+            actor_id=principal.id,
+            schema_version=1,
+            payload={
+                "scenario_id": scenario_id,
+                "is_synthetic": True,
+                "scenario_letter": manifest.scenario_letter,
+            },
+            created_at=now,
+        )
+        db.add(event)
+
+        for field_name, value in manifest.initial_facts.items():
+            field_type = (
+                "boolean"
+                if isinstance(value, bool)
+                else ("number" if isinstance(value, (int, float)) else "string")
+            )
+            assertion = FactAssertion(
+                id=uuid.uuid4(),
+                case_id=case_id,
+                field_name=field_name,
+                field_type=field_type,
+                typed_value=value,
+                original_text=str(value),
+                origin="synthetic_scenario_manifest",
+                asserting_actor_id=principal.id,
+                created_case_version=1,
+                is_active=True,
+                created_at=now,
+            )
+            db.add(assertion)
+
+        samples = [
+            (
+                "bkash_statement_trx_receipt.png",
+                "image/png",
+                84200,
+                "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            ),
+            (
+                "whatsapp_merchant_chat_blocking.png",
+                "image/png",
+                65100,
+                "a1b2c3d4e5f67890123456789abcdef0123456789abcdef0123456789abcdef0",
+            ),
+        ]
+        for filename, mime, size, sha in samples:
+            ev_item = EvidenceItem(
+                id=uuid.uuid4(),
+                case_id=case_id,
+                principal_id=principal.id,
+                storage_kind="local_disk",
+                quarantine_path=f"quarantine/{case_id}/{filename}",
+                accepted_path=f"accepted/{case_id}/{filename}",
+                original_filename=filename,
+                declared_mime_type=mime,
+                detected_mime_type=mime,
+                byte_size=size,
+                sha256_hash=sha,
+                status="accepted",
+                is_quarantined=False,
+                upload_token=f"seed-{uuid.uuid4().hex}",
+                token_expires_at=now + datetime.timedelta(days=365),
+                intent_consumed=True,
+                created_at=now,
+            )
+            db.add(ev_item)
+
+        await db.commit()
+        await db.refresh(case)
+        return case
+
     @classmethod
     def list_scenarios(cls) -> list[SyntheticScenarioManifest]:
         return SCENARIO_MANIFESTS

@@ -20,7 +20,9 @@ from app.facts.schemas import (
 from app.identity.models import Principal
 
 DEMO_FIXTURE_IDS = {
-    uuid.UUID("1887c4ed-99d6-44f2-9fb4-0c15e9d3287e"),
+    uuid.UUID("1887c4ed-99d6-44f2-9fb4-0c15e9d3287e"),  # Scenario A (case_demo_phone)
+    uuid.UUID("2887c4ed-99d6-44f2-9fb4-0c15e9d3287f"),  # Scenario B (case_demo_mfs)
+    uuid.UUID("3887c4ed-99d6-44f2-9fb4-0c15e9d3287a"),  # Scenario H (case_demo_living)
     uuid.UUID("a5b13210-e0dc-461b-8233-f33c98d45489"),
 }
 
@@ -34,6 +36,10 @@ class FactService:
         db: AsyncSession,
     ) -> Case:
         """Enforces tenant isolation: owner-based access only. Non-enumerating 404 for foreign cases."""
+        if case_id in DEMO_FIXTURE_IDS:
+            from app.scenarios.service import ScenarioService
+            await ScenarioService.ensure_deterministic_demo_case(case_id, db)
+
         stmt = select(Case).where(
             Case.id == case_id,
             (Case.principal_id == principal.id)

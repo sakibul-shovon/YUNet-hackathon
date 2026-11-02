@@ -1,13 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 const BACKEND_API_URL = process.env.BACKEND_API_URL || 'http://127.0.0.1:8000';
-const DEMO_CASE_UUID = '1887c4ed-99d6-44f2-9fb4-0c15e9d3287e';
+const DEMO_SLUG_MAP: Record<string, string> = {
+  case_demo_phone: '1887c4ed-99d6-44f2-9fb4-0c15e9d3287e',
+  case_demo_mfs: '2887c4ed-99d6-44f2-9fb4-0c15e9d3287f',
+  case_demo_living: '3887c4ed-99d6-44f2-9fb4-0c15e9d3287a',
+};
 
 async function handleProxy(req: NextRequest, { params }: { params: Promise<{ path: string[] }> }) {
   const { path } = await params;
 
-  // Map known synthetic demo slug 'case_demo_phone' to its seeded UUID fixture
-  const mappedPath = path.map((segment) => (segment === 'case_demo_phone' ? DEMO_CASE_UUID : segment));
+  // Map known synthetic demo slugs to their deterministic UUID fixtures
+  const mappedPath = path.map((segment) => DEMO_SLUG_MAP[segment] || segment);
   const targetPath = mappedPath.join('/');
 
   // If path begins with 'auth/', route directly to /auth/ (identity router root)

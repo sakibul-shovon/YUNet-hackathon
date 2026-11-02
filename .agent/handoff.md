@@ -13,10 +13,19 @@
   - **P08 (Complete Proof-to-Path and Multi-Issue Reasoning):** 100% COMPLETE & VERIFIED (`5779d8e7dc492bd7c13041eea11bed3b40f5c8dd`)
   - **Major User Upgrade (UI Fixes, AI Copilot, Scam Radar, Community Forum & Realistic Evidence):** 100% COMPLETE & VERIFIED
   - **Consumer Resolution Dashboard & Full Dynamic Data Pipeline (P17 Upgrade):** 100% COMPLETE & VERIFIED
+  - **Deterministic Multi-Scenario Fixtures & Slug Routing Engine (P18 Upgrade):** 100% COMPLETE & VERIFIED
 - **Active Dev Services:**
   - Next.js Web: `http://localhost:3000`
   - FastAPI Backend: `http://127.0.0.1:8000`
   - Verification: Foundation (`tasks.py check --scope foundation`) PASS, Core (`tasks.py check --scope core`) 134/134 PASS.
+
+## Newly Delivered Features & Modules (P18)
+1. **Deterministic Multi-Scenario Slug Routing & Fixture Provisioning:**
+   - **Root Cause Fixed:** Resolved 422 Unprocessable Entity error when navigating to `/cases/case_demo_living/paths` or `/cases/case_demo_mfs/paths` where alphanumeric slugs were rejected by FastAPI UUID path params.
+   - **Proxy Resolution Map:** Configured `apps/web/src/app/api/v1/[...path]/route.ts` with `DEMO_SLUG_MAP` translating `case_demo_phone`, `case_demo_mfs`, and `case_demo_living` to deterministic UUIDs (`1887c4ed-99d6-44f2-9fb4-0c15e9d3287e`, `2887c4ed-99d6-44f2-9fb4-0c15e9d3287f`, and `3887c4ed-99d6-44f2-9fb4-0c15e9d3287a`).
+   - **Backend On-Demand Guarantee:** Implemented `ScenarioService.ensure_deterministic_demo_case()` in `services/backend/app/scenarios/service.py` and hooked it into `CaseService.get_case_by_id`, `FactService.get_authorized_case`, and `CaseService.get_case_events` so any query automatically provisions the case with its initial facts, timeline events, and evidence items without 404 or 422 errors.
+   - **Idempotent DB Seeding:** Updated `scripts/seed_demo.py` to seed Scenario A, B, and H fixtures permanently in the SQLite database.
+   - **Comprehensive Verification:** Tested live with client authentication across `/assessment`, `/facts`, `/actions/dag`, and `/activity`, verifying 100% HTTP 200 responses with full procedural routes and traces.
 
 ## Newly Delivered Features & Modules (P17)
 1. **Consumer Resolution Dashboard (`/cases` & `ConsumerDashboardClient.tsx`):**
