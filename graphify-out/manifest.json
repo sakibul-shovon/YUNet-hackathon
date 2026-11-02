@@ -96,8 +96,8 @@
     "semantic_hash": "02c186df223c8933d3a20d3e9be74d8e"
   },
   "apps/web/src/app/[locale]/cases/page.tsx": {
-    "mtime": 1793627046.1495085,
-    "seen": 1793627443.840928,
+    "mtime": 1793628151.7755537,
+    "seen": 1793629115.2547824,
     "ast_hash": "d274e9da0c2ee61dd5205ae65475235e",
     "semantic_hash": ""
   },
@@ -174,8 +174,8 @@
     "semantic_hash": "93870bed2241125c2823b00b4a245b33"
   },
   "apps/web/src/components/cases/ActionDraftViewer.tsx": {
-    "mtime": 1793627112.2060618,
-    "seen": 1793627443.840928,
+    "mtime": 1793628152.7148416,
+    "seen": 1793629115.2610767,
     "ast_hash": "74a850f7a6723d23f8393bd7998a8558",
     "semantic_hash": ""
   },
@@ -246,8 +246,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/paths/WhyWhyNotTraceView.tsx": {
-    "mtime": 1793627030.1920805,
-    "seen": 1793627443.840928,
+    "mtime": 1793628153.8296087,
+    "seen": 1793629115.2610767,
     "ast_hash": "82c4ab11c720d34638a69261f4046f7b",
     "semantic_hash": ""
   },
@@ -1530,9 +1530,9 @@
     "semantic_hash": ""
   },
   ".agent/handoff.md": {
-    "mtime": 1793623840.876833,
-    "seen": 1793627443.840928,
-    "ast_hash": "7b8c55291438b793f6206024bee5fa06",
+    "mtime": 1793629035.1677954,
+    "seen": 1793629115.2610767,
+    "ast_hash": "107327617f7745486f5b6e4bbb2c75c4",
     "semantic_hash": ""
   },
   ".github/copilot-instructions.md": {
@@ -1896,8 +1896,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/ai/DemandNoticeStudio.tsx": {
-    "mtime": 1793627144.3897853,
-    "seen": 1793627443.840928,
+    "mtime": 1793628152.3511267,
+    "seen": 1793629115.2610767,
     "ast_hash": "34f4b90d59225bcd0ccf309b3a4345cd",
     "semantic_hash": ""
   },
@@ -1944,8 +1944,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/cases/DynamicCaseOverview.tsx": {
-    "mtime": 1793627083.2368672,
-    "seen": 1793627443.840928,
+    "mtime": 1793628153.1039162,
+    "seen": 1793629115.2610767,
     "ast_hash": "2293940d85bb256e3376d778dda3e1a6",
     "semantic_hash": ""
   },
@@ -2052,8 +2052,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/dashboard/ConsumerDashboardClient.tsx": {
-    "mtime": 1793627069.3359416,
-    "seen": 1793627443.840928,
+    "mtime": 1793628153.383744,
+    "seen": 1793629115.2610767,
     "ast_hash": "2af49186776873d5bf42519a9c76905f",
     "semantic_hash": ""
   },
@@ -2064,8 +2064,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/merchants/MerchantRiskSearchWidget.tsx": {
-    "mtime": 1793627245.3255494,
-    "seen": 1793627443.840928,
+    "mtime": 1793628153.539654,
+    "seen": 1793629115.2610767,
     "ast_hash": "8389dcab767197c2ea3cbbe6a5344ab4",
     "semantic_hash": ""
   },
@@ -2073,6 +2073,18 @@
     "mtime": 1793608261.8931267,
     "seen": 1793614526.1341069,
     "ast_hash": "8c5e484c5f967e6fa5048273033198ed",
+    "semantic_hash": ""
+  },
+  "README.md": {
+    "mtime": 1793628927.1649635,
+    "seen": 1793629115.2610767,
+    "ast_hash": "fd2caaf5c4861042fdae265f898c360a",
+    "semantic_hash": ""
+  },
+  "docs/COMPLETE_SYSTEM_MANUAL.md": {
+    "mtime": 1793628961.512495,
+    "seen": 1793629115.2610767,
+    "ast_hash": "f172b5ad62ff35fee29d708f8faa206f",
     "semantic_hash": ""
   },
   "pnpm-lock.yaml": {
