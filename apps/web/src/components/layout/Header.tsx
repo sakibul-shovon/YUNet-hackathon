@@ -79,8 +79,13 @@ export function Header({ locale, labels }: HeaderProps) {
               <Link href={`/${locale}/scenarios`} className="hover:text-foreground transition-colors px-2 py-1">
                 {labels.scenarios}
               </Link>
-              <Link href={`/${locale}/cases`} className="hover:text-foreground transition-colors px-2 py-1">
-                {labels.cases || 'My Cases'}
+              <Link
+                href={`/${locale}/cases`}
+                className="hover:text-foreground transition-all px-3 py-1.5 text-primary font-bold flex items-center gap-1.5 bg-primary/10 rounded-lg border border-primary/25 shadow-2xs hover:bg-primary/20"
+                title={locale === 'bn' ? 'ভোক্তা অধিকার সমাধান ড্যাশবোর্ড' : 'Consumer Resolution Dashboard'}
+              >
+                <span>📊</span>
+                <span>{locale === 'bn' ? 'ড্যাশবোর্ড' : 'Dashboard'}</span>
               </Link>
               <Link
                 href={`/${locale}/admin`}

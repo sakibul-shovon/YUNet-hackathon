@@ -79,6 +79,13 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             <ArrowRight className="w-4 h-4" />
           </Link>
           <Link
+            href={`/${locale}/cases`}
+            className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-[var(--radius-control)] border-2 border-primary/40 bg-primary/10 text-primary font-bold hover:bg-primary/20 transition-all text-base min-h-[48px] shadow-2xs"
+          >
+            <span>📊</span>
+            <span>{locale === 'bn' ? 'ভোক্তা সমাধান ড্যাশবোর্ড' : 'Consumer Dashboard'}</span>
+          </Link>
+          <Link
             href={`/${locale}/scenarios`}
             className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-[var(--radius-control)] border border-border bg-surface font-semibold hover:bg-elevated transition-colors text-base min-h-[48px]"
           >

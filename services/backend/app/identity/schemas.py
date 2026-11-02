@@ -90,5 +90,6 @@ class AuthUserOut(BaseModel):
     full_name: str
     phone: str | None = None
     is_demo_judge: bool = False
+    roles: list[str] = Field(default_factory=list)
     access_token: str | None = None
     token_type: str = "bearer"

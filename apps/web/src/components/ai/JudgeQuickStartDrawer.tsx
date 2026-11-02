@@ -198,6 +198,17 @@ export function JudgeQuickStartDrawer({ locale = 'en' }: JudgeQuickStartDrawerPr
               {/* 3. Executive Shortcuts */}
               <div className="grid grid-cols-2 gap-2">
                 <Link
+                  href={`/${locale}/cases`}
+                  onClick={() => setIsOpen(false)}
+                  className="p-2.5 rounded-xl border border-primary/30 bg-primary/10 hover:bg-primary/20 transition text-xs font-bold text-primary flex items-center justify-between col-span-2"
+                >
+                  <span className="flex items-center gap-1.5">
+                    <span>📊</span>
+                    <span>Consumer Resolution Dashboard (ভোক্তা অধিকার সমাধান ড্যাশবোর্ড)</span>
+                  </span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+                <Link
                   href={`/${locale}/admin`}
                   onClick={() => setIsOpen(false)}
                   className="p-2.5 rounded-xl border border-border bg-elevated/40 hover:bg-elevated transition text-xs font-semibold text-foreground flex items-center justify-between"

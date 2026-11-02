@@ -17,6 +17,7 @@ async function handleProxy(req: NextRequest, { params }: { params: Promise<{ pat
   const headers = new Headers(req.headers);
   headers.set('host', new URL(BACKEND_API_URL).host);
   headers.delete('content-length');
+  headers.delete('expect');
 
   const correlationId = req.headers.get('x-correlation-id') || crypto.randomUUID();
   headers.set('x-correlation-id', correlationId);
@@ -58,6 +59,7 @@ async function handleProxy(req: NextRequest, { params }: { params: Promise<{ pat
 
     return res;
   } catch (err: any) {
+    console.error('handleProxy fetch error:', err);
     return NextResponse.json(
       {
         error: {

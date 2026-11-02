@@ -109,19 +109,21 @@ export function AdminDashboardClient({ locale }: AdminDashboardClientProps) {
     }
   };
 
-  const handleLogin = async (e?: React.FormEvent) => {
+  const handleLogin = async (e?: React.FormEvent, customEmail?: string, customPass?: string) => {
     if (e) e.preventDefault();
     setIsLoggingIn(true);
     setLoginError(null);
+    const emailToUse = (customEmail ?? loginEmail).trim().toLowerCase();
+    const passToUse = customPass ?? loginPassword;
     try {
       const res = await fetch('/api/v1/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: loginEmail, password: loginPassword }),
+        body: JSON.stringify({ email: emailToUse, password: passToUse }),
       });
       const data = await res.json();
       if (!res.ok) {
-        setLoginError(data.detail?.error?.message || 'Login failed. Check credentials.');
+        setLoginError(data.detail?.error?.message || data.detail || 'Login failed. Check credentials.');
         return;
       }
       localStorage.setItem('cc_token', data.access_token);
@@ -378,7 +380,7 @@ export function AdminDashboardClient({ locale }: AdminDashboardClientProps) {
                   onClick={() => {
                     setLoginEmail('admin@claimcraft.bd');
                     setLoginPassword('Admin@ClaimCraft2026!');
-                    handleLogin();
+                    handleLogin(undefined, 'admin@claimcraft.bd', 'Admin@ClaimCraft2026!');
                   }}
                   className="px-4 font-semibold text-primary border-primary/30 hover:bg-primary/5"
                   title="1-Click Fill & Login"

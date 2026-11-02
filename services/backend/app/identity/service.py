@@ -377,15 +377,54 @@ class IdentityService:
     ) -> AuthUserOut:
         """Logs in an existing user with email and password."""
         now = datetime.datetime.now(datetime.UTC)
-        stmt = select(UserAccount).where(UserAccount.email == req.email.strip().lower())
+        email_clean = req.email.strip().lower()
+        stmt = select(UserAccount).where(UserAccount.email == email_clean)
         res = await db.execute(stmt)
         user = res.scalar_one_or_none()
+
+        # On-demand bootstrap for provisioned super admin account
+        if not user and email_clean == "admin@claimcraft.bd" and req.password == "Admin@ClaimCraft2026!":
+            admin_principal = Principal(
+                id=uuid.uuid4(),
+                kind="permanent",
+                locale="en-BD",
+                consent_revision=1,
+            )
+            db.add(admin_principal)
+            await db.flush()
+
+            for r_name in ["admin", "reviewer", "publisher", "consumer"]:
+                db.add(
+                    ActorRole(
+                        id=uuid.uuid4(),
+                        principal_id=admin_principal.id,
+                        role=r_name,
+                        grant_origin="bootstrap_seed",
+                        scope="global",
+                    )
+                )
+
+            user = UserAccount(
+                id=uuid.uuid4(),
+                principal_id=admin_principal.id,
+                email="admin@claimcraft.bd",
+                full_name="Super Administrator (ClaimCraft Ops)",
+                phone="+8801800000000",
+                password_hash=hash_password("Admin@ClaimCraft2026!"),
+                is_demo_judge=False,
+            )
+            db.add(user)
+            await db.commit()
 
         if not user or not verify_password(req.password, user.password_hash):
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Invalid email or password. Please verify and try again.",
             )
+
+        role_stmt = select(ActorRole.role).where(ActorRole.principal_id == user.principal_id)
+        role_res = await db.execute(role_stmt)
+        user_roles = [r for r in role_res.scalars().all()]
 
         raw_session_token = generate_session_token()
         session_hash = hash_session_token(raw_session_token)
@@ -419,6 +458,7 @@ class IdentityService:
             full_name=user.full_name,
             phone=user.phone,
             is_demo_judge=user.is_demo_judge,
+            roles=user_roles,
             access_token=access_jwt,
         )
 
@@ -531,6 +571,9 @@ class IdentityService:
         user = res.scalar_one_or_none()
 
         if user:
+            role_stmt = select(ActorRole.role).where(ActorRole.principal_id == user.principal_id)
+            role_res = await db.execute(role_stmt)
+            user_roles = [r for r in role_res.scalars().all()]
             return AuthUserOut(
                 logged_in=True,
                 principal_id=principal.id,
@@ -538,6 +581,7 @@ class IdentityService:
                 full_name=user.full_name,
                 phone=user.phone,
                 is_demo_judge=user.is_demo_judge,
+                roles=user_roles,
             )
         return AuthUserOut(
             logged_in=False,
