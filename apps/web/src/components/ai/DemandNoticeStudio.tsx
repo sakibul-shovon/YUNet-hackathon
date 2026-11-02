@@ -14,70 +14,81 @@ interface DemandNoticeStudioProps {
 
 type ToneType = 'formal' | 'urgent' | 'amicable';
 
-const TEMPLATES: Record<ToneType, { label: string; badge: string; text: string }> = {
-  formal: {
-    label: '⚖️ Formal Statutory (DNCRP Compliant)',
-    badge: 'Recommended Legal Standard',
-    text: `FORMAL LEGAL DEMAND NOTICE
+function getNoticeTemplates(vars: {
+  merchantName: string;
+  amountBdt: number;
+  itemDescription: string;
+  caseReference: string;
+  dateStr: string;
+}): Record<ToneType, { label: string; badge: string; text: string }> {
+  const { merchantName, amountBdt, itemDescription, caseReference, dateStr } = vars;
+  const formattedAmt = `BDT ${amountBdt.toLocaleString('en-US')}.00`;
+
+  return {
+    formal: {
+      label: '⚖️ Formal Statutory (DNCRP Compliant)',
+      badge: 'Recommended Legal Standard',
+      text: `FORMAL LEGAL DEMAND NOTICE
 Under Section 45 & 53 of the Consumer Rights Protection Act, 2009
 
-Date: 02 November 2026
-To: The Authorized Representative, Gadget Palace BD
+Date: ${dateStr}
+To: The Authorized Representative, ${merchantName}
 
-Subject: Final demand for settlement regarding non-delivery of prepaid goods (Order #GP-9920)
+Subject: Final demand for settlement regarding non-delivery of prepaid goods (Ref #${caseReference})
 
 Dear Sir/Madam,
 
-On 15 October 2026, the undersigned consumer remitted BDT 3,200.00 via verified bKash MFS transfer (TrxID: BL9X882KZP) for the purchase of "Samsung Galaxy Watch5". The promised delivery deadline expired on 18 October 2026.
+The undersigned consumer remitted ${formattedAmt} via verified digital payment for the purchase of "${itemDescription}". The promised delivery deadline has expired without resolution.
 
 Despite repeated communications, you have failed to deliver the purchased item or issue a full refund, constituting an unlawful trade practice under Section 45 of the Consumer Rights Protection Act, 2009.
 
-You are hereby formally requested to refund the entire disputed sum of BDT 3,200.00 within seven (7) business days from the receipt of this notice. Failure to do so will result in formal complaint escalation to the National Consumer Rights Protection Directorate (DNCRP) and relevant regulatory bodies without further notice.
+You are hereby formally requested to refund the entire disputed sum of ${formattedAmt} within seven (7) business days from the receipt of this notice. Failure to do so will result in formal complaint escalation to the National Consumer Rights Protection Directorate (DNCRP) and relevant regulatory bodies without further notice.
 
 Yours faithfully,
-Aggrieved Consumer (ClaimCraft BD Verified Dossier)`,
-  },
-  urgent: {
-    label: '⚡ Strict & Urgent (72-Hour Pre-Action)',
-    badge: 'High Pressure / Escrow Freeze Warning',
-    text: `LEGAL NOTICE OF INTENT TO ESCALATE — 72-HOUR NOTICE
+Aggrieved Consumer (ClaimCraft BD Verified Dispute #${caseReference})`,
+    },
+    urgent: {
+      label: '⚡ Strict & Urgent (72-Hour Pre-Action)',
+      badge: 'High Pressure / Escrow Freeze Warning',
+      text: `LEGAL NOTICE OF INTENT TO ESCALATE — 72-HOUR NOTICE
 Pursuant to Bangladesh Penal Code Section 420 and Consumer Rights Protection Act 2009
 
-To: Gadget Palace BD
-Merchant Reference: Order #GP-9920 | Disputed Sum: BDT 3,200.00
+To: ${merchantName}
+Merchant Reference: #${caseReference} | Disputed Sum: ${formattedAmt}
 
-TAKE NOTICE that your failure to deliver the ordered merchandise or provide refund constitutes willful breach and unjust enrichment.
+TAKE NOTICE that your failure to deliver the ordered merchandise ("${itemDescription}") or provide refund constitutes willful breach and unjust enrichment.
 
-Unless the complete sum of BDT 3,200.00 is refunded to the originating bKash account within seventy-two (72) hours of this communication, formal complaints will be initiated with:
+Unless the complete sum of ${formattedAmt} is refunded to the originating payment account within seventy-two (72) hours of this communication, formal complaints will be initiated with:
 1. Directorate of National Consumer Rights Protection (DNCRP) for punitive administrative fines.
 2. Bangladesh Bank Payment Systems Department for merchant wallet review.
 3. Cyber Police Centre for digital commerce fraudulent non-delivery tracking.
 
 Consider this our final pre-action communication before formal docketing.`,
-  },
-  amicable: {
-    label: '🤝 Settlement Negotiation (Good Faith)',
-    badge: 'Bilateral Amicable Resolution',
-    text: `REQUEST FOR RESOLUTION & MUTUAL SETTLEMENT
+    },
+    amicable: {
+      label: '🤝 Settlement Negotiation (Good Faith)',
+      badge: 'Bilateral Amicable Resolution',
+      text: `REQUEST FOR RESOLUTION & MUTUAL SETTLEMENT
 
-To: Customer Care Management, Gadget Palace BD
-Re: Order #GP-9920 (Payment BDT 3,200.00 on 15 Oct 2026)
+To: Customer Care Management, ${merchantName}
+Re: Case #${caseReference} (Disputed Sum ${formattedAmt})
 
 Dear Management,
 
-I am writing regarding my recent order for a Samsung Galaxy Watch5, which has not arrived past the agreed schedule. I understand that courier delays occasionally happen, but after waiting over two weeks, I kindly request an amicable cancellation of the order and a prompt refund of BDT 3,200.00 to my bKash account.
+I am writing regarding my recent order for "${itemDescription}", which has not arrived past the agreed schedule. I understand that courier delays occasionally happen, but after waiting, I kindly request an amicable cancellation of the order and a prompt refund of ${formattedAmt} to my account.
 
 I appreciate your past service and hope we can resolve this matter directly between consumer and merchant within the next 3 days, avoiding the need for third-party regulatory dispute filings.
 
 Thank you for your prompt attention.`,
-  },
-};
+    },
+  };
+}
 
 export function DemandNoticeStudio({
   caseReference = 'DEMO-GP-001',
-  merchantName = 'Gadget Palace BD',
-  amountBdt = 3200,
-  itemDescription = 'Samsung Galaxy Watch5',
+  merchantName = 'Authorized Merchant',
+  amountBdt = 2500,
+  itemDescription = 'Prepaid Goods / Services',
   className = '',
 }: DemandNoticeStudioProps) {
   const [currentTone, setCurrentTone] = useState<ToneType>('formal');
@@ -87,8 +98,22 @@ export function DemandNoticeStudio({
   const [merchantPhone, setMerchantPhone] = useState('');
   const [showPhoneInput, setShowPhoneInput] = useState(false);
 
+  const dateStr = new Intl.DateTimeFormat('en-GB', {
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric',
+  }).format(new Date());
+
+  const templates = getNoticeTemplates({
+    merchantName,
+    amountBdt,
+    itemDescription,
+    caseReference,
+    dateStr,
+  });
+
   const handleWhatsAppSend = () => {
-    const rawText = TEMPLATES[currentTone].text;
+    const rawText = templates[currentTone].text;
     const cleanPhone = merchantPhone.replace(/[^0-9]/g, '');
     const url = cleanPhone
       ? `https://wa.me/${cleanPhone.startsWith('88') ? cleanPhone : '88' + cleanPhone}?text=${encodeURIComponent(rawText)}`
@@ -100,7 +125,7 @@ export function DemandNoticeStudio({
 
   // Typewriter streaming effect when tone changes
   useEffect(() => {
-    const fullText = TEMPLATES[currentTone].text;
+    const fullText = templates[currentTone].text;
     setIsStreaming(true);
     setDisplayedText('');
 
@@ -117,10 +142,10 @@ export function DemandNoticeStudio({
     }, 18);
 
     return () => clearInterval(interval);
-  }, [currentTone]);
+  }, [currentTone, merchantName, amountBdt, itemDescription, caseReference]);
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(TEMPLATES[currentTone].text);
+    navigator.clipboard.writeText(templates[currentTone].text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2500);
   };
@@ -170,9 +195,9 @@ export function DemandNoticeStudio({
       {/* Editor Canvas */}
       <div className="p-5 bg-slate-950/5 dark:bg-slate-950/40 relative">
         <div className="flex justify-between items-center pb-2 text-[11px] text-muted-foreground font-mono">
-          <span>Tone: <strong>{TEMPLATES[currentTone].label}</strong></span>
+          <span>Tone: <strong>{templates[currentTone].label}</strong></span>
           <span className="text-emerald-600 dark:text-emerald-400 font-bold">
-            {TEMPLATES[currentTone].badge}
+            {templates[currentTone].badge}
           </span>
         </div>
 

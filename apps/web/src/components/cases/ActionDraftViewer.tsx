@@ -148,7 +148,7 @@ export function ActionDraftViewer({ caseId, initialLocale }: ActionDraftViewerPr
         <CardContent className="pt-4 space-y-6">
           {/* AI Generative Tone & Streaming Studio */}
           <DemandNoticeStudio
-            merchantName={draft?.recipient || 'Gadget Palace BD'}
+            merchantName={draft?.recipient || (isBangla ? 'সংশ্লিষ্ট মার্চেন্ট' : 'Authorized Merchant Representative')}
             caseReference={caseId}
           />
 

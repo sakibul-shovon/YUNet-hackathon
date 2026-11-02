@@ -49,8 +49,13 @@ ClaimCraft BD is an agentic, Bangladesh-first consumer resolution copilot design
 
 ---
 
-## 3. Advanced Realistic Consumer Protection Tools
+## 3. Advanced Realistic Consumer Protection Tools & Dashboard
 
+- **Consumer Resolution Dashboard (`/cases`):**
+  - **Financial Recovery Scorecard:** 4 live KPIs tracking Total Money at Stake (দাবিকৃত মোট টাকা), Successfully Recovered Funds, Active Disputes, and Potential Section 76(1) 25% Government Fine Reward.
+  - **Personal Complainant Profile & Smart NID Vault:** One-time profile setup storing Name, Phone, NID, and Address in secure local storage—automatically pre-filling all formal petitions and eliminating mock or hardcoded templates.
+  - **4-Stage Visual Lifecycle Stepper:** Tracks disputes across Evidence Lockdown ➔ Legal Notice ➔ DNCRP Form ➔ Resolution.
+  - **Urgent Section 60 Watchdog Center:** Flags claims nearing 30 days with direct 1-click official form generation.
 - **1-Click WhatsApp Legal Notice Dispatcher:** Instant pre-action legal notice sent directly to the merchant's WhatsApp with Section 45 citations and a 48-hour refund ultimatum.
 - **Instant Merchant Scam & Risk Checker:** Homepage hero search bar evaluating real-time risk scores (0-100) and indexed complaints before paying advance money.
 - **Collective Consumer Class-Action Hub:** On `/merchants`, view consolidated petitions on repeat offender merchants (e.g. Gadget Zone BD with 14 victims and ৳84,500 aggregate damages), with 1-click joint DNCRP memo generation.

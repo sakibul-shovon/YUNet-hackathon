@@ -48,8 +48,8 @@ const DEFAULT_NODES: DAGNode[] = [
     timelineEn: 'Day 0 • Completed',
     timelineBn: 'দিন ০ • সম্পন্ন',
     statutoryBasis: 'Section 45 & ISO/IEC 27037 Digital Forensics',
-    descriptionEn: 'MFS bKash transaction TrxID BL9X882KZP cross-referenced against Steadfast tracking slip and WhatsApp merchant blocking screenshot.',
-    descriptionBn: 'বিকাশ লেনদেন TrxID, স্টেডফাস্ট কুরিয়ার স্লিপ এবং হোয়াটসঅ্যাপে ব্লক করার স্ক্রিনশট ফরেনসিক এআই দ্বারা যাচাইকৃত।',
+    descriptionEn: 'MFS transaction statement and digital payment receipt cross-referenced against logistics tracking slip and merchant communications.',
+    descriptionBn: 'ডিজিটাল লেনদেন রসিদ, কুরিয়ার ট্র্যাকিং চালান এবং বিক্রেতার সাথে চ্যাট ইতিহাস ফরেনসিক এআই দ্বারা যাচাইকৃত।',
     deliverablesEn: [
       'Digital Tamper-Proof Audit Manifest',
       'Fact Assertion Matrix (3 assertions grounded)',

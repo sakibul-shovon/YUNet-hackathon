@@ -43,8 +43,8 @@ const DEFAULT_AGENTS: SwarmAgent[] = [
     role: 'Document & Tamper Auditor',
     roleBn: 'ডকুমেন্ট ও পেমেন্ট অডিটর',
     status: 'verified',
-    summary: 'Matched ৳3,200.00 across bKash MFS TrxID BL9X882KZP and invoice',
-    summaryBn: 'বিকাশ স্লিপ ও ইনভয়েসের মধ্যে ৩,২০০ টাকার ১০০% মিল পাওয়া গেছে',
+    summary: 'Forensic reconciliation verified across digital payment statement and merchant invoice',
+    summaryBn: 'পেমেন্ট স্টেটমেন্ট ও মার্চেন্ট ইনভয়েসের ডিজিটাল সত্যতা এবং ফরেনসিক অডিট সম্পন্ন',
     metric: '0.00 BDT Discrepancy',
     icon: Scan,
     accentColor: 'text-emerald-500 bg-emerald-500/10 border-emerald-500/20',
@@ -118,17 +118,34 @@ interface MultiAgentSwarmBarProps {
   agents?: SwarmAgent[];
   locale?: string;
   className?: string;
+  disputedAmount?: number;
+  trxId?: string;
 }
 
 export function MultiAgentSwarmBar({
   agents = DEFAULT_AGENTS,
   locale = 'en',
   className = '',
+  disputedAmount,
+  trxId,
 }: MultiAgentSwarmBarProps) {
   const isBangla = locale === 'bn';
   const [selectedAgentId, setSelectedAgentId] = useState<string | null>(null);
 
-  const selectedAgent = agents.find((a) => a.id === selectedAgentId);
+  const resolvedAgents = (agents || DEFAULT_AGENTS).map((agent) => {
+    if (agent.id === 'forensic' && (disputedAmount || trxId)) {
+      const amtStr = disputedAmount ? `৳${disputedAmount.toLocaleString(isBangla ? 'bn-BD' : 'en-US')}` : '৳—';
+      const refStr = trxId || 'Payment Ref';
+      return {
+        ...agent,
+        summary: `Matched ${amtStr} across payment reference (${refStr}) and seller invoice`,
+        summaryBn: `পেমেন্ট রসিদ (${refStr}) ও ইনভয়েসের মধ্যে ${amtStr} টাকার শতভাগ মিল নিশ্চিত`,
+      };
+    }
+    return agent;
+  });
+
+  const selectedAgent = resolvedAgents.find((a) => a.id === selectedAgentId);
 
   return (
     <div
@@ -165,7 +182,7 @@ export function MultiAgentSwarmBar({
 
       {/* 4 Agent Cards Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-border">
-        {agents.map((agent) => {
+        {resolvedAgents.map((agent) => {
           const Icon = agent.icon;
           const isSelected = selectedAgentId === agent.id;
 

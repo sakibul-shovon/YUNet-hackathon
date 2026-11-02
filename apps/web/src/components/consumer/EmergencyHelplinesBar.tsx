@@ -100,9 +100,9 @@ const HELPLINES: HelplineItem[] = [
 
 export function EmergencyHelplinesBar({
   locale = 'en',
-  disputedTrxId = 'BL9X882KZP',
-  disputedAmount = 3200,
-  merchantName = 'Gadget Zone BD',
+  disputedTrxId = 'TRX-REF-PENDING',
+  disputedAmount = 2500,
+  merchantName = 'অনির্দিষ্ট অনলাইন মার্চেন্ট',
   className,
 }: {
   locale?: string;

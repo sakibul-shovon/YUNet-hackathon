@@ -31,7 +31,11 @@ ClaimCraft BD guides consumers through a clear, transparent journey with real-wo
    The pipeline extracts key facts (dates, transaction IDs, counterparty names, monetary values) with pixel/character-level provenance bounding boxes. Discrepancies between narrated totals and receipts are detected and highlighted for user review.
 3. **Attributable Procedural Route Assessment:**
    Instead of letting an LLM guess legal eligibility, ClaimCraft BD executes a verified **3-valued Kleene policy engine** bound to authoritative Bangladesh gazettes (CRPA 2009, BB Circulars, BTRC Directives, IDRA Regulations). If facts are missing, it asks targeted Next Best Questions (NBQ) rather than guessing.
-4. **Action Studio & 1-Click Real-World Dispatch:**
+4. **Comprehensive Consumer Resolution Dashboard & Profile Vault:**
+   - **Financial Recovery Scorecard:** Live tracking of total disputed funds (দাবিকৃত মোট টাকা), successfully recovered amounts, active disputes, and potential Section 76(1) 25% government fine bounties.
+   - **Complainant Profile & Smart NID Sync:** One-time profile setup that auto-injects real complainant credentials across all formal legal notices, official forms, and courier memos—eliminating hardcoded mock data.
+   - **4-Stage Visual Lifecycle Stepper:** Instant visibility into whether a dispute is in Evidence Lockdown, Legal Notice, DNCRP Docketing, or Resolution.
+5. **Action Studio & 1-Click Real-World Dispatch:**
    - **1-Click WhatsApp Legal Notice:** Formatted Bengali pre-action legal notice citing Section 45 with a 48-hour ultimatum, sent directly to merchant WhatsApp chats.
    - **DNCRP Schedule-1 (ফরম-১) Dossier:** Official government complaint pack ready for 1-click A4 printing or direct email dispatch to `complaint@dncrp.gov.bd`.
    - **Section 60 Statutory 30-Day Watchdog:** Real-time animated limitation countdown preventing claims from expiring.

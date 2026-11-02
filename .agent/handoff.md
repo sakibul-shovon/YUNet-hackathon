@@ -12,13 +12,25 @@
   - **P07 (Genuine Hybrid Retrieval & Exact Citations):** 100% COMPLETE & VERIFIED (`1129970e554268f7fe2ffe8575009fa6450b1a5b`)
   - **P08 (Complete Proof-to-Path and Multi-Issue Reasoning):** 100% COMPLETE & VERIFIED (`5779d8e7dc492bd7c13041eea11bed3b40f5c8dd`)
   - **Major User Upgrade (UI Fixes, AI Copilot, Scam Radar, Community Forum & Realistic Evidence):** 100% COMPLETE & VERIFIED
+  - **Consumer Resolution Dashboard & Full Dynamic Data Pipeline (P17 Upgrade):** 100% COMPLETE & VERIFIED
 - **Active Dev Services:**
   - Next.js Web: `http://localhost:3000`
   - FastAPI Backend: `http://127.0.0.1:8000`
   - Verification: Foundation (`tasks.py check --scope foundation`) PASS, Core (`tasks.py check --scope core`) 134/134 PASS.
 
-## Newly Delivered Features & Modules
-1. **Super Admin Oversight Command Center (P16 Upgrade):**
+## Newly Delivered Features & Modules (P17)
+1. **Consumer Resolution Dashboard (`/cases` & `ConsumerDashboardClient.tsx`):**
+   - **Financial Recovery Scorecard:** 4 live KPIs calculating Total Money at Stake (দাবিকৃত মোট টাকা), Recovered Funds, Active In-Progress Disputes, and Section 76(1) Potential 25% Government Fine Reward.
+   - **Personal Complainant Profile & Smart NID Vault:** Integrated profile editor with instant LocalStorage sync (`claimcraft_user_profile`), auto-populating Name, Phone, NID, and Address across all legal petitions, PDFs, and notices.
+   - **4-Stage Visual Lifecycle Stepper:** Visual tracking per claim (`1. Evidence Locked` -> `2. Legal Notice Sent` -> `3. DNCRP Form Ready` -> `4. Resolved / Refunded`).
+   - **Urgent Section 60 Limitation Watchdog:** Real-time countdown highlighting cases approaching 30 days with direct 1-click DNCRP petition generation.
+   - **Quick Resolution Toolkit:** 1-Click shortcuts to DNCRP 16121 Hotline, Merchant Scam Radar, CRPA 2009 Gazette, and New Guided Intake.
+2. **Complete Elimination of Hardcoded & Mock Data Across Pipeline:**
+   - Eliminated static `Md. Sakibul Hasan (ভোক্তা)` in `DynamicCaseOverview.tsx`, replacing it with dynamic user profile data with fallback to interactive editable complainant drawer.
+   - Eliminated static `3200`, `BL9X882KZP`, and `Gadget Palace BD` in `DynamicCaseOverview.tsx`, `DemandNoticeStudio.tsx`, `EmergencyHelplinesBar.tsx`, `DocumentGroundingCanvas.tsx`, `AIReasoningTrace.tsx`, `MultiAgentSwarmBar.tsx`, and `KineticActionDAG.tsx`.
+   - Dynamic template interpolation in `DemandNoticeStudio.tsx` (`formal`, `urgent`, `amicable`) dynamically inserting real counterparty, disputed sum, and case reference.
+   - Evidence Vault grounding canvas dynamically bound to uploaded case evidence items.
+3. **Super Admin Oversight Command Center (P16 Upgrade):**
    - Backend router & service `services/backend/app/admin/` with 7 modules: Global KPI analytics, Case audits, Merchant blacklist management with scam risk dial, Emergency scam warning broadcast system, System telemetry with API latencies and vector index counts, and Audit trails.
    - Seeded Super Admin: `admin@claimcraft.bd` / `Admin@ClaimCraft2026!`.
    - Frontend page `apps/web/src/app/[locale]/admin/page.tsx` & `AdminDashboardClient.tsx`.

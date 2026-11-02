@@ -23,28 +23,28 @@ const DEFAULT_ENTITIES: GroundedEntity[] = [
   {
     id: 'ent-1',
     field: 'Merchant / Beneficiary',
-    value: 'Gadget Palace BD',
+    value: 'Verified E-Commerce Merchant',
     confidence: 98,
     box: { top: 21, left: 11, width: 78, height: 6 },
   },
   {
     id: 'ent-2',
     field: 'Transaction Amount',
-    value: 'BDT 3,200.00',
+    value: 'Settled Disputed Amount (BDT)',
     confidence: 100,
     box: { top: 32, left: 11, width: 78, height: 7 },
   },
   {
     id: 'ent-3',
     field: 'Transaction ID (TrxID)',
-    value: 'BL9X882KZP',
+    value: 'MFS Digital Transaction Hash',
     confidence: 99,
     box: { top: 38, left: 11, width: 78, height: 6 },
   },
   {
     id: 'ent-4',
     field: 'Payment Timestamp',
-    value: '15 Oct 2026, 04:30 PM',
+    value: 'Verified MFS Timestamp',
     confidence: 95,
     box: { top: 43, left: 11, width: 78, height: 6 },
   },
@@ -58,7 +58,7 @@ const DEFAULT_ENTITIES: GroundedEntity[] = [
 ];
 
 export function DocumentGroundingCanvas({
-  documentTitle = 'bKash Transaction Statement — TrxID #BL9X882KZP',
+  documentTitle = 'Digital Transaction Statement & Evidence Ledger',
   documentType = 'Mobile Financial Service (MFS) Proof of Payment',
   imageUrl,
   entities = DEFAULT_ENTITIES,
@@ -66,6 +66,12 @@ export function DocumentGroundingCanvas({
 }: DocumentGroundingCanvasProps) {
   const [activeEntityId, setActiveEntityId] = useState<string | null>(null);
   const [showLaserScan, setShowLaserScan] = useState(true);
+
+  const merchantEnt = entities.find(e => e.field.toLowerCase().includes('merchant'))?.value || 'Verified Commerce Merchant';
+  const amountEnt = entities.find(e => e.field.toLowerCase().includes('amount'))?.value || 'Disputed Sum Verified';
+  const trxEnt = entities.find(e => e.field.toLowerCase().includes('trxid') || e.field.toLowerCase().includes('transaction id'))?.value || 'MFS-HASH-VERIFIED';
+  const dateEnt = entities.find(e => e.field.toLowerCase().includes('date') || e.field.toLowerCase().includes('timestamp'))?.value || 'Timestamp Authenticated';
+  const statusEnt = entities.find(e => e.field.toLowerCase().includes('status'))?.value || 'COMPLETED / SETTLED';
 
   return (
     <div
@@ -167,23 +173,23 @@ export function DocumentGroundingCanvas({
               <div className="space-y-2 text-[10.5px]">
                 <div>
                   <span className="text-slate-500 block text-[9.5px]">Merchant:</span>
-                  <span className="font-bold text-slate-900">Gadget Palace BD</span>
+                  <span className="font-bold text-slate-900">{merchantEnt}</span>
                 </div>
                 <div>
                   <span className="text-slate-500 block text-[9.5px]">Amount Paid:</span>
-                  <span className="font-bold text-[#e2136e] text-xs">BDT 3,200.00</span>
+                  <span className="font-bold text-[#e2136e] text-xs">{amountEnt}</span>
                 </div>
                 <div>
                   <span className="text-slate-500 block text-[9.5px]">TrxID:</span>
-                  <span className="font-mono font-bold text-slate-900">BL9X882KZP</span>
+                  <span className="font-mono font-bold text-slate-900">{trxEnt}</span>
                 </div>
                 <div>
                   <span className="text-slate-500 block text-[9.5px]">Date & Time:</span>
-                  <span className="text-slate-700">15 Oct 2026, 04:30 PM</span>
+                  <span className="text-slate-700">{dateEnt}</span>
                 </div>
                 <div>
                   <span className="text-slate-500 block text-[9.5px]">Status:</span>
-                  <span className="font-bold text-emerald-700">COMPLETED / SETTLED</span>
+                  <span className="font-bold text-emerald-700">{statusEnt}</span>
                 </div>
               </div>
             </div>

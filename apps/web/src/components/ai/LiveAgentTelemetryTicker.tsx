@@ -34,8 +34,8 @@ const TELEMETRY_STREAM: TelemetryPulse[] = [
     icon: Scan,
     color: 'text-emerald-500',
     metric: '99.8% match',
-    messageEn: 'bKash TrxID BL9X882KZP cross-checked with Steadfast courier payload',
-    messageBn: 'বিকাশ TrxID ও স্টেডফাস্ট কুরিয়ার স্লিপের ডিজিটাল সত্যতা নিশ্চিত',
+    messageEn: 'Forensic MFS transaction payload cross-checked with logistics courier payload',
+    messageBn: 'ডিজিটাল পেমেন্ট স্টেটমেন্ট ও কুরিয়ার ট্র্যাকিং স্লিপের সত্যতা নিশ্চিত',
   },
   {
     id: 'statute-1',

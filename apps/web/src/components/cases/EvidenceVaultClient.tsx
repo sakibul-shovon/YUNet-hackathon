@@ -562,7 +562,11 @@ export function EvidenceVaultClient({
 
       {/* Interactive AI Document OCR Grounding Canvas */}
       <DocumentGroundingCanvas
-        documentTitle={isBangla ? 'বিকাশ পেমেন্ট ট্রানজ্যাকশন স্লিপ — TrxID #BL9X882KZP' : 'bKash Transaction Statement — TrxID #BL9X882KZP'}
+        documentTitle={
+          items.length > 0
+            ? `${items[0].original_filename} (${items[0].status === 'accepted' ? (isBangla ? 'যাচাইকৃত' : 'Verified') : (isBangla ? 'আপলোডকৃত' : 'Uploaded')})`
+            : (isBangla ? 'ডিজিটাল লেনদেন ও পেমেন্ট রসিদ অডিট' : 'Digital Payment Proof & Forensic Audit')
+        }
         documentType={isBangla ? 'মোবাইল ফিনান্সিয়াল সার্ভিস (MFS) ডিজিটাল প্রমাণপত্র' : 'Mobile Financial Service (MFS) Digital Payment Proof'}
       />
 

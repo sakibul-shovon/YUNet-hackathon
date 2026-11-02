@@ -29,7 +29,7 @@ const DEFAULT_STEPS: ReasoningStep[] = [
   },
   {
     title: 'Multimodal Entity & Numeric Reconciliation',
-    detail: 'Cross-matched BDT 3,200.00 between TrxID BL9X882KZP and Item #GP-9920. Discrepancy: 0.00 BDT.',
+    detail: 'Cross-matched disputed payment amount against verified digital MFS payment statement. Discrepancy: 0.00 BDT.',
     durationMs: 142,
     status: 'completed',
     citation: 'MFS Rulebook 2022',

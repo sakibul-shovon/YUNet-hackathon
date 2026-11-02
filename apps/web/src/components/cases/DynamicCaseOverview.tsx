@@ -106,17 +106,38 @@ export function DynamicCaseOverview({ caseId, locale }: DynamicCaseOverviewProps
   const [assessment, setAssessment] = useState<AssessmentData | null>(null);
   const [facts, setFacts] = useState<FactAssertion[]>([]);
   const [activities, setActivities] = useState<CaseActivityEvent[]>([]);
+  const [evidenceItems, setEvidenceItems] = useState<any[]>([]);
+  const [userProfile, setUserProfile] = useState<{
+    full_name?: string;
+    nid?: string;
+    phone?: string;
+    address?: string;
+  } | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isAnsweringNbq, setIsAnsweringNbq] = useState(false);
   const [showDncrpModal, setShowDncrpModal] = useState(false);
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('claimcraft_user_profile');
+        if (saved) {
+          setUserProfile(JSON.parse(saved));
+        }
+      } catch (err) {
+        console.error('Failed to parse saved user profile:', err);
+      }
+    }
+  }, []);
+
   const loadCaseData = useCallback(async () => {
     try {
-      const [caseRes, assessRes, factsRes, actRes] = await Promise.all([
+      const [caseRes, assessRes, factsRes, actRes, evidRes] = await Promise.all([
         apiFetch(`/api/v1/cases/${caseId}`),
         apiFetch(`/api/v1/cases/${caseId}/assessment`),
         apiFetch(`/api/v1/cases/${caseId}/facts`),
         apiFetch(`/api/v1/cases/${caseId}/activity`),
+        apiFetch(`/api/v1/cases/${caseId}/evidence`),
       ]);
 
       if (caseRes.ok) {
@@ -130,6 +151,9 @@ export function DynamicCaseOverview({ caseId, locale }: DynamicCaseOverviewProps
       }
       if (actRes.ok) {
         setActivities(await actRes.json());
+      }
+      if (evidRes.ok) {
+        setEvidenceItems(await evidRes.json());
       }
     } catch (err) {
       console.error('Failed to load case overview:', err);
@@ -181,18 +205,88 @@ export function DynamicCaseOverview({ caseId, locale }: DynamicCaseOverviewProps
     );
   }
 
-  const merchant = caseData?.merchant_name || 'Unspecified Merchant';
+  const merchant = caseData?.merchant_name || (isBangla ? 'অনির্দিষ্ট মার্চেন্ট' : 'Unspecified Merchant');
 
-  // Format amount from facts
-  const amountFact = facts.find((f) => f.field_name === 'amount_paid');
+  // Format amount from facts or narrative dynamically
+  const amountFact = facts.find((f) => f.field_name === 'amount_paid' || f.field_name === 'claim_amount' || f.field_name === 'price');
   let amountDisplay = '৳—';
+  let numericDisputedAmount = 0;
   if (amountFact) {
     if (typeof amountFact.typed_value === 'object' && amountFact.typed_value?.minor_units) {
+      numericDisputedAmount = Math.round(amountFact.typed_value.minor_units / 100);
       amountDisplay = formatBdtMoney(amountFact.typed_value.minor_units, locale);
-    } else {
-      amountDisplay = String(amountFact.typed_value);
+    } else if (typeof amountFact.typed_value === 'number') {
+      numericDisputedAmount = amountFact.typed_value;
+      amountDisplay = `৳${numericDisputedAmount.toLocaleString(isBangla ? 'bn-BD' : 'en-US')}`;
+    } else if (typeof amountFact.typed_value === 'string') {
+      const parsed = parseFloat(amountFact.typed_value.replace(/[^0-9.]/g, ''));
+      if (!isNaN(parsed)) {
+        numericDisputedAmount = Math.round(parsed);
+        amountDisplay = `৳${numericDisputedAmount.toLocaleString(isBangla ? 'bn-BD' : 'en-US')}`;
+      } else {
+        amountDisplay = String(amountFact.typed_value);
+      }
     }
   }
+
+  // Fallback: search narrative for BDT or ৳ figures
+  if (!numericDisputedAmount && caseData?.story_narrative) {
+    const match =
+      caseData.story_narrative.match(/(?:৳|BDT|টাকা)\s*([0-9,]+)/i) ||
+      caseData.story_narrative.match(/([0-9,]+)\s*(?:৳|BDT|টাকা)/i);
+    if (match) {
+      const parsed = parseFloat(match[1].replace(/,/g, ''));
+      if (!isNaN(parsed)) {
+        numericDisputedAmount = Math.round(parsed);
+        amountDisplay = `৳${numericDisputedAmount.toLocaleString(isBangla ? 'bn-BD' : 'en-US')}`;
+      }
+    }
+  }
+  if (!numericDisputedAmount) {
+    numericDisputedAmount = 2500;
+  }
+
+  // Dynamic TrxID
+  const trxFact = facts.find((f) => f.field_name === 'trx_id' || f.field_name === 'transaction_id');
+  const dynamicTrxId = trxFact?.typed_value
+    ? String(trxFact.typed_value)
+    : (caseData?.display_reference || 'TRX-REF-PENDING');
+
+  // Dynamic Merchant Phone
+  const phoneFact = facts.find((f) => f.field_name === 'merchant_phone');
+  const merchantPhone = phoneFact?.typed_value
+    ? String(phoneFact.typed_value)
+    : (isBangla ? 'অনির্দিষ্ট / মেসেঞ্জারে যোগাযোগ' : 'Unspecified / Chat contact');
+
+  // Dynamic Evidence List from API
+  const dynamicEvidenceList = evidenceItems.length > 0
+    ? evidenceItems.map((e, idx) => `${idx + 1}. ${e.original_filename} (${e.status === 'accepted' ? (isBangla ? 'ফরেনসিক যাচাইকৃত' : 'Forensically Verified') : (isBangla ? 'সংযুক্ত ফাইল' : 'Attached Document')})`)
+    : [
+        isBangla
+          ? `১. ডিজিটাল পেমেন্ট স্টেটমেন্ট বা ব্যাংক/এমএফএস লেনদেন রসিদ (${dynamicTrxId})`
+          : `1. Digital payment statement or bank/MFS slip (${dynamicTrxId})`,
+        isBangla
+          ? '২. পণ্য অর্ডার সংক্রান্ত ইনভয়েস অথবা কুরিয়ার পার্সেল ট্র্যাকিং স্লিপ'
+          : '2. Product order invoice or courier parcel consignment note',
+        isBangla
+          ? '৩. বিক্রেতার সাথে চ্যাট ও মেসেঞ্জার কথোপকথনের প্রাসঙ্গিক স্ক্রিনশট'
+          : '3. Relevant screenshots of chat conversation with merchant',
+      ];
+
+  // Dynamic Statutory Sections
+  const dynamicSections = assessment?.routes && assessment.routes.length > 0
+    ? assessment.routes.map((r) => isBangla ? `${r.title_bn} (স্ট্যাটাস: ${r.status})` : `${r.title_en} (Status: ${r.status})`)
+    : [
+        isBangla
+          ? 'ভোক্তা-অধিকার সংরক্ষণ আইন ২০০৯: ধারা ৪৫ (প্রতিশ্রুত পণ্য বা সেবা বিক্রয় বা সরবরাহে ব্যর্থতা)'
+          : 'Consumer Rights Protection Act 2009: Section 45 (Failure to deliver promised product)',
+        isBangla
+          ? 'ভোক্তা-অধিকার সংরক্ষণ আইন ২০০৯: ধারা ৪১ (মিথ্যা বা প্রতারণামূলক বিজ্ঞাপন বা অসদুপায়)'
+          : 'Consumer Rights Protection Act 2009: Section 41 (Deceptive or misleading trade practice)',
+        isBangla
+          ? 'ভোক্তা-অধিকার সংরক্ষণ আইন ২০০৯: ধারা ৭৬(১) (আদায়কৃত জরিমানার ২৫% অভিযোগকারীকে নগদ প্রদান)'
+          : 'Consumer Rights Protection Act 2009: Section 76(1) (Complainant right to 25% of realized fine)',
+      ];
 
   // Format NBQ or Primary Action
   const nbq = assessment?.next_best_question;
@@ -203,7 +297,7 @@ export function DynamicCaseOverview({ caseId, locale }: DynamicCaseOverviewProps
   return (
     <div className="space-y-6">
       {/* 0. Autonomous Multi-Agent Swarm Status Bar */}
-      <MultiAgentSwarmBar locale={locale} />
+      <MultiAgentSwarmBar locale={locale} disputedAmount={numericDisputedAmount} trxId={dynamicTrxId} />
 
       {/* 1. Scam Radar Alert Banner — Only renders if this merchant has complaints on record */}
       {caseData?.merchant_name && (
@@ -361,14 +455,15 @@ export function DynamicCaseOverview({ caseId, locale }: DynamicCaseOverviewProps
         {/* Section 76(1) 25% Direct Cash Reward Calculator */}
         <StatutoryCompensationCalculator
           locale={locale}
-          initialClaimAmount={3200}
+          initialClaimAmount={numericDisputedAmount}
         />
 
         {/* Emergency Consumer & Financial Hotlines + bKash Freeze Script */}
         <EmergencyHelplinesBar
           locale={locale}
           merchantName={merchant}
-          disputedAmount={3200}
+          disputedAmount={numericDisputedAmount}
+          disputedTrxId={dynamicTrxId}
         />
       </div>
 
@@ -584,26 +679,26 @@ export function DynamicCaseOverview({ caseId, locale }: DynamicCaseOverviewProps
         onClose={() => setShowDncrpModal(false)}
         locale={locale}
         data={{
-          complainantName: 'Md. Sakibul Hasan (ভোক্তা)',
-          complainantNid: '19952691048000123',
-          complainantPhone: '01711-234567',
-          complainantAddress: 'বাড়ি ৪২, রোড ৯/এ, ধানমন্ডি, ঢাকা-১২০৯',
+          complainantName:
+            userProfile?.full_name ||
+            (isBangla ? 'সম্মানিত ভোক্তা (সম্পাদনা করুন)' : 'Aggrieved Consumer (Click Edit)'),
+          complainantNid: userProfile?.nid || '',
+          complainantPhone: userProfile?.phone || '',
+          complainantAddress:
+            userProfile?.address ||
+            (isBangla ? 'ঠিকানা অনির্ধারিত (সম্পাদনা করুন)' : 'Address not specified (Click Edit)'),
           merchantName: merchant,
-          merchantAddress: `${merchant} (অনলাইন ফেসবুক পেইজ ও ই-কমার্স শপ)`,
-          merchantPhone: '01899-887766',
-          incidentDate: caseData?.incident_date || 'অক্টোবর ২০২৬',
-          disputedAmountBdt: 3200,
-          productDescription: caseData?.story_narrative || 'অগ্রিম টাকা পরিশোধ করার পর প্রতিশ্রুত পণ্য সরবরাহ করা হয়নি এবং পরবর্তীতে যোগাযোগের মাধ্যমে অবরুদ্ধ করা হয়েছে।',
-          statutorySections: [
-            'ধারা ৪৫: প্রতিশ্রুত পণ্য বা সেবা যথাযথভাবে বিক্রয় বা সরবরাহে ব্যর্থতা',
-            'ধারা ৪১: ভেজাল বা নকল পণ্য বিক্রয়ের অসদুপায় অবলম্বন',
-            'ধারা ৭৬(১): আদায়কৃত সরকারি অর্থদণ্ডের ২৫% অংশ অভিযোগকারীকে নগদ প্রদানের আইনগত অধিকার',
-          ],
-          evidenceList: [
-            'বিকাশ ট্রানজ্যাকশন স্লিপ (TrxID: BL9X882KZP, BDT 3,200)',
-            'স্টেডফাস্ট কুরিয়ার ট্র্যাকিং ইনভয়েস ও ডেলিভারি মেমো',
-            'হোয়াটসঅ্যাপ চ্যাট ও ফেসবুক মেসেঞ্জার ব্লকিং স্ক্রিনশট',
-          ],
+          merchantAddress: `${merchant} (${isBangla ? 'অনলাইন ই-কমার্স ও ফেসবুক শপ' : 'Online Merchant / E-Commerce'})`,
+          merchantPhone: merchantPhone,
+          incidentDate: caseData?.incident_date || (isBangla ? 'অক্টোবর ২০২৬' : 'October 2026'),
+          disputedAmountBdt: numericDisputedAmount,
+          productDescription:
+            caseData?.story_narrative ||
+            (isBangla
+              ? 'অনলাইনে পণ্য ক্রয়ের জন্য অগ্রিম টাকা গ্রহণের পর প্রতিশ্রুত সেবা বা পণ্য সরবরাহ করা হয়নি।'
+              : 'Failure to deliver promised product after receiving advance payment.'),
+          statutorySections: dynamicSections,
+          evidenceList: dynamicEvidenceList,
         }}
       />
     </div>
