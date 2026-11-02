@@ -6,6 +6,7 @@ import type { ReactNode } from 'react';
 import '@/app/globals.css';
 import { AICopilotDrawer } from '@/components/ai/AICopilotDrawer';
 import { AgentCommandPalette } from '@/components/ai/AgentCommandPalette';
+import { JudgeQuickStartDrawer } from '@/components/ai/JudgeQuickStartDrawer';
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -40,6 +41,7 @@ export default async function LocaleLayout({
           {children}
           <AICopilotDrawer locale={locale} />
           <AgentCommandPalette locale={locale} />
+          <JudgeQuickStartDrawer locale={locale} />
         </NextIntlClientProvider>
       </body>
     </html>

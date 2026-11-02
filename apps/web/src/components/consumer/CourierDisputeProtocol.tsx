@@ -12,6 +12,8 @@ import {
   Copy,
   Check,
   ShieldCheck,
+  MessageCircle,
+  Mail,
 } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
@@ -101,15 +103,28 @@ export function CourierDisputeProtocol({
           </div>
         </div>
 
-        <Button
-          size="sm"
-          variant="outline"
-          onClick={handleCopy}
-          className="text-xs gap-1.5 h-8 self-start sm:self-center"
-        >
-          {copied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
-          <span>{copied ? (isBangla ? 'মেমো কপি হয়েছে' : 'Copied') : (isBangla ? 'কুরিয়ার হোল্ড মেমো কপি' : 'Copy Hold Memo')}</span>
-        </Button>
+        <div className="flex items-center gap-2 self-start sm:self-center">
+          <a
+            href={`https://wa.me/?text=${encodeURIComponent(courierHoldMemo)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-[var(--radius-control)] bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition h-8"
+            title="Send Hold Memo to Courier Manager via WhatsApp"
+          >
+            <MessageCircle className="w-3.5 h-3.5 fill-white" />
+            <span>{isBangla ? 'WhatsApp নোটিশ' : 'WhatsApp'}</span>
+          </a>
+
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={handleCopy}
+            className="text-xs gap-1.5 h-8"
+          >
+            {copied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
+            <span>{copied ? (isBangla ? 'মেমো কপি হয়েছে' : 'Copied') : (isBangla ? 'কপি মেমো' : 'Copy Memo')}</span>
+          </Button>
+        </div>
       </div>
 
       {/* 3 Step Protocol Cards */}

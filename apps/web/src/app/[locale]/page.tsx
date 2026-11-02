@@ -21,6 +21,7 @@ import { Header } from '@/components/layout/Header';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
+import { MerchantRiskSearchWidget } from '@/components/merchants/MerchantRiskSearchWidget';
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -69,7 +70,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </p>
 
         {/* Two Primary CTAs */}
-        <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto justify-center mb-16">
+        <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto justify-center mb-12">
           <Link
             href={`/${locale}/cases/new`}
             className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-[var(--radius-control)] bg-primary text-primary-foreground font-semibold hover:opacity-90 shadow-sm transition-all text-base min-h-[48px]"
@@ -84,6 +85,11 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             <Eye className="w-4 h-4 text-muted-foreground" />
             <span>{t('scenarios_cta')}</span>
           </Link>
+        </div>
+
+        {/* Real-Time Merchant Scam & Risk Checker */}
+        <div className="w-full mb-16">
+          <MerchantRiskSearchWidget locale={locale} />
         </div>
 
         {/* Real Product Workspace Composition Preview (Section 5.2) */}

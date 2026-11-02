@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Copy, Check, FileDown, Sparkles, Scale, AlertTriangle, ShieldCheck } from 'lucide-react';
+import { Copy, Check, FileDown, Sparkles, Scale, AlertTriangle, ShieldCheck, MessageCircle, Send, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 
 interface DemandNoticeStudioProps {
@@ -84,6 +84,19 @@ export function DemandNoticeStudio({
   const [displayedText, setDisplayedText] = useState('');
   const [isStreaming, setIsStreaming] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [merchantPhone, setMerchantPhone] = useState('');
+  const [showPhoneInput, setShowPhoneInput] = useState(false);
+
+  const handleWhatsAppSend = () => {
+    const rawText = TEMPLATES[currentTone].text;
+    const cleanPhone = merchantPhone.replace(/[^0-9]/g, '');
+    const url = cleanPhone
+      ? `https://wa.me/${cleanPhone.startsWith('88') ? cleanPhone : '88' + cleanPhone}?text=${encodeURIComponent(rawText)}`
+      : `https://wa.me/?text=${encodeURIComponent(rawText)}`;
+    if (typeof window !== 'undefined') {
+      window.open(url, '_blank');
+    }
+  };
 
   // Typewriter streaming effect when tone changes
   useEffect(() => {
@@ -171,6 +184,32 @@ export function DemandNoticeStudio({
           )}
         </div>
 
+        {/* Phone Input Row for Direct WhatsApp */}
+        {showPhoneInput && (
+          <div className="mb-3 p-3 rounded-xl border border-emerald-500/30 bg-emerald-500/10 flex flex-col sm:flex-row items-center gap-2">
+            <Phone className="w-4 h-4 text-emerald-500 shrink-0" />
+            <span className="text-xs text-foreground font-medium shrink-0">
+              Merchant WhatsApp:
+            </span>
+            <input
+              type="text"
+              placeholder="e.g. 01712345678"
+              value={merchantPhone}
+              onChange={(e) => setMerchantPhone(e.target.value)}
+              className="flex-1 p-1.5 px-3 rounded-lg border border-border bg-surface text-xs text-foreground focus:outline-hidden focus:ring-1 focus:ring-emerald-500"
+            />
+            <Button
+              type="button"
+              size="sm"
+              onClick={handleWhatsAppSend}
+              className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold gap-1.5 shrink-0"
+            >
+              <Send className="w-3.5 h-3.5" />
+              <span>Send Now</span>
+            </Button>
+          </div>
+        )}
+
         {/* Bottom Actions Bar */}
         <div className="flex flex-col sm:flex-row justify-between items-center gap-3 pt-4">
           <div className="flex items-center gap-2 text-[11px] text-muted-foreground">
@@ -178,25 +217,40 @@ export function DemandNoticeStudio({
             <span>Pre-action compliance: Governed under CRPA 2009 Sec 45</span>
           </div>
 
-          <div className="flex items-center gap-2 w-full sm:w-auto">
+          <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+            <button
+              type="button"
+              onClick={() => {
+                if (merchantPhone) {
+                  handleWhatsAppSend();
+                } else {
+                  setShowPhoneInput(!showPhoneInput);
+                }
+              }}
+              className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-xs transition-all active:scale-95 flex-1 sm:flex-none h-8"
+              title="Send Legal Notice to Merchant via WhatsApp"
+            >
+              <MessageCircle className="w-3.5 h-3.5 fill-white" />
+              <span>WhatsApp Notice</span>
+            </button>
             <Button
               type="button"
               size="sm"
               variant="outline"
               onClick={handleCopy}
-              className="text-xs flex items-center gap-1.5 flex-1 sm:flex-none"
+              className="text-xs flex items-center gap-1.5 flex-1 sm:flex-none h-8"
             >
               {copied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
-              <span>{copied ? 'Copied to Clipboard' : 'Copy Notice'}</span>
+              <span>{copied ? 'Copied' : 'Copy Notice'}</span>
             </Button>
             <Button
               type="button"
               size="sm"
               onClick={handleCopy}
-              className="text-xs font-bold flex items-center gap-1.5 flex-1 sm:flex-none"
+              className="text-xs font-bold flex items-center gap-1.5 flex-1 sm:flex-none h-8"
             >
               <FileDown className="w-3.5 h-3.5" />
-              <span>Download Signed PDF</span>
+              <span>Save PDF</span>
             </Button>
           </div>
         </div>

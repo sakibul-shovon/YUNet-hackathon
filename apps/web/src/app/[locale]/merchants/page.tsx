@@ -15,6 +15,7 @@ import { Header } from '@/components/layout/Header';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
+import { ScamRadarOffendersList } from '@/components/merchants/ScamRadarOffendersList';
 
 interface OffenderItem {
   merchant_name: string;
@@ -206,57 +207,7 @@ export default async function ScamMerchantRadarPage({
             </span>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {topOffenders.map((offender: OffenderItem, i: number) => (
-              <Card key={i} className="border border-border bg-surface hover:shadow-md transition-all flex flex-col justify-between">
-                <CardHeader className="pb-3">
-                  <div className="flex items-center justify-between gap-2 mb-2">
-                    <Badge variant={offender.risk_level.includes('HIGH') ? 'danger' : 'warning'}>
-                      {offender.risk_level}
-                    </Badge>
-                    <span className="text-xs font-mono font-bold text-[var(--danger-ink)]">
-                      {offender.complaint_count} {isBangla ? 'টি অভিযোগ' : 'Complaints'}
-                    </span>
-                  </div>
-
-                  <CardTitle className="text-base font-bold text-foreground">
-                    {offender.merchant_name}
-                  </CardTitle>
-                  <CardDescription className="text-xs">
-                    {offender.platform} · {offender.category}
-                  </CardDescription>
-                </CardHeader>
-
-                <CardContent className="space-y-3 text-xs flex-1 flex flex-col justify-between pt-0">
-                  <div className="p-3 rounded-xl bg-elevated/60 border border-border/80 space-y-1">
-                    <span className="text-[10px] uppercase font-bold text-muted-foreground tracking-wider block">
-                      {isBangla ? 'মূল অভিযোগের বিবরণ:' : 'Primary Allegation:'}
-                    </span>
-                    <p className="text-foreground/90 leading-relaxed">
-                      {offender.primary_allegation}
-                    </p>
-                  </div>
-
-                  <div className="pt-2 border-t border-border flex items-center justify-between">
-                    <div>
-                      <span className="text-[10px] text-muted-foreground block">{isBangla ? 'মোট বিরোধ:' : 'Total Disputed:'}</span>
-                      <span className="font-extrabold text-foreground">
-                        ৳{offender.total_disputed_bdt.toLocaleString(isBangla ? 'bn-BD' : 'en-US')}
-                      </span>
-                    </div>
-
-                    <Link
-                      href={`/${locale}/cases/new`}
-                      className="inline-flex items-center gap-1 text-xs font-bold text-primary hover:underline"
-                    >
-                      <span>{isBangla ? 'অভিযোগ করুন' : 'File Claim'}</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </Link>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+          <ScamRadarOffendersList offenders={topOffenders} locale={locale} />
         </div>
 
         {/* How to Protect Yourself Guide */}

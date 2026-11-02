@@ -30,6 +30,7 @@ import { AutonomyDial } from '@/components/ai/AutonomyDial';
 import { StatutoryCompensationCalculator } from '@/components/consumer/StatutoryCompensationCalculator';
 import { EmergencyHelplinesBar } from '@/components/consumer/EmergencyHelplinesBar';
 import { DncrpOfficialFormModal, DncrpFormData } from '@/components/consumer/DncrpOfficialFormModal';
+import { StatutoryCountdownWatchdog } from '@/components/cases/StatutoryCountdownWatchdog';
 import { Building2 } from 'lucide-react';
 import { apiFetch } from '@/lib/api';
 import { formatBdtMoney, formatFactLabel } from '@/lib/formatters';
@@ -208,6 +209,13 @@ export function DynamicCaseOverview({ caseId, locale }: DynamicCaseOverviewProps
       {caseData?.merchant_name && (
         <MerchantScamAlertBanner merchantName={caseData.merchant_name} locale={locale} />
       )}
+
+      {/* 1.5 Statutory 30-Day Limitation Watchdog Banner (CRPA 2009 Sec 60) */}
+      <StatutoryCountdownWatchdog
+        incidentDateStr={caseData?.incident_date || '2026-10-18'}
+        locale={locale}
+        caseId={caseId}
+      />
 
       {/* 2. One Next Step Hero Card (Interactive Agentic Directive) */}
       {nbq ? (
