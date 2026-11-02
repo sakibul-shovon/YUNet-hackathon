@@ -6,6 +6,7 @@ import { AlertTriangle, ShieldAlert, Users, ExternalLink, ChevronRight, CheckCir
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { apiFetch } from '@/lib/api';
+import { CollectiveClassActionModal } from '@/components/merchants/CollectiveClassActionModal';
 
 interface MerchantIntelligenceData {
   merchant_name: string;
@@ -31,6 +32,7 @@ export function MerchantScamAlertBanner({
   const isBangla = locale === 'bn';
   const [intel, setIntel] = useState<MerchantIntelligenceData | null>(null);
   const [joinedGroup, setJoinedGroup] = useState(false);
+  const [showClassActionModal, setShowClassActionModal] = useState(false);
 
   useEffect(() => {
     if (!merchantName) return;
@@ -109,12 +111,12 @@ export function MerchantScamAlertBanner({
             <Button
               size="sm"
               variant={joinedGroup ? 'outline' : 'primary'}
-              className="gap-1.5 text-xs"
-              onClick={() => setJoinedGroup(!joinedGroup)}
+              className="gap-1.5 text-xs font-bold"
+              onClick={() => setShowClassActionModal(true)}
             >
               {joinedGroup ? (
                 <>
-                  <CheckCircle2 className="w-3.5 h-3.5 text-primary" />
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
                   <span>{isBangla ? 'যৌথ আবেদনে যুক্ত আছেন' : 'Joined Group Report'}</span>
                 </>
               ) : (
@@ -131,6 +133,21 @@ export function MerchantScamAlertBanner({
           )}
         </div>
       </div>
+
+      {showClassActionModal && (
+        <CollectiveClassActionModal
+          isOpen={showClassActionModal}
+          onClose={() => {
+            setShowClassActionModal(false);
+            setJoinedGroup(true);
+          }}
+          merchantName={intel.merchant_name}
+          platform={intel.platform || 'Digital Marketplace'}
+          complaintCount={intel.victim_count || intel.complaint_count || 12}
+          totalDisputedBdt={intel.total_disputed_bdt || 48000}
+          locale={locale}
+        />
+      )}
     </div>
   );
 }
