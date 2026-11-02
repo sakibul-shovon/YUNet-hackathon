@@ -13,9 +13,11 @@ import {
   CheckCircle2,
   Sparkles,
   ExternalLink,
+  Loader2,
 } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
+import { apiFetch } from '@/lib/api';
 
 interface MerchantRecord {
   name: string;
@@ -85,37 +87,69 @@ export function MerchantRiskSearchWidget({ locale = 'en' }: { locale?: string })
   const isBangla = locale === 'bn';
   const [query, setQuery] = useState('');
   const [selectedResult, setSelectedResult] = useState<MerchantRecord | null>(null);
+  const [isSearching, setIsSearching] = useState(false);
 
-  const handleSearch = (searchTerm: string) => {
+  const handleSearch = async (searchTerm: string) => {
     setQuery(searchTerm);
     if (!searchTerm.trim()) {
       setSelectedResult(null);
       return;
     }
 
-    const clean = searchTerm.toLowerCase().trim();
-    const match = DATABASE.find(
-      (m) =>
-        m.name.toLowerCase().includes(clean) ||
-        m.aliases.some((a) => a.toLowerCase().includes(clean))
-    );
+    const clean = searchTerm.trim();
+    setIsSearching(true);
 
-    if (match) {
-      setSelectedResult(match);
-    } else {
-      // Dynamic fallback for unlisted shop
-      setSelectedResult({
-        name: searchTerm,
-        aliases: [],
-        platform: 'Unregistered / Unknown Merchant',
-        category: 'Unverified Online Seller',
-        riskScore: 65,
-        riskLevel: 'MODERATE',
-        complaintCount: 1,
-        disputedAmountBdt: 3500,
-        allegation: 'Unverified merchant profile. Exercise caution; insist on Cash on Delivery with unboxing inspection.',
-        statute: 'CRPA 2009 Sec 45 Precautionary Guidance',
-      });
+    try {
+      const res = await apiFetch(`/api/v1/merchants/intelligence?query=${encodeURIComponent(clean)}`);
+      if (res.ok) {
+        const intel = await res.json();
+        const score =
+          intel.risk_level === 'HIGH RISK'
+            ? 88
+            : intel.risk_level === 'MODERATE'
+            ? 52
+            : intel.risk_level === 'INVESTIGATING'
+            ? 65
+            : 12;
+
+        const level: 'HIGH' | 'MODERATE' | 'LOW' =
+          intel.risk_level === 'HIGH RISK'
+            ? 'HIGH'
+            : intel.risk_level === 'LOW RISK' || intel.risk_level === 'NEW / UNFLAGGED'
+            ? 'LOW'
+            : 'MODERATE';
+
+        setSelectedResult({
+          name: intel.merchant_name || clean,
+          aliases: [],
+          platform: intel.platform || 'Online Merchant / E-Commerce',
+          category: intel.category || 'Consumer Retail & Services',
+          riskScore: score,
+          riskLevel: level,
+          complaintCount: intel.complaint_count || 0,
+          disputedAmountBdt: intel.total_disputed_bdt || 0,
+          allegation:
+            intel.common_patterns && intel.common_patterns.length > 0
+              ? intel.common_patterns.join('. ')
+              : 'No verified fraudulent allegations recorded in official registry.',
+          statute:
+            intel.complaint_count > 0
+              ? 'CRPA 2009 Sec 45 (False Promise & Non-Delivery)'
+              : 'Full Statutory Compliance',
+        });
+      }
+    } catch {
+      // Local fallback if offline
+      const match = DATABASE.find(
+        (m) =>
+          m.name.toLowerCase().includes(clean.toLowerCase()) ||
+          m.aliases.some((a) => a.toLowerCase().includes(clean.toLowerCase()))
+      );
+      if (match) {
+        setSelectedResult(match);
+      }
+    } finally {
+      setIsSearching(false);
     }
   };
 
@@ -156,7 +190,11 @@ export function MerchantRiskSearchWidget({ locale = 'en' }: { locale?: string })
       {/* Search Input Bar */}
       <div className="relative">
         <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-muted-foreground">
-          <Search className="w-4 h-4" />
+          {isSearching ? (
+            <Loader2 className="w-4 h-4 animate-spin text-primary" />
+          ) : (
+            <Search className="w-4 h-4" />
+          )}
         </div>
         <input
           type="text"

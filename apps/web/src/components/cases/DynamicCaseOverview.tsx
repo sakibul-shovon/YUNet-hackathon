@@ -233,17 +233,15 @@ export function DynamicCaseOverview({ caseId, locale }: DynamicCaseOverviewProps
   if (!numericDisputedAmount && caseData?.story_narrative) {
     const match =
       caseData.story_narrative.match(/(?:৳|BDT|টাকা)\s*([0-9,]+)/i) ||
-      caseData.story_narrative.match(/([0-9,]+)\s*(?:৳|BDT|টাকা)/i);
+      caseData.story_narrative.match(/([0-9,]+)\s*(?:৳|BDT|টাকা)/i) ||
+      caseData.story_narrative.match(/(?:for|amount of|মূল্য|টাকার)\s*([0-9,]+)/i);
     if (match) {
       const parsed = parseFloat(match[1].replace(/,/g, ''));
-      if (!isNaN(parsed)) {
+      if (!isNaN(parsed) && parsed > 0) {
         numericDisputedAmount = Math.round(parsed);
         amountDisplay = `৳${numericDisputedAmount.toLocaleString(isBangla ? 'bn-BD' : 'en-US')}`;
       }
     }
-  }
-  if (!numericDisputedAmount) {
-    numericDisputedAmount = 2500;
   }
 
   // Dynamic TrxID

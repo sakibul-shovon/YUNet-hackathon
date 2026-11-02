@@ -100,22 +100,15 @@ export function ConsumerDashboardClient({
     }
   }, []);
 
-  // 2. Fetch fresh guest cases from API to merge with SSR cases
+  // 2. Fetch fresh guest cases from API
   useEffect(() => {
     async function refreshCases() {
       try {
         const res = await apiFetch('/api/v1/cases?limit=30');
         if (res.ok) {
           const data = await res.json();
-          if (Array.isArray(data.items) && data.items.length > 0) {
-            setCases((prev) => {
-              const map = new Map<string, DashboardCase>();
-              data.items.forEach((c: DashboardCase) => map.set(c.id, c));
-              prev.forEach((c) => {
-                if (!map.has(c.id)) map.set(c.id, c);
-              });
-              return Array.from(map.values());
-            });
+          if (Array.isArray(data.items)) {
+            setCases(data.items);
           }
         }
       } catch {
@@ -144,13 +137,14 @@ export function ConsumerDashboardClient({
     if (c.story_narrative) {
       const match =
         c.story_narrative.match(/(?:৳|BDT|টাকা)\s*([0-9,]+)/i) ||
-        c.story_narrative.match(/([0-9,]+)\s*(?:৳|BDT|টাকা)/i);
+        c.story_narrative.match(/([0-9,]+)\s*(?:৳|BDT|টাকা)/i) ||
+        c.story_narrative.match(/(?:for|amount of|মূল্য|টাকার)\s*([0-9,]+)/i);
       if (match) {
         const parsed = parseFloat(match[1].replace(/,/g, ''));
         if (!isNaN(parsed) && parsed > 0) return parsed;
       }
     }
-    return 2500;
+    return 0;
   };
 
   // Financial Recovery Scorecard Analytics

@@ -96,9 +96,9 @@
     "semantic_hash": "02c186df223c8933d3a20d3e9be74d8e"
   },
   "apps/web/src/app/[locale]/cases/page.tsx": {
-    "mtime": 1793615409.2357855,
-    "seen": 1793623794.256322,
-    "ast_hash": "1e14a629fa5597e91ba018cff7722662",
+    "mtime": 1793627046.1495085,
+    "seen": 1793627443.840928,
+    "ast_hash": "d274e9da0c2ee61dd5205ae65475235e",
     "semantic_hash": ""
   },
   "apps/web/src/app/[locale]/help/page.tsx": {
@@ -156,8 +156,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/app/api/v1/[...path]/route.ts": {
-    "mtime": 1793623427.0006366,
-    "seen": 1793623794.256322,
+    "mtime": 1793625734.5060549,
+    "seen": 1793627443.840928,
     "ast_hash": "13667e119dc98caace6278d70eea86d2",
     "semantic_hash": ""
   },
@@ -174,9 +174,9 @@
     "semantic_hash": "93870bed2241125c2823b00b4a245b33"
   },
   "apps/web/src/components/cases/ActionDraftViewer.tsx": {
-    "mtime": 1793615410.7580538,
-    "seen": 1793623794.256322,
-    "ast_hash": "c95708d38df55f6893f4b9e239546752",
+    "mtime": 1793627112.2060618,
+    "seen": 1793627443.840928,
+    "ast_hash": "74a850f7a6723d23f8393bd7998a8558",
     "semantic_hash": ""
   },
   "apps/web/src/components/cases/EvidenceItemRejectionBanner.tsx": {
@@ -246,9 +246,9 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/paths/WhyWhyNotTraceView.tsx": {
-    "mtime": 1793542960.4964557,
-    "seen": 1793570954.2251325,
-    "ast_hash": "2b0baa0776ac083f432a0e3c2764992c",
+    "mtime": 1793627030.1920805,
+    "seen": 1793627443.840928,
+    "ast_hash": "82c4ab11c720d34638a69261f4046f7b",
     "semantic_hash": ""
   },
   "apps/web/src/components/scenarios/ScenarioLauncher.tsx": {
@@ -510,8 +510,8 @@
     "semantic_hash": "d38a63e6025c96ba98945faf1ba571e7"
   },
   "scripts/seed_demo.py": {
-    "mtime": 1793623392.3915184,
-    "seen": 1793623794.256322,
+    "mtime": 1793625734.674612,
+    "seen": 1793627443.840928,
     "ast_hash": "908689fe94f3a250565f79cf6a86fd6f",
     "semantic_hash": ""
   },
@@ -630,8 +630,8 @@
     "semantic_hash": "efe8c142adf12f6ee83c82aa6a7b6002"
   },
   "services/backend/app/cases/service.py": {
-    "mtime": 1793623317.9208615,
-    "seen": 1793623794.256322,
+    "mtime": 1793625734.8218465,
+    "seen": 1793627443.840928,
     "ast_hash": "c68c04b7631b047ef8c7b6087acf7dd9",
     "semantic_hash": ""
   },
@@ -786,8 +786,8 @@
     "semantic_hash": "a836ff6ff88e4bf33158435344c4eed5"
   },
   "services/backend/app/facts/service.py": {
-    "mtime": 1793623334.1041286,
-    "seen": 1793623794.256322,
+    "mtime": 1793625735.070976,
+    "seen": 1793627443.840928,
     "ast_hash": "78a35416158028277b33406f20640b2e",
     "semantic_hash": ""
   },
@@ -1050,8 +1050,8 @@
     "semantic_hash": "1fe3c72ba0044991aef0419b317c1857"
   },
   "services/backend/app/scenarios/service.py": {
-    "mtime": 1793623462.3838413,
-    "seen": 1793623794.256322,
+    "mtime": 1793625735.399359,
+    "seen": 1793627443.840928,
     "ast_hash": "6b0b1c2f0b44f1ddc20eef590e8457e5",
     "semantic_hash": ""
   },
@@ -1530,9 +1530,9 @@
     "semantic_hash": ""
   },
   ".agent/handoff.md": {
-    "mtime": 1793615408.985674,
-    "seen": 1793623794.256322,
-    "ast_hash": "3e1a5c163e90dcd138b4676f9dcb6b86",
+    "mtime": 1793623840.876833,
+    "seen": 1793627443.840928,
+    "ast_hash": "7b8c55291438b793f6206024bee5fa06",
     "semantic_hash": ""
   },
   ".github/copilot-instructions.md": {
@@ -1896,9 +1896,9 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/ai/DemandNoticeStudio.tsx": {
-    "mtime": 1793615409.751075,
-    "seen": 1793623794.256322,
-    "ast_hash": "99a4662ace2d37df45012ae405c9527d",
+    "mtime": 1793627144.3897853,
+    "seen": 1793627443.840928,
+    "ast_hash": "34f4b90d59225bcd0ccf309b3a4345cd",
     "semantic_hash": ""
   },
   "apps/web/src/components/ai/DocumentGroundingCanvas.tsx": {
@@ -1944,9 +1944,9 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/cases/DynamicCaseOverview.tsx": {
-    "mtime": 1793615411.144181,
-    "seen": 1793623794.256322,
-    "ast_hash": "398984e88dd29a534f4ac9302d15de79",
+    "mtime": 1793627083.2368672,
+    "seen": 1793627443.840928,
+    "ast_hash": "2293940d85bb256e3376d778dda3e1a6",
     "semantic_hash": ""
   },
   "apps/web/src/components/consumer/CourierDisputeProtocol.tsx": {
@@ -2052,9 +2052,9 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/dashboard/ConsumerDashboardClient.tsx": {
-    "mtime": 1793615412.0988064,
-    "seen": 1793623794.256322,
-    "ast_hash": "17b4637819a5d53546509b3a028528e3",
+    "mtime": 1793627069.3359416,
+    "seen": 1793627443.840928,
+    "ast_hash": "2af49186776873d5bf42519a9c76905f",
     "semantic_hash": ""
   },
   "apps/web/src/components/merchants/CollectiveClassActionModal.tsx": {
@@ -2064,9 +2064,9 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/merchants/MerchantRiskSearchWidget.tsx": {
-    "mtime": 1793608261.644021,
-    "seen": 1793614526.1341069,
-    "ast_hash": "72952fd260531a15a22742654f685b73",
+    "mtime": 1793627245.3255494,
+    "seen": 1793627443.840928,
+    "ast_hash": "8389dcab767197c2ea3cbbe6a5344ab4",
     "semantic_hash": ""
   },
   "apps/web/src/components/merchants/ScamRadarOffendersList.tsx": {

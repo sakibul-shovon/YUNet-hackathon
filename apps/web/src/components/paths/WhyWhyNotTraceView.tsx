@@ -89,6 +89,7 @@ export function WhyWhyNotTraceView({ caseId, locale }: WhyWhyNotTraceViewProps) 
   const isBangla = locale === 'bn';
 
   const [assessment, setAssessment] = useState<ProceduralAssessment | null>(null);
+  const [merchantName, setMerchantName] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
@@ -103,10 +104,20 @@ export function WhyWhyNotTraceView({ caseId, locale }: WhyWhyNotTraceViewProps) 
     setLoading(true);
     setErrorMsg(null);
     try {
-      const res = await apiFetch(`/api/v1/cases/${caseId}/assessment`);
+      const [res, caseRes] = await Promise.all([
+        apiFetch(`/api/v1/cases/${caseId}/assessment`),
+        apiFetch(`/api/v1/cases/${caseId}`),
+      ]);
       if (!res.ok) throw new Error('Failed to load procedural assessment.');
       const data = await res.json();
       setAssessment(data);
+
+      if (caseRes.ok) {
+        const cData = await caseRes.json();
+        if (cData.merchant_name) {
+          setMerchantName(cData.merchant_name);
+        }
+      }
     } catch (err: unknown) {
       setErrorMsg(err instanceof Error ? err.message : 'Error fetching assessment');
     } finally {
@@ -190,8 +201,8 @@ export function WhyWhyNotTraceView({ caseId, locale }: WhyWhyNotTraceViewProps) 
 
   return (
     <div className="space-y-6">
-      {/* Merchant Scam Radar Alert */}
-      <MerchantScamAlertBanner merchantName="Gadget Zone BD" locale={locale} />
+      {/* Merchant Scam Radar Alert (Dynamic based on case merchant) */}
+      <MerchantScamAlertBanner merchantName={merchantName} locale={locale} />
 
       {/* Top action row */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">

@@ -22,7 +22,8 @@ function getNoticeTemplates(vars: {
   dateStr: string;
 }): Record<ToneType, { label: string; badge: string; text: string }> {
   const { merchantName, amountBdt, itemDescription, caseReference, dateStr } = vars;
-  const formattedAmt = `BDT ${amountBdt.toLocaleString('en-US')}.00`;
+  const formattedAmt =
+    amountBdt > 0 ? `BDT ${amountBdt.toLocaleString('en-US')}.00` : 'the disputed sum stated in order details';
 
   return {
     formal: {
@@ -87,7 +88,7 @@ Thank you for your prompt attention.`,
 export function DemandNoticeStudio({
   caseReference = 'DEMO-GP-001',
   merchantName = 'Authorized Merchant',
-  amountBdt = 2500,
+  amountBdt = 0,
   itemDescription = 'Prepaid Goods / Services',
   className = '',
 }: DemandNoticeStudioProps) {

@@ -30,6 +30,7 @@ interface ActionDraftViewerProps {
 export function ActionDraftViewer({ caseId, initialLocale }: ActionDraftViewerProps) {
   const [draftLocale, setDraftLocale] = useState<string>(initialLocale);
   const [draft, setDraft] = useState<DraftData | null>(null);
+  const [amountBdt, setAmountBdt] = useState<number>(0);
   const [copied, setCopied] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -38,10 +39,27 @@ export function ActionDraftViewer({ caseId, initialLocale }: ActionDraftViewerPr
   const fetchDraft = async (loc: string) => {
     try {
       setLoading(true);
-      const res = await apiFetch(`/api/v1/cases/${caseId}/draft?locale=${loc}`);
+      const [res, factsRes] = await Promise.all([
+        apiFetch(`/api/v1/cases/${caseId}/draft?locale=${loc}`),
+        apiFetch(`/api/v1/cases/${caseId}/facts`),
+      ]);
       if (res.ok) {
         const data = await res.json();
         setDraft(data);
+      }
+      if (factsRes.ok) {
+        const facts = await factsRes.json();
+        const amtFact = facts.find((f: any) => f.field_name === 'amount_paid' || f.field_name === 'claim_amount');
+        if (amtFact) {
+          if (typeof amtFact.typed_value === 'object' && amtFact.typed_value?.minor_units) {
+            setAmountBdt(Math.round(amtFact.typed_value.minor_units / 100));
+          } else if (typeof amtFact.typed_value === 'number') {
+            setAmountBdt(amtFact.typed_value);
+          } else if (typeof amtFact.typed_value === 'string') {
+            const p = parseFloat(amtFact.typed_value.replace(/[^0-9.]/g, ''));
+            if (!isNaN(p)) setAmountBdt(Math.round(p));
+          }
+        }
       }
     } catch {
       // Fallback
@@ -149,6 +167,7 @@ export function ActionDraftViewer({ caseId, initialLocale }: ActionDraftViewerPr
           {/* AI Generative Tone & Streaming Studio */}
           <DemandNoticeStudio
             merchantName={draft?.recipient || (isBangla ? 'সংশ্লিষ্ট মার্চেন্ট' : 'Authorized Merchant Representative')}
+            amountBdt={amountBdt}
             caseReference={caseId}
           />
 

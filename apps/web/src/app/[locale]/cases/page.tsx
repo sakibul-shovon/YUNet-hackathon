@@ -53,28 +53,7 @@ export default async function CasesListPage({
   const tNav = await getTranslations({ locale, namespace: 'nav' });
 
   const isBangla = locale === 'bn';
-  let cases = await fetchCases();
-
-  // If no server cases exist yet for fresh guest, provide representative dispute
-  if (cases.length === 0) {
-    cases = [
-      {
-        id: 'case_demo_phone',
-        title: isBangla
-          ? 'অনলাইন গ্যাজেট শপ: অগ্রিম টাকা পরিশোধ সত্ত্বেও পণ্য নিখোঁজ'
-          : 'Prepaid purchase, non-delivery with ৳3,200 mismatch',
-        display_reference: '#case_demo_phone',
-        lifecycle_status: 'ACTION_PREPARED',
-        incident_date: '2026-10-18',
-        merchant_name: 'Gadget Zone BD',
-        story_narrative: isBangla
-          ? 'অনলাইন পেজ থেকে অগ্রিম ৩,২০০ টাকা বিকাশে পরিশোধ করার পর পণ্য সরবরাহ করা হয়নি এবং যোগাযোগ বিচ্ছিন্ন করা হয়েছে।'
-          : 'Paid BDT 3,200 in advance via bKash. Seller failed to deliver and blocked messenger communications.',
-        created_at: new Date().toISOString(),
-        is_demo: true,
-      },
-    ];
-  }
+  const cases = await fetchCases();
 
   return (
     <div className="min-h-screen flex flex-col bg-canvas text-foreground">
