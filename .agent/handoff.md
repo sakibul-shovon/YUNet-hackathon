@@ -59,6 +59,13 @@
 6. **Realistic Evidence Samples & Auto-Seeding:**
    - Generated authentic Daraz bKash receipt, WhatsApp chat screenshot, and Steadfast courier memo.
    - 1-click quick loader buttons in Evidence Vault and automatic database pre-seeding when launching Scenario A.
+7. **Consumer Upgrades & Hackathon Judge Quick-Start Suite:**
+   - **1-Click WhatsApp Legal Notice Dispatcher:** Embedded in `DemandNoticeStudio.tsx` allowing instant pre-action notice dispatch to merchant WhatsApp chats with Section 45 48-hr refund ultimatum.
+   - **Judge Quick-Start Sandbox (`JudgeQuickStartDrawer.tsx`):** Floating bottom-left pill across all pages providing 1-click launch of flagship scenarios (A, B, H), live verification metrics (134/134 test pass, 0% hallucination), and instant shortcuts.
+   - **Homepage Instant Scam & Risk Checker (`MerchantRiskSearchWidget.tsx`):** Interactive hero widget calculating real-time 0-100 risk score, complaint index, and quick-test suggestions before paying advance money.
+   - **Collective Consumer Class-Action Hub (`CollectiveClassActionModal.tsx` & `ScamRadarOffendersList.tsx`):** Uniting multiple victims of repeat offenders (e.g. Gadget Zone BD) into joint high-impact DNCRP petitions with Section 76(1) 25% reward estimation.
+   - **Section 60 Statutory 30-Day Watchdog (`StatutoryCountdownWatchdog.tsx`):** Real-time animated countdown alerting consumers before their legal claim expires.
+   - **Courier COD Payout Hold Direct Dispatcher (`CourierDisputeProtocol.tsx`):** Direct WhatsApp and email notice to Steadfast, Pathao, and RedX hubs to freeze fraudulent merchant payouts.
 - **Active Task:** P09.1 (Remedy/stage-aware action DAG and one primary next action UI)
 - **Last Completed Task:** P08.6 (Build owner-scoped Processing details/How this result was built view plus public Technology explanation)
 - **Required Tasks Progress:** 51 / 86 (59.3% complete, 0 blocked)

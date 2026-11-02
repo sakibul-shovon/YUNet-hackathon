@@ -327,3 +327,4 @@ export function MerchantRiskSearchWidget({ locale = 'en' }: { locale?: string })
     </div>
   );
 }
+

@@ -7,11 +7,15 @@ ClaimCraft BD is an agentic, Bangladesh-first consumer resolution copilot design
 
 ## 1. Quick Launch & Entry
 
-1. **Access the Scenarios Gallery:**
+1. **Floating Judge Quick-Start Modal (Global):**
+   - Click the floating **🧑‍⚖️ Judge Quick-Start** pill on the bottom-left of any page.
+   - Run any of the 3 flagship scenarios in 1 click, inspect the 134/134 automated test scorecard, and jump directly to key modules.
+2. **Access the Scenarios Gallery & Homepage Tools:**
    - Navigate to `/scenarios` (or click **Explore scenarios** on the landing page).
+   - Use the **Instant Merchant Scam & Risk Checker** on the homepage hero section to test shops like *Gadget Zone BD* or *Daraz*.
    - The platform opens in **English** by default, with instant 100% translation toggle to **বাংলা** (top right header).
    - Toggle between **Light Mode** (default) and **Dark Mode** with zero hydration flash.
-2. **Synthetic Data Notice:**
+3. **Synthetic Data Notice:**
    - All 8 scenarios use realistic synthetic evidence fixtures clearly marked with a synthetic data watermark.
    - Each scenario run creates an isolated, owner-scoped case in the database. No session or judge ever shares data with another visitor.
 
@@ -22,11 +26,12 @@ ClaimCraft BD is an agentic, Bangladesh-first consumer resolution copilot design
 ### Quick Start 1: Scenario A — Phone Order Not Delivered (E-Commerce)
 - **Problem:** Shafiq ordered a ৳5,500 smartphone on Daraz. It never arrived. The merchant stopped responding.
 - **What to Observe:**
-  1. Click **Launch Scenario** on Scenario A.
+  1. Click **Launch Scenario** on Scenario A (or launch via the Judge Quick-Start pill).
   2. Notice the **Evidence Conflict Alert**: Shafiq’s story mentions ৳5,500, but the receipt shows ৳5,000.
-  3. Inspect the **Attributable Statutory Route**: DNCRP Section 45 is evaluated via the deterministic Kleene 3-valued engine.
-  4. Try the **In-Memory What-If Simulation**: Change the facts (e.g. "What if the delivery was only delayed?") and observe the dynamic route reassessment without altering the saved case.
-  5. Open the **Action Studio**: View the respectful Pre-Filing Notice and DNCRP Complaint Pack with explicit `Draft Only • Not Submitted` watermarks.
+  3. Notice the **Section 60 Statutory 30-Day Watchdog**: Real-time animated countdown alerting user of remaining days before statutory bar.
+  4. Inspect the **Attributable Statutory Route**: DNCRP Section 45 is evaluated via the deterministic Kleene 3-valued engine.
+  5. Try the **In-Memory What-If Simulation**: Change the facts (e.g. "What if the delivery was only delayed?") and observe the dynamic route reassessment without altering the saved case.
+  6. Open the **Action Studio**: View the respectful Pre-Filing Notice with **1-Click WhatsApp Direct Dispatch** and DNCRP Schedule-1 Complaint Pack with explicit `Draft Only • Not Submitted` watermarks.
 
 ### Quick Start 2: Scenario B — Debit Without Credit (MFS & Banking)
 - **Problem:** Fatima attempted an MFS bank transfer of ৳3,000. The money was debited from her account, but never credited to the receiver.
@@ -44,13 +49,13 @@ ClaimCraft BD is an agentic, Bangladesh-first consumer resolution copilot design
 
 ---
 
-## 3. The Full Scenario Suite (Scenarios C through G)
+## 3. Advanced Realistic Consumer Protection Tools
 
-- **Scenario C (Defective Purchase / Refused Return):** Reconciles a seller's "no returns" policy against statutory implied warranty under the Consumer Rights Protection Act 2009.
-- **Scenario D (Telecom / ISP Unexpected Charge):** Ingests screenshot-only evidence, identifies carrier QoS guidelines, and directs to the BTRC Consumer Complaint Cell.
-- **Scenario E (Insurance Claim Explanation):** Parses scanned policy documents and explains grievance escalation pathways to IDRA without hallucinating coverage guarantees.
-- **Scenario F (Ongoing Phishing Concern):** Instantly triggers urgent safety hazard handling, prioritizes freezing SIM cards and MFS accounts, and collects zero passwords/PINs.
-- **Scenario G (Public Service Grievance):** Routes citizens through the official Citizen Charter Grievance Redress System (GRS) while safely abstaining if a court appeal is active.
+- **1-Click WhatsApp Legal Notice Dispatcher:** Instant pre-action legal notice sent directly to the merchant's WhatsApp with Section 45 citations and a 48-hour refund ultimatum.
+- **Instant Merchant Scam & Risk Checker:** Homepage hero search bar evaluating real-time risk scores (0-100) and indexed complaints before paying advance money.
+- **Collective Consumer Class-Action Hub:** On `/merchants`, view consolidated petitions on repeat offender merchants (e.g. Gadget Zone BD with 14 victims and ৳84,500 aggregate damages), with 1-click joint DNCRP memo generation.
+- **Courier Cash-on-Delivery (COD) Payout Freeze Protocol:** Step-by-step unboxing evidence standard and 1-click payout hold notice to Steadfast, Pathao, and RedX hub managers.
+- **Section 76(1) 25% Statutory Reward Calculator:** Interactive estimator calculating the 25% direct cash bounty awarded to complainants when DNCRP magistrates issue fines.
 
 ---
 

@@ -241,3 +241,4 @@ export function JudgeQuickStartDrawer({ locale = 'en' }: JudgeQuickStartDrawerPr
     </>
   );
 }
+
