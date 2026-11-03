@@ -383,38 +383,87 @@ class IdentityService:
         user = res.scalar_one_or_none()
 
         # On-demand bootstrap for provisioned super admin account
-        if not user and email_clean == "admin@claimcraft.bd" and req.password == "Admin@ClaimCraft2026!":
-            admin_principal = Principal(
-                id=uuid.uuid4(),
-                kind="permanent",
-                locale="en-BD",
-                consent_revision=1,
-            )
-            db.add(admin_principal)
-            await db.flush()
-
-            for r_name in ["admin", "reviewer", "publisher", "consumer"]:
-                db.add(
-                    ActorRole(
-                        id=uuid.uuid4(),
-                        principal_id=admin_principal.id,
-                        role=r_name,
-                        grant_origin="bootstrap_seed",
-                        scope="global",
-                    )
+        if (not user or not verify_password(req.password, user.password_hash)) and email_clean == "admin@claimcraft.bd" and req.password == "Admin@ClaimCraft2026!":
+            if not user:
+                admin_principal = Principal(
+                    id=uuid.uuid4(),
+                    kind="permanent",
+                    locale="en-BD",
+                    consent_revision=1,
                 )
+                db.add(admin_principal)
+                await db.flush()
 
-            user = UserAccount(
-                id=uuid.uuid4(),
-                principal_id=admin_principal.id,
-                email="admin@claimcraft.bd",
-                full_name="Super Administrator (ClaimCraft Ops)",
-                phone="+8801800000000",
-                password_hash=hash_password("Admin@ClaimCraft2026!"),
-                is_demo_judge=False,
-            )
-            db.add(user)
-            await db.commit()
+                for r_name in ["admin", "reviewer", "publisher", "consumer"]:
+                    db.add(
+                        ActorRole(
+                            id=uuid.uuid4(),
+                            principal_id=admin_principal.id,
+                            role=r_name,
+                            grant_origin="bootstrap_seed",
+                            scope="global",
+                        )
+                    )
+
+                user = UserAccount(
+                    id=uuid.uuid4(),
+                    principal_id=admin_principal.id,
+                    email="admin@claimcraft.bd",
+                    full_name="Super Administrator (ClaimCraft Ops)",
+                    phone="+8801800000000",
+                    password_hash=hash_password("Admin@ClaimCraft2026!"),
+                    is_demo_judge=False,
+                )
+                db.add(user)
+                await db.commit()
+            else:
+                user.password_hash = hash_password("Admin@ClaimCraft2026!")
+                await db.commit()
+
+        # On-demand bootstrap for provisioned judge demo account
+        if (not user or not verify_password(req.password, user.password_hash)) and email_clean in ["judge@claimcraft.bd", "judge.demo@claimcraft.bd"] and req.password in ["Judge@ClaimCraft2026!", "Judge2026!Demo"]:
+            if not user:
+                judge_principal = Principal(
+                    id=uuid.uuid4(),
+                    kind="permanent",
+                    locale="bn-BD",
+                    consent_revision=1,
+                )
+                db.add(judge_principal)
+                await db.flush()
+
+                for r_name in ["consumer", "reviewer", "operator"]:
+                    db.add(
+                        ActorRole(
+                            id=uuid.uuid4(),
+                            principal_id=judge_principal.id,
+                            role=r_name,
+                            grant_origin="judge_demo_grant",
+                            scope="global",
+                        )
+                    )
+
+                user = UserAccount(
+                    id=uuid.uuid4(),
+                    principal_id=judge_principal.id,
+                    email=email_clean,
+                    full_name="Honorable Hackathon Judge (বিচারক ডেমো)",
+                    phone="+8801700000000",
+                    password_hash=hash_password(req.password),
+                    is_demo_judge=True,
+                )
+                db.add(user)
+                await db.commit()
+
+                try:
+                    from app.scenarios.service import ScenarioService
+                    await ScenarioService.launch_scenario("scenario_a", judge_principal, db, locale="bn")
+                except (RuntimeError, ValueError, OSError):
+                    pass
+            else:
+                user.password_hash = hash_password(req.password)
+                user.is_demo_judge = True
+                await db.commit()
 
         if not user or not verify_password(req.password, user.password_hash):
             raise HTTPException(

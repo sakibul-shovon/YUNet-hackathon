@@ -14,19 +14,55 @@ export function AuthPage({locale,register=false}:{locale:string;register?:boolea
   <div style={{ display: 'flex', gap: '8px', marginBottom: '16px', flexWrap: 'wrap' }}>
     <button
       type="button"
-      onClick={() => { setEmail('admin@claimcraft.bd'); setPassword('Admin@ClaimCraft2026!'); }}
+      onClick={async () => {
+        setEmail('admin@claimcraft.bd');
+        setPassword('Admin@ClaimCraft2026!');
+        setBusy(true);
+        setError('');
+        try {
+          const profile = await send<Profile>('auth/login', { email: 'admin@claimcraft.bd', password: 'Admin@ClaimCraft2026!' });
+          remember(profile);
+          window.location.assign(`/${locale}/admin`);
+        } catch {
+          setError(words(locale, 'Unable to log in as Admin. Check connection.', 'অ্যাডমিন হিসেবে লগ ইন করা যায়নি।'));
+        } finally {
+          setBusy(false);
+        }
+      }}
+      disabled={busy}
       style={{ padding: '6px 12px', fontSize: '12px', fontWeight: 600, borderRadius: '8px', border: '1px solid #3b82f6', background: '#eff6ff', color: '#1d4ed8', cursor: 'pointer' }}
-      title="Fill admin@claimcraft.bd credentials"
+      title="1-Click Instant Admin Login"
     >
-      ⚡ {words(locale, '1-Click Admin Credentials', '১-ক্লিক সুপার অ্যাডমিন তথ্য')}
+      ⚡ {words(locale, '1-Click Admin Login', '১-ক্লিক সুপার অ্যাডমিন লগইন')}
     </button>
     <button
       type="button"
-      onClick={() => { setEmail('judge@claimcraft.bd'); setPassword('Judge@ClaimCraft2026!'); }}
+      onClick={async () => {
+        setEmail('judge@claimcraft.bd');
+        setPassword('Judge@ClaimCraft2026!');
+        setBusy(true);
+        setError('');
+        try {
+          const profile = await send<Profile>('auth/login', { email: 'judge@claimcraft.bd', password: 'Judge@ClaimCraft2026!' });
+          remember(profile);
+          window.location.assign(`/${locale}/cases`);
+        } catch {
+          try {
+            const profile = await send<Profile>('auth/judge-demo');
+            remember(profile);
+            window.location.assign(`/${locale}/cases`);
+          } catch {
+            setError(words(locale, 'Unable to log in as Judge. Check connection.', 'বিচারক হিসেবে লগ ইন করা যায়নি।'));
+          }
+        } finally {
+          setBusy(false);
+        }
+      }}
+      disabled={busy}
       style={{ padding: '6px 12px', fontSize: '12px', fontWeight: 600, borderRadius: '8px', border: '1px solid #f59e0b', background: '#fef3c7', color: '#92400e', cursor: 'pointer' }}
-      title="Fill judge@claimcraft.bd credentials"
+      title="1-Click Instant Judge Login"
     >
-      🧑‍⚖️ {words(locale, '1-Click Judge Credentials', '১-ক্লিক বিচারক ডেমো তথ্য')}
+      🧑‍⚖️ {words(locale, '1-Click Judge Login', '১-ক্লিক বিচারক লগইন')}
     </button>
   </div>
 )}<form onSubmit={submit}>{register&&<Field label={words(locale,'Your name','আপনার নাম')}><input autoComplete="name" minLength={2} maxLength={255} required value={name} onChange={e=>setName(e.target.value)}/></Field>}<Field label={words(locale,'Email address','ইমেইল')}><input type="email" autoComplete="email" maxLength={255} required value={email} onChange={e=>setEmail(e.target.value)}/></Field><Field label={words(locale,'Password','পাসওয়ার্ড')} hint={register?words(locale,'At least 6 characters.','অন্তত ৬ অক্ষরের পাসওয়ার্ড দিন।'):undefined}><div className="ui-password"><input type={visible?'text':'password'} autoComplete={register?'new-password':'current-password'} minLength={6} maxLength={128} required value={password} onChange={e=>setPassword(e.target.value)}/><button type="button" onClick={()=>setVisible(!visible)} aria-label={words(locale,visible?'Hide password':'Show password',visible?'পাসওয়ার্ড আড়াল করুন':'পাসওয়ার্ড দেখুন')} aria-pressed={visible}><Glyph name="eye" size={17}/></button></div></Field><Button type="submit" busy={busy}>{words(locale,register?'Create account':'Log in',register?'অ্যাকাউন্ট খুলুন':'লগ ইন করুন')}<Glyph name="arrow" size={16}/></Button></form><p className="ui-auth-switch">{words(locale,register?'Already have an account?':'New to Ebarki?',register?'আগেই অ্যাকাউন্ট আছে?':'Ebarki-তে প্রথমবার?')} <Link href={`/${locale}/${register?'login':'register'}`}>{words(locale,register?'Log in':'Create an account',register?'লগ ইন করুন':'অ্যাকাউন্ট খুলুন')}</Link></p><div className="ui-auth-divider"><span>{words(locale,'OR','অথবা')}</span></div><Button tone="secondary" onClick={()=>router.push(`/${locale}/cases`)}>{words(locale,'Continue as a guest','অ্যাকাউন্ট ছাড়াই শুরু করুন')}<Glyph name="arrow" size={16}/></Button><small>{words(locale,'Guest access belongs to this browser session. Signing into another account opens that account’s cases.','অ্যাকাউন্ট ছাড়া করা কাজ এই ব্রাউজারের সেশনে থাকে। অন্য অ্যাকাউন্টে লগ ইন করলে সেই অ্যাকাউন্টের অভিযোগগুলো দেখা যাবে।')}</small><Link href={`/${locale}/scenarios`} className="ui-auth-demo">{words(locale,'Just looking? Try a sample case.','আগে দেখে নিতে চান? নমুনা অভিযোগ খুলুন।')}</Link></section></main>;
