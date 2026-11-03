@@ -45,15 +45,15 @@ def test_t50_theme_default_and_tokens():
     content = globals_css.read_text(encoding="utf-8")
 
     # Light tokens present
-    assert "--canvas: #f6f7f4;" in content
-    assert "--surface: #ffffff;" in content
-    assert "--brand: #175c45;" in content
+    assert "--canvas:#f7f6f2;" in content
+    assert "--surface:#fff;" in content
+    assert "--brand:#b13f2c;" in content
 
     # Dark baseline tokens present
     assert ".dark" in content
-    assert "--canvas: #101713;" in content
-    assert "--surface: #18221c;" in content
-    assert "--brand: #83d2a2;" in content
+    assert "--canvas:#151a1d;" in content
+    assert "--surface:#1e2529;" in content
+    assert "--brand:#f49278;" in content
 
     # Default html theme in layout
     layout_tsx = ROOT / "apps" / "web" / "src" / "app" / "[locale]" / "layout.tsx"

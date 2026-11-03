@@ -42,7 +42,7 @@ class EditableDocumentAST(BaseModel):
     evidence_index: list[dict[str, Any]] = Field(default_factory=list)
     preparation_checklist: list[str] = Field(default_factory=list)
     unsubmitted_disclaimer_en: str = (
-        "PREPARATION MATERIAL ONLY — NOT SUBMITTED BY CLAIMCRAFT BD. "
+        "PREPARATION MATERIAL ONLY — NOT SUBMITTED BY EBARKI. "
         "Review carefully and file personally via official portal or merchant contact."
     )
     unsubmitted_disclaimer_bn: str = (
@@ -53,6 +53,8 @@ class EditableDocumentAST(BaseModel):
     is_filed: bool = False
     is_sent: bool = False
     created_at: str
+    case_version: int = 1
+    revision: int = 1
 
 
 class DocumentEditRequest(BaseModel):
@@ -60,6 +62,8 @@ class DocumentEditRequest(BaseModel):
     section_id: str
     sentence_id: str
     new_text: str
+    locale: str = "en"
+    expected_revision: int | None = None
 
 
 class DocumentASTService:
@@ -577,5 +581,6 @@ class DocumentASTService:
                         # T29: User edited text is classified as user_allegation, not certified statutory fact
                         sent.statement_type = "user_allegation"
                         sent.supporting_fact_id = None
+                        sent.supporting_citation = None
                         return doc
         return doc

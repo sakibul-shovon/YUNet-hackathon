@@ -1,11 +1,3 @@
-import { DynamicCaseOverview } from '@/components/cases/DynamicCaseOverview';
-
-export default async function CaseOverviewPage({
-  params,
-}: {
-  params: Promise<{ locale: string; id: string }>;
-}) {
-  const { locale, id } = await params;
-
-  return <DynamicCaseOverview caseId={id} locale={locale} />;
-}
+import { CaseOverview } from '@/features/workspace/Cases';
+export const metadata = { title: 'Ebarki' };
+export default async function Page({params}:{params:Promise<{locale:string}>}){const {locale}=await params;return <CaseOverview locale={locale} />;}

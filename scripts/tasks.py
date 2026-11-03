@@ -203,11 +203,12 @@ def cmd_check(args):
         subprocess.check_call(["uv", "run", "ruff", "check", "app"], cwd=backend_dir)
 
         print("\n--- 3. Web Next.js Build / Typecheck ---")
-        next_dir = ROOT_DIR / "apps" / "web" / ".next"
-        if next_dir.exists():
-            import shutil
-            shutil.rmtree(next_dir, ignore_errors=True)
-        subprocess.check_call([get_pnpm_cmd(), "--filter", "@claimcraft/web", "build"], cwd=ROOT_DIR)
+        # Keep production checks separate from an active development server.
+        check_env = {**os.environ, "EBARKI_NEXT_DIST_DIR": ".next-check"}
+        subprocess.check_call(
+            [get_pnpm_cmd(), "--filter", "@claimcraft/web", "build"],
+            cwd=ROOT_DIR, env=check_env,
+        )
 
         print("\n[SUCCESS] Foundation checks passed completely.")
 
@@ -316,6 +317,15 @@ def cmd_dev(args):
                 pass
 
 
+def cmd_web(args):
+    """Run a web workspace command through the cross-platform task runner."""
+    if not args.web_args:
+        raise SystemExit("Usage: python scripts/tasks.py web <pnpm command>")
+    raise SystemExit(subprocess.call(
+        [get_pnpm_cmd(), "--filter", "@claimcraft/web", *args.web_args], cwd=ROOT_DIR
+    ))
+
+
 def cmd_graphify(args):
     py_path_file = ROOT_DIR / "graphify-out" / ".graphify_python"
     if py_path_file.exists():
@@ -325,6 +335,13 @@ def cmd_graphify(args):
 
     cmd = [py_exe, "-m", "graphify"] + (args.graphify_args or [])
     sys.exit(subprocess.call(cmd, cwd=ROOT_DIR))
+
+
+def cmd_backend(args):
+    """Run a uv command in the backend workspace."""
+    if not args.backend_args:
+        raise SystemExit("Usage: python scripts/tasks.py backend <uv command>")
+    raise SystemExit(subprocess.call(["uv", *args.backend_args], cwd=ROOT_DIR / "services" / "backend"))
 
 
 def main():
@@ -353,6 +370,14 @@ def main():
 
     dev_parser = subparsers.add_parser("dev", help="Show instructions for running development servers")
     dev_parser.set_defaults(func=cmd_dev)
+
+    web_parser = subparsers.add_parser("web", help="Run a command in the web workspace")
+    web_parser.add_argument("web_args", nargs=argparse.REMAINDER)
+    web_parser.set_defaults(func=cmd_web)
+
+    backend_parser = subparsers.add_parser("backend", help="Run a uv command in the backend workspace")
+    backend_parser.add_argument("backend_args", nargs=argparse.REMAINDER)
+    backend_parser.set_defaults(func=cmd_backend)
 
     graphify_parser = subparsers.add_parser("graphify", help="Execute graphify CLI (query, update, path, explain)")
     graphify_parser.add_argument("graphify_args", nargs=argparse.REMAINDER, help="Arguments passed directly to graphify")

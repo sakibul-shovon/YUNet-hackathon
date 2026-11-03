@@ -71,7 +71,7 @@ async def override_case(
         case_id=case_id,
         new_status=req.new_status,
         admin_notes=req.admin_notes,
-        admin_email="admin@claimcraft.bd",
+        admin_email=str(admin.id),
         db=db,
     )
     if "error" in res:
@@ -95,7 +95,7 @@ async def toggle_ban(
     db: AsyncSession = Depends(get_db_session),
 ):
     """Toggles ban and deactivation status for a consumer or suspicious user."""
-    res = await AdminService.toggle_user_ban(user_id=user_id, admin_email="admin@claimcraft.bd", db=db)
+    res = await AdminService.toggle_user_ban(user_id=user_id, admin_email=str(admin.id), db=db)
     if "error" in res:
         raise HTTPException(status_code=404, detail=res["error"])
     return res
@@ -110,7 +110,7 @@ async def update_roles(
 ):
     """Promotes or alters administrative roles (admin, reviewer, publisher, operator)."""
     res = await AdminService.update_user_roles(
-        user_id=user_id, new_roles=req.roles, admin_email="admin@claimcraft.bd", db=db
+        user_id=user_id, new_roles=req.roles, admin_email=str(admin.id), db=db
     )
     if "error" in res:
         raise HTTPException(status_code=404, detail=res["error"])
@@ -138,7 +138,7 @@ async def override_merchant(
         is_verified=req.is_verified,
         risk_percent=req.risk_percent,
         admin_note=req.admin_note,
-        admin_email="admin@claimcraft.bd",
+        admin_email=str(admin.id),
     )
 
 
@@ -158,7 +158,7 @@ async def moderate_post(
 ):
     """Moderates community post: pin, hide, unhide, or dismiss reports."""
     return AdminService.moderate_community_post(
-        post_id=post_id, action=req.action, admin_email="admin@claimcraft.bd"
+        post_id=post_id, action=req.action, admin_email=str(admin.id)
     )
 
 
@@ -180,7 +180,7 @@ async def create_alert(
         severity=req.severity,
         message=req.message,
         active=req.active,
-        admin_email="admin@claimcraft.bd",
+        admin_email=str(admin.id),
     )
 
 

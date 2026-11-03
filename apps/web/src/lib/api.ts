@@ -6,6 +6,8 @@
  * with proactive JWT expiration checks and automatic 401 retry.
  */
 
+let guestSessionRequest: Promise<string> | null = null;
+
 function parseJwtExp(token: string): number | null {
   try {
     const parts = token.split('.');
@@ -28,7 +30,7 @@ export async function getClientSessionToken(forceRefresh = false): Promise<strin
   if (typeof window === 'undefined') return '';
 
   if (!forceRefresh) {
-    const storedToken = localStorage.getItem('cc_token');
+    const storedToken = localStorage.getItem('ebarki_token') || localStorage.getItem('cc_token');
     if (storedToken) {
       const exp = parseJwtExp(storedToken);
       // Valid if remaining lifetime > 30 seconds
@@ -38,6 +40,12 @@ export async function getClientSessionToken(forceRefresh = false): Promise<strin
     }
   }
 
+  if (guestSessionRequest) return guestSessionRequest;
+  guestSessionRequest = createGuestSession();
+  try { return await guestSessionRequest; } finally { guestSessionRequest = null; }
+}
+
+async function createGuestSession(): Promise<string> {
   try {
     const res = await fetch('/api/v1/auth/guest', {
       method: 'POST',
@@ -49,6 +57,8 @@ export async function getClientSessionToken(forceRefresh = false): Promise<strin
       if (data.access_token) {
         localStorage.setItem('cc_token', data.access_token);
         localStorage.setItem('cc_principal_id', data.principal_id);
+        localStorage.setItem('ebarki_token', data.access_token);
+        localStorage.setItem('ebarki_principal_id', data.principal_id);
         return data.access_token;
       }
     }
@@ -56,7 +66,7 @@ export async function getClientSessionToken(forceRefresh = false): Promise<strin
     console.error('Failed to establish guest session:', err);
   }
 
-  return localStorage.getItem('cc_token') || '';
+  return localStorage.getItem('ebarki_token') || localStorage.getItem('cc_token') || '';
 }
 
 export async function apiFetch(input: RequestInfo | URL, init?: RequestInit): Promise<Response> {

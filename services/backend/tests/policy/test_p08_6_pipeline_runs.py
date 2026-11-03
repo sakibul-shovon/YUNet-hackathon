@@ -15,43 +15,22 @@ async def test_p08_6_pipeline_runs_and_receipts_t53(client: AsyncClient, db_sess
     )).json()
     case_id = case["id"]
 
-    # 1. Fetch pipeline runs
+    # Reading a case must not manufacture execution receipts.
     res = await client.get(f"/v1/cases/{case_id}/pipeline-runs", headers=headers)
-    assert res.status_code == 200
-    runs = res.json()
-    assert len(runs) >= 1
-
+    assert res.json() == []
+    started = await client.post(f"/v1/cases/{case_id}/runs", headers=headers,
+                                json={"operation": "assess"})
+    assert started.status_code == 202
+    runs = (await client.get(f"/v1/cases/{case_id}/pipeline-runs", headers=headers)).json()
+    assert len(runs) == 1
     run = runs[0]
-    assert run["case_id"] == case_id
-    assert run["overall_status"] == "verified"
-
-    # Check stages
-    stage_names = [s["stage_name"] for s in run["stages"]]
-    assert "text_extraction" in stage_names
-    assert "layout_detection" in stage_names
-    assert "stt_audio" in stage_names
-    assert "hybrid_retrieval" in stage_names
-    assert "deterministic_policy" in stage_names
-
-    # Check that unused stages are truthfully marked not_applicable (T53)
-    audio_stage = next(s for s in run["stages"] if s["stage_name"] == "stt_audio")
-    assert audio_stage["status"] == "not_applicable"
-
-    layout_stage = next(s for s in run["stages"] if s["stage_name"] == "layout_detection")
-    assert layout_stage["status"] == "not_applicable"
-
-    text_stage = next(s for s in run["stages"] if s["stage_name"] == "text_extraction")
-    assert text_stage["status"] == "completed"
-
-    policy_stage = next(s for s in run["stages"] if s["stage_name"] == "deterministic_policy")
-    assert policy_stage["status"] == "completed"
-    assert "Kleene" in policy_stage["model_or_algorithm"]
-
-    # Check technology inventory
-    tech = run["technology_inventory"]
-    assert "Kleene" in tech["logic_model"]
-    assert "multilingual-e5-small" in tech["embeddings"]
-    assert "bm25s" in tech["lexical_search"]
+    assert run["pipeline_id"] == started.json()["id"]
+    assert run["overall_status"] == "completed"
+    assert [stage["stage_name"] for stage in run["stages"]] == ["source_retrieval", "procedural_assessment"]
+    assert all(stage["duration_ms"] >= 0 for stage in run["stages"])
+    assert run["technology_inventory"]["dense_model_executed"] == "false"
+    again = (await client.get(f"/v1/cases/{case_id}/pipeline-runs", headers=headers)).json()
+    assert again == runs
 
     # 2. Tenant isolation check: foreign user gets 404
     client.cookies.clear()

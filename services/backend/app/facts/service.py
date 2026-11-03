@@ -3,7 +3,7 @@ import uuid
 from typing import Any
 
 from fastapi import HTTPException, status
-from sqlalchemy import select
+from sqlalchemy import or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.cases.models import Case
@@ -231,7 +231,18 @@ class FactService:
 
         res = await db.execute(stmt)
         records = res.scalars().all()
-        return [FactAssertionOut.model_validate(r) for r in records]
+        reviews = (await db.scalars(select(FactReview).where(
+            or_(FactReview.assertion_id.in_([record.id for record in records]),
+                FactReview.correction_assertion_id.in_([record.id for record in records]))
+        ).order_by(FactReview.reviewed_at.desc()))).all() if records else []
+        latest = {}
+        for review in reviews:
+            latest.setdefault(review.assertion_id, review.review_outcome)
+            if review.correction_assertion_id:
+                latest.setdefault(review.correction_assertion_id, "corrected")
+        return [FactAssertionOut.model_validate(record).model_copy(
+            update={"review_outcome": latest.get(record.id)}
+        ) for record in records]
 
     @classmethod
     async def review_assertion(

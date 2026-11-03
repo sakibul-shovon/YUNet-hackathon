@@ -22,6 +22,10 @@ dependencies = [
     "pypdf>=6.21.4",
     "pdfplumber>=0.11.10",
     "bm25s>=0.3.16",
+    "reportlab>=5.1.0",
+    "uharfbuzz>=0.57.0",
+    "fonttools>=4.68.0",
+    "brotli>=1.2.1",
 ]
 
 [project.optional-dependencies]

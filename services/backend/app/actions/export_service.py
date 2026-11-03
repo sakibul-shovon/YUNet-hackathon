@@ -2,6 +2,7 @@ import datetime
 import hashlib
 import io
 import uuid
+from html import escape
 
 from PIL import Image
 from pydantic import BaseModel, ConfigDict, Field
@@ -19,7 +20,7 @@ class CaseExportOut(BaseModel):
     content: str
     sha256_hash: str
     disclaimer_notice: str = (
-        "PREPARATION MATERIAL ONLY — NOT SUBMITTED BY CLAIMCRAFT BD. "
+        "PREPARATION MATERIAL ONLY — NOT SUBMITTED BY EBARKI. "
         "Generating or downloading this document does not constitute official submission (T27)."
     )
     is_filed: bool = False
@@ -111,7 +112,7 @@ class ExportService:
         html_parts.append(f"<html lang='{doc.locale}'>")
         html_parts.append("<head>")
         html_parts.append("<meta charset='utf-8'/>")
-        html_parts.append(f"<title>{doc.title}</title>")
+        html_parts.append(f"<title>{escape(doc.title)}</title>")
         html_parts.append("""<style>
           body { font-family: 'SolaimanLipi', 'Noto Sans Bengali', system-ui, sans-serif; line-height: 1.6; padding: 40px; color: #1e293b; max-width: 800px; margin: auto; }
           .disclaimer { border: 2px solid #f59e0b; background: #fffbeb; color: #b45309; padding: 16px; border-radius: 8px; margin-bottom: 24px; font-weight: bold; font-size: 13px; }
@@ -126,29 +127,29 @@ class ExportService:
         html_parts.append("<body>")
 
         disclaimer = doc.unsubmitted_disclaimer_bn if is_bn else doc.unsubmitted_disclaimer_en
-        html_parts.append(f"<div class='disclaimer'>⚠️ {disclaimer}</div>")
-        html_parts.append(f"<h1>{doc.title}</h1>")
+        html_parts.append(f"<div class='disclaimer'>⚠️ {escape(disclaimer)}</div>")
+        html_parts.append(f"<h1>{escape(doc.title)}</h1>")
         html_parts.append(
             f"<p><small>Date: {doc.created_at} | Status: {doc.lifecycle_state.upper()}</small></p>"
         )
 
         for sec in doc.sections:
             title = sec.section_title_bn if is_bn else sec.section_title_en
-            html_parts.append(f"<h2>{title}</h2><ul>")
+            html_parts.append(f"<h2>{escape(title)}</h2><ul>")
             for sent in sec.sentences:
                 badge = (
-                    f" <span class='tag'>{sent.statement_type}</span>"
+                    f" <span class='tag'>{escape(sent.statement_type)}</span>"
                     if sent.statement_type != "reviewed_fact"
                     else ""
                 )
                 citation = (
-                    f" <em>({sent.supporting_citation})</em>" if sent.supporting_citation else ""
+                    f" <em>({escape(sent.supporting_citation)})</em>" if sent.supporting_citation else ""
                 )
-                html_parts.append(f"<li>{sent.text}{citation}{badge}</li>")
+                html_parts.append(f"<li>{escape(sent.text)}{citation}{badge}</li>")
             html_parts.append("</ul>")
 
         html_parts.append(
-            "<div class='footer'>ClaimCraft BD — Deterministic Consumer Resolution Copilot.</div>"
+            "<div class='footer'>Ebarki — Deterministic Consumer Resolution Copilot.</div>"
         )
         html_parts.append("</body></html>")
 

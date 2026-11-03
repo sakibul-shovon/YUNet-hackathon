@@ -1,8 +1,11 @@
+import io
 import uuid
+import zipfile
 
 from fastapi import APIRouter, Depends, HTTPException, Query, Response, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
+from starlette.concurrency import run_in_threadpool
 
 from app.actions.action_dag import ActionDAGOut, ActionDAGService
 from app.actions.destinations import ComplaintDestinationOut, ComplaintDestinationService
@@ -11,6 +14,7 @@ from app.actions.document_ast import (
     DocumentEditRequest,
     EditableDocumentAST,
 )
+from app.actions.document_store import PreparedDocument, load_document, save_document
 from app.actions.draft_generator import DraftRequestGenerator, DraftRequestOut
 from app.actions.export_service import (
     CaseExportOut,
@@ -54,31 +58,7 @@ async def get_editable_document_ast(
     db: AsyncSession = Depends(get_db_session),
 ):
     """P09.2: Generates editable document AST with sentence source mapping and fact/allegation tags."""
-    case = await FactService.get_authorized_case(case_id, principal, db)
-
-    stmt_f = select(FactAssertion).where(
-        FactAssertion.case_id == case.id,
-        FactAssertion.is_active.is_(True),
-    )
-    res_f = await db.execute(stmt_f)
-    assertions = res_f.scalars().all()
-    facts = ProceduralAssessmentEngine.extract_facts_from_db_records(assertions, case)
-
-    stmt_e = select(EvidenceItem).where(
-        EvidenceItem.case_id == case.id,
-        EvidenceItem.status != "deleted",
-    )
-    res_e = await db.execute(stmt_e)
-    evidence = res_e.scalars().all()
-
-    return DocumentASTService.generate_document_ast(
-        case=case,
-        facts=facts,
-        assertions=assertions,
-        evidence_items=evidence,
-        document_type=document_type,
-        locale=locale,
-    )
+    return await load_document(case_id, principal, db, document_type, locale)
 
 
 @router.post(
@@ -92,24 +72,14 @@ async def edit_document_ast_sentence(
     db: AsyncSession = Depends(get_db_session),
 ):
     """P09.2 & T29: Applies user edit to document AST; marks statement as user_allegation."""
-    case = await FactService.get_authorized_case(case_id, principal, db)
-
-    stmt_f = select(FactAssertion).where(
-        FactAssertion.case_id == case.id,
-        FactAssertion.is_active.is_(True),
-    )
-    res_f = await db.execute(stmt_f)
-    assertions = res_f.scalars().all()
-    facts = ProceduralAssessmentEngine.extract_facts_from_db_records(assertions, case)
-
-    doc = DocumentASTService.generate_document_ast(
-        case=case,
-        facts=facts,
-        assertions=assertions,
-        document_type=payload.document_type,
-    )
-
-    return DocumentASTService.apply_user_edit(doc, payload)
+    doc = await load_document(case_id, principal, db, payload.document_type, payload.locale)
+    if payload.expected_revision is not None and doc.revision != payload.expected_revision:
+        raise HTTPException(409, "The document changed. Reload before editing.")
+    revised = DocumentASTService.apply_user_edit(doc.model_copy(deep=True), payload)
+    revised.document_id = uuid.uuid4()
+    revised.revision = doc.revision + 1
+    await save_document(revised, principal.id, db)
+    return revised
 
 
 @router.get(
@@ -152,27 +122,52 @@ async def export_case_document(
     format_type: str,
     locale: str = Query("en", pattern="^(en|bn)$"),
     document_type: str = Query("dncrp_ccms_complaint"),
+    include_evidence_index: bool = Query(True),
+    include_originals: bool = Query(False),
+    evidence_ids: list[uuid.UUID] = Query(default=[]),
     principal: Principal = Depends(get_current_principal),
     db: AsyncSession = Depends(get_db_session),
 ):
-    """P09.4 & T27: Exports dispute document as Markdown or HTML. Never marks case as filed."""
-    case = await FactService.get_authorized_case(case_id, principal, db)
-
-    stmt_f = select(FactAssertion).where(
-        FactAssertion.case_id == case.id,
-        FactAssertion.is_active.is_(True),
-    )
-    res_f = await db.execute(stmt_f)
-    assertions = res_f.scalars().all()
-    facts = ProceduralAssessmentEngine.extract_facts_from_db_records(assertions, case)
-
-    doc = DocumentASTService.generate_document_ast(
-        case=case,
-        facts=facts,
-        assertions=assertions,
-        document_type=document_type,
-        locale=locale,
-    )
+    """Exports a reviewed preparation copy. Never marks a case as filed."""
+    doc = await load_document(case_id, principal, db, document_type, locale)
+    doc = doc.model_copy(deep=True)
+    if not include_evidence_index:
+        doc.evidence_index = []
+    if format_type in {"pdf", "zip"}:
+        from app.actions.pdf_export import render_pdf
+        pdf_bytes = await run_in_threadpool(render_pdf, doc)
+        if format_type == "pdf":
+            return Response(pdf_bytes, media_type="application/pdf", headers={
+                "Content-Disposition": 'attachment; filename="Ebarki-draft.pdf"',
+                "Cache-Control": "private, no-store",
+            })
+        selected = []
+        if include_originals and evidence_ids:
+            selected = list((await db.scalars(select(EvidenceItem).where(
+                EvidenceItem.case_id == case_id, EvidenceItem.principal_id == principal.id,
+                EvidenceItem.id.in_(evidence_ids), EvidenceItem.status == "accepted",
+            ))).all())
+            if len(selected) != len(set(evidence_ids)):
+                raise HTTPException(404, "An attachment is unavailable")
+            if sum(item.byte_size for item in selected) > 100 * 1024 * 1024:
+                raise HTTPException(413, "Selected files exceed the 100 MB export limit")
+        from app.evidence.storage import get_storage_backend
+        buffer = io.BytesIO()
+        with zipfile.ZipFile(buffer, "w", zipfile.ZIP_DEFLATED) as archive:
+            archive.writestr("Ebarki-draft.pdf", pdf_bytes)
+            archive.writestr("Ebarki-draft.md", ExportService.export_as_markdown(doc).content)
+            for item in selected:
+                name = item.original_filename.replace("\\", "/").split("/")[-1]
+                name = "".join(c for c in name if c.isalnum() or c in " ._-").strip(" .") or "attachment"
+                try:
+                    content = get_storage_backend().read_accepted(item.accepted_path)
+                except (OSError, ValueError):
+                    raise HTTPException(409, "An original file is no longer available")
+                archive.writestr(f"attachments/{item.id}_{name}", content)
+        return Response(buffer.getvalue(), media_type="application/zip", headers={
+            "Content-Disposition": 'attachment; filename="Ebarki-preparation.zip"',
+            "Cache-Control": "private, no-store",
+        })
 
     if format_type == "markdown":
         return ExportService.export_as_markdown(doc)
@@ -210,15 +205,10 @@ async def redact_evidence_attachment(
             status_code=status.HTTP_404_NOT_FOUND, detail="Evidence item not found."
         )
 
-    # Generate a dummy 200x200 sample image for redaction test or load bytes
-    import io
-
-    from PIL import Image as PILImage
-
-    dummy = PILImage.new("RGB", (200, 200), color=(255, 255, 255))
-    buf = io.BytesIO()
-    dummy.save(buf, format="PNG")
-    original_bytes = buf.getvalue()
+    if not item.accepted_path or not (item.detected_mime_type or "").startswith("image/"):
+        raise HTTPException(415, "Raster redaction requires an accepted image")
+    from app.evidence.storage import get_storage_backend
+    original_bytes = get_storage_backend().read_accepted(item.accepted_path)
 
     redacted_bytes = ExportService.apply_raster_redaction(original_bytes, payload.bounding_boxes)
 
@@ -284,3 +274,28 @@ async def get_case_draft_request(
         locale=locale,
         remedy=effective_remedy,
     )
+
+
+@router.get("/v1/cases/{case_id}/documents/history")
+async def document_history(
+    case_id: uuid.UUID,
+    principal: Principal = Depends(get_current_principal),
+    db: AsyncSession = Depends(get_db_session),
+):
+    await FactService.get_authorized_case(case_id, principal, db)
+    rows = await db.scalars(select(PreparedDocument).where(
+        PreparedDocument.case_id == case_id, PreparedDocument.principal_id == principal.id,
+    ).order_by(PreparedDocument.created_at.desc()).limit(50))
+    return [{"id": str(row.id), "case_version": row.case_version,
+             "revision": row.revision, "locale": row.locale,
+             "document_type": row.document_type, "created_at": row.created_at.isoformat()}
+            for row in rows]
+
+
+@router.get("/v1/cases/{case_id}/documents/versions/{document_id}")
+async def document_version(
+    case_id: uuid.UUID, document_id: uuid.UUID,
+    principal: Principal = Depends(get_current_principal),
+    db: AsyncSession = Depends(get_db_session),
+):
+    return await load_document(case_id, principal, db, document_id=document_id)

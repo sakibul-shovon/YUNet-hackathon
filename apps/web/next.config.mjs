@@ -5,6 +5,7 @@ const withNextIntl = createNextIntlPlugin('./src/lib/i18n/request.ts');
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  distDir: process.env.EBARKI_NEXT_DIST_DIR || '.next',
   webpack: (config, { dev }) => {
     config.resolve.symlinks = false;
     if (dev) {

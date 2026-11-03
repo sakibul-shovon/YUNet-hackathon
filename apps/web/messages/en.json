@@ -14,7 +14,7 @@
     "scenario_gallery_title": "Featured Real-World Scenarios",
     "scenario_gallery_sub": "Explore simulated dispute runs through our actual production engine.",
     "view_all_scenarios": "View all 8 scenarios",
-    "how_it_works_title": "How EbarKi Works",
+    "how_it_works_title": "How Ebarki Works",
     "how_it_works_sub": "From scattered receipts and Bengali narration to a defensible complaint package in four clear steps.",
     "step1_title": "1. Provide Evidence",
     "step1_desc": "Speak in Bangla/English, paste dispute text, or upload receipts and screenshots.",
@@ -50,8 +50,8 @@
     "tech_sub": "A modern, deterministic pipeline engineered for transparency and accuracy.",
     "see_how_built": "See how it is built →",
     "faq_title": "Frequently Asked Questions",
-    "faq1_q": "Is ClaimCraft BD an official government agency?",
-    "faq1_a": "No. ClaimCraft BD is an independent consumer resolution copilot. We help consumers understand their rights, organize documentation, and prepare official filings, but we do not issue rulings or make automatic submissions.",
+    "faq1_q": "Is Ebarki an official government agency?",
+    "faq1_a": "No. Ebarki is an independent consumer resolution copilot. We help consumers understand their rights, organize documentation, and prepare official filings, but we do not issue rulings or make automatic submissions.",
     "faq2_q": "What languages and input formats are supported?",
     "faq2_a": "We support English, Standard Bangla, and Banglish text, Bengali spoken voice, and image/PDF uploads including bKash/Nagad receipts, paper memos, and F-commerce chat screenshots.",
     "faq3_q": "Is my personal evidence kept private?",
@@ -147,7 +147,7 @@
   "actions": {
     "title": "Action Studio & Filing Companion",
     "subtitle": "Review your prepared complaint, copy verified portal fields, or export PDF.",
-    "unsubmitted_notice": "Status: Prepared, Not Submitted. EbarKi does not file on your behalf. You control external submission.",
+    "unsubmitted_notice": "Status: Prepared, Not Submitted. Ebarki does not file on your behalf. You control external submission.",
     "formal_notice_title": "Written Demand / Notice to Seller",
     "dnCRP_complaint_title": "DNCRP Official Consumer Complaint Form",
     "portal_fields_title": "Online Portal Quick-Copy Helper (dncrp.portal.gov.bd)",
@@ -222,10 +222,10 @@
     "retry": "Retry",
     "confirm": "Confirm",
     "cancel": "Cancel",
-    "independent_notice": "EbarKi is an independent consumer assistance tool, not a government body or court. Prepared complaints must be reviewed by the consumer prior to external submission."
+    "independent_notice": "Ebarki is an independent consumer assistance tool, not a government body or court. Prepared complaints must be reviewed by the consumer prior to external submission."
   },
   "auth": {
-    "login_title": "Sign In to EbarKi",
+    "login_title": "Sign In to Ebarki",
     "login_subtitle": "Access your cases, evidence vault, and legal filings",
     "judge_banner_title": "Hackathon Judge 1-Click Access",
     "judge_banner_desc": "Instant evaluation mode with pre-seeded demo cases and full access",

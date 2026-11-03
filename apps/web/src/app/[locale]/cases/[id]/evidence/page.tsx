@@ -1,18 +1,3 @@
-import { EvidenceVaultClient } from '@/components/cases/EvidenceVaultClient';
-
-export default async function CaseEvidencePage({
-  params,
-}: {
-  params: Promise<{ locale: string; id: string }>;
-}) {
-  const { locale, id } = await params;
-
-  return (
-    <EvidenceVaultClient
-      caseId={id}
-      locale={locale}
-      initialItems={[]}
-      initialReconciliation={null}
-    />
-  );
-}
+import { EvidenceVault } from '@/features/workspace/Evidence';
+export const metadata = { title: 'Ebarki' };
+export default async function Page({params}:{params:Promise<{locale:string}>}){const {locale}=await params;return <EvidenceVault locale={locale} />;}

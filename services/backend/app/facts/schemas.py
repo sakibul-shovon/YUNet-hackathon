@@ -30,6 +30,7 @@ class FactAssertionOut(BaseModel):
     created_case_version: int
     is_active: bool
     created_at: datetime.datetime
+    review_outcome: str | None = None
 
 
 class FactReviewSubmission(BaseModel):

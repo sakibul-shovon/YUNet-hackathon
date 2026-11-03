@@ -39,7 +39,8 @@ async function handleProxy(req: NextRequest, { params }: { params: Promise<{ pat
     }
 
     const backendRes = await fetch(targetUrl.toString(), fetchOptions);
-    const body = await backendRes.arrayBuffer();
+    const isStream = backendRes.headers.get('content-type')?.includes('text/event-stream');
+    const body = isStream ? backendRes.body : await backendRes.arrayBuffer();
 
     const responseHeaders = new Headers(backendRes.headers);
     responseHeaders.set('x-correlation-id', correlationId);
