@@ -235,3 +235,4 @@ export function CaseAgentAuditCard({ locale, amount, merchantName }: CaseAgentAu
     </div>
   );
 }
+
