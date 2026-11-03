@@ -5,6 +5,12 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { AnimatePresence, MotionConfig, motion, useMotionValue, useReducedMotion, useSpring } from 'motion/react';
 import { bangla, english, type LandingCopy } from './copy';
+import { MultiAgentSwarmBar } from '@/components/ai/MultiAgentSwarmBar';
+import { MerchantRiskSearchWidget } from '@/components/merchants/MerchantRiskSearchWidget';
+import { KleeneLogicEngineExplainer } from '@/components/landing/KleeneLogicEngineExplainer';
+import { StatutoryCompensationCalculator } from '@/components/consumer/StatutoryCompensationCalculator';
+import { ViabilityHUDGauge } from '@/components/ai/ViabilityHUDGauge';
+import { AIReasoningTrace } from '@/components/ai/AIReasoningTrace';
 
 type IconName = 'arrow' | 'check' | 'plus' | 'file' | 'mic' | 'link' | 'search' | 'shield' | 'clock' | 'sun' | 'moon' | 'menu' | 'close' | 'reset' | 'external' | 'chevron';
 
@@ -168,7 +174,15 @@ export function EbarkiLanding({ locale }: { locale: string }) {
       <div className="eb-container eb-header-inner">
         <Link href={`/${locale}`} aria-label="Ebarki" className="eb-home"><Brand /></Link>
         <nav className="eb-desktop-nav" aria-label={locale === 'bn' ? 'প্রধান নেভিগেশন' : 'Main navigation'}><a href="#how-it-works">{copy.nav.how}</a><a href="#toolkit">{copy.nav.toolkit}</a><a href="#trust">{copy.nav.trust}</a></nav>
-        <div className="eb-header-actions"><Link href={locale === 'bn' ? '/en' : '/bn'} className="eb-language" lang={locale === 'bn' ? 'en' : 'bn'}>{copy.nav.language}</Link><button className="eb-theme" onClick={toggleTheme} aria-label={dark ? copy.nav.light : copy.nav.theme} aria-pressed={dark}><Icon name={dark ? 'sun' : 'moon'} /></button><Link href={`/${locale}/login`} className="eb-login">{copy.nav.login}</Link><MagneticLink href={`/${locale}/cases/new`} className="eb-header-cta">{copy.nav.start}</MagneticLink><button id="eb-menu-button" className="eb-menu-toggle" aria-label={menuOpen ? copy.nav.close : copy.nav.menu} aria-expanded={menuOpen} aria-controls="eb-mobile-nav" onClick={() => setMenuOpen(!menuOpen)}><Icon name={menuOpen ? 'close' : 'menu'} /></button></div>
+        <div className="eb-header-actions">
+          <Link href={`/${locale}/admin`} className="eb-admin-btn" style={{ padding: '6px 12px', fontSize: '13px', fontWeight: 600, borderRadius: '6px', border: '1px solid var(--eb-line)', background: 'var(--eb-surface)', display: 'inline-flex', alignItems: 'center', gap: '6px' }} title={locale === 'bn' ? 'সুপার অ্যাডমিন পোর্টাল' : 'Super Admin Portal'}>
+            <Icon name="shield" />
+            <span>{locale === 'bn' ? 'অ্যাডমিন' : 'Admin'}</span>
+          </Link>
+          <Link href={`/${locale}/scenarios`} className="eb-judge-btn" style={{ padding: '6px 12px', fontSize: '13px', fontWeight: 600, borderRadius: '6px', border: '1px solid #f59e0b', background: '#fef3c7', color: '#92400e', display: 'inline-flex', alignItems: 'center', gap: '6px' }} title={locale === 'bn' ? 'বিচারক ডেমো স্যান্ডবক্স' : 'Judge Demo Sandbox'}>
+            <span>🧑‍⚖️</span>
+            <span>{locale === 'bn' ? 'বিচারক স্যান্ডবক্স' : 'Judge Sandbox'}</span>
+          </Link><Link href={locale === 'bn' ? '/en' : '/bn'} className="eb-language" lang={locale === 'bn' ? 'en' : 'bn'}>{copy.nav.language}</Link><button className="eb-theme" onClick={toggleTheme} aria-label={dark ? copy.nav.light : copy.nav.theme} aria-pressed={dark}><Icon name={dark ? 'sun' : 'moon'} /></button><Link href={`/${locale}/login`} className="eb-login">{copy.nav.login}</Link><MagneticLink href={`/${locale}/cases/new`} className="eb-header-cta">{copy.nav.start}</MagneticLink><button id="eb-menu-button" className="eb-menu-toggle" aria-label={menuOpen ? copy.nav.close : copy.nav.menu} aria-expanded={menuOpen} aria-controls="eb-mobile-nav" onClick={() => setMenuOpen(!menuOpen)}><Icon name={menuOpen ? 'close' : 'menu'} /></button></div>
       </div>
       {menuOpen && <nav id="eb-mobile-nav" className="eb-mobile-nav" aria-label={copy.nav.menu}><a href="#how-it-works" onClick={() => setMenuOpen(false)}>{copy.nav.how}</a><a href="#toolkit" onClick={() => setMenuOpen(false)}>{copy.nav.toolkit}</a><a href="#trust" onClick={() => setMenuOpen(false)}>{copy.nav.trust}</a><Link href={`/${locale}/login`}>{copy.nav.login}</Link><Link href={`/${locale}/cases/new`}>{copy.nav.start}<Icon name="arrow" /></Link></nav>}
     </header>
@@ -188,6 +202,124 @@ export function EbarkiLanding({ locale }: { locale: string }) {
       </section>
 
       <div className="eb-principle-strip"><div className="eb-container">{copy.strip.map((text, index) => <span key={text}><span className="eb-strip-symbol">{index === 0 ? '↗' : index === 1 ? '⊞' : '↳'}</span>{text}</span>)}</div></div>
+
+      {/* VISUAL AI SHOWCASE SECTION 1: Multi-Agent Autonomous Defense Swarm */}
+      <section className="eb-section eb-container eb-reveal" style={{ paddingBottom: '32px' }}>
+        <div style={{ marginBottom: '20px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+            <span style={{ fontSize: '11px', fontFamily: 'var(--eb-mono)', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', padding: '3px 10px', borderRadius: '999px', background: 'rgba(36, 87, 214, 0.12)', color: '#1d4ed8', border: '1px solid rgba(36, 87, 214, 0.25)' }}>
+              ✦ Live AI Agent Swarm
+            </span>
+            <span style={{ fontSize: '12px', color: 'var(--eb-muted)', fontFamily: 'var(--eb-mono)' }}>
+              4 Autonomous Agents Synchronously Advocating For You
+            </span>
+          </div>
+          <h2 style={{ fontSize: '26px', fontWeight: 800, margin: 0, letterSpacing: '-0.02em', color: 'var(--eb-ink)' }}>
+            {locale === 'bn' ? '৪টি বিশেষায়িত এআই এজেন্টের সক্রিয় দল' : 'Autonomous Multi-Agent Defense Swarm'}
+          </h2>
+          <p style={{ fontSize: '15px', color: 'var(--eb-muted)', margin: 0, maxWidth: '750px', lineHeight: 1.6 }}>
+            {locale === 'bn'
+              ? 'আপনার প্রতিটি অভিযোগের তথ্য যাচাই, আইনি তামাদি ট্র্যাকিং, ক্ষতিপূরণ প্রাক্কলন ও ড্রাফট তৈরির জন্য ৪টি বিশেষায়িত সাব-এজেন্ট দলবদ্ধভাবে নিয়োজিত।'
+              : 'Four specialized autonomous agents independently audit digital payment evidence, cross-reference statutory limitations, simulate procedural viability, and draft court-ready dockets.'}
+          </p>
+        </div>
+        <MultiAgentSwarmBar locale={locale} />
+      </section>
+
+      {/* VISUAL AI SHOWCASE SECTION 2: Merchant Scam Radar & Trade Risk Checker */}
+      <section className="eb-section eb-container eb-reveal" style={{ paddingBottom: '32px' }}>
+        <div style={{ marginBottom: '20px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+            <span style={{ fontSize: '11px', fontFamily: 'var(--eb-mono)', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', padding: '3px 10px', borderRadius: '999px', background: 'rgba(239, 68, 68, 0.12)', color: '#b91c1c', border: '1px solid rgba(239, 68, 68, 0.25)' }}>
+              🛡️ Live Merchant Risk Intelligence
+            </span>
+            <span style={{ fontSize: '12px', color: 'var(--eb-muted)', fontFamily: 'var(--eb-mono)' }}>
+              Real-Time Complaint & Trade License Registry
+            </span>
+          </div>
+          <h2 style={{ fontSize: '26px', fontWeight: 800, margin: 0, letterSpacing: '-0.02em', color: 'var(--eb-ink)' }}>
+            {locale === 'bn' ? 'মার্চেন্ট স্ক্যাম রাডার ও ট্রেড লাইসেন্স সত্যতা' : 'Instant Merchant Scam Radar & Risk Checker'}
+          </h2>
+          <p style={{ fontSize: '15px', color: 'var(--eb-muted)', margin: 0, maxWidth: '750px', lineHeight: 1.6 }}>
+            {locale === 'bn'
+              ? 'টাকা পরিশোধের আগে যেকোনো ফেসবুক পেজ, অনলাইন শপ বা নম্বরের অভিযোগের ইতিহাস ও আইনি ঝুঁকি তাৎক্ষণিকভাবে যাচাই করুন।'
+              : 'Instantly query indexed dispute history, trade license verification, and common non-delivery patterns before sending advance payments.'}
+          </p>
+        </div>
+        <MerchantRiskSearchWidget locale={locale} />
+      </section>
+
+      {/* VISUAL AI SHOWCASE SECTION 3: Kleene 3-Valued Logic Engine */}
+      <section className="eb-section eb-container eb-reveal" style={{ paddingBottom: '32px' }}>
+        <div style={{ marginBottom: '20px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+            <span style={{ fontSize: '11px', fontFamily: 'var(--eb-mono)', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', padding: '3px 10px', borderRadius: '999px', background: 'rgba(16, 185, 129, 0.12)', color: '#047857', border: '1px solid rgba(16, 185, 129, 0.25)' }}>
+              ⚖️ Zero Hallucination Guarantee
+            </span>
+            <span style={{ fontSize: '12px', color: 'var(--eb-muted)', fontFamily: 'var(--eb-mono)' }}>
+              Formal Three-Valued Logic Over Abstract Syntax Tree (AST)
+            </span>
+          </div>
+          <h2 style={{ fontSize: '26px', fontWeight: 800, margin: 0, letterSpacing: '-0.02em', color: 'var(--eb-ink)' }}>
+            {locale === 'bn' ? 'কেন ক্লেইমক্রাফ্ট কখনো ভুল বা বানিয়ে বলা আইনি তথ্য দেয় না' : 'Deterministic 3-Valued Kleene Logic Engine'}
+          </h2>
+          <p style={{ fontSize: '15px', color: 'var(--eb-muted)', margin: 0, maxWidth: '750px', lineHeight: 1.6 }}>
+            {locale === 'bn'
+              ? 'আইনি বিষয়ে সাধারণ চ্যাটবটের ভুয়া অনুমান বা হ্যালুসিনেশন সম্পূর্ণ রোধ করতে প্রতিটি আইনি সিদ্ধান্ত ৩-মানসম্পন্ন (TRUE / UNKNOWN / FALSE) যুক্তির ট্রুথ টেবিল দ্বারা নিয়ন্ত্রিত।'
+              : 'Unlike standard chatbots that hallucinate legal advice, our engine enforces formal Kleene 3-Valued Logic over an AST before generating dockets.'}
+          </p>
+        </div>
+        <KleeneLogicEngineExplainer locale={locale} />
+      </section>
+
+      {/* VISUAL AI SHOWCASE SECTION 4: 25% Statutory Reward Simulator */}
+      <section className="eb-section eb-container eb-reveal" style={{ paddingBottom: '32px' }}>
+        <div style={{ marginBottom: '20px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+            <span style={{ fontSize: '11px', fontFamily: 'var(--eb-mono)', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', padding: '3px 10px', borderRadius: '999px', background: 'rgba(245, 158, 11, 0.12)', color: '#b45309', border: '1px solid rgba(245, 158, 11, 0.25)' }}>
+              💰 CRPA 2009 Section 76(1) Cash Reward
+            </span>
+            <span style={{ fontSize: '12px', color: 'var(--eb-muted)', fontFamily: 'var(--eb-mono)' }}>
+              Direct Treasury Cash Payout For Citizen Complainants
+            </span>
+          </div>
+          <h2 style={{ fontSize: '26px', fontWeight: 800, margin: 0, letterSpacing: '-0.02em', color: 'var(--eb-ink)' }}>
+            {locale === 'bn' ? 'আইনসম্মত ২৫% সরকারি নগদ পুরস্কার ক্যালকুলেটর' : '25% Statutory Cash Reward Simulator'}
+          </h2>
+          <p style={{ fontSize: '15px', color: 'var(--eb-muted)', margin: 0, maxWidth: '750px', lineHeight: 1.6 }}>
+            {locale === 'bn'
+              ? 'ভোক্তা অধিকার সংরক্ষণ আইনের ধারা ৭৬(১) অনুযায়ী অভিযুক্ত বিক্রেতাকে আদায়কৃত জরিমানার ২৫% নগদ অর্থ তাৎক্ষণিকভাবে অভিযোগকারীকে সরাসরি প্রদান করা বাধ্যতামূলক।'
+              : 'Under Bangladesh Law, whenever DNCRP fines a deceptive merchant, 25% of the total realized fine is immediately awarded in cash directly to you.'}
+          </p>
+        </div>
+        <StatutoryCompensationCalculator locale={locale} initialClaimAmount={5500} />
+      </section>
+
+      {/* VISUAL AI SHOWCASE SECTION 5: AI Viability HUD & Reasoning Trace */}
+      <section className="eb-section eb-container eb-reveal" style={{ paddingBottom: '32px' }}>
+        <div style={{ marginBottom: '20px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+            <span style={{ fontSize: '11px', fontFamily: 'var(--eb-mono)', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', padding: '3px 10px', borderRadius: '999px', background: 'rgba(36, 87, 214, 0.12)', color: '#1d4ed8', border: '1px solid rgba(36, 87, 214, 0.25)' }}>
+              🧠 Case Intelligence & Viability HUD
+            </span>
+            <span style={{ fontSize: '12px', color: 'var(--eb-muted)', fontFamily: 'var(--eb-mono)' }}>
+              Real-Time Procedural Probability & Chain-of-Thought
+            </span>
+          </div>
+          <h2 style={{ fontSize: '26px', fontWeight: 800, margin: 0, letterSpacing: '-0.02em', color: 'var(--eb-ink)' }}>
+            {locale === 'bn' ? 'এআই কেস ভায়াবিলিটি ও ডিসিশন রিজনিং ট্রেস' : 'AI Case Viability Index & Reasoning Trace'}
+          </h2>
+          <p style={{ fontSize: '15px', color: 'var(--eb-muted)', margin: 0, maxWidth: '750px', lineHeight: 1.6 }}>
+            {locale === 'bn'
+              ? 'এআই আপনার বিরোধের পক্ষে কোন কোন তথ্য পেয়েছে এবং কীভাবে আইনি ফোরাম নির্ধারণ করেছে তার স্টেপ-বাই-স্টেপ স্বচ্ছ ব্যাখ্যা।'
+              : 'Inspect how our neural copilot evaluates evidentiary strength, verifies limitation gates, and selects optimal administrative remedies.'}
+          </p>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '20px' }}>
+          <ViabilityHUDGauge score={92} />
+          <AIReasoningTrace defaultExpanded={true} />
+        </div>
+      </section>
 
       <section id="how-it-works" className="eb-section eb-container eb-problem" aria-labelledby="eb-problem-title">
         <div className="eb-section-heading eb-reveal"><div><p className="eb-eyebrow">{copy.problem.eyebrow}</p><h2 id="eb-problem-title">{copy.problem.title}</h2></div><p>{copy.problem.description}</p></div>

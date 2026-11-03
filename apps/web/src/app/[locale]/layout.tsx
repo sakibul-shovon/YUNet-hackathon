@@ -5,6 +5,7 @@ import { locales } from '@/lib/i18n/config';
 import type { ReactNode } from 'react';
 import '@/app/globals.css';
 import { AppShell } from '@/features/workspace/AppShell';
+import { JudgeQuickStartDrawer } from '@/components/ai/JudgeQuickStartDrawer';
 import '@/features/workspace/workspace.css';
 import '@/features/workspace/sections.css';
 
@@ -42,6 +43,7 @@ export default async function LocaleLayout({
         </a>
         <NextIntlClientProvider messages={messages} locale={locale}>
           <AppShell locale={locale}>{children}</AppShell>
+          <JudgeQuickStartDrawer locale={locale} />
         </NextIntlClientProvider>
       </body>
     </html>
