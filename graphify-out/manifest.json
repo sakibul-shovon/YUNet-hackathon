@@ -1530,9 +1530,9 @@
     "semantic_hash": ""
   },
   ".agent/handoff.md": {
-    "mtime": 1793833793.3345327,
-    "seen": 1793833909.521426,
-    "ast_hash": "d87aa7948a1d3d5c1eb7ed76a7fb23e7",
+    "mtime": 1793834156.3284357,
+    "seen": 1793834248.3472273,
+    "ast_hash": "afcbe9b133f4f640ad33fa3177a60e65",
     "semantic_hash": ""
   },
   ".github/copilot-instructions.md": {
@@ -2568,8 +2568,8 @@
     "semantic_hash": ""
   },
   "docs/qa/evidence/api-route-inventory.json": {
-    "mtime": 1793833836.296184,
-    "seen": 1793833909.5204256,
+    "mtime": 1793834193.7932322,
+    "seen": 1793834248.3462255,
     "ast_hash": "df55e833c5a0b409512a9b7cf666724a",
     "semantic_hash": ""
   },
@@ -2580,9 +2580,9 @@
     "semantic_hash": ""
   },
   "docs/qa/evidence/final-environment-validation.json": {
-    "mtime": 1793833836.306713,
-    "seen": 1793833909.5204256,
-    "ast_hash": "549e0446f7cdb58e9633f9e2ec5d27b1",
+    "mtime": 1793834193.8014932,
+    "seen": 1793834248.3462255,
+    "ast_hash": "a56110c34e1e0b2c2fc3a14334ec4842",
     "semantic_hash": ""
   },
   "docs/qa/evidence/live-baseline.json": {
@@ -2610,9 +2610,9 @@
     "semantic_hash": ""
   },
   "docs/qa/evidence/validation-summary.json": {
-    "mtime": 1793833874.8214996,
-    "seen": 1793833909.5204256,
-    "ast_hash": "6efabbfa792425aa43c60a58b5d4f182",
+    "mtime": 1793834156.329434,
+    "seen": 1793834248.3462255,
+    "ast_hash": "a2fd586702994ae5e5331de270d01e6f",
     "semantic_hash": ""
   },
   "docs/qa/fixtures/GROUND_TRUTH.json": {
@@ -2646,9 +2646,9 @@
     "semantic_hash": ""
   },
   "scripts/verify_final_audit_environment.py": {
-    "mtime": 1793833639.4443083,
-    "seen": 1793833909.5204256,
-    "ast_hash": "ae0f11beb82536cce6b5ee3c5f576f44",
+    "mtime": 1793834190.7757566,
+    "seen": 1793834248.3462255,
+    "ast_hash": "b3f599c52e50c5cee65e882b8286bd52",
     "semantic_hash": ""
   },
   "services/backend/tests/integration/test_final_audit_regressions.py": {
@@ -2664,27 +2664,27 @@
     "semantic_hash": ""
   },
   "docs/qa/EBARKI_FEATURE_TEST_MATRIX.md": {
-    "mtime": 1793833835.0194764,
-    "seen": 1793833909.521426,
-    "ast_hash": "973f64d70b570f836dac4eea829e7c22",
+    "mtime": 1793833963.6946278,
+    "seen": 1793834248.3472273,
+    "ast_hash": "b1d1358d61e92a6ac056f7c225b5d3f7",
     "semantic_hash": ""
   },
   "docs/qa/EBARKI_FINAL_SYSTEM_AUDIT.md": {
-    "mtime": 1793833793.2562165,
-    "seen": 1793833909.521426,
-    "ast_hash": "9d92faf5ff886108533146ceeb25773c",
+    "mtime": 1793834156.3304381,
+    "seen": 1793834248.3472273,
+    "ast_hash": "c6c68388cd545a123721a5fb05849179",
     "semantic_hash": ""
   },
   "docs/qa/EBARKI_ISSUE_LEDGER.md": {
-    "mtime": 1793833580.1043518,
-    "seen": 1793833909.521426,
-    "ast_hash": "9b052d778933585d473b72d72abf6afe",
+    "mtime": 1793834156.326437,
+    "seen": 1793834248.3472273,
+    "ast_hash": "62d9c6aa2a85772db00db36ccffdde76",
     "semantic_hash": ""
   },
   "docs/qa/evidence/README.md": {
-    "mtime": 1793833639.4473083,
-    "seen": 1793833909.521426,
-    "ast_hash": "7ab1b0f518d79752f49e01b37d113203",
+    "mtime": 1793834095.5380752,
+    "seen": 1793834248.3472273,
+    "ast_hash": "913fe4586d8f972c1e91870da9784d2a",
     "semantic_hash": ""
   },
   "docs/qa/evidence/core-validation.txt": {
@@ -2712,9 +2712,9 @@
     "semantic_hash": ""
   },
   "docs/qa/evidence/graph-update.txt": {
-    "mtime": 1793833905.9868102,
-    "seen": 1793833909.521426,
-    "ast_hash": "f74e55f781f9e5a883f6e0127f4095f2",
+    "mtime": 1793833909.989828,
+    "seen": 1793834248.3472273,
+    "ast_hash": "a570e415e75440e34ef4afae0deb1b5f",
     "semantic_hash": ""
   },
   "docs/qa/evidence/live-final-console.txt": {
@@ -2736,9 +2736,9 @@
     "semantic_hash": ""
   },
   "services/backend/app/actions/fonts/noto-bengali-full-OFL.txt": {
-    "mtime": 1793832228.0363295,
-    "seen": 1793833909.521426,
-    "ast_hash": "4e8e923ebace445f857aac0013ca1085",
+    "mtime": 1793834216.52982,
+    "seen": 1793834248.3472273,
+    "ast_hash": "c3d52ef079882ed31f09e6f83f996ff1",
     "semantic_hash": ""
   },
   "docs/qa/evidence/export-baseline-bn.pdf": {
