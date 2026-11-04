@@ -16,7 +16,6 @@ from app.actions.document_ast import (
 )
 from app.core.database import Base
 from app.evidence.models import EvidenceItem
-from app.facts.models import FactAssertion
 from app.facts.service import FactService
 from app.identity.models import Principal
 from app.policy.engine import ProceduralAssessmentEngine
@@ -48,16 +47,16 @@ async def load_document(
         saved = await db.scalar(query.where(PreparedDocument.id == document_id))
         if not saved:
             raise HTTPException(404, "Document not found")
+        if saved.content.get('template_version', 0) < 2:
+            raise HTTPException(409, 'Ebarki retired this preparation template. Prepare a current document before using it.')
     else:
         saved = await db.scalar(query.where(
             PreparedDocument.document_type == document_type, PreparedDocument.locale == locale,
             PreparedDocument.case_version == case.row_version,
         ).order_by(PreparedDocument.revision.desc(), PreparedDocument.created_at.desc()).limit(1))
-    if saved:
+    if saved and saved.content.get('template_version', 0) >= 2:
         return EditableDocumentAST.model_validate(saved.content)
-    assertions = list((await db.scalars(select(FactAssertion).where(
-        FactAssertion.case_id == case.id, FactAssertion.is_active.is_(True)
-    ))).all())
+    assertions = await FactService.get_assertions(case.id, principal, db)
     evidence = list((await db.scalars(select(EvidenceItem).where(
         EvidenceItem.case_id == case.id, EvidenceItem.status == "accepted"
     ))).all())

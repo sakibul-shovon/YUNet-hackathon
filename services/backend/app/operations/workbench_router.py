@@ -123,7 +123,10 @@ async def review_moment(case_id: uuid.UUID, payload: ReviewInput,
         if amount:
             links = (await db.scalars(select(FactSourceLink).where(FactSourceLink.assertion_id == amount.id))).all()
             for link in links:
-                if (link.locator_meta or {}).get('timeline_item_id') == item['id']:
+                meta = link.locator_meta or {}
+                if meta.get('timeline_item_id') == item['id'] or (
+                    meta.get('evidence_id') == source['id'] and not meta.get('timeline_item_id')
+                ):
                     await db.delete(link)
             matches = list(MONEY.finditer(item['quote']))
             if payload.outcome == 'confirmed' and len(matches) == 1:

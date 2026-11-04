@@ -7,6 +7,7 @@ import { Button, ErrorPanel, Glyph, Loading, Modal, Notice, words } from '@/feat
 import type { ConnectedRecords, ConnectedSource, RecordLocator } from './experience-types';
 
 export function sourceMethod(source: ConnectedSource, locale: string) {
+  if (source.reused_from_run) return words(locale, 'Previous reading · no new model call', 'আগের পড়া তথ্য · নতুন করে মডেল চলেনি');
   if (source.is_demo) return words(locale, 'Fictional conversation · demo only', 'নমুনার কথোপকথন');
   const labels: Record<string, [string, string]> = {
     native_pdf: ['Read from the PDF', 'PDF থেকে পড়া'], gemini_vision: ['AI reading · review needed', 'AI দিয়ে পড়া · মিলিয়ে দেখুন'], groq_vision: ['AI reading · review needed', 'AI দিয়ে পড়া · মিলিয়ে দেখুন'],

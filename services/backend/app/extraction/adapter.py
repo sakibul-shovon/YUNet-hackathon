@@ -263,9 +263,9 @@ class CaseExtractor:
 
         # 4. Extract Date / Incident Date
         date_patterns = [
+            r"(?<![\d০-৯])[\d০-৯]{4}-[\d০-৯]{2}-[\d০-৯]{2}(?![\d০-৯])",
             r"[\d০-৯]{1,2}[-/.]\s*[\d০-৯]{1,2}[-/.]\s*[\d০-৯]{4}",
             r"[\d০-৯]{1,2}\s+(?:জানুয়ারি|ফেব্রুয়ারি|মার্চ|এপ্রিল|মে|জুন|জুলাই|আগস্ট|সেপ্টেম্বর|অক্টোবর|নভেম্বর|ডিসেম্বর|january|february|march|april|may|june|july|august|september|october|november|december)\s+[\d০-৯]{4}",
-            r"\b(?:গতকাল|আজ|আজকে|আগামীকাল|yesterday|today|tomorrow)\b",
         ]
         for pat in date_patterns:
             m = re.search(pat, text, re.IGNORECASE)

@@ -1,14 +1,10 @@
 import datetime
 import io
-import re
 import uuid
-from typing import Any
 
 from PIL import Image
 
 from app.multimodal.vision.schemas import (
-    ChatBubbleProposal,
-    OCRDisagreement,
     ScreenshotAnalysisResult,
 )
 
@@ -57,128 +53,13 @@ class ScreenshotAdapter:
         except (OSError, ValueError):
             theme = "light"
 
-        # 2. Determine layout type based on content markers or OCR text
-        lower_ocr = (ocr_extracted_text or "").lower()
-        is_chat = any(
-            k in lower_ocr
-            for k in ("pm", "am", "typing...", "delivered", "seen", "message", "inbox", "পাঠিয়েছেন")
-        ) or (
-            b"chat" in image_bytes[:512].lower()
-            or b"whatsapp" in image_bytes[:512].lower()
-            or b"messenger" in image_bytes[:512].lower()
-        )
-        is_payment = any(
-            k in lower_ocr
-            for k in ("trx", "bdt", "টাকা", "payment", "bKash", "nagad", "rocket", "invoice")
-        )
-
-        detected_layout = (
-            "chat_conversation"
-            if is_chat
-            else ("payment_receipt" if is_payment else "unstructured")
-        )
-
-        # 3. Analyze Chat Bubbles with Uncertainty (T23 Invariant)
-        bubbles: list[ChatBubbleProposal] = []
-        if detected_layout == "chat_conversation":
-            # Extract sample message lines from OCR or synthetic fixture
-            lines = (
-                [l.strip() for l in ocr_extracted_text.splitlines() if len(l.strip()) > 3]
-                if ocr_extracted_text
-                else [
-                    "ভাই আমার অর্ডার করা ঘড়িটা এখনো পাইনি (14:30)",
-                    "আমরা চেক করে জানাচ্ছি স্যার (14:35)",
-                    "কবে ডেলিভারি হবে? (14:38)",
-                ]
-            )
-
-            for idx, line in enumerate(lines[:6]):
-                # Check alignment / speech direction
-                # Right aligned -> consumer, Left aligned -> merchant
-                is_consumer_tone = any(
-                    q in line for q in ("কবে", "পাইনি", "কোথায়", "অর্ডার", "টাকা দিয়েছি")
-                )
-                is_merchant_tone = any(
-                    m in line for m in ("স্যার", "জানাচ্ছি", "অপেক্ষা", "পাঠানো হয়েছে", "চেক")
-                )
-
-                # Invariant T23: If alignment is ambiguous or cropped, speaker_role must be ambiguous with low confidence
-                if is_consumer_tone:
-                    role = "consumer"
-                    conf = 0.88
-                elif is_merchant_tone:
-                    role = "counterparty_merchant"
-                    conf = 0.85
-                else:
-                    role = "ambiguous"
-                    conf = 0.50
-
-                bubbles.append(
-                    ChatBubbleProposal(
-                        bubble_id=f"bubble_{idx + 1}",
-                        text=line,
-                        speaker_role=role,
-                        speaker_role_confidence=conf,
-                        normalized_box=[
-                            0.1,
-                            round(0.15 * idx, 2),
-                            0.9,
-                            round(0.15 * idx + 0.12, 2),
-                        ],
-                    )
-                )
-
-        # 4. Proposed facts from visual/layout analysis
-        proposed_facts: list[dict[str, Any]] = []
-        if is_payment or any(k in lower_ocr for k in ("টাকা", "bdt", "trx", "receipt", "paid", "amount", "5500", "5000")):
-            # VLM visual extraction proposal
-            num_match = re.findall(r"(?:bdt|tk|টাকা)?\s*([\d,]+(?:\.\d+)?)\s*(?:bdt|tk|টাকা)?", lower_ocr, re.IGNORECASE)
-            valid_nums = [float(n.replace(",", "")) for n in num_match if n.replace(",", "").replace(".", "").isdigit() and float(n.replace(",", "")) > 0]
-            if "5500" in lower_ocr or "৫,৫০০" in lower_ocr:
-                vlm_amount = 550000
-            elif valid_nums:
-                vlm_amount = int(max(valid_nums) * 100)
-            else:
-                vlm_amount = 500000
-
-            proposed_facts.append(
-                {
-                    "field_name": "transaction_amount",
-                    "field_type": "money",
-                    "value": {"currency": "BDT", "minor_units": vlm_amount},
-                    "confidence": 0.85,
-                    "provenance": "vlm_layout_extraction",
-                }
-            )
-
-        # 5. OCR vs VLM Disagreement Reconciliation (T23 Invariant)
-        ocr_disagreements: list[OCRDisagreement] = []
-        # If OCR text contains ৳5,000 but VLM inferred ৳5,500 from context
-        has_5000_ocr = "5000" in lower_ocr or "৫০০০" in lower_ocr
-        has_5500_vlm = any(f.get("value", {}).get("minor_units") == 550000 for f in proposed_facts)
-
-        if has_5000_ocr and has_5500_vlm:
-            ocr_disagreements.append(
-                OCRDisagreement(
-                    field_name="transaction_amount",
-                    ocr_detected_value={"currency": "BDT", "minor_units": 500000},
-                    vlm_detected_value={"currency": "BDT", "minor_units": 550000},
-                    ocr_confidence=0.95,
-                    vlm_confidence=0.82,
-                    resolution_status="requires_user_review",
-                    guidance_en="OCR extracted BDT 5,000 from receipt text, but visual layout suggests BDT 5,500. Please select the correct amount.",
-                    guidance_bn="ওসিআর অনুযায়ী রশিদে ৫,০০০ টাকা পাওয়া গেছে, তবে দৃষ্টিগোচর লেআউট ৫,৫০০ টাকা নির্দেশ করছে। অনুগ্রহ করে সঠিক পরিমাণটি নির্বাচন করুন।",
-                )
-            )
-
+        # A layout/text model did not execute here. Hints are user input, never OCR.
+        # No speaker attribution, coordinates, monetary facts or disagreements can
+        # be established from image metadata or a supplied hint.
         return ScreenshotAnalysisResult(
-            evidence_id=evidence_id,
-            case_id=case_id,
-            detected_layout=detected_layout,
-            theme=theme,
-            authenticity_guarantee=False,  # T23 Invariant: Never certified authentic
-            bubbles=bubbles,
-            proposed_facts=proposed_facts,
-            ocr_disagreements=ocr_disagreements,
-            analyzed_at=now,
+            evidence_id=evidence_id, case_id=case_id, detected_layout="unstructured",
+            theme=theme, authenticity_guarantee=False, bubbles=[], proposed_facts=[],
+            ocr_disagreements=[], analyzed_at=now,
+            disclaimer_en="Ebarki inspected image colors only. No OCR or layout model executed. Read records in Evidence story, or add a manual transcript.",
+            disclaimer_bn="Ebarki শুধু ছবির রং দেখেছে। OCR বা লেআউট মডেল চলেনি। সূত্রসহ ঘটনা অংশে নথি পড়ুন বা নিজে লেখা যোগ করুন।",
         )

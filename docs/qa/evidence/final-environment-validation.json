@@ -1,0 +1,30 @@
+[
+  {
+    "test": "configured secrets absent from tracked files, QA artifacts and built client assets",
+    "result": "PASS",
+    "matches": [],
+    "files_checked": 632
+  },
+  {
+    "test": "fixture files match recorded ground-truth hashes",
+    "result": "PASS",
+    "mismatches": [],
+    "files_checked": 20
+  },
+  {
+    "test": "Git preserves indexed fixture bytes without newline conversion",
+    "result": "PASS",
+    "mismatches": [],
+    "files_checked": 19,
+    "note": "Oversized PCM recording is intentionally ignored by Git."
+  },
+  {
+    "test": "generated OpenAPI matches running API",
+    "result": "PASS"
+  },
+  {
+    "test": "public HTTPS deployment",
+    "result": "UNVERIFIED",
+    "reason": "No verified hosted application URL supplied or discovered in current configuration."
+  }
+]

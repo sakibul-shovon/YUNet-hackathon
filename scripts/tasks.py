@@ -138,7 +138,7 @@ def cmd_status(args):
 
 def cmd_doctor(args):
     print("==================================================")
-    print(" ClaimCraft BD — System Doctor & Capabilities")
+    print(" Ebarki — System Doctor & Capabilities")
     print("==================================================")
 
     def check_cmd(name, cmd):
@@ -165,15 +165,18 @@ def cmd_doctor(args):
             all_ok = False
 
     print("\n--- Provider & AI Readiness ---")
-    gemini_key = os.environ.get("GEMINI_API_KEY")
-    supabase_url = os.environ.get("SUPABASE_URL")
-    supabase_key = os.environ.get("SUPABASE_SERVICE_KEY")
-    stt_key = os.environ.get("GOOGLE_APPLICATION_CREDENTIALS")
-
-    print(f"  Gemini API Key: {'Configured' if gemini_key else 'Missing (synthetic/manual mode active)'}")
-    print(f"  Supabase URL: {'Configured' if supabase_url else 'Missing (local/in-memory mode active)'}")
-    print(f"  Supabase Key: {'Configured' if supabase_key else 'Missing'}")
-    print(f"  Google STT Credentials: {'Configured' if stt_key else 'Missing (browser/fallback mode active)'}")
+    # Load the same server-side Settings/environment file as the actual API.
+    # Only booleans/model names are printed. Configuration is not execution proof.
+    subprocess.check_call([*get_backend_python(), '-c',
+        "from app.core.config import settings as s; "
+        "print('  Groq: '+('configured' if s.GROQ_API_KEY else 'unavailable')); "
+        "print('  Summary/reply model: '+s.GROQ_MODEL); "
+        "print('  Image model: '+s.GROQ_VISION_MODEL); "
+        "print('  Audio model: '+s.GROQ_TRANSCRIBE_MODEL); "
+        "print('  Gemini: '+('configured' if s.GEMINI_API_KEY else 'unavailable')); "
+        "print('  Storage: '+s.STORAGE_BACKEND); "
+        "print('  Configuration only; verify provider requests independently.')"
+    ], cwd=ROOT_DIR / 'services' / 'backend')
 
     print("\nDoctor check completed.")
     if not all_ok:
@@ -211,7 +214,7 @@ def cmd_check(args):
 
         print("\n--- 3. Web Next.js Build / Typecheck ---")
         # Keep production checks separate from an active development server.
-        check_env = {**os.environ, "EBARKI_NEXT_DIST_DIR": ".next-check"}
+        check_env = {**os.environ, "EBARKI_NEXT_DIST_DIR": os.environ.get("EBARKI_NEXT_DIST_DIR", ".next-check")}
         subprocess.check_call(
             [get_pnpm_cmd(), "--filter", "@claimcraft/web", "build"],
             cwd=ROOT_DIR, env=check_env,

@@ -22,23 +22,17 @@ def list_community_posts(
 @router.post("/posts", response_model=CommunityPostOut, status_code=status.HTTP_201_CREATED)
 def create_community_post(post: CommunityPostCreate):
     """Publishes a consumer dispute help request to the public community board."""
-    return CommunityService.create_post(post)
+    raise HTTPException(503, 'Ebarki public sharing is unavailable until durable storage and moderation are configured. Your case remains private.')
 
 
 @router.post("/posts/{id}/me-too")
 def increment_me_too(id: str):
     """Increments the 'Me Too / আমার সাথেও এমন হয়েছে' counter for a dispute."""
-    count = CommunityService.increment_me_too(id)
-    if count == 0:
-        raise HTTPException(status_code=404, detail="Post not found")
-    return {"me_too_count": count}
+    raise HTTPException(503, 'Ebarki community responses are currently unavailable.')
 
 
 @router.post("/posts/{id}/comments", response_model=CommunityCommentOut)
 def add_community_comment(id: str, comment: CommunityCommentCreate):
     """Adds a consumer or legal volunteer advice comment to a community post."""
-    try:
-        return CommunityService.add_comment(id, comment)
-    except ValueError:
-        raise HTTPException(status_code=404, detail="Post not found")
+    raise HTTPException(503, 'Ebarki community discussions are currently unavailable.')
 

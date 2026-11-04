@@ -10,7 +10,7 @@ from app.core.config import settings
 from app.facts.models import FactSourceLink
 from app.facts.service import FactService
 from app.operations.connected_records import has_external_consent
-from app.operations.understanding import reasoning_options
+from app.operations.understanding import provider_receipt, reasoning_options
 
 
 class ReplyWording(BaseModel):
@@ -45,6 +45,7 @@ async def prepare_reply(case, principal, db, message, locale):
                  'this with the order and payment records available to me. Please let me know '
                  'what next step you can offer to help resolve the issue.')
     method, executed = 'reviewable_reply_template', False
+    receipt = None
     if settings.GROQ_API_KEY and await has_external_consent(case, principal, db):
         try:
             async with httpx.AsyncClient(timeout=22) as client:
@@ -73,8 +74,9 @@ async def prepare_reply(case, principal, db, message, locale):
             # Generated legal citations/threats are outside this bounded feature.
             if not re.search(r'\bsection\s*\d|ধারা\s*[\d০-৯]|\b(?:criminal|guarantee|court)\b|আইনি ব্যবস্থা', wording.draft, re.IGNORECASE):
                 draft, method, executed = wording.draft, f'groq/{settings.GROQ_MODEL}', True
+                receipt = provider_receipt(response, settings.GROQ_MODEL)
         except (httpx.HTTPError, ValidationError, ValueError, KeyError, IndexError):
             pass
     return {'message': message, 'draft': draft, 'locale': locale, 'facts': facts,
             'questions': questions, 'method': method, 'model_executed': executed,
-            'is_sent': False, 'requires_review': True}
+            'is_sent': False, 'requires_review': True, 'execution_receipt': receipt}

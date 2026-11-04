@@ -1,0 +1,3 @@
+# Ebarki synthetic audit fixtures
+
+All records are fictional and separate from public knowledge and real case data. Ground truth is in GROUND_TRUTH.json, including hashes, amounts in poisha, dates, page locations, exact chat, and the speech transcript. Filenames intentionally disagree with content in two duplicates. The scan has zero native text. Use the actual file bytes. The valid oversized PCM silence recording is generated locally and ignored by Git to avoid committing a 22 MB binary; regenerate it with the rest of the pack. Regenerate: `python scripts/tasks.py backend run python ../../scripts/build_final_audit_fixtures.py`.

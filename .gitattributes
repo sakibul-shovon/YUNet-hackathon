@@ -1,1 +1,8 @@
 graphify-out/graph.json merge=graphify
+*.pdf binary
+*.png binary
+*.jpg binary
+*.wav binary
+*.ttf binary
+# Fixture hashes include the original CRLF bytes on Windows.
+docs/qa/fixtures/* -text whitespace=cr-at-eol

@@ -183,7 +183,7 @@ def normalize_bd_date(val: str, reference_date: datetime.date | None = None) -> 
     if not raw_str:
         raise ValueError("Cannot normalize empty date string")
 
-    ref_date = reference_date or datetime.datetime.now(datetime.UTC).date()
+    ref_date = reference_date or datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=6))).date()
     normalized_digits = bengali_to_ascii_digits(raw_str).strip()
     lower_text = raw_str.lower().strip()
 

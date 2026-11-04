@@ -3,7 +3,7 @@ import hashlib
 import uuid
 from typing import Any
 
-from sqlalchemy import select
+from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.cases.models import Case, CaseEvent
@@ -12,51 +12,10 @@ from app.identity.models import ActorRole, UserAccount
 from app.knowledge.models import SourceCandidate
 from app.merchants.service import KNOWN_OFFENDER_REGISTRY
 
-# In-memory storage for runtime admin state (audit logs, merchant overrides, alerts)
-ADMIN_AUDIT_LOGS: list[dict[str, Any]] = [
-    {
-        "id": "log-001",
-        "timestamp": datetime.datetime.now(datetime.UTC).isoformat(),
-        "admin_email": "admin@claimcraft.bd",
-        "action": "SYSTEM_BOOTSTRAP",
-        "target": "Security & RBAC Infrastructure",
-        "details": "Super Admin permissions provisioned for [admin, reviewer, publisher, operator]",
-        "hash": hashlib.sha256(b"SYSTEM_BOOTSTRAP_INIT").hexdigest()[:16],
-    }
-]
-
-MERCHANT_OVERRIDES: dict[str, dict[str, Any]] = {
-    "gadget zone bd": {
-        "is_blacklisted": True,
-        "is_verified": False,
-        "risk_percent": 92,
-        "admin_note": "Repeated non-delivery complaints & unverified phone contacts under Sec 45 CRPA 2009",
-    },
-    "daraz bangladesh": {
-        "is_blacklisted": False,
-        "is_verified": True,
-        "risk_percent": 35,
-        "admin_note": "Legally incorporated e-commerce entity. Periodic return logistics delays monitored.",
-    },
-    "bkash limited": {
-        "is_blacklisted": False,
-        "is_verified": True,
-        "risk_percent": 12,
-        "admin_note": "Regulated MFS entity governed under Bangladesh Bank Payment Systems Dept (PSD).",
-    },
-}
-
-PLATFORM_ALERTS: list[dict[str, Any]] = [
-    {
-        "id": "alert-001",
-        "title": "সতর্কবার্তা: ভুয়া কুরিয়ার ট্র্যাকিং ও অগ্রিম পেমেন্ট প্রতারণা",
-        "title_en": "Alert: Fake Courier Tracking & Advance Payment Scams",
-        "severity": "warning",  # warning, critical, info
-        "active": True,
-        "message": "ফেসবুক ও সোশ্যাল পেজ থেকে কেনাকাটার সময় ব্যক্তিগত বিকাশ/নগদে ১০০% অগ্রিম পেমেন্ট করবেন না। পণ্য যাচাই করে মূল্য পরিশোধ করুন।",
-        "created_at": datetime.datetime.now(datetime.UTC).isoformat(),
-    }
-]
+# Runtime-only administrative views start empty; no invented bootstrap receipts.
+ADMIN_AUDIT_LOGS: list[dict[str, Any]] = []
+MERCHANT_OVERRIDES: dict[str, dict[str, Any]] = {}
+PLATFORM_ALERTS: list[dict[str, Any]] = []
 
 BANNED_USERS_SET: set[str] = set()
 COMMUNITY_POST_OVERRIDES: dict[str, dict[str, Any]] = {}
@@ -91,14 +50,20 @@ class AdminService:
         resolved_cases = sum(1 for c in cases if c.lifecycle_status == "resolved")
         dismissed_cases = sum(1 for c in cases if c.lifecycle_status in ("dismissed", "closed", "fraudulent"))
 
-        total_disputed_bdt = 0.0
-        total_recovered_bdt = 0.0
-        for c in cases:
-            # Check fact assertions or title for amount
-            bdt = 3200.0 if "3200" in (c.story_narrative or "") else 5500.0
-            total_disputed_bdt += bdt
-            if c.lifecycle_status == "resolved":
-                total_recovered_bdt += bdt
+        # Recorded disputed amounts only. Resolution status is not payment proof.
+        from app.facts.models import FactAssertion
+        amount_rows = list((await db.scalars(select(FactAssertion).where(
+            FactAssertion.case_id.in_([case.id for case in cases if case.deleted_at is None]),
+            FactAssertion.is_active.is_(True), FactAssertion.field_name == 'amount_paid',
+        ).order_by(FactAssertion.created_at.desc()))).all())
+        seen = set()
+        total_minor = 0
+        for fact in amount_rows:
+            if fact.case_id not in seen and isinstance(fact.typed_value, dict):
+                total_minor += int(fact.typed_value.get('minor_units', 0))
+                seen.add(fact.case_id)
+        total_disputed_bdt = total_minor / 100
+        total_recovered_bdt = None  # No verified recovered-payment dataset exists.
 
         # User metrics
         stmt_users = select(UserAccount)
@@ -124,18 +89,14 @@ class AdminService:
                 "total_merchants_tracked": len(KNOWN_OFFENDER_REGISTRY) + len(MERCHANT_OVERRIDES),
                 "community_grievances_count": len(COMMUNITY_POSTS_STORE),
             },
-            "resolution_paths_distribution": {
-                "DNCRP Directorate (ভোক্তা অধিকার)": 58,
-                "Bangladesh Bank CIPC (আর্থিক অখণ্ডতা)": 24,
-                "Direct Merchant Negotiation (দ্বিপাক্ষিক)": 14,
-                "Small Claims Court (দেওয়ানি আদালত)": 4,
-            },
+            "resolution_paths_distribution": {},
             "system_health": {
-                "api_gateway": "ONLINE (99.98% Uptime)",
-                "database_engine": "CONNECTED (SQLite / AsyncSession RLS)",
-                "multimodal_ocr": "READY (Pillow + Tesseract Grounding)",
-                "voice_stt": "READY (Web Speech + STT Adapter)",
-                "active_statutory_release": "REL-2026-Q4-CRPA (v4.2.0)",
+                "api_gateway": "This request was handled; uptime not measured",
+                "database_engine": "Query completed; authorization enforced by application",
+                "multimodal_ocr": "Consent-scoped reader; check per-run receipt",
+                "voice_stt": "Consent-scoped reader; check per-run receipt",
+                "active_statutory_release": "Not verified by this endpoint",
+                "runtime_admin_state": "Alerts, overrides and audit display are process-local and reset on restart",
             },
         }
 
@@ -189,6 +150,7 @@ class AdminService:
 
         old_status = case.lifecycle_status
         case.lifecycle_status = new_status
+        case.row_version += 1
         case.updated_at = datetime.datetime.now(datetime.UTC)
 
         # Log event in CaseEvent
@@ -196,6 +158,8 @@ class AdminService:
             id=uuid.uuid4(),
             case_id=case.id,
             principal_id=case.principal_id,
+            event_sequence=int(await db.scalar(select(func.coalesce(func.max(CaseEvent.event_sequence), 0)).where(CaseEvent.case_id == case.id))) + 1,
+            actor_type='admin',
             event_type="ADMIN_STATUS_OVERRIDE",
             payload={
                 "old_status": old_status,

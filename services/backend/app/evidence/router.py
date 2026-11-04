@@ -1,4 +1,5 @@
 import uuid
+from urllib.parse import quote
 
 from fastapi import (
     APIRouter,
@@ -136,7 +137,7 @@ async def get_evidence_preview(
         "Cache-Control": "private, no-store, max-age=0, must-revalidate",
         "Pragma": "no-cache",
         "X-Content-Type-Options": "nosniff",
-        "Content-Disposition": f'inline; filename="{filename}"',
+        "Content-Disposition": "inline; filename=\"evidence\"; filename*=UTF-8''" + quote(filename, safe=''),
     }
     return Response(content=data, media_type=media_type, headers=headers)
 

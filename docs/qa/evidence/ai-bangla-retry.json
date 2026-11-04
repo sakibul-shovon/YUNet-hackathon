@@ -1,0 +1,104 @@
+{
+  "product": "Ebarki",
+  "test": "Fresh Bangla-image content execution retry",
+  "result": "PASS",
+  "upload_status": 200,
+  "case_id": "b7e2ac10-9690-437b-a86d-21da5320b81f",
+  "reading": {
+    "id": "9aa8b659-c5da-407d-bc5b-fc6d54eb2779",
+    "filename": "বাংলা রসিদ.png",
+    "mime_type": "image/png",
+    "sha256": "a792f447587aaf0a464e09a0942c2fa2e2bb39212eef4e3641926064cd5086c0",
+    "text": "Ebarki / FICTIONAL QA ONLY\nসম্পূর্ণ কাছারিনিক রসিদ\nকাছারিনিক পদমা টেস্ট শপ\nতারিখ: ২৪ অক্টোবর ২০২৬\nReference: PADMA-QA-BN24\nপণ্য: বৈদ্যুতিক কেটলি\nপরিশোধ: ৭,০০০.০০ টাকা",
+    "lines": [
+      {
+        "text": "Ebarki / FICTIONAL QA ONLY",
+        "page": 1,
+        "box": [
+          0.116,
+          0.07,
+          0.418,
+          0.095
+        ]
+      },
+      {
+        "text": "সম্পূর্ণ কাছারিনিক রসিদ",
+        "page": 1,
+        "box": [
+          0.116,
+          0.144,
+          0.37,
+          0.182
+        ]
+      },
+      {
+        "text": "কাছারিনিক পদমা টেস্ট শপ",
+        "page": 1,
+        "box": [
+          0.116,
+          0.239,
+          0.37,
+          0.277
+        ]
+      },
+      {
+        "text": "তারিখ: ২৪ অক্টোবর ২০২৬",
+        "page": 1,
+        "box": [
+          0.116,
+          0.317,
+          0.42,
+          0.355
+        ]
+      },
+      {
+        "text": "Reference: PADMA-QA-BN24",
+        "page": 1,
+        "box": [
+          0.116,
+          0.405,
+          0.418,
+          0.43
+        ]
+      },
+      {
+        "text": "পণ্য: বৈদ্যুতিক কেটলি",
+        "page": 1,
+        "box": [
+          0.116,
+          0.483,
+          0.362,
+          0.521
+        ]
+      },
+      {
+        "text": "পরিশোধ: ৭,০০০.০০ টাকা",
+        "page": 1,
+        "box": [
+          0.116,
+          0.561,
+          0.41,
+          0.599
+        ]
+      }
+    ],
+    "model_executed": true,
+    "method": "groq_vision",
+    "reason": null,
+    "model": "qwen/qwen3.8-27b",
+    "execution_receipt": {
+      "provider": "groq",
+      "model": "qwen/qwen3.8-27b",
+      "request_id": "req_01m6mc47dtebn8n5tk3mvjmsx6",
+      "response_status": 200
+    }
+  },
+  "ground_truth": "BDT 7,000.00; 24 October 2026; PADMA-QA-BN24; fictional merchant",
+  "note": "Separate fresh execution, not a rewrite of the earlier rate-limited test.",
+  "quality_checks": {
+    "amount": "PASS",
+    "reference": "PASS",
+    "merchant_verbatim": "FAIL"
+  },
+  "quality_note": "Real provider execution and critical amount/reference succeeded; merchant words disagree with the fixture. Human correction is required."
+}

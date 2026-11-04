@@ -1,0 +1,70 @@
+{
+  "product": "Ebarki",
+  "date": "2026-11-05",
+  "timezone": "Asia/Dhaka",
+  "release_verdict": "NOT READY",
+  "core": {
+    "command": "python scripts/tasks.py check --scope core",
+    "exit_code": 0,
+    "passed": 171,
+    "warnings": 7
+  },
+  "foundation": {
+    "command": "EBARKI_NEXT_DIST_DIR=.next-audit-check python scripts/tasks.py check --scope foundation",
+    "exit_code": 0,
+    "i18n_keys": 223,
+    "production_build": "PASS",
+    "typecheck": "PASS",
+    "backend_ruff": "PASS"
+  },
+  "contracts": {
+    "generation": "PASS",
+    "running_openapi_parity": "PASS"
+  },
+  "live_bff": {
+    "checks": 90,
+    "PASS": 89,
+    "FAIL": 1,
+    "failed_condition": "Bangla image provider HTTP 429; accuracy BLOCKED in this run",
+    "evidence": "live-final.json"
+  },
+  "bangla_retry": {
+    "execution": "PASS",
+    "amount": "PASS",
+    "reference": "PASS",
+    "merchant_verbatim": "FAIL",
+    "evidence": "ai-bangla-retry.json"
+  },
+  "public_http_routes": {
+    "PASS": 30,
+    "note": "HTTP rendering only, not browser acceptance"
+  },
+  "secrets": {
+    "configured_value_matches": 0,
+    "files_checked": 632,
+    "scope": "tracked files, QA evidence and client build assets"
+  },
+  "browser": {
+    "result": "BLOCKED for remaining journeys",
+    "verified": "fresh English intake/PDF/source/reply/edit/reload; selected EN/BN themes and 412px emulation",
+    "blocker": "Computer Use could not determine current browser URL on Windows; browser host unavailable"
+  },
+  "public_deployment": "UNVERIFIED",
+  "current_legal_source_approval": "UNVERIFIED",
+  "physical_device_and_AT": "UNVERIFIED",
+  "fixtures": {
+    "manifest_entries": 20,
+    "local_ground_truth_hashes": "20 PASS",
+    "indexed_byte_preservation": "19 PASS",
+    "oversized_recording": "actual playable PCM file generated locally; ignored by Git"
+  },
+  "code_graph": {
+    "result": "PASS",
+    "nodes": 3808,
+    "edges": 9665,
+    "communities": 249,
+    "limitation": "graphify PDF semantic extra unavailable; AST/code refresh completed"
+  },
+  "destructive_cleanup": "automatic review rejected transient build-cache deletion; a fresh build directory succeeded without deletion",
+  "git_delivery": "commit and remote receipt recorded in final response and git history"
+}

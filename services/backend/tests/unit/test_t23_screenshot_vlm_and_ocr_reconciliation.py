@@ -77,19 +77,11 @@ async def test_t23_screenshot_dark_theme_and_bubble_role_uncertainty(client: Asy
 
     # Invariant T23: Theme correctly detected as dark
     assert res["theme"] == "dark"
-    assert res["detected_layout"] == "chat_conversation"
-
-    # Invariant T23: Mandatory False authenticity guarantee
+    assert res["detected_layout"] == "unstructured"
     assert res["authenticity_guarantee"] is False
-    assert "Does not constitute regulatory, banking, or forensic certification" in res["disclaimer_en"]
-    assert "সত্যতা প্রমাণ করে না" in res["disclaimer_bn"]
-
-    # Invariant T23: Bubble roles are bounded with confidence, cropped/neutral lines stay ambiguous
-    bubbles = res["bubbles"]
-    assert len(bubbles) >= 3
-    roles = [b["speaker_role"] for b in bubbles]
-    assert "consumer" in roles
-    assert "counterparty_merchant" in roles
+    assert "No OCR or layout model executed" in res["disclaimer_en"]
+    assert res["bubbles"] == []
+    assert res["proposed_facts"] == []
 
 
 @pytest.mark.asyncio
@@ -130,14 +122,10 @@ async def test_t23_ocr_vs_vlm_disagreement_flagged_for_user_review(client: Async
     assert analysis_resp.status_code == 200
     res = analysis_resp.json()
 
-    # Invariant T23: Disagreement flagged with requires_user_review
-    disagreements = res["ocr_disagreements"]
-    assert len(disagreements) == 1
-    d = disagreements[0]
-    assert d["field_name"] == "transaction_amount"
-    assert d["ocr_detected_value"]["minor_units"] == 500000
-    assert d["vlm_detected_value"]["minor_units"] == 550000
-    assert d["resolution_status"] == "requires_user_review"
+    # User hints do not establish two independent OCR/VLM readings.
+    assert res["ocr_disagreements"] == []
+    assert res["proposed_facts"] == []
+    assert "No OCR or layout model executed" in res["disclaimer_en"]
 
 
 @pytest.mark.asyncio

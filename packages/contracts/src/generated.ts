@@ -85,7 +85,9 @@ export interface AudioTranscriptOut {
   audio_evidence_id?: unknown;
   transcript_text: string;
   language: string;
-  overall_confidence: number;
+  overall_confidence: unknown;
+  method?: string;
+  model_executed?: boolean;
   duration_seconds: number;
   words?: unknown[];
   uncertain_spans?: unknown[];
@@ -359,6 +361,7 @@ export interface CopilotChatRequest {
 }
 
 export interface CopilotChatResponse {
+  execution_receipt?: unknown;
   reply_en: string;
   reply_bn: string;
   relevant_statute?: unknown;
@@ -475,6 +478,7 @@ export interface EditableDocumentAST {
   created_at: string;
   case_version?: number;
   revision?: number;
+  template_version?: number;
 }
 
 export interface EvidenceItemOut {

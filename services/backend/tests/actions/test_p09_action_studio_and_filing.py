@@ -196,15 +196,16 @@ async def test_p09_2_document_ast_and_user_edit_t26_t29(client: AsyncClient, db_
     # Check background section sentence classification
     bg_sec = next(s for s in ast["sections"] if s["section_id"] == "sec_background")
     sent_bg1 = next(s for s in bg_sec["sentences"] if s["sentence_id"] == "bg_1")
-    assert sent_bg1["statement_type"] == "reviewed_fact"
+    assert sent_bg1["statement_type"] == "user_allegation"  # not yet reviewed
     assert sent_bg1["supporting_fact_id"] is not None
     assert sent_bg1["is_user_edited"] is False
 
     # Check remedy section sentence classification
     rem_sec = next(s for s in ast["sections"] if s["section_id"] == "sec_remedy")
     sent_rem1 = rem_sec["sentences"][0]
-    assert sent_rem1["statement_type"] == "statutory_basis"
-    assert "crpa2009:sec:76" in sent_rem1["supporting_citation"]
+    assert sent_rem1["statement_type"] == "user_allegation"
+    assert sent_rem1["supporting_citation"] is None
+    assert 'request a refund' in sent_rem1['text']
 
     # 2. Apply user edit to sentence bg_1 (T29 Invariant)
     edit_payload = {

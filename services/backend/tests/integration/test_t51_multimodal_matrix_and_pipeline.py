@@ -149,7 +149,7 @@ async def test_t51_matrix_row3_voice_recording_only(client: AsyncClient, db_sess
         audio_bytes = f.read()
 
     files = {"audio_file": ("sample_voice_ecommerce.webm", audio_bytes, "audio/webm")}
-    data = {"consent_granted": "true", "language_hint": "bn"}
+    data = {"consent_granted": "true", "language_hint": "bn", "client_transcript": "আমি দারাজ থেকে ৫,৫০০ টাকার পণ্য পাইনি"}
     trans_resp = await client.post(f"/v1/cases/{case_id}/audio/transcribe", headers=headers, files=files, data=data)
     assert trans_resp.status_code == 200
     trans_data = trans_resp.json()
@@ -198,7 +198,8 @@ async def test_t51_matrix_row4_screenshot_only_preserves_uncertainty(client: Asy
     # T23 Invariant: Never certifies authenticity
     assert result.authenticity_guarantee is False
     assert result.theme == "light"
-    assert result.detected_layout == "chat_conversation"
+    assert result.detected_layout == "unstructured"
+    assert result.bubbles == [] and result.proposed_facts == []
 
 
 @pytest.mark.asyncio

@@ -348,7 +348,7 @@ class ProceduralAssessmentEngine:
             # Handle YYYY-MM-DD or ISO timestamp
             dt_str = str(raw_date)[:10]
             parsed_date = datetime.date.fromisoformat(dt_str)
-            today = datetime.date.today()
+            today = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=6))).date()
             elapsed_days = (today - parsed_date).days
 
             if elapsed_days < 0:

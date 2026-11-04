@@ -1,3 +1,4 @@
+from pydantic import model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -51,6 +52,15 @@ class Settings(BaseSettings):
     REDIS_URL: str = "redis://127.0.0.1:6379/0"
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
+
+    @model_validator(mode='after')
+    def require_production_secrets(self):
+        if self.APP_ENV == 'production':
+            for field in ('APP_SECRET_KEY', 'JWT_SECRET_KEY'):
+                value = getattr(self, field)
+                if len(value) < 32 or value == type(self).model_fields[field].default:
+                    raise ValueError(f'Ebarki production requires a configured {field} of at least 32 characters.')
+        return self
 
 
 settings = Settings()

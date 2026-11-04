@@ -1,6 +1,7 @@
 import datetime
 import uuid
 from pathlib import Path
+from urllib.parse import quote
 
 from fastapi import (
     APIRouter,
@@ -62,16 +63,26 @@ async def transcribe_case_audio(
     is_nil_case = case_id == NIL_UUID or case_id.int == 0
     if not is_nil_case:
         # Authorize case ownership (T01)
-        await FactService.get_authorized_case(case_id, principal, db)
+        case = await FactService.get_authorized_case(case_id, principal, db)
+        if case.consent_status == 'withdrawn':
+            raise HTTPException(403, 'Processing consent was withdrawn')
 
     # 3. Read audio bytes
-    audio_bytes = await audio_file.read()
+    audio_bytes = await audio_file.read(20*1024*1024+1)
+    if len(audio_bytes) > 20*1024*1024:
+        raise HTTPException(413, 'Ebarki audio files must be under 20 MB.')
     if not audio_bytes:
         raise HTTPException(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
             detail="Uploaded audio file is empty.",
         )
 
+    result = await STTAdapter.transcribe_audio_bytes(
+        case_id=case_id, audio_bytes=audio_bytes,
+        declared_mime=audio_file.content_type or 'audio/webm',
+        consent_granted=consent_granted, language_hint=language_hint,
+        client_transcript=client_transcript, duration_seconds=client_duration,
+    )
     ev_item_id = None
     if not is_nil_case:
         # 4. Save audio recording in evidence vault storage for existing case
@@ -105,16 +116,7 @@ async def transcribe_case_audio(
         ev_item_id = ev_item.id
 
     # 5. Transcribe audio
-    return await STTAdapter.transcribe_audio_bytes(
-        case_id=case_id,
-        audio_bytes=audio_bytes,
-        declared_mime=audio_file.content_type or "audio/webm",
-        consent_granted=consent_granted,
-        language_hint=language_hint,
-        client_transcript=client_transcript,
-        audio_evidence_id=ev_item_id,
-        duration_seconds=client_duration,
-    )
+    return result.model_copy(update={'audio_evidence_id': ev_item_id})
 
 
 @router.get(
@@ -150,7 +152,7 @@ async def stream_audio_recording(
         "Cache-Control": "private, no-store, max-age=0, must-revalidate",
         "Pragma": "no-cache",
         "X-Content-Type-Options": "nosniff",
-        "Content-Disposition": f'inline; filename="{item.original_filename}"',
+        "Content-Disposition": "inline; filename=\"audio\"; filename*=UTF-8''" + quote(item.original_filename, safe=''),
     }
     return Response(
         content=data,

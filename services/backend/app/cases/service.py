@@ -220,15 +220,9 @@ class CaseService:
         db: AsyncSession,
     ) -> CaseOut:
         """Retrieves a single case with strict tenant isolation (returns 404 for foreign cases)."""
-        if case_id in DEMO_FIXTURE_IDS:
-            from app.scenarios.service import ScenarioService
-            await ScenarioService.ensure_deterministic_demo_case(case_id, db)
-
         stmt = select(Case).where(
             Case.id == case_id,
-            (Case.principal_id == principal.id)
-            | (Case.display_reference == "DEMO-DARAZ-001")
-            | Case.id.in_(DEMO_FIXTURE_IDS),
+            Case.principal_id == principal.id,
             Case.lifecycle_status.notin_(["deleting", "deleted"]),
             Case.deleted_at.is_(None),
         )
@@ -398,16 +392,10 @@ class CaseService:
         db: AsyncSession,
     ) -> list[CaseEventOut]:
         """Returns chronological activity log for an authorized case."""
-        if case_id in DEMO_FIXTURE_IDS:
-            from app.scenarios.service import ScenarioService
-            await ScenarioService.ensure_deterministic_demo_case(case_id, db)
-
-        # Verify ownership or demo fixture access
+        # Verify ownership; samples must be launched into a private workspace.
         stmt = select(Case).where(
             Case.id == case_id,
-            (Case.principal_id == principal.id)
-            | (Case.display_reference == "DEMO-DARAZ-001")
-            | Case.id.in_(DEMO_FIXTURE_IDS),
+            Case.principal_id == principal.id,
             Case.lifecycle_status != "deleted",
         )
         res = await db.execute(stmt)

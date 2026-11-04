@@ -8,7 +8,7 @@ export type AgentStage = {
   finished_at?: string; duration_ms: number | null; details: Record<string, unknown>;
 };
 export type AgentRun = {
-  id: string; operation: string; case_version: number; status: string;
+  id: string; operation: string; locale: string; case_version: number; status: string;
   cancel_requested: boolean; created_at: string; finished_at?: string;
   stages: AgentStage[]; result: Record<string, unknown>; error_code?: string;
   events?: Array<{ id: string; sequence: number; type: string; task?: string; timestamp?: string }>;

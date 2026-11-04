@@ -36,15 +36,9 @@ class FactService:
         db: AsyncSession,
     ) -> Case:
         """Enforces tenant isolation: owner-based access only. Non-enumerating 404 for foreign cases."""
-        if case_id in DEMO_FIXTURE_IDS:
-            from app.scenarios.service import ScenarioService
-            await ScenarioService.ensure_deterministic_demo_case(case_id, db)
-
         stmt = select(Case).where(
             Case.id == case_id,
-            (Case.principal_id == principal.id)
-            | (Case.display_reference == "DEMO-DARAZ-001")
-            | Case.id.in_(DEMO_FIXTURE_IDS),
+            Case.principal_id == principal.id,
             Case.deleted_at.is_(None),
         )
         res = await db.execute(stmt)

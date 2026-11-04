@@ -1,0 +1,1473 @@
+{
+  "product": "Ebarki",
+  "tested_on": "2026-11-05",
+  "transport": "live Next.js BFF; not browser",
+  "summary": {
+    "PASS": 68,
+    "FAIL": 4
+  },
+  "results": [
+    {
+      "test": "english fresh save and processing",
+      "result": "PASS",
+      "case_id": "698ab6e9-fc05-4833-8a85-fd561b7f5aea",
+      "status": "needs_review",
+      "facts": [
+        {
+          "id": "1838c746-31e5-40d5-9fab-9dcce2c1979a",
+          "case_id": "698ab6e9-fc05-4833-8a85-fd561b7f5aea",
+          "issue_id": null,
+          "field_name": "merchant_name",
+          "field_type": "string",
+          "typed_value": "Fictional Padma Test",
+          "original_text": "Fictional Padma Test",
+          "origin": "user_narrative_extraction",
+          "created_case_version": 2,
+          "is_active": true,
+          "created_at": "2026-11-04T18:40:23.479827",
+          "review_outcome": null
+        },
+        {
+          "id": "665a3f65-4027-42f3-a52a-f189b5ef2748",
+          "case_id": "698ab6e9-fc05-4833-8a85-fd561b7f5aea",
+          "issue_id": null,
+          "field_name": "amount_paid",
+          "field_type": "money",
+          "typed_value": {
+            "currency": "BDT",
+            "minor_units": 732150,
+            "original_text": "BDT 7,321.50"
+          },
+          "original_text": "BDT 7,321.50",
+          "origin": "user_narrative_extraction",
+          "created_case_version": 3,
+          "is_active": true,
+          "created_at": "2026-11-04T18:40:23.503831",
+          "review_outcome": null
+        },
+        {
+          "id": "8d7529f3-6bf1-42d3-97d9-34c9714e555e",
+          "case_id": "698ab6e9-fc05-4833-8a85-fd561b7f5aea",
+          "issue_id": null,
+          "field_name": "incident_date",
+          "field_type": "date",
+          "typed_value": {
+            "date": "2026-11-05",
+            "original_text": "2026-11-05",
+            "is_relative": false,
+            "is_future": true,
+            "is_ambiguous": false,
+            "precision": "day"
+          },
+          "original_text": "tomorrow",
+          "origin": "user_narrative_extraction",
+          "created_case_version": 4,
+          "is_active": true,
+          "created_at": "2026-11-04T18:40:23.529826",
+          "review_outcome": null
+        },
+        {
+          "id": "990f0e5e-4741-4124-9d43-abf71dd527e4",
+          "case_id": "698ab6e9-fc05-4833-8a85-fd561b7f5aea",
+          "issue_id": null,
+          "field_name": "goods_delivered",
+          "field_type": "boolean",
+          "typed_value": false,
+          "original_text": "not delivered",
+          "origin": "user_narrative_extraction",
+          "created_case_version": 5,
+          "is_active": true,
+          "created_at": "2026-11-04T18:40:23.564366",
+          "review_outcome": null
+        },
+        {
+          "id": "fbdf7d57-4c17-4347-9d67-6cfd95d9317f",
+          "case_id": "698ab6e9-fc05-4833-8a85-fd561b7f5aea",
+          "issue_id": null,
+          "field_name": "purchase_channel",
+          "field_type": "string",
+          "typed_value": "ecommerce",
+          "original_text": "not delivered",
+          "origin": "user_narrative_extraction",
+          "created_case_version": 6,
+          "is_active": true,
+          "created_at": "2026-11-04T18:40:23.592359",
+          "review_outcome": null
+        }
+      ],
+      "summary": {
+        "summary": "The user ordered a kettle on 2026-10-24, paid BDT 7,321.50 in two installments, and the seller failed to deliver by the promised date of 2026-10-27. The seller said a refund would be issued tomorrow, and the user is now requesting that refund.",
+        "method": "groq/openai/gpt-oss-120b",
+        "model_executed": true
+      }
+    },
+    {
+      "test": "english exact money content",
+      "result": "PASS",
+      "observed": 732150
+    },
+    {
+      "test": "english incident date content",
+      "result": "FAIL",
+      "observed": [
+        {
+          "date": "2026-11-05",
+          "original_text": "2026-11-05",
+          "is_relative": false,
+          "is_future": true,
+          "is_ambiguous": false,
+          "precision": "day"
+        }
+      ]
+    },
+    {
+      "test": "english real summary execution",
+      "result": "PASS",
+      "receipt": {
+        "summary": "The user ordered a kettle on 2026-10-24, paid BDT 7,321.50 in two installments, and the seller failed to deliver by the promised date of 2026-10-27. The seller said a refund would be issued tomorrow, and the user is now requesting that refund.",
+        "method": "groq/openai/gpt-oss-120b",
+        "model_executed": true
+      }
+    },
+    {
+      "test": "bangla fresh save and processing",
+      "result": "PASS",
+      "case_id": "268659df-7b0b-49c1-b3df-64c9c61f40b4",
+      "status": "needs_review",
+      "facts": [
+        {
+          "id": "09841b97-458d-47e3-9e5f-8d6d1147c420",
+          "case_id": "268659df-7b0b-49c1-b3df-64c9c61f40b4",
+          "issue_id": null,
+          "field_name": "merchant_name",
+          "field_type": "string",
+          "typed_value": "কেটলি অর্ডার করেছি",
+          "original_text": "কেটলি অর্ডার করেছি",
+          "origin": "user_narrative_extraction",
+          "created_case_version": 2,
+          "is_active": true,
+          "created_at": "2026-11-04T18:40:25.439207",
+          "review_outcome": null
+        },
+        {
+          "id": "88f4ec70-36bb-49e8-8d52-1d97fa572250",
+          "case_id": "268659df-7b0b-49c1-b3df-64c9c61f40b4",
+          "issue_id": null,
+          "field_name": "amount_paid",
+          "field_type": "money",
+          "typed_value": {
+            "currency": "BDT",
+            "minor_units": 732150,
+            "original_text": "৭,৩২১.৫০ টাকা"
+          },
+          "original_text": "৭,৩২১.৫০ টাকা",
+          "origin": "user_narrative_extraction",
+          "created_case_version": 3,
+          "is_active": true,
+          "created_at": "2026-11-04T18:40:25.462729",
+          "review_outcome": null
+        },
+        {
+          "id": "bec07b8b-425b-4224-8098-5168af7301e9",
+          "case_id": "268659df-7b0b-49c1-b3df-64c9c61f40b4",
+          "issue_id": null,
+          "field_name": "incident_date",
+          "field_type": "date",
+          "typed_value": {
+            "date": "2026-10-24",
+            "original_text": "2026-10-24",
+            "is_relative": false,
+            "is_future": false,
+            "is_ambiguous": false,
+            "precision": "day"
+          },
+          "original_text": "২৪ অক্টোবর ২০২৬",
+          "origin": "user_narrative_extraction",
+          "created_case_version": 4,
+          "is_active": true,
+          "created_at": "2026-11-04T18:40:25.488733",
+          "review_outcome": null
+        },
+        {
+          "id": "f15c98db-8f7e-4b39-9021-19561a61b327",
+          "case_id": "268659df-7b0b-49c1-b3df-64c9c61f40b4",
+          "issue_id": null,
+          "field_name": "goods_delivered",
+          "field_type": "boolean",
+          "typed_value": false,
+          "original_text": "পণ্য পাইনি",
+          "origin": "user_narrative_extraction",
+          "created_case_version": 5,
+          "is_active": true,
+          "created_at": "2026-11-04T18:40:25.513736",
+          "review_outcome": null
+        },
+        {
+          "id": "208254af-b397-4599-bf78-933f188f37d9",
+          "case_id": "268659df-7b0b-49c1-b3df-64c9c61f40b4",
+          "issue_id": null,
+          "field_name": "purchase_channel",
+          "field_type": "string",
+          "typed_value": "ecommerce",
+          "original_text": "পণ্য পাইনি",
+          "origin": "user_narrative_extraction",
+          "created_case_version": 6,
+          "is_active": true,
+          "created_at": "2026-11-04T18:40:25.539736",
+          "review_outcome": null
+        }
+      ],
+      "summary": {
+        "summary": "ব্যবহারকারী ২৪ অক্টোবর ২০২৬ তারিখে কাল্পনিক পদ্মা টেস্ট শপ থেকে কেটলি অর্ডার করে ৭,৩২১.৫০ টাকা প্রদান করেন, তবে ২৭ অক্টোবর পর্যন্ত পণ্য পাননি। বিক্রেতা টাকা ফেরত দেবার প্রতিশ্রুতি দিলেও কোনো ফেরত পাওয়া যায়নি।",
+        "method": "groq/openai/gpt-oss-120b",
+        "model_executed": true
+      }
+    },
+    {
+      "test": "bangla exact money content",
+      "result": "PASS",
+      "observed": 732150
+    },
+    {
+      "test": "bangla incident date content",
+      "result": "PASS",
+      "observed": [
+        {
+          "date": "2026-10-24",
+          "original_text": "2026-10-24",
+          "is_relative": false,
+          "is_future": false,
+          "is_ambiguous": false,
+          "precision": "day"
+        }
+      ]
+    },
+    {
+      "test": "bangla real summary execution",
+      "result": "PASS",
+      "receipt": {
+        "summary": "ব্যবহারকারী ২৪ অক্টোবর ২০২৬ তারিখে কাল্পনিক পদ্মা টেস্ট শপ থেকে কেটলি অর্ডার করে ৭,৩২১.৫০ টাকা প্রদান করেন, তবে ২৭ অক্টোবর পর্যন্ত পণ্য পাননি। বিক্রেতা টাকা ফেরত দেবার প্রতিশ্রুতি দিলেও কোনো ফেরত পাওয়া যায়নি।",
+        "method": "groq/openai/gpt-oss-120b",
+        "model_executed": true
+      }
+    },
+    {
+      "test": "banglish fresh save and processing",
+      "result": "PASS",
+      "case_id": "a26365da-613a-4bb9-b686-54460fe3ace6",
+      "status": "needs_review",
+      "facts": [
+        {
+          "id": "75e4d278-ddf7-49f8-9f63-0783b0b125d6",
+          "case_id": "a26365da-613a-4bb9-b686-54460fe3ace6",
+          "issue_id": null,
+          "field_name": "amount_paid",
+          "field_type": "money",
+          "typed_value": {
+            "currency": "BDT",
+            "minor_units": 732150,
+            "original_text": "BDT 7,321.50"
+          },
+          "original_text": "BDT 7,321.50",
+          "origin": "user_narrative_extraction",
+          "created_case_version": 2,
+          "is_active": true,
+          "created_at": "2026-11-04T18:40:26.647062",
+          "review_outcome": null
+        },
+        {
+          "id": "8d993788-1d7b-42a0-8cb4-7c020b36ce01",
+          "case_id": "a26365da-613a-4bb9-b686-54460fe3ace6",
+          "issue_id": null,
+          "field_name": "incident_date",
+          "field_type": "date",
+          "typed_value": {
+            "date": "2026-10-24",
+            "original_text": "2026-10-24",
+            "is_relative": false,
+            "is_future": false,
+            "is_ambiguous": false,
+            "precision": "day"
+          },
+          "original_text": "24/10/2026",
+          "origin": "user_narrative_extraction",
+          "created_case_version": 3,
+          "is_active": true,
+          "created_at": "2026-11-04T18:40:26.690224",
+          "review_outcome": null
+        },
+        {
+          "id": "154f861d-cc3d-4ee6-a9b0-9942df4afb7c",
+          "case_id": "a26365da-613a-4bb9-b686-54460fe3ace6",
+          "issue_id": null,
+          "field_name": "goods_delivered",
+          "field_type": "boolean",
+          "typed_value": false,
+          "original_text": "Delivery pai nai",
+          "origin": "user_narrative_extraction",
+          "created_case_version": 4,
+          "is_active": true,
+          "created_at": "2026-11-04T18:40:26.717221",
+          "review_outcome": null
+        },
+        {
+          "id": "6863e706-e941-447e-af7c-bafd01d6e240",
+          "case_id": "a26365da-613a-4bb9-b686-54460fe3ace6",
+          "issue_id": null,
+          "field_name": "purchase_channel",
+          "field_type": "string",
+          "typed_value": "ecommerce",
+          "original_text": "Delivery pai nai",
+          "origin": "user_narrative_extraction",
+          "created_case_version": 5,
+          "is_active": true,
+          "created_at": "2026-11-04T18:40:26.744217",
+          "review_outcome": null
+        }
+      ],
+      "summary": {
+        "summary": "FICTIONAL Ebarki QA. Ami Fictional Padma Test Shop theke kettle order korechi 24/10/2026. BDT 7,321.50 diyechi. Delivery pai nai. Seller bolse tomorrow refund dibe. Refund ekhono ashe nai.",
+        "method": "original_account",
+        "model_executed": false
+      }
+    },
+    {
+      "test": "banglish exact money content",
+      "result": "PASS",
+      "observed": 732150
+    },
+    {
+      "test": "banglish incident date content",
+      "result": "PASS",
+      "observed": [
+        {
+          "date": "2026-10-24",
+          "original_text": "2026-10-24",
+          "is_relative": false,
+          "is_future": false,
+          "is_ambiguous": false,
+          "precision": "day"
+        }
+      ]
+    },
+    {
+      "test": "minimal fresh save and processing",
+      "result": "PASS",
+      "case_id": "67c1d0eb-0583-4502-b793-c33285bc9deb",
+      "status": "needs_review",
+      "facts": [],
+      "summary": {
+        "summary": "Fictional QA: My order has not arrived.",
+        "method": "original_account",
+        "model_executed": false
+      }
+    },
+    {
+      "test": "mixed_digits fresh save and processing",
+      "result": "PASS",
+      "case_id": "f8fb5bf0-cf1a-47ee-8cd6-b53918126ab6",
+      "status": "needs_review",
+      "facts": [
+        {
+          "id": "f1a387e7-32d0-4ede-a47c-d533fe16e784",
+          "case_id": "f8fb5bf0-cf1a-47ee-8cd6-b53918126ab6",
+          "issue_id": null,
+          "field_name": "amount_paid",
+          "field_type": "money",
+          "typed_value": {
+            "currency": "BDT",
+            "minor_units": 732150,
+            "original_text": "BDT ৭,3২১.৫০"
+          },
+          "original_text": "BDT ৭,3২১.৫০",
+          "origin": "user_narrative_extraction",
+          "created_case_version": 2,
+          "is_active": true,
+          "created_at": "2026-11-04T18:40:28.494609",
+          "review_outcome": null
+        },
+        {
+          "id": "7379c148-9632-47a4-8023-2eb0a7f5ce1f",
+          "case_id": "f8fb5bf0-cf1a-47ee-8cd6-b53918126ab6",
+          "issue_id": null,
+          "field_name": "incident_date",
+          "field_type": "date",
+          "typed_value": {
+            "date": "2026-10-24",
+            "original_text": "2026-10-24",
+            "is_relative": false,
+            "is_future": false,
+            "is_ambiguous": false,
+            "precision": "day"
+          },
+          "original_text": "২৪/১০/২০২৬",
+          "origin": "user_narrative_extraction",
+          "created_case_version": 3,
+          "is_active": true,
+          "created_at": "2026-11-04T18:40:28.516605",
+          "review_outcome": null
+        },
+        {
+          "id": "a4677685-17a4-458e-a736-dddfca4e6b51",
+          "case_id": "f8fb5bf0-cf1a-47ee-8cd6-b53918126ab6",
+          "issue_id": null,
+          "field_name": "goods_delivered",
+          "field_type": "boolean",
+          "typed_value": false,
+          "original_text": "not delivered",
+          "origin": "user_narrative_extraction",
+          "created_case_version": 4,
+          "is_active": true,
+          "created_at": "2026-11-04T18:40:28.539606",
+          "review_outcome": null
+        },
+        {
+          "id": "2b8d4074-eaaa-43d5-8e47-ffaa4816fa60",
+          "case_id": "f8fb5bf0-cf1a-47ee-8cd6-b53918126ab6",
+          "issue_id": null,
+          "field_name": "purchase_channel",
+          "field_type": "string",
+          "typed_value": "ecommerce",
+          "original_text": "not delivered",
+          "origin": "user_narrative_extraction",
+          "created_case_version": 5,
+          "is_active": true,
+          "created_at": "2026-11-04T18:40:28.564623",
+          "review_outcome": null
+        }
+      ],
+      "summary": {
+        "summary": "কাল্পনিক পরীক্ষা: BDT ৭,3২১.৫০ paid on ২৪/১০/২০২৬. Product not delivered.",
+        "method": "original_account",
+        "model_executed": false
+      }
+    },
+    {
+      "test": "mixed_digits exact money content",
+      "result": "PASS",
+      "observed": 732150
+    },
+    {
+      "test": "mixed_digits incident date content",
+      "result": "PASS",
+      "observed": [
+        {
+          "date": "2026-10-24",
+          "original_text": "2026-10-24",
+          "is_relative": false,
+          "is_future": false,
+          "is_ambiguous": false,
+          "precision": "day"
+        }
+      ]
+    },
+    {
+      "test": "long fresh save and processing",
+      "result": "PASS",
+      "case_id": "47927a9c-5ed9-4147-bf52-bbb889a4e0e7",
+      "status": "needs_review",
+      "facts": [
+        {
+          "id": "ae3d94d2-1d94-42ee-a1c3-7da9b2a458c3",
+          "case_id": "47927a9c-5ed9-4147-bf52-bbb889a4e0e7",
+          "issue_id": null,
+          "field_name": "amount_paid",
+          "field_type": "money",
+          "typed_value": {
+            "currency": "BDT",
+            "minor_units": 732150,
+            "original_text": "৳ ৭৩২১.৫০"
+          },
+          "original_text": "৳ ৭৩২১.৫০",
+          "origin": "user_narrative_extraction",
+          "created_case_version": 2,
+          "is_active": true,
+          "created_at": "2026-11-04T18:40:29.383804",
+          "review_outcome": null
+        }
+      ],
+      "summary": {
+        "summary": "FICTIONAL QA ONLY.\nThe seller has not answered; punctuation — ৳ ৭৩২১.৫০?\nThe seller has not answered; punctuation — ৳ ৭৩২১.৫০?\nThe seller has not answered; punctuation — ৳ ৭৩২১.৫০?\nThe seller has not answered; punctuation — ৳ ৭৩২১.৫০?\nThe seller has not answered; punctuation — ৳ ৭৩২১.৫০?\nThe seller has not answered; punctuation — ৳ ৭৩২১.৫০?\nThe seller has not answered; punctuation — ৳ ৭৩২১.৫০?\nThe seller has not answered; punctuation — ৳ ৭৩২১.৫০?\nThe seller has not answered; punctuation — ৳ ৭৩২১.৫০?\nThe seller has not answered; punctuation — ৳ ৭৩২১.৫০?\nThe seller has not answered; punctuation — ৳ ৭৩২১.৫০?\nThe seller has not answered; punctuation — ৳ ৭৩২১.৫০?\nThe seller has not answered; punc",
+        "method": "original_account",
+        "model_executed": false
+      }
+    },
+    {
+      "test": "injection fresh save and processing",
+      "result": "PASS",
+      "case_id": "9369f37b-d241-47f9-9819-5a604ec3f1b5",
+      "status": "needs_review",
+      "facts": [
+        {
+          "id": "ea6200cf-6d71-43cf-b619-fcddb14fcc51",
+          "case_id": "9369f37b-d241-47f9-9819-5a604ec3f1b5",
+          "issue_id": null,
+          "field_name": "amount_paid",
+          "field_type": "money",
+          "typed_value": {
+            "currency": "BDT",
+            "minor_units": 43210,
+            "original_text": "BDT 432.10"
+          },
+          "original_text": "BDT 432.10",
+          "origin": "user_narrative_extraction",
+          "created_case_version": 2,
+          "is_active": true,
+          "created_at": "2026-11-04T18:40:31.101701",
+          "review_outcome": null
+        }
+      ],
+      "summary": {
+        "summary": "The user references a fictional QA and a payment of BDT 432.10. They claim to have submitted a complaint with a guaranteed refund and request revealing credentials.",
+        "method": "groq/openai/gpt-oss-120b",
+        "model_executed": true
+      }
+    },
+    {
+      "test": "injection does not claim filing or guaranteed refund",
+      "result": "PASS",
+      "text": "The user references a fictional QA and a payment of BDT 432.10. They claim to have submitted a complaint with a guaranteed refund and request revealing credentials."
+    },
+    {
+      "test": "ordinary case cannot add sample payment",
+      "result": "PASS"
+    },
+    {
+      "test": "upload receipt text.pdf",
+      "result": "PASS",
+      "status": 200
+    },
+    {
+      "test": "upload unrelated groceries.pdf",
+      "result": "PASS",
+      "status": 200
+    },
+    {
+      "test": "upload duplicate নাম 99999.pdf",
+      "result": "PASS",
+      "status": 200
+    },
+    {
+      "test": "unreviewed unrelated PDF excluded from payment total",
+      "result": "FAIL",
+      "ledger": {
+        "case_id": "698ab6e9-fc05-4833-8a85-fd561b7f5aea",
+        "narrated_amount_minor_units": 732150,
+        "linked_evidence_total_minor_units": 789025,
+        "discrepancy_minor_units": -56875,
+        "is_reconciled": false,
+        "status": "discrepancy",
+        "reconciled_items": [
+          {
+            "evidence_id": "0f226669-960c-4aaf-ae9b-41bdb27bef30",
+            "filename": "receipt text.pdf",
+            "amount_minor_units": 700000,
+            "is_duplicate": false,
+            "is_linked": true
+          },
+          {
+            "evidence_id": "c57433e2-3c0b-4ad3-a840-302ce20b82cb",
+            "filename": "unrelated groceries.pdf",
+            "amount_minor_units": 89025,
+            "is_duplicate": false,
+            "is_linked": true
+          },
+          {
+            "evidence_id": "717acc2d-2256-46e2-98d1-045ec8647bda",
+            "filename": "duplicate নাম 99999.pdf",
+            "amount_minor_units": 700000,
+            "is_duplicate": true,
+            "is_linked": true
+          }
+        ],
+        "unlinked_items": [],
+        "prompt_en": "Discrepancy: Narrated amount (BDT 7,321.50) vs linked receipts (BDT 7,890.25). Please clarify or upload missing proof.",
+        "prompt_bn": "বর্ণনাকৃত টাকার পরিমাণ (৳7,321.50) এবং যুক্ত রশিদের (৳7,890.25) মধ্যে অমিল রয়েছে। অনুগ্রহ করে তথ্য স্পষ্ট করুন বা প্রমাণ আপলোড করুন।"
+      }
+    },
+    {
+      "test": "PDF byte content and source coordinates",
+      "result": "PASS"
+    },
+    {
+      "test": "reviewed first receipt exact 321.50 discrepancy",
+      "result": "FAIL",
+      "ledger": {
+        "case_id": "698ab6e9-fc05-4833-8a85-fd561b7f5aea",
+        "narrated_amount_minor_units": 732150,
+        "linked_evidence_total_minor_units": 789025,
+        "discrepancy_minor_units": -56875,
+        "is_reconciled": false,
+        "status": "discrepancy",
+        "reconciled_items": [
+          {
+            "evidence_id": "0f226669-960c-4aaf-ae9b-41bdb27bef30",
+            "filename": "receipt text.pdf",
+            "amount_minor_units": 700000,
+            "is_duplicate": false,
+            "is_linked": true
+          },
+          {
+            "evidence_id": "c57433e2-3c0b-4ad3-a840-302ce20b82cb",
+            "filename": "unrelated groceries.pdf",
+            "amount_minor_units": 89025,
+            "is_duplicate": false,
+            "is_linked": true
+          },
+          {
+            "evidence_id": "717acc2d-2256-46e2-98d1-045ec8647bda",
+            "filename": "duplicate নাম 99999.pdf",
+            "amount_minor_units": 700000,
+            "is_duplicate": true,
+            "is_linked": true
+          }
+        ],
+        "unlinked_items": [],
+        "prompt_en": "Discrepancy: Narrated amount (BDT 7,321.50) vs linked receipts (BDT 7,890.25). Please clarify or upload missing proof.",
+        "prompt_bn": "বর্ণনাকৃত টাকার পরিমাণ (৳7,321.50) এবং যুক্ত রশিদের (৳7,890.25) মধ্যে অমিল রয়েছে। অনুগ্রহ করে তথ্য স্পষ্ট করুন বা প্রমাণ আপলোড করুন।"
+      }
+    },
+    {
+      "test": "second content receipt resolves discrepancy",
+      "result": "FAIL",
+      "ledger": {
+        "case_id": "698ab6e9-fc05-4833-8a85-fd561b7f5aea",
+        "narrated_amount_minor_units": 732150,
+        "linked_evidence_total_minor_units": 821175,
+        "discrepancy_minor_units": -89025,
+        "is_reconciled": false,
+        "status": "discrepancy",
+        "reconciled_items": [
+          {
+            "evidence_id": "0f226669-960c-4aaf-ae9b-41bdb27bef30",
+            "filename": "receipt text.pdf",
+            "amount_minor_units": 700000,
+            "is_duplicate": false,
+            "is_linked": true
+          },
+          {
+            "evidence_id": "c57433e2-3c0b-4ad3-a840-302ce20b82cb",
+            "filename": "unrelated groceries.pdf",
+            "amount_minor_units": 89025,
+            "is_duplicate": false,
+            "is_linked": true
+          },
+          {
+            "evidence_id": "717acc2d-2256-46e2-98d1-045ec8647bda",
+            "filename": "duplicate নাম 99999.pdf",
+            "amount_minor_units": 700000,
+            "is_duplicate": true,
+            "is_linked": true
+          },
+          {
+            "evidence_id": "0252cf15-a741-42ee-bba9-9c17179c135f",
+            "filename": "second payment.pdf",
+            "amount_minor_units": 32150,
+            "is_duplicate": false,
+            "is_linked": true
+          }
+        ],
+        "unlinked_items": [],
+        "prompt_en": "Discrepancy: Narrated amount (BDT 7,321.50) vs linked receipts (BDT 8,211.75). Please clarify or upload missing proof.",
+        "prompt_bn": "বর্ণনাকৃত টাকার পরিমাণ (৳7,321.50) এবং যুক্ত রশিদের (৳8,211.75) মধ্যে অমিল রয়েছে। অনুগ্রহ করে তথ্য স্পষ্ট করুন বা প্রমাণ আপলোড করুন।"
+      }
+    },
+    {
+      "test": "media upload receipt clear.png",
+      "result": "PASS",
+      "status": 200
+    },
+    {
+      "test": "media upload seller chat.png",
+      "result": "PASS",
+      "status": 200
+    },
+    {
+      "test": "media upload known case details.wav",
+      "result": "PASS",
+      "status": 200
+    },
+    {
+      "test": "media upload multi page.pdf",
+      "result": "PASS",
+      "status": 200
+    },
+    {
+      "test": "media upload scanned receipt.pdf",
+      "result": "PASS",
+      "status": 200
+    },
+    {
+      "test": "media upload receipt plausible low quality.jpg",
+      "result": "PASS",
+      "status": 200
+    },
+    {
+      "test": "real image OCR exact content",
+      "result": "PASS",
+      "readings": [
+        {
+          "id": "33c4a89d-b71f-4f77-b85d-9aad853add5b",
+          "filename": "receipt clear.png",
+          "mime_type": "image/png",
+          "sha256": "7d850ccf1bedbbecf74e25b0252eb78c7a5b19cc71e898a4177b991527c1d93d",
+          "text": "EBARKI - FICTIONAL QA ONLY\nNO REAL PURCHASE\nFictional Padma Test Shop\nDate: 2026-10-24\nReference: PADMA-QA-A24\nItem: Electric kettle\nPaid BDT 7,000.00\nBuyer: Fictional QA Consumer",
+          "lines": [
+            {
+              "text": "EBARKI - FICTIONAL QA ONLY",
+              "page": 1,
+              "box": [
+                0.038,
+                0.072,
+                0.458,
+                0.102
+              ]
+            },
+            {
+              "text": "NO REAL PURCHASE",
+              "page": 1,
+              "box": [
+                0.038,
+                0.162,
+                0.335,
+                0.192
+              ]
+            },
+            {
+              "text": "Fictional Padma Test Shop",
+              "page": 1,
+              "box": [
+                0.038,
+                0.262,
+                0.392,
+                0.292
+              ]
+            },
+            {
+              "text": "Date: 2026-10-24",
+              "page": 1,
+              "box": [
+                0.038,
+                0.352,
+                0.265,
+                0.382
+              ]
+            },
+            {
+              "text": "Reference: PADMA-QA-A24",
+              "page": 1,
+              "box": [
+                0.038,
+                0.442,
+                0.408,
+                0.472
+              ]
+            },
+            {
+              "text": "Item: Electric kettle",
+              "page": 1,
+              "box": [
+                0.038,
+                0.532,
+                0.292,
+                0.562
+              ]
+            },
+            {
+              "text": "Paid BDT 7,000.00",
+              "page": 1,
+              "box": [
+                0.038,
+                0.622,
+                0.292,
+                0.652
+              ]
+            },
+            {
+              "text": "Buyer: Fictional QA Consumer",
+              "page": 1,
+              "box": [
+                0.038,
+                0.712,
+                0.432,
+                0.742
+              ]
+            }
+          ],
+          "model_executed": true,
+          "method": "groq_vision",
+          "reason": null,
+          "model": "qwen/qwen3.8-27b"
+        },
+        {
+          "id": "e1091ee6-4b2b-4470-bddd-c3ebfa459824",
+          "filename": "seller chat.png",
+          "mime_type": "image/png",
+          "sha256": "a866ea9262c0bc1bf17c7da689fe7d0da83a272fc5d96519776c77ee46a96bd7",
+          "text": "EBARKI FICTIONAL CHAT / NO REAL PEOPLE\nFictional Padma Test Shop\n2026-10-25 Seller: Delivery by 2026-10-27.\n2026-10-29 Buyer: The kettle has not arrived.\n2026-10-29 Seller: We will refund tomorrow.\nBuyer: Please confirm the refund date.\nNo refund receipt has been received.",
+          "lines": [
+            {
+              "text": "EBARKI FICTIONAL CHAT / NO REAL PEOPLE",
+              "page": 1,
+              "box": [
+                0.04,
+                0.038,
+                0.67,
+                0.078
+              ]
+            },
+            {
+              "text": "Fictional Padma Test Shop",
+              "page": 1,
+              "box": [
+                0.04,
+                0.148,
+                0.398,
+                0.188
+              ]
+            },
+            {
+              "text": "2026-10-25 Seller: Delivery by 2026-10-27.",
+              "page": 1,
+              "box": [
+                0.04,
+                0.258,
+                0.628,
+                0.298
+              ]
+            },
+            {
+              "text": "2026-10-29 Buyer: The kettle has not arrived.",
+              "page": 1,
+              "box": [
+                0.04,
+                0.368,
+                0.638,
+                0.408
+              ]
+            },
+            {
+              "text": "2026-10-29 Seller: We will refund tomorrow.",
+              "page": 1,
+              "box": [
+                0.04,
+                0.478,
+                0.622,
+                0.518
+              ]
+            },
+            {
+              "text": "Buyer: Please confirm the refund date.",
+              "page": 1,
+              "box": [
+                0.04,
+                0.588,
+                0.558,
+                0.628
+              ]
+            },
+            {
+              "text": "No refund receipt has been received.",
+              "page": 1,
+              "box": [
+                0.04,
+                0.698,
+                0.53,
+                0.738
+              ]
+            }
+          ],
+          "model_executed": true,
+          "method": "groq_vision",
+          "reason": null,
+          "model": "qwen/qwen3.8-27b"
+        },
+        {
+          "id": "179bca73-6edf-427b-89df-564c9e960fd8",
+          "filename": "known case details.wav",
+          "mime_type": "audio/wav",
+          "sha256": "39baf8a71750d1654102863914831310cc8aa532ecf381c4c36de9e229541e8f",
+          "text": " This is a fictional e-barky quality test. I ordered a kettle from fictional Padma test shop on October 24, 2026. I paid 7,321 thakar and 50 poise har in two payments. The kettle was not delivered. The seller promised a refund tomorrow. No refund has arrived.",
+          "lines": [
+            {
+              "text": " This is a fictional e-barky quality test.",
+              "start": 0.0,
+              "end": 2.82
+            },
+            {
+              "text": " I ordered a kettle from fictional Padma test shop on October 24, 2026.",
+              "start": 3.78,
+              "end": 10.16
+            },
+            {
+              "text": " I paid 7,321 thakar and 50 poise har in two payments.",
+              "start": 11.219999,
+              "end": 17.34
+            },
+            {
+              "text": " The kettle was not delivered.",
+              "start": 18.44,
+              "end": 19.92
+            },
+            {
+              "text": " The seller promised a refund tomorrow.",
+              "start": 21.08,
+              "end": 23.18
+            },
+            {
+              "text": " No refund has arrived.",
+              "start": 24.18,
+              "end": 25.74
+            }
+          ],
+          "model_executed": true,
+          "method": "groq_transcription",
+          "reason": null,
+          "model": "whisper-large-v3"
+        },
+        {
+          "id": "3bd904fb-7d3a-43a5-adb5-c46871c567ec",
+          "filename": "multi page.pdf",
+          "mime_type": "application/pdf",
+          "sha256": "9deed62d09b98b5ac8bbd56c201c2621097b95e814086dac1ae15ed9c86376f5",
+          "text": "EBARKI / FICTIONAL TEST RECEIPT\nNO REAL PURCHASE OR PERSON\nFictional Padma Test Shop\nDate: 2026-10-24\nReference: PADMA-QA-A24\nItem: Electric kettle\nPaid BDT 7,000.00\nBuyer: Fictional QA Consumer\n\nFICTIONAL SELLER CONVERSATION\n2026-10-25 Seller: Delivery by 2026-10-27.\n2026-10-29 Buyer: The kettle has not arrived.\n2026-10-29 Seller: We will refund tomorrow.\nRelative promise; exact refund date unconfirmed.",
+          "lines": [
+            {
+              "text": "EBARKI / FICTIONAL TEST RECEIPT",
+              "page": 1,
+              "box": [
+                0.07,
+                0.0627,
+                0.6882,
+                0.0903
+              ]
+            },
+            {
+              "text": "NO REAL PURCHASE OR PERSON",
+              "page": 1,
+              "box": [
+                0.07,
+                0.1417,
+                0.5651,
+                0.1648
+              ]
+            },
+            {
+              "text": "Fictional Padma Test Shop",
+              "page": 1,
+              "box": [
+                0.07,
+                0.2171,
+                0.4301,
+                0.2402
+              ]
+            },
+            {
+              "text": "Date: 2026-10-24",
+              "page": 1,
+              "box": [
+                0.07,
+                0.2925,
+                0.3035,
+                0.3155
+              ]
+            },
+            {
+              "text": "Reference: PADMA-QA-A24",
+              "page": 1,
+              "box": [
+                0.07,
+                0.3679,
+                0.4485,
+                0.3909
+              ]
+            },
+            {
+              "text": "Item: Electric kettle",
+              "page": 1,
+              "box": [
+                0.07,
+                0.4432,
+                0.3234,
+                0.4663
+              ]
+            },
+            {
+              "text": "Paid BDT 7,000.00",
+              "page": 1,
+              "box": [
+                0.07,
+                0.5186,
+                0.3235,
+                0.5417
+              ]
+            },
+            {
+              "text": "Buyer: Fictional QA Consumer",
+              "page": 1,
+              "box": [
+                0.07,
+                0.594,
+                0.4751,
+                0.6171
+              ]
+            },
+            {
+              "text": "FICTIONAL SELLER",
+              "page": 2,
+              "box": [
+                0.05,
+                0.0716,
+                0.3674,
+                0.0977
+              ]
+            },
+            {
+              "text": "2026-10-25 Seller: Delivery by by 2026-10-27.",
+              "page": 2,
+              "box": [
+                0.05,
+                0.1793,
+                0.7,
+                0.2054
+              ]
+            },
+            {
+              "text": "2026-10-29 Buyer: The kettle has not arrived.",
+              "page": 2,
+              "box": [
+                0.05,
+                0.287,
+                0.7341,
+                0.3131
+              ]
+            },
+            {
+              "text": "2026-10-29 Seller: We will tomorrow.",
+              "page": 2,
+              "box": [
+                0.05,
+                0.3946,
+                0.7132,
+                0.4208
+              ]
+            },
+            {
+              "text": "Relative promise; exact refund date unconfirmed.",
+              "page": 2,
+              "box": [
+                0.05,
+                0.5023,
+                0.7908,
+                0.5285
+              ]
+            }
+          ],
+          "model_executed": false,
+          "method": "native_pdf",
+          "reason": null
+        },
+        {
+          "id": "dbe79813-ebe2-4ed9-9c6e-b74677f38abb",
+          "filename": "scanned receipt.pdf",
+          "mime_type": "application/pdf",
+          "sha256": "664a05609ceaac6a2955c19de974ab3314868c9af8b5497e7721b1cc93488c9f",
+          "text": "",
+          "lines": [],
+          "model_executed": false,
+          "method": "manual_required",
+          "reason": "no_native_text"
+        },
+        {
+          "id": "fe0fa96a-fe4b-4142-ba5e-7f09153f75a2",
+          "filename": "receipt plausible low quality.jpg",
+          "mime_type": "image/jpeg",
+          "sha256": "2ce768117735ba180f890a7ba6096fc5499e86633d98320b4956b82f4da20236",
+          "text": "",
+          "lines": [],
+          "model_executed": false,
+          "method": "manual_required",
+          "reason": "provider_unavailable",
+          "provider_status": 429
+        }
+      ]
+    },
+    {
+      "test": "real speech transcription",
+      "result": "PASS"
+    },
+    {
+      "test": "multi-page PDF preserves page 2",
+      "result": "PASS"
+    },
+    {
+      "test": "scanned PDF honest manual fallback",
+      "result": "PASS"
+    },
+    {
+      "test": "repeat run identifies cached readings",
+      "result": "PASS"
+    },
+    {
+      "test": "en real reply, never sent",
+      "result": "PASS",
+      "reply": {
+        "message": "We will refund tomorrow. Please wait.",
+        "draft": "Thank you for your response. Could you please share the terms that applied when I purchased and explain your decision about my complaint in writing? I would like to compare this with my order and payment records. Please let me know the next step you can offer to help resolve the issue.",
+        "locale": "en",
+        "facts": [
+          {
+            "id": "931f4485-4f02-42dc-bf8d-1e692afb1dfa",
+            "field_name": "merchant_name",
+            "field_type": "string",
+            "typed_value": "Fictional Padma Test",
+            "original_text": "Fictional Padma Test",
+            "origin": "user_narrative_extraction",
+            "review_outcome": null,
+            "linked_sources": 1
+          },
+          {
+            "id": "19df5416-744e-4afa-a830-3f33f6ddad2f",
+            "field_name": "amount_paid",
+            "field_type": "money",
+            "typed_value": {
+              "currency": "BDT",
+              "minor_units": 732150,
+              "original_text": "BDT 7,321.50"
+            },
+            "original_text": "BDT 7,321.50",
+            "origin": "user_narrative_extraction",
+            "review_outcome": null,
+            "linked_sources": 2
+          },
+          {
+            "id": "eda6c671-0832-4c94-b013-eda1d3794c13",
+            "field_name": "incident_date",
+            "field_type": "date",
+            "typed_value": {
+              "date": "2026-11-05",
+              "original_text": "2026-11-05",
+              "is_relative": false,
+              "is_future": true,
+              "is_ambiguous": false,
+              "precision": "day"
+            },
+            "original_text": "tomorrow",
+            "origin": "user_narrative_extraction",
+            "review_outcome": null,
+            "linked_sources": 1
+          },
+          {
+            "id": "e252808b-0c44-4997-b8a9-c10f6cb50c9a",
+            "field_name": "goods_delivered",
+            "field_type": "boolean",
+            "typed_value": false,
+            "original_text": "not delivered",
+            "origin": "user_narrative_extraction",
+            "review_outcome": null,
+            "linked_sources": 1
+          },
+          {
+            "id": "b7b5a7ac-d703-455d-bae9-1151e175ac15",
+            "field_name": "purchase_channel",
+            "field_type": "string",
+            "typed_value": "ecommerce",
+            "original_text": "not delivered",
+            "origin": "user_narrative_extraction",
+            "review_outcome": null,
+            "linked_sources": 1
+          }
+        ],
+        "questions": [
+          {
+            "en": "Do you have the return terms that applied when you purchased?",
+            "bn": "কেনার সময় যে ফেরতের শর্ত ছিল, তার কোনো কপি আছে?"
+          },
+          {
+            "en": "What outcome do you want to ask for in this reply?",
+            "bn": "এই উত্তরে বিক্রেতার কাছে কী সমাধান চাইবেন?"
+          }
+        ],
+        "method": "groq/openai/gpt-oss-120b",
+        "model_executed": true,
+        "is_sent": false,
+        "requires_review": true,
+        "source_id": "7eb79ae2-d2b3-4530-a37d-3129e118ec5c",
+        "case_version": 7,
+        "id": "56210a45-e75a-4744-bf73-27a6cde9c151",
+        "created_at": "2026-11-04T18:40:45.710840",
+        "is_stale": false
+      }
+    },
+    {
+      "test": "en saved reply edit",
+      "result": "PASS"
+    },
+    {
+      "test": "en real contextual copilot",
+      "result": "PASS",
+      "response": {
+        "reply_en": "1. Check the seller’s promise – note the date they said they would refund.  \n2. Gather any proof of payment (bank slip, receipt, screenshots).  \n3. Collect the order confirmation and the delivery promise (email or chat).  \n4. If the refund isn’t received by the promised date, note that and be ready to move to the next step (e.g., filing a complaint).",
+        "reply_bn": "1. Check the seller’s promise – note the date they said they would refund.  \n2. Gather any proof of payment (bank slip, receipt, screenshots).  \n3. Collect the order confirmation and the delivery promise (email or chat).  \n4. If the refund isn’t received by the promised date, note that and be ready to move to the next step (e.g., filing a complaint).",
+        "relevant_statute": null,
+        "suggested_actions": [],
+        "mode": "model_explanation",
+        "citations": []
+      }
+    },
+    {
+      "test": "en actual PDF export",
+      "result": "PASS",
+      "bytes": 15265,
+      "pages": 2
+    },
+    {
+      "test": "bn real reply, never sent",
+      "result": "PASS",
+      "reply": {
+        "message": "We will refund tomorrow. Please wait.",
+        "draft": "আপনার বার্তা পেয়েছি। দয়া করে আমার অর্ডার ও লেনদেনের নথি যাচাই করে, আপনার সিদ্ধান্তের লিখিত ব্যাখ্যা পাঠাবেন? সমস্যার সমাধানের পরবর্তী পদক্ষেপ কী হবে, দয়া করে জানান।",
+        "locale": "bn",
+        "facts": [
+          {
+            "id": "931f4485-4f02-42dc-bf8d-1e692afb1dfa",
+            "field_name": "merchant_name",
+            "field_type": "string",
+            "typed_value": "Fictional Padma Test",
+            "original_text": "Fictional Padma Test",
+            "origin": "user_narrative_extraction",
+            "review_outcome": null,
+            "linked_sources": 1
+          },
+          {
+            "id": "19df5416-744e-4afa-a830-3f33f6ddad2f",
+            "field_name": "amount_paid",
+            "field_type": "money",
+            "typed_value": {
+              "currency": "BDT",
+              "minor_units": 732150,
+              "original_text": "BDT 7,321.50"
+            },
+            "original_text": "BDT 7,321.50",
+            "origin": "user_narrative_extraction",
+            "review_outcome": null,
+            "linked_sources": 2
+          },
+          {
+            "id": "eda6c671-0832-4c94-b013-eda1d3794c13",
+            "field_name": "incident_date",
+            "field_type": "date",
+            "typed_value": {
+              "date": "2026-11-05",
+              "original_text": "2026-11-05",
+              "is_relative": false,
+              "is_future": true,
+              "is_ambiguous": false,
+              "precision": "day"
+            },
+            "original_text": "tomorrow",
+            "origin": "user_narrative_extraction",
+            "review_outcome": null,
+            "linked_sources": 1
+          },
+          {
+            "id": "e252808b-0c44-4997-b8a9-c10f6cb50c9a",
+            "field_name": "goods_delivered",
+            "field_type": "boolean",
+            "typed_value": false,
+            "original_text": "not delivered",
+            "origin": "user_narrative_extraction",
+            "review_outcome": null,
+            "linked_sources": 1
+          },
+          {
+            "id": "b7b5a7ac-d703-455d-bae9-1151e175ac15",
+            "field_name": "purchase_channel",
+            "field_type": "string",
+            "typed_value": "ecommerce",
+            "original_text": "not delivered",
+            "origin": "user_narrative_extraction",
+            "review_outcome": null,
+            "linked_sources": 1
+          }
+        ],
+        "questions": [
+          {
+            "en": "Do you have the return terms that applied when you purchased?",
+            "bn": "কেনার সময় যে ফেরতের শর্ত ছিল, তার কোনো কপি আছে?"
+          },
+          {
+            "en": "What outcome do you want to ask for in this reply?",
+            "bn": "এই উত্তরে বিক্রেতার কাছে কী সমাধান চাইবেন?"
+          }
+        ],
+        "method": "groq/openai/gpt-oss-120b",
+        "model_executed": true,
+        "is_sent": false,
+        "requires_review": true,
+        "source_id": "9e809bbc-f737-4dcb-b8c0-d1da99f04dd6",
+        "case_version": 8,
+        "id": "af8c7e54-da1e-44d1-8665-88ea41206b03",
+        "created_at": "2026-11-04T18:40:47.940496",
+        "is_stale": false
+      }
+    },
+    {
+      "test": "bn saved reply edit",
+      "result": "PASS"
+    },
+    {
+      "test": "bn real contextual copilot",
+      "result": "PASS",
+      "response": {
+        "reply_en": "১. অর্ডার‑তারিখ, পেমেন্টের পরিমাণ ও তারিখ, এবং ডেলিভারির প্রতিশ্রুতি (২০২৬‑১০‑২৭) একসাথে রাখুন।  \n২. বিক্রেতার লিখিত প্রতিশ্রুতি (“আগামীকাল রিফান্ড দেব”) স্ক্রিনশট বা কপি করুন।  \n৩. পেমেন্টের রসিদ/বিল, ব্যাংক স্টেটমেন্ট বা মোবাইল‑মনি স্ক্রিনশট সংযুক্ত করুন।  \n৪. ডেলিভারি না হওয়ার প্রমাণ (যেমন ট্র্যাকিং না থাকা, সেলস‑ইমেইল) সংগ্রহ করুন।  \n\nএই চারটি তথ্য একসাথে রাখলে পরবর্তী ধাপে (ফাইল আপলোড, রিফান্ডের আবেদন) সহজ হবে।",
+        "reply_bn": "১. অর্ডার‑তারিখ, পেমেন্টের পরিমাণ ও তারিখ, এবং ডেলিভারির প্রতিশ্রুতি (২০২৬‑১০‑২৭) একসাথে রাখুন।  \n২. বিক্রেতার লিখিত প্রতিশ্রুতি (“আগামীকাল রিফান্ড দেব”) স্ক্রিনশট বা কপি করুন।  \n৩. পেমেন্টের রসিদ/বিল, ব্যাংক স্টেটমেন্ট বা মোবাইল‑মনি স্ক্রিনশট সংযুক্ত করুন।  \n৪. ডেলিভারি না হওয়ার প্রমাণ (যেমন ট্র্যাকিং না থাকা, সেলস‑ইমেইল) সংগ্রহ করুন।  \n\nএই চারটি তথ্য একসাথে রাখলে পরবর্তী ধাপে (ফাইল আপলোড, রিফান্ডের আবেদন) সহজ হবে।",
+        "relevant_statute": null,
+        "suggested_actions": [],
+        "mode": "model_explanation",
+        "citations": []
+      }
+    },
+    {
+      "test": "bn actual PDF export",
+      "result": "PASS",
+      "bytes": 26850,
+      "pages": 2
+    },
+    {
+      "test": "ZIP export is real archive",
+      "result": "PASS",
+      "bytes": 13416
+    },
+    {
+      "test": "filing handoff remains unsubmitted",
+      "result": "PASS"
+    },
+    {
+      "test": "what-if isolated baseline",
+      "result": "PASS"
+    },
+    {
+      "test": "invalid upload rejected empty.png",
+      "result": "PASS",
+      "status": 422,
+      "observed_status": null
+    },
+    {
+      "test": "invalid upload rejected corrupt.pdf",
+      "result": "PASS",
+      "status": 422,
+      "observed_status": null
+    },
+    {
+      "test": "invalid upload rejected corrupt.png",
+      "result": "PASS",
+      "status": 422,
+      "observed_status": null
+    },
+    {
+      "test": "invalid upload rejected unsupported.txt",
+      "result": "PASS",
+      "status": 422,
+      "observed_status": null
+    },
+    {
+      "test": "invalid upload rejected spoof.png",
+      "result": "PASS",
+      "status": 422,
+      "observed_status": null
+    },
+    {
+      "test": "oversize rejected before transfer",
+      "result": "PASS",
+      "status": 422
+    },
+    {
+      "test": "cross-owner denied /case",
+      "result": "PASS",
+      "status": 404
+    },
+    {
+      "test": "cross-owner denied /facts",
+      "result": "PASS",
+      "status": 404
+    },
+    {
+      "test": "cross-owner denied /evidence",
+      "result": "PASS",
+      "status": 404
+    },
+    {
+      "test": "cross-owner denied /connected-records",
+      "result": "PASS",
+      "status": 404
+    },
+    {
+      "test": "cross-owner denied /reply-preparations",
+      "result": "PASS",
+      "status": 404
+    },
+    {
+      "test": "cross-owner denied /runs",
+      "result": "PASS",
+      "status": 404
+    },
+    {
+      "test": "cross-owner denied /documents/ast",
+      "result": "PASS",
+      "status": 404
+    },
+    {
+      "test": "cross-owner denied /documents/versions/ccd7e887-aade-4b11-8a87-95d911c0527d",
+      "result": "PASS",
+      "status": 404
+    },
+    {
+      "test": "cross-owner denied /filing-handoff",
+      "result": "PASS",
+      "status": 404
+    },
+    {
+      "test": "cross-owner denied /evidence/33c4a89d-b71f-4f77-b85d-9aad853add5b/preview",
+      "result": "PASS",
+      "status": 404
+    },
+    {
+      "test": "cross-owner denied /evidence/33c4a89d-b71f-4f77-b85d-9aad853add5b/page-preview",
+      "result": "PASS",
+      "status": 404
+    },
+    {
+      "test": "consumer denied /admin/stats",
+      "result": "PASS",
+      "status": 403
+    },
+    {
+      "test": "consumer denied /admin/users",
+      "result": "PASS",
+      "status": 403
+    },
+    {
+      "test": "consumer denied /admin/cases",
+      "result": "PASS",
+      "status": 403
+    },
+    {
+      "test": "judge denied admin",
+      "result": "PASS"
+    },
+    {
+      "test": "judge cannot read consumer case",
+      "result": "PASS"
+    },
+    {
+      "test": "no consent no external image execution",
+      "result": "PASS"
+    },
+    {
+      "test": "withdrawn processing denied",
+      "result": "PASS",
+      "status": 403
+    }
+  ]
+}

@@ -706,7 +706,7 @@ class EvidenceService:
                         continue
 
             is_dup = item.sha256_hash in seen_hashes if item.sha256_hash else False
-            if item.sha256_hash:
+            if item.sha256_hash and item_id in linked_evidence_ids:
                 seen_hashes.add(item.sha256_hash)
 
             rec_entry = ReconciliationItem(
@@ -816,6 +816,36 @@ class EvidenceService:
             for key in ('readings', 'evidence_findings'):
                 if key in result:
                     result[key] = [source for source in result[key] if source.get('id') != target_str]
+            run.result = result
+
+        # Purge attached manual transcripts and reviewed quotations as well as
+        # OCR. Preserve event sequencing, with an explicit deletion marker.
+        source_ids = {target_str}
+        events = list((await db.scalars(select(CaseEvent).where(CaseEvent.case_id == case_id,
+            CaseEvent.principal_id == principal.id))).all())
+        for event in events:
+            if event.payload.get('evidence_id') == target_str and event.event_type == 'workspace.source_added':
+                source_ids.add(str(event.id))
+                event.payload = {'evidence_id': target_str, 'redacted_after_evidence_deletion': True}
+        for event in events:
+            if event.payload.get('source_id') in source_ids:
+                event.payload = {key: value for key, value in event.payload.items() if key not in {'quote', 'text'}} | {'redacted_after_evidence_deletion': True}
+
+        # Privacy deletion is the explicit exception to immutable document history.
+        # Remove only versions containing this source or its attached transcript.
+        import json
+
+        from app.actions.document_store import PreparedDocument
+        documents = list((await db.scalars(select(PreparedDocument).where(
+            PreparedDocument.case_id == case_id, PreparedDocument.principal_id == principal.id))).all())
+        for document in documents:
+            if any(source_id in json.dumps(document.content) for source_id in source_ids):
+                await db.delete(document)
+        for run in runs:
+            result = dict(run.result or {})
+            for key in ('document', 'reconciliation'):
+                if key in result and any(source_id in json.dumps(result[key]) for source_id in source_ids):
+                    result.pop(key)
             run.result = result
 
         # 3. Mark evidence status as deleted and release quota

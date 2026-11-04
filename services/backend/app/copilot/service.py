@@ -6,7 +6,7 @@ import httpx
 
 from app.copilot.schemas import CopilotChatRequest, CopilotChatResponse
 from app.core.config import settings
-from app.operations.understanding import reasoning_options
+from app.operations.understanding import provider_receipt, reasoning_options
 
 logger = logging.getLogger(__name__)
 BANGLA_GUIDE = (
@@ -47,7 +47,8 @@ class CopilotService:
                         })
                 response.raise_for_status()
                 answer = response.json()['choices'][0]['message']['content']
-                return CopilotChatResponse(reply_en=answer,reply_bn=answer,mode='model_explanation')
+                return CopilotChatResponse(reply_en=answer,reply_bn=answer,mode='model_explanation',
+                    execution_receipt=provider_receipt(response, settings.GROQ_MODEL))
             except (httpx.HTTPError, ValueError, KeyError, IndexError):
                 logger.warning('Assistant provider unavailable; showing workflow guide')
         return CopilotChatResponse(

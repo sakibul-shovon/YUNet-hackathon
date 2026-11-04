@@ -26,7 +26,9 @@ class AudioTranscriptOut(BaseModel):
     audio_evidence_id: uuid.UUID | None = None
     transcript_text: str
     language: str  # 'bn', 'en', 'mixed'
-    overall_confidence: float
+    overall_confidence: float | None
+    method: str = 'client_provided_transcript'
+    model_executed: bool = False
     duration_seconds: float
     words: list[WordTimestamp] = Field(default_factory=list)
     uncertain_spans: list[UncertainSpan] = Field(default_factory=list)

@@ -19,6 +19,7 @@ class CopilotActionSuggestion(BaseModel):
 
 
 class CopilotChatResponse(BaseModel):
+    execution_receipt: dict | None = None
     reply_en: str
     reply_bn: str
     relevant_statute: str | None = None

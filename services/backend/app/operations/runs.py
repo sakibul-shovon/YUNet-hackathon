@@ -16,7 +16,7 @@ from app.evidence.models import EvidenceItem
 from app.evidence.service import EvidenceService
 from app.evidence.storage import get_storage_backend
 from app.extraction.adapter import CaseExtractor
-from app.facts.models import FactAssertion, FactSourceLink
+from app.facts.models import FactAssertion
 from app.facts.schemas import FactAssertionCreate
 from app.facts.service import FactService
 from app.identity.models import Consent, Principal
@@ -71,7 +71,7 @@ def serialize_run(run: CaseRun) -> dict[str, Any]:
                        'type': 'input.required' if run.status=='needs_review' else f'run.{run.status}',
                        'timestamp': run.finished_at.isoformat() if run.finished_at else None})
     return {
-        "id": str(run.id), "case_id": str(run.case_id), "operation": run.operation,
+        "id": str(run.id), "case_id": str(run.case_id), "operation": run.operation, "locale": run.locale,
         "status": run.status, "case_version": run.case_version,
         "cancel_requested": run.cancel_requested, "stages": run.stages,
         "result": run.result, "error_code": run.error_code,
@@ -122,8 +122,8 @@ async def create_run(case_id: uuid.UUID, payload: RunRequest, principal: Princip
 async def execute_run(run_id: uuid.UUID, factory: async_sessionmaker[AsyncSession]):
     """Bounded operations, real timings, and cancellation at durable stage boundaries.
 
-    No model-provider execution is claimed. The retrieval stage deliberately uses
-    lexical search; the development hash adapter is not advertised as E5 inference.
+    Model acknowledgements and cached readings are recorded separately. Retrieval
+    uses lexical search; the development hash adapter is not E5 inference.
     """
     async with factory() as db:
         run = await db.get(CaseRun, run_id)
@@ -176,7 +176,8 @@ async def execute_run(run_id: uuid.UUID, factory: async_sessionmaker[AsyncSessio
                 }
                 run.result = {'understanding': understanding}
                 await stage_end(started, {'method': understanding['method'],
-                                         'model_executed': understanding['model_executed']})
+                                         'model_executed': understanding['model_executed'],
+                                         'execution_receipt': understanding.get('execution_receipt')})
             if run.operation in {"extract", "resolve"}:
                 started = await stage_start("text_extraction", "deterministic_pattern_extractor")
                 proposals = CaseExtractor.propose(case.story_narrative or "")
@@ -191,7 +192,7 @@ async def execute_run(run_id: uuid.UUID, factory: async_sessionmaker[AsyncSessio
                     span = next((item for item in proposals.spans if item.span_id in proposal.span_ids), None)
                     await FactService.create_assertion(case.id, FactAssertionCreate(
                         field_name=proposal.field_name, field_type=proposal.field_type,
-                        raw_value=proposal.original_text if proposal.field_type == "money" else proposal.raw_value,
+                        raw_value=proposal.original_text if proposal.field_type in {"money", "date"} else proposal.raw_value,
                         original_text=proposal.original_text, origin="user_narrative_extraction",
                         span_start=span.start_offset if span else None,
                         span_end=span.end_offset if span else None,
@@ -208,10 +209,6 @@ async def execute_run(run_id: uuid.UUID, factory: async_sessionmaker[AsyncSessio
                     EvidenceItem.status == 'accepted',
                 ).limit(20))).all())
                 findings = []
-                amount_fact = await db.scalar(select(FactAssertion).where(
-                    FactAssertion.case_id == case.id, FactAssertion.is_active.is_(True),
-                    FactAssertion.field_name == 'amount_paid',
-                ).order_by(FactAssertion.created_at.desc()).limit(1))
                 for evidence in accepted:
                     await checkpoint()
                     # Reuse a successful reading of these exact bytes. Besides saving
@@ -228,6 +225,9 @@ async def execute_run(run_id: uuid.UUID, factory: async_sessionmaker[AsyncSessio
                     reading = ({**cached[1], 'reused_from_run': str(cached[0].id)} if cached
                                else await read_evidence(evidence, bool(external_consent)))
                     await checkpoint()
+                    await db.refresh(evidence)
+                    if evidence.status != 'accepted':
+                        continue  # A deletion during provider processing must not restore derivatives.
                     run.result = {**run.result, 'readings': [*run.result.get('readings', []), reading]}
                     await db.commit()
                     try:
@@ -238,33 +238,20 @@ async def execute_run(run_id: uuid.UUID, factory: async_sessionmaker[AsyncSessio
                             findings.append({'id': str(evidence.id), 'filename': evidence.original_filename,
                                              'requires_review': True, 'method': 'original_file'})
                             continue
-                        monetary = [region for region in parsed.regions if region.critical_token_type == 'money']
-                        unique = {region.text for region in monetary}
                         findings.append({'id': str(evidence.id), 'filename': evidence.original_filename,
                                          'text': parsed.full_text[:3000], 'requires_review': True,
                                          'method': 'native_pdf_text'})
-                        if amount_fact and len(unique) == 1:
-                            existing_link = await db.scalar(select(FactSourceLink).where(
-                                FactSourceLink.assertion_id == amount_fact.id,
-                                FactSourceLink.source_type == 'evidence_span',
-                            ))
-                            # Links remain proposals. Never infer coordinates from a filename.
-                            links = list((await db.scalars(select(FactSourceLink).where(
-                                FactSourceLink.assertion_id == amount_fact.id,
-                            ))).all()) if existing_link else []
-                            if not any((link.locator_meta or {}).get('evidence_id') == str(evidence.id) for link in links):
-                                region = monetary[0]
-                                db.add(FactSourceLink(assertion_id=amount_fact.id, source_type='evidence_span',
-                                    locator_meta={'evidence_id': str(evidence.id), 'filename': evidence.original_filename,
-                                                  'page_number': region.page_number, 'normalized_box': region.normalized_box,
-                                                  'selected_text': region.text}))
-                                await db.commit()
+                        # Reading a receipt does not establish that its payment belongs
+                        # to this dispute. Only an explicit source review/link counts it.
                     except (OSError, ValueError):
                         findings.append({'id': str(evidence.id), 'filename': evidence.original_filename,
                                          'requires_review': True, 'method': 'unavailable'})
                 run.result = {**run.result, 'evidence_findings': findings}
                 await stage_end(started, {'files_reviewed': len(findings),
                                          'native_text_files': sum(f['method']=='native_pdf_text' for f in findings),
+                                         'provider_calls': sum(bool(f.get('model_executed')) and not f.get('reused_from_run') for f in run.result.get('readings', [])),
+                                         'cached_readings': sum(bool(f.get('reused_from_run')) for f in run.result.get('readings', [])),
+                                         'providers': sorted({f['execution_receipt']['provider'] for f in run.result.get('readings', []) if f.get('execution_receipt') and not f.get('reused_from_run')}),
                                          'readable_records': sum(bool(f.get('text')) for f in run.result.get('readings', []))})
                 started = await stage_start('payment_reconciliation', 'linked_receipt_comparison')
                 reconciliation = await EvidenceService.reconcile_case_payments(case.id, principal, db)

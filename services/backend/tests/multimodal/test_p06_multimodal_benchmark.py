@@ -17,55 +17,17 @@ SAMPLES_DIR = os.path.join(REPO_ROOT, "demo", "specs", "samples")
 
 
 @pytest.mark.asyncio
-async def test_committed_audio_samples_recall_and_timestamps():
-    """P06.5 / T22: Reproducible keyword recall, timestamp attribution, and uncertainty flags on committed samples."""
-    case_id = uuid.uuid4()
-    ecommerce_sample_path = os.path.join(SAMPLES_DIR, "sample_voice_ecommerce.webm")
-    assert os.path.exists(ecommerce_sample_path), f"Sample not found: {ecommerce_sample_path}"
-
-    with open(ecommerce_sample_path, "rb") as f:
-        audio_bytes = f.read()
-
-    # 1. E-commerce sample
-    res = await STTAdapter.transcribe_audio_bytes(
-        case_id=case_id,
-        audio_bytes=audio_bytes,
-        declared_mime="audio/webm",
-        consent_granted=True,
-    )
-
-    assert res.language in ("bn", "mixed")
-    assert "দারাজ" in res.transcript_text
-    assert "৫,৫০০" in res.transcript_text or "5500" in res.transcript_text
-    assert res.consent_recorded is True
-    assert len(res.words) > 0
-
-    # Monotonic timestamps
-    prev_end = 0.0
-    for w in res.words:
-        assert w.start_time >= prev_end - 0.01
-        assert w.end_time >= w.start_time
-        prev_end = w.end_time
-
-    # Critical amount/date uncertainty flags (T22 invariant)
-    reasons = [u.reason for u in res.uncertain_spans]
-    assert "critical_amount_requires_review" in reasons
-    assert any("5500" in u.span or "৫,৫০০" in u.span for u in res.uncertain_spans)
-
-    # 2. Finance sample
-    finance_sample_path = os.path.join(SAMPLES_DIR, "sample_voice_finance.webm")
-    assert os.path.exists(finance_sample_path)
-    with open(finance_sample_path, "rb") as f:
-        finance_bytes = f.read()
-
-    res_fin = await STTAdapter.transcribe_audio_bytes(
-        case_id=case_id,
-        audio_bytes=finance_bytes,
-        declared_mime="audio/webm",
-        consent_granted=True,
-    )
-    assert "বিকাশ" in res_fin.transcript_text
-    assert any("2400" in u.span or "২,৪০০" in u.span for u in res_fin.uncertain_spans)
+async def test_committed_audio_metadata_is_not_speech_recognition():
+    """Legacy byte fixtures cannot serve as transcription ground truth."""
+    from fastapi import HTTPException
+    for name in ['sample_voice_ecommerce.webm', 'sample_voice_finance.webm']:
+        with open(os.path.join(SAMPLES_DIR, name), 'rb') as file:
+            data = file.read()
+        with pytest.raises(HTTPException) as error:
+            await STTAdapter.transcribe_audio_bytes(case_id=uuid.uuid4(), audio_bytes=data,
+                declared_mime='audio/webm', consent_granted=True)
+        assert error.value.status_code == 503
+        assert 'No transcription was performed' in error.value.detail
 
 
 def test_committed_vision_samples_theme_and_layout():
@@ -87,8 +49,8 @@ def test_committed_vision_samples_theme_and_layout():
     )
     assert res_light.theme == "light"
     assert res_light.authenticity_guarantee is False
-    assert res_light.detected_layout == "chat_conversation"
-    assert len(res_light.bubbles) >= 2
+    assert res_light.detected_layout == "unstructured"
+    assert res_light.bubbles == [] and res_light.proposed_facts == []
     # Check that speaker role confidence is preserved without false certainty
     for b in res_light.bubbles:
         assert b.speaker_role_confidence <= 0.90
@@ -110,25 +72,15 @@ def test_committed_vision_samples_theme_and_layout():
 
 
 @pytest.mark.asyncio
-async def test_provider_failure_resilience_fallback():
-    """P06.5: Provider failure resilience: simulated API outage gracefully falls back to deterministic local STT."""
-    case_id = uuid.uuid4()
-    ecommerce_sample_path = os.path.join(SAMPLES_DIR, "sample_voice_ecommerce.webm")
-    with open(ecommerce_sample_path, "rb") as f:
-        audio_bytes = f.read()
-
-    # Simulate external API 503 error
-    with patch("httpx.AsyncClient.post", side_effect=Exception("503 Service Unavailable")):
-        res = await STTAdapter.transcribe_audio_bytes(
-            case_id=case_id,
-            audio_bytes=audio_bytes,
-            declared_mime="audio/webm",
-            consent_granted=True,
-        )
-        # Verify fallback produced a working transcript without crashing
-        assert res.transcript_text != ""
-        assert res.consent_recorded is True
-        assert len(res.words) > 0
+async def test_provider_failure_never_fabricates_a_transcript():
+    from fastapi import HTTPException
+    with open(os.path.join(SAMPLES_DIR, 'sample_voice_ecommerce.webm'), 'rb') as file:
+        data = file.read()
+    with patch('httpx.AsyncClient.post', side_effect=Exception('503 Service Unavailable')):
+        with pytest.raises(HTTPException) as error:
+            await STTAdapter.transcribe_audio_bytes(case_id=uuid.uuid4(), audio_bytes=data,
+                declared_mime='audio/webm', consent_granted=True)
+        assert error.value.status_code == 503
 
 
 @pytest.mark.asyncio

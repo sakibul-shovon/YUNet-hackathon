@@ -97,7 +97,7 @@ async def test_t22_consent_enforcement_and_private_stt_transcription(client: Asy
     transcribe_resp = await client.post(
         f"/v1/cases/{case_id}/audio/transcribe",
         headers=headers,
-        data={"consent_granted": "true", "client_duration": "4.5"},
+        data={"consent_granted": "true", "client_duration": "4.5", "client_transcript": "আমি দারাজ থেকে ৫,৫০০ টাকার ঘড়ি পাইনি ১৫ অক্টোবর"},
         files={"audio_file": ("voice_note.webm", audio_data, "audio/webm")},
     )
     assert transcribe_resp.status_code == 200
@@ -109,20 +109,13 @@ async def test_t22_consent_enforcement_and_private_stt_transcription(client: Asy
     assert res_data["consent_recorded"] is True
     assert res_data["duration_seconds"] > 0
 
-    # 3. P06.2: Verify word timestamps attribution
-    words = res_data["words"]
-    assert len(words) >= 4
-    for w in words:
-        assert "word" in w
-        assert "start_time" in w
-        assert "end_time" in w
-        assert w["end_time"] >= w["start_time"]
-
-    # 4. Invariant T22 / P06.2: Material monetary amounts and dates flagged as uncertain requiring consumer review
-    uncertain = res_data["uncertain_spans"]
-    assert len(uncertain) >= 1
-    reasons = [u["reason"] for u in uncertain]
-    assert any("critical_amount_requires_review" in r or "critical_date_requires_review" in r for r in reasons)
+    # A user-provided transcript is preserved without fake ASR confidence or timing.
+    assert res_data["method"] == "client_provided_transcript"
+    assert res_data["model_executed"] is False
+    assert res_data["overall_confidence"] is None
+    assert res_data["words"] == []
+    assert res_data["uncertain_spans"] == []
+    assert res_data["transcript_text"] == "আমি দারাজ থেকে ৫,৫০০ টাকার ঘড়ি পাইনি ১৫ অক্টোবর"
 
 
 @pytest.mark.asyncio
@@ -143,7 +136,7 @@ async def test_t22_audio_replay_stream_and_deletion(client: AsyncClient, db_sess
     t_resp = await client.post(
         f"/v1/cases/{case_id}/audio/transcribe",
         headers=headers_a,
-        data={"consent_granted": "true"},
+        data={"consent_granted": "true", "client_transcript": "Fictional manual transcript for playback test."},
         files={"audio_file": ("test_replay.webm", audio_bytes, "audio/webm")},
     )
     audio_id = t_resp.json()["audio_evidence_id"]

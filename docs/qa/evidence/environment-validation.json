@@ -1,0 +1,197 @@
+[
+  {
+    "test": "configured secrets absent from tracked files, QA artifacts and built client assets",
+    "result": "PASS",
+    "matches": [],
+    "files_checked": 582
+  },
+  {
+    "test": "en/ landing HTTP route",
+    "result": "PASS",
+    "status": 200,
+    "note": "HTTP rendering only; does not prove browser interactions"
+  },
+  {
+    "test": "en/how-it-works HTTP route",
+    "result": "PASS",
+    "status": 200,
+    "note": "HTTP rendering only; does not prove browser interactions"
+  },
+  {
+    "test": "en/technology HTTP route",
+    "result": "PASS",
+    "status": 200,
+    "note": "HTTP rendering only; does not prove browser interactions"
+  },
+  {
+    "test": "en/sources HTTP route",
+    "result": "PASS",
+    "status": 200,
+    "note": "HTTP rendering only; does not prove browser interactions"
+  },
+  {
+    "test": "en/limitations HTTP route",
+    "result": "PASS",
+    "status": 200,
+    "note": "HTTP rendering only; does not prove browser interactions"
+  },
+  {
+    "test": "en/privacy HTTP route",
+    "result": "PASS",
+    "status": 200,
+    "note": "HTTP rendering only; does not prove browser interactions"
+  },
+  {
+    "test": "en/help HTTP route",
+    "result": "PASS",
+    "status": 200,
+    "note": "HTTP rendering only; does not prove browser interactions"
+  },
+  {
+    "test": "en/merchants HTTP route",
+    "result": "PASS",
+    "status": 200,
+    "note": "HTTP rendering only; does not prove browser interactions"
+  },
+  {
+    "test": "en/community HTTP route",
+    "result": "PASS",
+    "status": 200,
+    "note": "HTTP rendering only; does not prove browser interactions"
+  },
+  {
+    "test": "en/scenarios HTTP route",
+    "result": "PASS",
+    "status": 200,
+    "note": "HTTP rendering only; does not prove browser interactions"
+  },
+  {
+    "test": "en/login HTTP route",
+    "result": "PASS",
+    "status": 200,
+    "note": "HTTP rendering only; does not prove browser interactions"
+  },
+  {
+    "test": "en/register HTTP route",
+    "result": "PASS",
+    "status": 200,
+    "note": "HTTP rendering only; does not prove browser interactions"
+  },
+  {
+    "test": "en/admin/login HTTP route",
+    "result": "PASS",
+    "status": 200,
+    "note": "HTTP rendering only; does not prove browser interactions"
+  },
+  {
+    "test": "en/settings HTTP route",
+    "result": "PASS",
+    "status": 200,
+    "note": "HTTP rendering only; does not prove browser interactions"
+  },
+  {
+    "test": "en/cases/new HTTP route",
+    "result": "PASS",
+    "status": 200,
+    "note": "HTTP rendering only; does not prove browser interactions"
+  },
+  {
+    "test": "bn/ landing HTTP route",
+    "result": "PASS",
+    "status": 200,
+    "note": "HTTP rendering only; does not prove browser interactions"
+  },
+  {
+    "test": "bn/how-it-works HTTP route",
+    "result": "PASS",
+    "status": 200,
+    "note": "HTTP rendering only; does not prove browser interactions"
+  },
+  {
+    "test": "bn/technology HTTP route",
+    "result": "PASS",
+    "status": 200,
+    "note": "HTTP rendering only; does not prove browser interactions"
+  },
+  {
+    "test": "bn/sources HTTP route",
+    "result": "PASS",
+    "status": 200,
+    "note": "HTTP rendering only; does not prove browser interactions"
+  },
+  {
+    "test": "bn/limitations HTTP route",
+    "result": "PASS",
+    "status": 200,
+    "note": "HTTP rendering only; does not prove browser interactions"
+  },
+  {
+    "test": "bn/privacy HTTP route",
+    "result": "PASS",
+    "status": 200,
+    "note": "HTTP rendering only; does not prove browser interactions"
+  },
+  {
+    "test": "bn/help HTTP route",
+    "result": "PASS",
+    "status": 200,
+    "note": "HTTP rendering only; does not prove browser interactions"
+  },
+  {
+    "test": "bn/merchants HTTP route",
+    "result": "PASS",
+    "status": 200,
+    "note": "HTTP rendering only; does not prove browser interactions"
+  },
+  {
+    "test": "bn/community HTTP route",
+    "result": "PASS",
+    "status": 200,
+    "note": "HTTP rendering only; does not prove browser interactions"
+  },
+  {
+    "test": "bn/scenarios HTTP route",
+    "result": "PASS",
+    "status": 200,
+    "note": "HTTP rendering only; does not prove browser interactions"
+  },
+  {
+    "test": "bn/login HTTP route",
+    "result": "PASS",
+    "status": 200,
+    "note": "HTTP rendering only; does not prove browser interactions"
+  },
+  {
+    "test": "bn/register HTTP route",
+    "result": "PASS",
+    "status": 200,
+    "note": "HTTP rendering only; does not prove browser interactions"
+  },
+  {
+    "test": "bn/admin/login HTTP route",
+    "result": "PASS",
+    "status": 200,
+    "note": "HTTP rendering only; does not prove browser interactions"
+  },
+  {
+    "test": "bn/settings HTTP route",
+    "result": "PASS",
+    "status": 200,
+    "note": "HTTP rendering only; does not prove browser interactions"
+  },
+  {
+    "test": "bn/cases/new HTTP route",
+    "result": "PASS",
+    "status": 200,
+    "note": "HTTP rendering only; does not prove browser interactions"
+  },
+  {
+    "test": "generated OpenAPI matches running API",
+    "result": "PASS"
+  },
+  {
+    "test": "public HTTPS deployment",
+    "result": "UNVERIFIED",
+    "reason": "No verified hosted application URL supplied or discovered in current configuration."
+  }
+]

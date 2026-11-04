@@ -1,0 +1,248 @@
+{
+  "product": "Ebarki",
+  "classification": "FICTIONAL QA ONLY; no real transactions",
+  "merchant": "Fictional Padma Test Shop",
+  "case_total_minor_units": 732150,
+  "purchase_date": "2026-10-24",
+  "promised_delivery": "2026-10-27",
+  "files": {
+    "receipt text.pdf": {
+      "bytes": 1599,
+      "sha256": "92688893a8b9b146b0a93af23264d1e6099a7d3df5e6201093016b55619c91a4",
+      "amount_minor_units": 700000,
+      "reference": "PADMA-QA-A24",
+      "date": "2026-10-24",
+      "merchant": "Fictional Padma Test Shop",
+      "item": "Electric kettle",
+      "amount_page": 1,
+      "pages": 1,
+      "text_lines": [
+        "EBARKI / FICTIONAL TEST RECEIPT",
+        "NO REAL PURCHASE OR PERSON",
+        "Fictional Padma Test Shop",
+        "Date: 2026-10-24",
+        "Reference: PADMA-QA-A24",
+        "Item: Electric kettle",
+        "Paid BDT 7,000.00",
+        "Buyer: Fictional QA Consumer"
+      ],
+      "page_2": null
+    },
+    "second payment.pdf": {
+      "bytes": 1598,
+      "sha256": "02b3f41e19586ea4d32bac1f8e9c5190d0435b1f6716416df2e9e944b1a0640c",
+      "amount_minor_units": 32150,
+      "reference": "PADMA-QA-B24",
+      "date": "2026-10-24",
+      "merchant": "Fictional Padma Test Shop",
+      "item": "Electric kettle",
+      "amount_page": 1,
+      "pages": 1,
+      "text_lines": [
+        "EBARKI / FICTIONAL TEST RECEIPT",
+        "NO REAL PURCHASE OR PERSON",
+        "Fictional Padma Test Shop",
+        "Date: 2026-10-24",
+        "Reference: PADMA-QA-B24",
+        "Item: Electric kettle",
+        "Paid BDT 321.50",
+        "Buyer: Fictional QA Consumer"
+      ],
+      "page_2": null
+    },
+    "multi page.pdf": {
+      "bytes": 2225,
+      "sha256": "7a6f85a6cd201beadb46acaee021d1f6c9e8458022168a068182e76507e4b50b",
+      "amount_minor_units": 700000,
+      "reference": "PADMA-QA-A24",
+      "date": "2026-10-24",
+      "merchant": "Fictional Padma Test Shop",
+      "item": "Electric kettle",
+      "amount_page": 1,
+      "pages": 2,
+      "text_lines": [
+        "EBARKI / FICTIONAL TEST RECEIPT",
+        "NO REAL PURCHASE OR PERSON",
+        "Fictional Padma Test Shop",
+        "Date: 2026-10-24",
+        "Reference: PADMA-QA-A24",
+        "Item: Electric kettle",
+        "Paid BDT 7,000.00",
+        "Buyer: Fictional QA Consumer"
+      ],
+      "page_2": "Seller delivery 2026-10-27; Buyer not arrived 2026-10-29; Seller refund tomorrow."
+    },
+    "receipt clear.png": {
+      "bytes": 58943,
+      "sha256": "7d850ccf1bedbbecf74e25b0252eb78c7a5b19cc71e898a4177b991527c1d93d",
+      "amount_minor_units": 700000,
+      "date": "2026-10-24",
+      "reference": "PADMA-QA-A24",
+      "text_lines": [
+        "EBARKI - FICTIONAL QA ONLY",
+        "NO REAL PURCHASE",
+        "Fictional Padma Test Shop",
+        "Date: 2026-10-24",
+        "Reference: PADMA-QA-A24",
+        "Item: Electric kettle",
+        "Paid BDT 7,000.00",
+        "Buyer: Fictional QA Consumer"
+      ],
+      "degraded": false
+    },
+    "receipt plausible low quality.jpg": {
+      "bytes": 21085,
+      "sha256": "2ce768117735ba180f890a7ba6096fc5499e86633d98320b4956b82f4da20236",
+      "amount_minor_units": 700000,
+      "date": "2026-10-24",
+      "reference": "PADMA-QA-A24",
+      "text_lines": [
+        "EBARKI - FICTIONAL QA ONLY",
+        "NO REAL PURCHASE",
+        "Fictional Padma Test Shop",
+        "Date: 2026-10-24",
+        "Reference: PADMA-QA-A24",
+        "Item: Electric kettle",
+        "Paid BDT 7,000.00",
+        "Buyer: Fictional QA Consumer"
+      ],
+      "degraded": true
+    },
+    "duplicate নাম 99999.pdf": {
+      "bytes": 1599,
+      "sha256": "92688893a8b9b146b0a93af23264d1e6099a7d3df5e6201093016b55619c91a4",
+      "duplicate_of": "receipt text.pdf",
+      "amount_minor_units": 700000
+    },
+    "ভুল নাম BDT 999999.png": {
+      "bytes": 58943,
+      "sha256": "7d850ccf1bedbbecf74e25b0252eb78c7a5b19cc71e898a4177b991527c1d93d",
+      "duplicate_of": "receipt clear.png",
+      "amount_minor_units": 700000
+    },
+    "scanned receipt.pdf": {
+      "bytes": 51008,
+      "sha256": "e70edc7a98deb7855e727e036cf59d6ff7a70acc3d8147d52ea1fd9b3cac0307",
+      "amount_minor_units": 700000,
+      "pages": 1,
+      "native_text": false
+    },
+    "unrelated groceries.pdf": {
+      "bytes": 1628,
+      "sha256": "d9dda3e6e112c05c524eda028ee5fa65a9b123c8b8f7876db4f99019e6cd0364",
+      "amount_minor_units": 89025,
+      "reference": "UNRELATED-QA-C24",
+      "date": "2026-09-10",
+      "merchant": "Fictional Meghna Grocery Shop",
+      "item": "Rice and lentils; unrelated purchase",
+      "amount_page": 1,
+      "pages": 1,
+      "text_lines": [
+        "EBARKI / FICTIONAL TEST RECEIPT",
+        "NO REAL PURCHASE OR PERSON",
+        "Fictional Meghna Grocery Shop",
+        "Date: 2026-09-10",
+        "Reference: UNRELATED-QA-C24",
+        "Item: Rice and lentils; unrelated purchase",
+        "Paid BDT 890.25",
+        "Buyer: Fictional QA Consumer"
+      ],
+      "page_2": null,
+      "relevant_to_case": false,
+      "note": "Separate fictional purchase; must not be auto counted as kettle payment."
+    },
+    "seller chat.png": {
+      "bytes": 57116,
+      "sha256": "a866ea9262c0bc1bf17c7da689fe7d0da83a272fc5d96519776c77ee46a96bd7",
+      "text_lines": [
+        "EBARKI FICTIONAL CHAT / NO REAL PEOPLE",
+        "Fictional Padma Test Shop",
+        "2026-10-25 Seller: Delivery by 2026-10-27.",
+        "2026-10-29 Buyer: The kettle has not arrived.",
+        "2026-10-29 Seller: We will refund tomorrow.",
+        "Buyer: Please confirm the refund date.",
+        "No refund receipt has been received."
+      ],
+      "refund_received": false,
+      "relative_date": "tomorrow"
+    },
+    "বাংলা রসিদ.pdf": {
+      "bytes": 23642,
+      "sha256": "b757d964d13382d017943db910f57645755276c0881f5a7fb41053db11559657",
+      "text_lines": [
+        "Ebarki / FICTIONAL QA ONLY",
+        "সম্পূর্ণ কাল্পনিক রসিদ",
+        "কাল্পনিক পদ্মা টেস্ট শপ",
+        "তারিখ: ২৪ অক্টোবর ২০২৬",
+        "Reference: PADMA-QA-BN24",
+        "পণ্য: বৈদ্যুতিক কেটলি",
+        "পরিশোধ: ৭,০০০.০০ টাকা"
+      ],
+      "amount_minor_units": 700000,
+      "date": "2026-10-24",
+      "reference": "PADMA-QA-BN24"
+    },
+    "বাংলা রসিদ.png": {
+      "bytes": 50988,
+      "sha256": "a792f447587aaf0a464e09a0942c2fa2e2bb39212eef4e3641926064cd5086c0",
+      "text_lines": [
+        "Ebarki / FICTIONAL QA ONLY",
+        "সম্পূর্ণ কাল্পনিক রসিদ",
+        "কাল্পনিক পদ্মা টেস্ট শপ",
+        "তারিখ: ২৪ অক্টোবর ২০২৬",
+        "Reference: PADMA-QA-BN24",
+        "পণ্য: বৈদ্যুতিক কেটলি",
+        "পরিশোধ: ৭,০০০.০০ টাকা"
+      ],
+      "amount_minor_units": 700000,
+      "date": "2026-10-24",
+      "reference": "PADMA-QA-BN24"
+    },
+    "narratives.json": {
+      "bytes": 12283,
+      "sha256": "466df59c557210f48852a80e723daee552b9e8ec0637d09f5b39008036212721",
+      "expected_amount_minor_units": 732150,
+      "notes": "Long input has repeated amount mentions; not separate payments."
+    },
+    "known case details.wav": {
+      "bytes": 1173850,
+      "sha256": "39baf8a71750d1654102863914831310cc8aa532ecf381c4c36de9e229541e8f",
+      "transcript": "This is a fictional Ebarki quality test. I ordered a kettle from Fictional Padma Test Shop on October twenty fourth, twenty twenty six. I paid seven thousand three hundred twenty one taka and fifty poisha in two payments. The kettle was not delivered. The seller promised a refund tomorrow. No refund has arrived.",
+      "duration_seconds": 26.61687074829932,
+      "generated_by": "Windows System.Speech; actual PCM speech"
+    },
+    "empty.png": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "invalid_reason": "empty"
+    },
+    "corrupt.pdf": {
+      "bytes": 28,
+      "sha256": "0a918287cb52c198f6b754e9a421440fe7e8f943c81feacdbeae4febb2693e73",
+      "invalid_reason": "corrupt"
+    },
+    "unsupported.txt": {
+      "bytes": 42,
+      "sha256": "2adde3fb66b1c394d1e681628d0a3700223734f18456b52e89cc2e457dadf1c6",
+      "invalid_reason": "unsupported"
+    },
+    "spoof.png": {
+      "bytes": 25,
+      "sha256": "db12d157a7cdce70398b0ad40cb2c418f8d63d46c50ff609c777c918ccc72ddd",
+      "invalid_reason": "MIME spoof"
+    },
+    "corrupt.png": {
+      "bytes": 14,
+      "sha256": "d0dcf8dde4a7d50c3dd8905c2cc8bb95984eda650f987c37ad93dbb20ee55497",
+      "invalid_reason": "corrupt image"
+    },
+    "oversized valid silence.wav": {
+      "bytes": 23068716,
+      "sha256": "a8515c8e23838cdb8e02df1e10e964380ab3d6352a46e859b73ca5ed20d22ead",
+      "invalid_reason": "over 20 MB; valid playable PCM WAV",
+      "transcript": "",
+      "duration_seconds": 261.54956916099775,
+      "not_committed": "regenerate with the fixture builder"
+    }
+  }
+}

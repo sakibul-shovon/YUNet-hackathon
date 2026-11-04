@@ -11,6 +11,14 @@ class Situation(BaseModel):
     summary: str = Field(min_length=1, max_length=1200)
 
 
+def provider_receipt(response, model: str, provider: str = 'groq') -> dict:
+    """Record provider acknowledgement only; never headers, prompts or credentials."""
+    payload = response.json()
+    return {'provider': provider, 'model': model,
+            'request_id': response.headers.get('x-request-id') or payload.get('id'),
+            'response_status': response.status_code}
+
+
 def reasoning_options(model: str) -> dict:
     if model.startswith('openai/gpt-oss'):
         return {'reasoning_effort': 'low'}
@@ -45,7 +53,7 @@ async def understand_situation(story: str, locale: str) -> dict:
         response.raise_for_status()
         result = Situation.model_validate_json(response.json()['choices'][0]['message']['content'])
         return {'summary': result.summary, 'method': f'groq/{settings.GROQ_MODEL}',
-                'model_executed': True}
+                'model_executed': True, 'execution_receipt': provider_receipt(response, settings.GROQ_MODEL)}
     except (httpx.HTTPError, ValidationError, ValueError, KeyError, IndexError):
         return {'summary': story[:700], 'method': 'original_account',
                 'model_executed': False, 'provider_unavailable': True}

@@ -82,7 +82,8 @@ export function AgentWorkspace({ locale }: { locale: string }) {
   const receiptTotal = payments.data?.linked_evidence_total_minor_units || 0;
   const discrepancy = !!payments.data && payments.data.status === 'discrepancy' && receiptTotal > 0;
   const currentStage = run?.stages.find(stage => stage.status === 'running');
-  const understanding = run?.result.understanding as { summary?: string; model_executed?: boolean; method?: string } | undefined;
+  const summaryRun = [run, ...agent.history].find(item => item?.locale === locale && item.case_version === record.row_version && item.result.understanding);
+  const understanding = (summaryRun?.result.understanding || { summary: record.story_narrative, model_executed: false, method: 'original_account' }) as { summary?: string; model_executed?: boolean; method?: string };
   const lastExternal = events.data?.find(event => event.origin === 'user_reported');
   const changed = !!lastExternal?.decision_diff?.is_decision_changed;
   const question = assessment.data?.next_best_question;

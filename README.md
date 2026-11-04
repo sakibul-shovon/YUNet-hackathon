@@ -48,7 +48,7 @@ The frontend serves port 3000. The API serves port 8000. Set provider credential
 - Next-best questions and isolated what-if comparisons.
 - Editable preparation materials and official-channel checklists.
 - Case activity, follow-ups, and decision changes.
-- Merchant intelligence, community experiences, and source administration.
+- Source administration. Merchant research has an honest empty public-data state; public community sharing is currently unavailable pending durable storage and moderation.
 
 Supported depth differs by domain. The workspace uses real persisted operation receipts and native PDF extraction, linked-payment comparisons, reference retrieval, and procedural checks. Optional Groq situation summaries require a configured key and explicit case consent; without them, the original account is shown. Images remain available for manual inspection when no real text reader is available. Historical development adapters elsewhere in the repository are not evidence of deployed model inference. Saved bilingual documents can be exported as PDF, HTML, Markdown, or an evidence ZIP. Downloading does not submit them.
 
@@ -96,3 +96,5 @@ Private case records must remain isolated by owner and separate from public refe
 - `scripts/tasks.py`: development and verification entry point.
 
 Historic source specifications and internal compatibility identifiers are retained for traceability. The current interface uses the Ebarki name and shared light/dark design tokens.
+
+The independent [final system audit](docs/qa/EBARKI_FINAL_SYSTEM_AUDIT.md) supersedes historical readiness claims. The release verdict is **NOT READY** until the documented deployment, browser acceptance, and source-review gaps are closed. Provider acknowledgements verify actual calls, not output correctness. Complaint templates express the consumer's account and request; they do not establish fault or legal entitlement.

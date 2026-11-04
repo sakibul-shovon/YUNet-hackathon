@@ -55,9 +55,11 @@ class PipelineRunService:
             overall_status=run.status,
             stages=[PipelineStageReceipt(
                 stage_name=stage['stage_name'], status=stage['status'],
-                provider='local', model_or_algorithm=stage['method'],
+                provider=(stage.get('details', {}).get('execution_receipt') or {}).get('provider') or
+                         ','.join(stage.get('details', {}).get('providers', [])) or 'local',
+                model_or_algorithm=stage.get('details', {}).get('method', stage['method']),
                 duration_ms=stage.get('duration_ms'), details=stage.get('details', {}),
             ) for stage in run.stages],
-            technology_inventory={'execution': 'Recorded local operations',
+            technology_inventory={'execution': 'Recorded operations; provider acknowledgements and cache use appear in stage details',
                                   'dense_model_executed': 'false'},
         ) for run in records]

@@ -1,0 +1,1110 @@
+[
+  {
+    "path": "/v1/capabilities",
+    "methods": [
+      "get"
+    ],
+    "tags": [
+      "System & Capabilities"
+    ]
+  },
+  {
+    "path": "/v1/technology",
+    "methods": [
+      "get"
+    ],
+    "tags": [
+      "System & Capabilities"
+    ]
+  },
+  {
+    "path": "/v1/auth/guest",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Identity & Sessions"
+    ]
+  },
+  {
+    "path": "/v1/auth/upgrade",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Identity & Sessions"
+    ]
+  },
+  {
+    "path": "/v1/auth/register",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Identity & Sessions"
+    ]
+  },
+  {
+    "path": "/v1/auth/login",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Identity & Sessions"
+    ]
+  },
+  {
+    "path": "/v1/auth/judge-demo",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Identity & Sessions"
+    ]
+  },
+  {
+    "path": "/v1/auth/me",
+    "methods": [
+      "get"
+    ],
+    "tags": [
+      "Identity & Sessions"
+    ]
+  },
+  {
+    "path": "/v1/auth/logout",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Identity & Sessions"
+    ]
+  },
+  {
+    "path": "/v1/me",
+    "methods": [
+      "get"
+    ],
+    "tags": [
+      "Identity & Sessions"
+    ]
+  },
+  {
+    "path": "/v1/consents",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Identity & Sessions"
+    ]
+  },
+  {
+    "path": "/v1/deletions",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Identity & Sessions"
+    ]
+  },
+  {
+    "path": "/v1/deletions/{id}",
+    "methods": [
+      "get"
+    ],
+    "tags": [
+      "Identity & Sessions"
+    ]
+  },
+  {
+    "path": "/v1/cases",
+    "methods": [
+      "post",
+      "get"
+    ],
+    "tags": [
+      "Cases"
+    ]
+  },
+  {
+    "path": "/v1/cases/{id}",
+    "methods": [
+      "get",
+      "patch",
+      "delete"
+    ],
+    "tags": [
+      "Cases"
+    ]
+  },
+  {
+    "path": "/v1/cases/{id}/activity",
+    "methods": [
+      "get"
+    ],
+    "tags": [
+      "Cases"
+    ]
+  },
+  {
+    "path": "/v1/cases/{id}/consent/withdraw",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Cases"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/issues",
+    "methods": [
+      "get",
+      "post"
+    ],
+    "tags": [
+      "Case Issue Tracks"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/issues/split",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Case Issue Tracks"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/issues/merge",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Case Issue Tracks"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/issues/{issue_id}",
+    "methods": [
+      "patch"
+    ],
+    "tags": [
+      "Case Issue Tracks"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/issues/assessment",
+    "methods": [
+      "get"
+    ],
+    "tags": [
+      "Case Issue Tracks"
+    ]
+  },
+  {
+    "path": "/v1/sources/{id}",
+    "methods": [
+      "get"
+    ],
+    "tags": [
+      "Knowledge & Sources"
+    ]
+  },
+  {
+    "path": "/v1/knowledge/release",
+    "methods": [
+      "get"
+    ],
+    "tags": [
+      "Knowledge & Sources"
+    ]
+  },
+  {
+    "path": "/v1/knowledge/source-health",
+    "methods": [
+      "get"
+    ],
+    "tags": [
+      "Knowledge & Sources"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/reassess",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Knowledge & Sources"
+    ]
+  },
+  {
+    "path": "/v1/admin/watchers/check",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Knowledge & Sources"
+    ]
+  },
+  {
+    "path": "/v1/admin/sources/manual-import",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Knowledge & Sources"
+    ]
+  },
+  {
+    "path": "/v1/admin/source-candidates",
+    "methods": [
+      "get"
+    ],
+    "tags": [
+      "Knowledge & Sources"
+    ]
+  },
+  {
+    "path": "/v1/admin/source-candidates/{id}/diff",
+    "methods": [
+      "get"
+    ],
+    "tags": [
+      "Knowledge & Sources"
+    ]
+  },
+  {
+    "path": "/v1/admin/source-candidates/{id}/approve",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Knowledge & Sources"
+    ]
+  },
+  {
+    "path": "/v1/admin/source-versions/{id}/review",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Knowledge & Sources"
+    ]
+  },
+  {
+    "path": "/v1/admin/releases/build",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Knowledge & Sources"
+    ]
+  },
+  {
+    "path": "/v1/admin/releases/{id}/promote",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Knowledge & Sources"
+    ]
+  },
+  {
+    "path": "/v1/admin/releases/{id}/rollback",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Knowledge & Sources"
+    ]
+  },
+  {
+    "path": "/v1/admin/releases/{id}/disable",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Knowledge & Sources"
+    ]
+  },
+  {
+    "path": "/v1/admin/releases/{id}/flag-impacted-cases",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Knowledge & Sources"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/facts",
+    "methods": [
+      "get",
+      "post"
+    ],
+    "tags": [
+      "Case Facts & Normalization"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/facts/{assertion_id}/review",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Case Facts & Normalization"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/facts/multimodal",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Case Facts & Normalization"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/extract",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Case Text Extraction"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/assessment",
+    "methods": [
+      "get"
+    ],
+    "tags": [
+      "Case Procedural Assessment"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/assess",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Case Procedural Assessment"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/what-if",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Case Procedural Assessment"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/what-if/apply",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Case Procedural Assessment"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/nbq/answer",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Case Procedural Assessment"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/nbq/skip",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Case Procedural Assessment"
+    ]
+  },
+  {
+    "path": "/v1/domains/catalogue",
+    "methods": [
+      "get"
+    ],
+    "tags": [
+      "Case Procedural Assessment"
+    ]
+  },
+  {
+    "path": "/v1/domains/{domain_id}/support",
+    "methods": [
+      "get"
+    ],
+    "tags": [
+      "Case Procedural Assessment"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/actions/dag",
+    "methods": [
+      "get"
+    ],
+    "tags": [
+      "Case Actions, Documents & Filing Companion"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/documents/ast",
+    "methods": [
+      "get"
+    ],
+    "tags": [
+      "Case Actions, Documents & Filing Companion"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/documents/edit",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Case Actions, Documents & Filing Companion"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/portals/{portal_id}/fields",
+    "methods": [
+      "get"
+    ],
+    "tags": [
+      "Case Actions, Documents & Filing Companion"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/export/{format_type}",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Case Actions, Documents & Filing Companion"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/evidence/{evidence_id}/redact",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Case Actions, Documents & Filing Companion"
+    ]
+  },
+  {
+    "path": "/v1/actions/destinations",
+    "methods": [
+      "get"
+    ],
+    "tags": [
+      "Case Actions, Documents & Filing Companion"
+    ]
+  },
+  {
+    "path": "/v1/actions/destinations/{destination_id}",
+    "methods": [
+      "get"
+    ],
+    "tags": [
+      "Case Actions, Documents & Filing Companion"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/draft",
+    "methods": [
+      "get"
+    ],
+    "tags": [
+      "Case Actions, Documents & Filing Companion"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/documents/history",
+    "methods": [
+      "get"
+    ],
+    "tags": [
+      "Case Actions, Documents & Filing Companion"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/documents/versions/{document_id}",
+    "methods": [
+      "get"
+    ],
+    "tags": [
+      "Case Actions, Documents & Filing Companion"
+    ]
+  },
+  {
+    "path": "/v1/uploads/init",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Evidence & Upload Vault"
+    ]
+  },
+  {
+    "path": "/v1/uploads/{intent_id}/raw",
+    "methods": [
+      "put"
+    ],
+    "tags": [
+      "Evidence & Upload Vault"
+    ]
+  },
+  {
+    "path": "/v1/uploads/{intent_id}/complete",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Evidence & Upload Vault"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/evidence",
+    "methods": [
+      "get"
+    ],
+    "tags": [
+      "Evidence & Upload Vault"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/evidence/reconciliation",
+    "methods": [
+      "get"
+    ],
+    "tags": [
+      "Evidence & Upload Vault"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/evidence/{evidence_id}",
+    "methods": [
+      "get",
+      "delete"
+    ],
+    "tags": [
+      "Evidence & Upload Vault"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/evidence/{evidence_id}/preview",
+    "methods": [
+      "get"
+    ],
+    "tags": [
+      "Evidence & Upload Vault"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/evidence/{evidence_id}/spans",
+    "methods": [
+      "post",
+      "get"
+    ],
+    "tags": [
+      "Evidence & Upload Vault"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/evidence/{evidence_id}/regions",
+    "methods": [
+      "get"
+    ],
+    "tags": [
+      "Evidence & Upload Vault"
+    ]
+  },
+  {
+    "path": "/v1/uploads/sweep",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Evidence & Upload Vault"
+    ]
+  },
+  {
+    "path": "/v1/audio/transcribe",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Multimodal Audio & Voice Notes"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/audio/transcribe",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Multimodal Audio & Voice Notes"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/audio/{audio_id}/stream",
+    "methods": [
+      "get"
+    ],
+    "tags": [
+      "Multimodal Audio & Voice Notes"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/audio/{audio_id}",
+    "methods": [
+      "delete"
+    ],
+    "tags": [
+      "Multimodal Audio & Voice Notes"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/evidence/{evidence_id}/analyze-layout",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Multimodal Vision & Screenshots"
+    ]
+  },
+  {
+    "path": "/v1/retrieval/search",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Knowledge & Retrieval"
+    ]
+  },
+  {
+    "path": "/v1/retrieval/citations/validate",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Knowledge & Retrieval"
+    ]
+  },
+  {
+    "path": "/v1/retrieval/provisions/lookup",
+    "methods": [
+      "get"
+    ],
+    "tags": [
+      "Knowledge & Retrieval"
+    ]
+  },
+  {
+    "path": "/v1/retrieval/provisions/{citation_handle}",
+    "methods": [
+      "get"
+    ],
+    "tags": [
+      "Knowledge & Retrieval"
+    ]
+  },
+  {
+    "path": "/v1/retrieval/sources/{source_id}/provisions",
+    "methods": [
+      "get"
+    ],
+    "tags": [
+      "Knowledge & Retrieval"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/sample-payment",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Case Operations & Pipeline History"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/facts/{fact_id}/provenance",
+    "methods": [
+      "get"
+    ],
+    "tags": [
+      "Case Operations & Pipeline History"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/evidence/{evidence_id}/page-preview",
+    "methods": [
+      "get"
+    ],
+    "tags": [
+      "Case Operations & Pipeline History",
+      "Connected Evidence & Reply Preparation"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/connected-records",
+    "methods": [
+      "get"
+    ],
+    "tags": [
+      "Case Operations & Pipeline History",
+      "Connected Evidence & Reply Preparation"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/connected-records/sources",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Case Operations & Pipeline History",
+      "Connected Evidence & Reply Preparation"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/connected-records/review",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Case Operations & Pipeline History",
+      "Connected Evidence & Reply Preparation"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/reply-preparations",
+    "methods": [
+      "get",
+      "post"
+    ],
+    "tags": [
+      "Case Operations & Pipeline History",
+      "Connected Evidence & Reply Preparation"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/reply-preparations/{reply_id}",
+    "methods": [
+      "put"
+    ],
+    "tags": [
+      "Case Operations & Pipeline History",
+      "Connected Evidence & Reply Preparation"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/filing-handoff",
+    "methods": [
+      "get"
+    ],
+    "tags": [
+      "Case Operations & Pipeline History",
+      "Connected Evidence & Reply Preparation"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/pipeline-runs",
+    "methods": [
+      "get"
+    ],
+    "tags": [
+      "Case Operations & Pipeline History"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/runs",
+    "methods": [
+      "post",
+      "get"
+    ],
+    "tags": [
+      "Case Operations & Pipeline History"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/runs/{run_id}",
+    "methods": [
+      "get"
+    ],
+    "tags": [
+      "Case Operations & Pipeline History"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/runs/{run_id}/cancel",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Case Operations & Pipeline History"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/runs/{run_id}/events",
+    "methods": [
+      "get"
+    ],
+    "tags": [
+      "Case Operations & Pipeline History"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/activity/updates",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Case Living Timeline, Updates, Diff & Reminders"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/activity/timeline",
+    "methods": [
+      "get"
+    ],
+    "tags": [
+      "Case Living Timeline, Updates, Diff & Reminders"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/snapshots",
+    "methods": [
+      "get"
+    ],
+    "tags": [
+      "Case Living Timeline, Updates, Diff & Reminders"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/reminders",
+    "methods": [
+      "post",
+      "get"
+    ],
+    "tags": [
+      "Case Living Timeline, Updates, Diff & Reminders"
+    ]
+  },
+  {
+    "path": "/v1/cases/{case_id}/reminders/{reminder_id}",
+    "methods": [
+      "delete"
+    ],
+    "tags": [
+      "Case Living Timeline, Updates, Diff & Reminders"
+    ]
+  },
+  {
+    "path": "/v1/scenarios",
+    "methods": [
+      "get"
+    ],
+    "tags": [
+      "Judge Scenarios Sandbox"
+    ]
+  },
+  {
+    "path": "/v1/scenarios/{scenario_id}/launch",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Judge Scenarios Sandbox"
+    ]
+  },
+  {
+    "path": "/v1/scenarios/{case_id}/reset",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Judge Scenarios Sandbox"
+    ]
+  },
+  {
+    "path": "/v1/merchants/intelligence",
+    "methods": [
+      "get"
+    ],
+    "tags": [
+      "Merchant Intelligence & Scam Radar"
+    ]
+  },
+  {
+    "path": "/v1/merchants/radar",
+    "methods": [
+      "get"
+    ],
+    "tags": [
+      "Merchant Intelligence & Scam Radar"
+    ]
+  },
+  {
+    "path": "/v1/community/posts",
+    "methods": [
+      "get",
+      "post"
+    ],
+    "tags": [
+      "Community Consumer Help Forum"
+    ]
+  },
+  {
+    "path": "/v1/community/posts/{id}/me-too",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Community Consumer Help Forum"
+    ]
+  },
+  {
+    "path": "/v1/community/posts/{id}/comments",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Community Consumer Help Forum"
+    ]
+  },
+  {
+    "path": "/v1/copilot/chat",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "AI Consumer Resolution Copilot"
+    ]
+  },
+  {
+    "path": "/v1/admin/stats",
+    "methods": [
+      "get"
+    ],
+    "tags": [
+      "Super Admin & Platform Operations"
+    ]
+  },
+  {
+    "path": "/v1/admin/cases",
+    "methods": [
+      "get"
+    ],
+    "tags": [
+      "Super Admin & Platform Operations"
+    ]
+  },
+  {
+    "path": "/v1/admin/cases/{case_id}/override",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Super Admin & Platform Operations"
+    ]
+  },
+  {
+    "path": "/v1/admin/users",
+    "methods": [
+      "get"
+    ],
+    "tags": [
+      "Super Admin & Platform Operations"
+    ]
+  },
+  {
+    "path": "/v1/admin/users/{user_id}/toggle-ban",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Super Admin & Platform Operations"
+    ]
+  },
+  {
+    "path": "/v1/admin/users/{user_id}/roles",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Super Admin & Platform Operations"
+    ]
+  },
+  {
+    "path": "/v1/admin/merchants",
+    "methods": [
+      "get"
+    ],
+    "tags": [
+      "Super Admin & Platform Operations"
+    ]
+  },
+  {
+    "path": "/v1/admin/merchants/{slug}/override",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Super Admin & Platform Operations"
+    ]
+  },
+  {
+    "path": "/v1/admin/community/posts",
+    "methods": [
+      "get"
+    ],
+    "tags": [
+      "Super Admin & Platform Operations"
+    ]
+  },
+  {
+    "path": "/v1/admin/community/posts/{post_id}/moderate",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Super Admin & Platform Operations"
+    ]
+  },
+  {
+    "path": "/v1/admin/alerts",
+    "methods": [
+      "get",
+      "post"
+    ],
+    "tags": [
+      "Super Admin & Platform Operations"
+    ]
+  },
+  {
+    "path": "/v1/admin/audit-logs",
+    "methods": [
+      "get"
+    ],
+    "tags": [
+      "Super Admin & Platform Operations"
+    ]
+  },
+  {
+    "path": "/v1/admin/statutory/candidates",
+    "methods": [
+      "get"
+    ],
+    "tags": [
+      "Super Admin & Platform Operations"
+    ]
+  }
+]

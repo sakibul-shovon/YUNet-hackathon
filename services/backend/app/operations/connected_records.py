@@ -170,6 +170,6 @@ async def connected_records(case, principal, db):
     consent = await has_external_consent(case, principal, db)
     return {'case_version': case.row_version, 'sources': sources[:50], 'timeline': timeline,
             'document': {'id': str(latest.id), 'case_version': latest.case_version,
-                         'is_stale': latest.case_version != case.row_version} if latest else None,
+                         'is_stale': latest.case_version != case.row_version or latest.content.get('template_version', 0) < 2} if latest else None,
             'capabilities': {'external_consent': consent, 'image_reading': bool((settings.GROQ_API_KEY and settings.GROQ_VISION_MODEL) or (settings.GEMINI_API_KEY and settings.GEMINI_RECORD_READER_MODEL)),
                              'audio_transcription': bool(settings.GROQ_API_KEY)}}

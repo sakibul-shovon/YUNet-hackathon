@@ -33,15 +33,10 @@ def render_pdf(doc: EditableDocumentAST) -> bytes:
                            textColor=colors.HexColor("#56616a"))
 
     def markup(text):
-        # Preserve complete Bangla runs for HarfBuzz; use Latin font for English identifiers.
-        runs = re.split(r"([^\u0980-\u09ff\u200c\u200d]+)", str(text))
-        parts = []
-        for part in runs:
-            if not part:
-                continue
-            font = "EbarkiBangla" if re.search(r"[\u0980-\u09ff]", part) else "EbarkiText"
-            parts.append(f'<font name="{font}">{escape(part)}</font>')
-        return "".join(parts).replace("\n", "<br/>")
+        # The full Bengali font also covers Latin punctuation/identifiers. Keep
+        # each paragraph in one font so shaping cannot map glyph IDs between faces.
+        font = 'EbarkiBangla' if re.search(r'[\u0980-\u09ff\u0964\u0965]', str(text)) else 'EbarkiText'
+        return f'<font name="{font}">{escape(str(text))}</font>'.replace('\n', '<br/>')
 
     story = [Paragraph(markup("EBARKI / " + ("খসড়া" if bn else "PREPARATION COPY")), small), Spacer(1, 16),
              Paragraph(markup(doc.title), title),

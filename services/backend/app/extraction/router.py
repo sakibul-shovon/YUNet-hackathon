@@ -61,7 +61,7 @@ async def extract_case_narrative(
                 field_name=prop.field_name,
                 field_type=prop.field_type,
                 raw_value=prop.original_text
-                if (prop.field_type == "money" and prop.original_text)
+                if (prop.field_type in {"money", "date"} and prop.original_text)
                 else prop.raw_value,
                 original_text=prop.original_text,
                 origin="document_extraction",

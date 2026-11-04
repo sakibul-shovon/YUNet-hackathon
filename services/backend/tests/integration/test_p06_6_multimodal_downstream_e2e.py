@@ -41,7 +41,7 @@ async def test_p06_6_complete_multimodal_combination_to_downstream_pipeline(clie
         voice_bytes = f.read()
 
     files = {"audio_file": ("sample_voice_ecommerce.webm", voice_bytes, "audio/webm")}
-    data = {"consent_granted": "true", "language_hint": "bn"}
+    data = {"consent_granted": "true", "language_hint": "bn", "client_transcript": "আমি দারাজ থেকে ৫,৫০০ টাকার পণ্য পাইনি"}
     trans_resp = await client.post(f"/v1/cases/{case_id}/audio/transcribe", headers=headers, files=files, data=data)
     assert trans_resp.status_code == 200
     trans_data = trans_resp.json()

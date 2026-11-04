@@ -10,7 +10,7 @@ from starlette.concurrency import run_in_threadpool
 from app.core.config import settings
 from app.evidence.document_parser import DocumentParser
 from app.evidence.storage import get_storage_backend
-from app.operations.understanding import reasoning_options
+from app.operations.understanding import provider_receipt, reasoning_options
 
 
 class VisualLine(BaseModel):
@@ -99,6 +99,7 @@ async def read_evidence(item, external_consent: bool) -> dict[str, Any]:
                               'box': [n/1000 for n in box] if valid_box else None})
             return {**base, 'method': 'groq_vision' if groq else 'gemini_vision', 'model_executed': True, 'reason': None,
                     'model': settings.GROQ_VISION_MODEL if groq else settings.GEMINI_RECORD_READER_MODEL, 'lines': lines,
+                    'execution_receipt': provider_receipt(response, settings.GROQ_VISION_MODEL if groq else settings.GEMINI_RECORD_READER_MODEL, 'groq' if groq else 'gemini'),
                     'text': '\n'.join(line['text'] for line in lines)[:18000]}
         if mime.startswith('audio/') and settings.GROQ_API_KEY:
             if len(data) > 20*1024*1024:
@@ -108,7 +109,8 @@ async def read_evidence(item, external_consent: bool) -> dict[str, Any]:
                     headers={'Authorization': f'Bearer {settings.GROQ_API_KEY}'},
                     files={'file': (item.original_filename, data, mime)},
                     data={'model': settings.GROQ_TRANSCRIBE_MODEL, 'response_format': 'verbose_json',
-                          'timestamp_granularities[]': 'segment', 'temperature': '0'})
+                          'timestamp_granularities[]': 'segment', 'temperature': '0',
+                          'prompt': 'Ebarki. Bangladesh consumer records. Currency words: taka, poisha. Preserve spoken details; do not infer missing facts.'})
             response.raise_for_status()
             result = response.json()
             lines = []
@@ -118,6 +120,7 @@ async def read_evidence(item, external_consent: bool) -> dict[str, Any]:
                     lines.append({'text': segment['text'][:1600], 'start': start, 'end': end})
             return {**base, 'method': 'groq_transcription', 'model_executed': True, 'reason': None,
                     'model': settings.GROQ_TRANSCRIBE_MODEL, 'lines': lines,
+                    'execution_receipt': provider_receipt(response, settings.GROQ_TRANSCRIBE_MODEL),
                     'text': str(result.get('text', ''))[:18000]}
     except httpx.HTTPStatusError as error:
         return {**base, 'reason': 'provider_unavailable', 'provider_status': error.response.status_code}
