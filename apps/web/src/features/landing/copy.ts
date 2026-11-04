@@ -1,9 +1,9 @@
 export const english = {
   nav: { how: 'How it works', toolkit: 'The toolkit', trust: 'Built on trust', login: 'Log in', start: 'Start a case', menu: 'Open navigation', close: 'Close navigation', language: 'বাংলা', theme: 'Switch to dark theme', light: 'Switch to light theme' },
   hero: {
-    eyebrow: 'A LITTLE CLARITY GOES A LONG WAY',
+    eyebrow: 'YOUR AI CONSUMER RESOLUTION AGENT',
     line1: 'Your evidence.', line2: 'A clear', line3: 'next step.',
-    description: 'A missing delivery. An unexplained charge. Ebarki helps you put the facts together, understand your options, and prepare what comes next.',
+    description: 'Tell Ebarki what happened. Watch it organize your evidence, spot what does not add up, and prepare your next step. Every finding stays open for your review.',
     sample: 'Explore a sample', note: 'Start with what you have. No account needed to begin.',
     marker: 'FROM “WHAT NOW?” TO A WAY FORWARD', event: 'A solo build. An everyday problem worth solving.',
     handwritten: 'A clearer picture, one piece at a time.',

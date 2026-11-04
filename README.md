@@ -6,14 +6,18 @@ A Bangladesh-first consumer resolution copilot that helps people organize disput
 
 Built by **Sakibul Islam Shovon** for Ostad Presents YUNet AIgnite Buildathon 2026.
 
-## Design review
+## Agent workspace
 
-The new landing page is the first approved implementation milestone. The rest of the application retains its existing design while the landing is reviewed.
+Ebarki now uses a shared English/Bangla agent workspace. A live workstream shows executed tasks beside a case canvas for records, facts, possible next steps, what-if comparisons, saved drafts, and activity.
 
 - [Complete design and implementation plan](docs/EBARKI_DESIGN_PLAN.md)
+- [Agentic Experience V2 direction](docs/EBARKI_AGENTIC_EXPERIENCE_V2.md)
+- [Connected AI features, implementation, privacy and live verification](docs/EBARKI_CONNECTED_EXPERIENCE.md)
 - English landing: `http://localhost:3000/en`
 - Bangla landing: `http://localhost:3000/bn`
 - The interactive landing sample uses fictional browser-local data. It does not run live AI, assess a real dispute, or submit a complaint.
+- **Judge Demo** on the landing and login pages opens a fresh, isolated English workspace with actual fictional PDF receipts. Add the second sample receipt to reconcile the 500 taka difference, inspect linked sources, then prepare a saved draft.
+- Consumer login: `/en/login`. Administrative login: `/en/admin/login`. Administrative permissions are enforced by the API. To provision a new administrator, set `BOOTSTRAP_ADMIN_EMAIL` and `BOOTSTRAP_ADMIN_PASSWORD` on the server before its first login. Credentials are never supplied by the new login UI.
 
 ## Run locally
 
@@ -37,13 +41,16 @@ The frontend serves port 3000. The API serves port 8000. Set provider credential
 - English/Bangla interfaces and English, Bangla, or Banglish narrative intake.
 - Optional evidence and voice workflows, subject to actual configured processing capabilities.
 - Material-fact review, source attribution, and conflict reconciliation.
+- Connected evidence story with original-source highlights, image reading, timestamped audio transcripts, and persisted human review.
+- Seller reply preparation with editable model wording and clear review requirements.
+- Guided filing handoff with prepared fields and a reviewed, version-checked PDF.
 - Deterministic three-valued procedural condition evaluation.
 - Next-best questions and isolated what-if comparisons.
 - Editable preparation materials and official-channel checklists.
 - Case activity, follow-ups, and decision changes.
 - Merchant intelligence, community experiences, and source administration.
 
-Supported depth differs by domain. Source code includes development adapters and fallback behavior; a library or model label does not establish that the capability has been exercised. Check configuration and real run evidence before making deployment claims. The current export API provides HTML and Markdown; server-generated PDF is a separately planned capability.
+Supported depth differs by domain. The workspace uses real persisted operation receipts and native PDF extraction, linked-payment comparisons, reference retrieval, and procedural checks. Optional Groq situation summaries require a configured key and explicit case consent; without them, the original account is shown. Images remain available for manual inspection when no real text reader is available. Historical development adapters elsewhere in the repository are not evidence of deployed model inference. Saved bilingual documents can be exported as PDF, HTML, Markdown, or an evidence ZIP. Downloading does not submit them.
 
 ## Architecture
 
@@ -88,4 +95,4 @@ Private case records must remain isolated by owner and separate from public refe
 - `.agent`: task state and implementation handoff.
 - `scripts/tasks.py`: development and verification entry point.
 
-Historic source specifications are retained for traceability. Application-wide presentation and identifier migration remain outside the landing-review milestone.
+Historic source specifications and internal compatibility identifiers are retained for traceability. The current interface uses the Ebarki name and shared light/dark design tokens.

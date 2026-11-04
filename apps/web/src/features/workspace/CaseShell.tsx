@@ -1,19 +1,27 @@
 'use client';
-
 import { createContext, useContext, type ReactNode } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useResource, type CaseRecord } from './data';
-import { Button, ErrorPanel, Glyph, Loading, Status, words } from './ui';
+import { ErrorPanel, Glyph, Loading, Status, words } from './ui';
 import { statusLabel } from './labels';
+import { AgentMark } from '@/features/agent/AgentMark';
 
 const CaseContext = createContext<{ record: CaseRecord; refresh: () => void } | null>(null);
 export const useCase = () => { const value = useContext(CaseContext); if (!value) throw new Error('Case workspace is unavailable'); return value; };
 export function CaseShell({ locale, caseId, children }: { locale: string; caseId: string; children: ReactNode }) {
   const resource = useResource<CaseRecord>(`cases/${caseId}`); const path = usePathname();
-  if (resource.loading) return <Loading locale={locale} />;
-  if (resource.error || !resource.data) return <ErrorPanel locale={locale} retry={resource.reload} />;
-  const record = resource.data; const base = `/${locale}/cases/${caseId}`;
-  const tabs = [['', 'Overview', 'এক নজরে'], ['/evidence', 'Evidence', 'নথি ও প্রমাণ'], ['/review', 'Review facts', 'তথ্য মিলিয়ে দেখুন'], ['/paths', 'Possible paths', 'কী করতে পারেন'], ['/actions', 'Action studio', 'খসড়া ও প্রস্তুতি'], ['/activity', 'Activity', 'ঘটনাক্রম']];
-  return <CaseContext.Provider value={{ record, refresh: resource.reload }}><div className="ui-case-header"><div className="ui-case-breadcrumb"><Link href={`/${locale}/cases`}><Glyph name="back" size={14} />{words(locale, 'All cases', 'সব অভিযোগ')}</Link><span>/</span><span>{record.display_reference}</span></div><div className="ui-case-heading"><div><span className="ui-eyebrow">{words(locale, record.is_demo ? 'SYNTHETIC CASE · YOUR OWN COPY' : 'PRIVATE CASE DESK', record.is_demo ? 'নমুনা অভিযোগ · আপনার আলাদা কপি' : 'শুধু আপনার জন্য সংরক্ষিত')}</span><h1>{record.title}</h1><p>{record.merchant_name || words(locale, 'Seller or provider not added yet', 'বিক্রেতা বা সেবাদাতার নাম এখনো দেওয়া হয়নি')}</p></div><div><Status tone={record.lifecycle_status === 'resolved' ? 'good' : 'brand'}>{statusLabel(record.lifecycle_status, locale)}</Status><span className="ui-version">{words(locale, `Version ${record.row_version}`, `সংস্করণ ${record.row_version}`)}</span></div></div><nav className="ui-case-tabs" aria-label={words(locale, 'Case sections', 'অভিযোগের অংশগুলো')}>{tabs.map(([suffix, en, bn], i) => <Link key={suffix} href={base + suffix} aria-current={path === base + suffix ? 'page' : undefined}><span>0{i + 1}</span>{words(locale, en, bn)}</Link>)}</nav></div><div className="ui-case-content">{record.is_demo && <div className="ui-sample-strip"><Glyph name="play" size={13} />{words(locale, 'Fictional scenario. Changes affect only your copy; no complaint is submitted.', 'এটি কাল্পনিক নমুনা। পরিবর্তন শুধু আপনার কপিতেই থাকবে; কোথাও অভিযোগ জমা হবে না।')}</div>}{children}</div></CaseContext.Provider>;
+  if (resource.loading && !resource.data) return <Loading locale={locale} />;
+  if (!resource.data) return <ErrorPanel locale={locale} retry={resource.reload} />;
+  const record = resource.data; const base = `/${locale}/cases/${caseId}`; const workspace = path === base;
+  const tabs = [['', 'Workspace', 'কাজের জায়গা'], ['/evidence', 'Evidence', 'নথি ও প্রমাণ'], ['/review', 'Review', 'তথ্য মিলিয়ে দেখুন'], ['/paths', 'Next steps', 'করণীয়'], ['/actions', 'Documents', 'খসড়া ও প্রস্তুতি'], ['/activity', 'Activity', 'ঘটনাক্রম']];
+  return <CaseContext.Provider value={{ record, refresh: resource.reload }}>
+    <header className={`ag-case-header ${workspace ? 'is-workspace' : ''}`}>
+      <div className="ag-case-breadcrumb"><Link href={`/${locale}/cases`}><Glyph name="back" size={14} />{words(locale, 'My cases', 'আমার অভিযোগ')}</Link><span>/</span><span>{record.display_reference}</span>{record.is_demo && <Status>{words(locale, 'Sample workspace', 'নমুনা')}</Status>}</div>
+      <div className="ag-case-title"><div><h1>{record.title}</h1><p>{record.merchant_name || words(locale, 'A case you control', 'আপনার নিজের অভিযোগ')}</p></div><Status tone={record.lifecycle_status === 'resolved' ? 'good' : 'brand'}>{statusLabel(record.lifecycle_status, locale)}</Status></div>
+      {!workspace && <><Link href={base} className="ag-case-continuity"><AgentMark small /><span>{words(locale, 'Your case, connected. Continue working with Ebarki.', 'আপনার ঘটনার প্রসঙ্গ রেখেই Ebarki-র সঙ্গে কাজ এগিয়ে নিন।')}</span><Glyph name="arrow" size={16} /></Link><nav className="ag-case-tabs" aria-label={words(locale, 'Case views', 'অভিযোগের অংশগুলো')}>{tabs.map(([suffix, en, bn]) => <Link href={base + suffix} key={suffix} aria-current={path === base + suffix ? 'page' : undefined}>{words(locale, en, bn)}</Link>)}</nav></>}
+    </header>
+    {resource.error && <ErrorPanel locale={locale} retry={resource.reload} />}
+    <div className="ui-case-content">{children}</div>
+  </CaseContext.Provider>;
 }

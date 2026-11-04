@@ -18,10 +18,16 @@ from app.operations.runs import (
     create_run,
     execute_run,
     owned_run,
+    recover_expired_run,
     serialize_run,
 )
+from app.operations.workbench_router import router as workbench_router
 
 router = APIRouter(tags=["Case Operations & Pipeline History"])
+from app.operations.workspace import router as workspace_router
+
+router.include_router(workspace_router)
+router.include_router(workbench_router)
 
 
 @router.get(
@@ -59,7 +65,10 @@ async def list_case_runs(
     runs = await db.scalars(select(CaseRun).where(
         CaseRun.case_id == case_id, CaseRun.principal_id == principal.id,
     ).order_by(CaseRun.created_at.desc()).limit(30))
-    return [serialize_run(run) for run in runs]
+    records = list(runs)
+    for run in records:
+        await recover_expired_run(run, db)
+    return [serialize_run(run) for run in records]
 
 
 @router.get("/v1/cases/{case_id}/runs/{run_id}")

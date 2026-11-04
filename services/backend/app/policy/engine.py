@@ -73,6 +73,7 @@ class RouteDiffItem(BaseModel):
 
 class WhatIfSimulationResult(BaseModel):
     case_id: uuid.UUID
+    case_version: int | None = None
     overrides: dict[str, Any]
     baseline_routes: list[AssessmentRouteOut]
     simulated_routes: list[AssessmentRouteOut]
@@ -651,6 +652,7 @@ class ProceduralAssessmentEngine:
 
         return WhatIfSimulationResult(
             case_id=case.id,
+            case_version=case.row_version,
             overrides=overrides,
             baseline_routes=baseline.routes,
             simulated_routes=simulated_routes,

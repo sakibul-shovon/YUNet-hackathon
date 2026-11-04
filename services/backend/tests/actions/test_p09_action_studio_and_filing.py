@@ -267,7 +267,7 @@ async def test_p09_3_portal_field_maps_and_stale_fallback_t33(client: AsyncClien
     data = res.json()
 
     assert data["portal_id"] == "dncrp_ccms"
-    assert data["official_destination_url"] == "https://ccms.dncrp.com/"
+    assert data["official_destination_url"] == "https://dncrp.com/"
     assert data["is_stale"] is False
 
     fields = {f["field_key"]: f for f in data["fields"]}
@@ -402,10 +402,10 @@ async def test_p09_7_destination_registry_and_link_health_t54(client: AsyncClien
     # Check DNCRP CCMS portal details
     ccms = dest_by_id["dncrp_ccms_portal"]
     assert ccms["link_health"] == "healthy"
-    assert ccms["official_portal_url"] == "https://ccms.dncrp.com/"
+    assert ccms["official_portal_url"] == "https://dncrp.com/"
     assert len(ccms["prerequisites_en"]) >= 3
     assert len(ccms["prerequisites_bn"]) >= 3
-    assert "ncrp@dncrp.gov.bd" in ccms["fallback_instructions_en"]
+    assert "official guidance" in ccms["fallback_instructions_en"]
 
     # Check BB CIPC portal link health degradation & fallback
     cipc = dest_by_id["bb_cipc_portal"]

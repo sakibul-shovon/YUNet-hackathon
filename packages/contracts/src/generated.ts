@@ -57,6 +57,14 @@ export interface ActionNode {
   is_mandatory?: boolean;
 }
 
+export interface AlertCreateRequest {
+  title: string;
+  title_en: string;
+  severity?: string;
+  message: string;
+  active?: boolean;
+}
+
 export interface AssessmentRouteOut {
   route_id: string;
   rule_id: string;
@@ -85,11 +93,41 @@ export interface AudioTranscriptOut {
   created_at: string;
 }
 
+export interface AuthUserOut {
+  logged_in: boolean;
+  principal_id: string;
+  email: string;
+  full_name: string;
+  phone?: unknown;
+  is_demo_judge?: boolean;
+  roles?: unknown[];
+  access_token?: unknown;
+  token_type?: string;
+  demo_case_id?: unknown;
+}
+
+export interface Body_transcribe_case_audio_api_v1_audio_transcribe_post {
+  audio_file: string;
+  consent_granted: boolean;
+  language_hint?: string;
+  client_duration?: number;
+  client_transcript?: string;
+}
+
 export interface Body_transcribe_case_audio_api_v1_cases__case_id__audio_transcribe_post {
   audio_file: string;
   consent_granted: boolean;
   language_hint?: string;
   client_duration?: number;
+  client_transcript?: string;
+}
+
+export interface Body_transcribe_case_audio_v1_audio_transcribe_post {
+  audio_file: string;
+  consent_granted: boolean;
+  language_hint?: string;
+  client_duration?: number;
+  client_transcript?: string;
 }
 
 export interface Body_transcribe_case_audio_v1_cases__case_id__audio_transcribe_post {
@@ -97,6 +135,7 @@ export interface Body_transcribe_case_audio_v1_cases__case_id__audio_transcribe_
   consent_granted: boolean;
   language_hint?: string;
   client_duration?: number;
+  client_transcript?: string;
 }
 
 export interface CandidateDiffOut {
@@ -175,6 +214,11 @@ export interface CaseOut {
   updated_at: string;
 }
 
+export interface CaseOverrideRequest {
+  new_status: string;
+  admin_notes?: string;
+}
+
 export interface CaseReassessmentResult {
   case_id: string;
   reassessed_at: string;
@@ -225,6 +269,46 @@ export interface CitationValidationResponse {
   invalid_citations?: unknown[];
 }
 
+export interface CommunityCommentCreate {
+  author_name?: string;
+  content: string;
+}
+
+export interface CommunityCommentOut {
+  id: string;
+  author_name: string;
+  content: string;
+  created_at: string;
+  is_legal_volunteer?: boolean;
+}
+
+export interface CommunityModerateRequest {
+  action: string;
+}
+
+export interface CommunityPostCreate {
+  title: string;
+  story: string;
+  category?: string;
+  merchant_name?: string;
+  disputed_amount_bdt?: number;
+}
+
+export interface CommunityPostOut {
+  id: string;
+  title: string;
+  story: string;
+  category: string;
+  merchant_name: string;
+  disputed_amount_bdt: number;
+  author_name: string;
+  me_too_count: number;
+  created_at: string;
+  has_converted_case?: boolean;
+  comments_count: number;
+  comments?: unknown[];
+}
+
 export interface ComplaintDestinationOut {
   destination_id: string;
   title_en: string;
@@ -259,6 +343,30 @@ export interface ConsentOut {
   withdrawn_at?: unknown;
 }
 
+export interface CopilotActionSuggestion {
+  id: string;
+  label_en: string;
+  label_bn: string;
+  action_type: string;
+  payload: string;
+}
+
+export interface CopilotChatRequest {
+  message: string;
+  locale?: string;
+  case_context?: unknown;
+  case_id?: unknown;
+}
+
+export interface CopilotChatResponse {
+  reply_en: string;
+  reply_bn: string;
+  relevant_statute?: unknown;
+  suggested_actions?: unknown[];
+  mode?: string;
+  citations?: unknown[];
+}
+
 export interface DeletionRequestCreate {
   case_id?: unknown;
   scope?: string;
@@ -281,6 +389,8 @@ export interface DocumentEditRequest {
   section_id: string;
   sentence_id: string;
   new_text: string;
+  locale?: string;
+  expected_revision?: unknown;
 }
 
 export interface DocumentParseResult {
@@ -307,6 +417,7 @@ export interface DocumentSentenceAST {
   statement_type: string;
   supporting_fact_id?: unknown;
   supporting_citation?: unknown;
+  supporting_record?: unknown;
   is_user_edited?: boolean;
 }
 
@@ -362,6 +473,8 @@ export interface EditableDocumentAST {
   is_filed?: boolean;
   is_sent?: boolean;
   created_at: string;
+  case_version?: number;
+  revision?: number;
 }
 
 export interface EvidenceItemOut {
@@ -433,6 +546,7 @@ export interface FactAssertionOut {
   created_case_version: number;
   is_active: boolean;
   created_at: string;
+  review_outcome?: unknown;
 }
 
 export interface FactProposal {
@@ -547,6 +661,53 @@ export interface ManualImportRequest {
   official_url?: unknown;
   publication_date?: unknown;
   commencement_date?: unknown;
+}
+
+export interface MerchantComplaintSummary {
+  id: string;
+  date: string;
+  issue_type: string;
+  amount_bdt: number;
+  status: string;
+  summary_preview: string;
+}
+
+export interface MerchantIntelligenceOut {
+  merchant_name: string;
+  risk_level: string;
+  complaint_count: number;
+  total_disputed_bdt: number;
+  common_patterns: unknown[];
+  victim_count: number;
+  is_known_offender: boolean;
+  platform: string;
+  recommended_action: string;
+  recent_complaints?: unknown[];
+}
+
+export interface MerchantOverrideRequest {
+  is_blacklisted: boolean;
+  is_verified: boolean;
+  risk_percent: number;
+  admin_note: string;
+}
+
+export interface MerchantRadarLeaderboardItem {
+  merchant_name: string;
+  platform: string;
+  category: string;
+  complaint_count: number;
+  total_disputed_bdt: number;
+  risk_level: string;
+  primary_allegation: string;
+  last_reported_date: string;
+}
+
+export interface MerchantRadarResponse {
+  total_tracked_merchants: number;
+  total_complaints_indexed: number;
+  total_disputed_amount_bdt: number;
+  top_offenders: unknown[];
 }
 
 export interface MultiIssueAssessmentOut {
@@ -782,6 +943,24 @@ export interface ReminderOut {
   created_at: string;
 }
 
+export interface ReplyEdit {
+  draft: string;
+  expected_version: number;
+}
+
+export interface ReplyInput {
+  message: string;
+  locale?: string;
+  expected_version: number;
+}
+
+export interface ReviewInput {
+  item_id: string;
+  outcome: string;
+  corrected_date?: unknown;
+  expected_version: number;
+}
+
 export interface ReviewResultOut {
   id: string;
   source_version_id: string;
@@ -807,6 +986,12 @@ export interface RouteDiffItem {
 }
 
 export interface RouteStatus {
+}
+
+export interface RunRequest {
+  operation?: string;
+  locale?: string;
+  expected_version?: unknown;
 }
 
 export interface ScreenshotAnalysisResult {
@@ -863,6 +1048,14 @@ export interface SourceHealthResponse {
   active_release_mode?: unknown;
   active_manifest_hash?: unknown;
   sources?: unknown[];
+}
+
+export interface SourceInput {
+  text: string;
+  label?: string;
+  source_type?: string;
+  evidence_id?: unknown;
+  expected_version: number;
 }
 
 export interface SourceProvisionOut {
@@ -969,6 +1162,22 @@ export interface UploadIntentOut {
   storage_kind: string;
 }
 
+export interface UserLoginRequest {
+  email: string;
+  password: string;
+}
+
+export interface UserRegisterRequest {
+  email: string;
+  password: string;
+  full_name: string;
+  phone?: unknown;
+}
+
+export interface UserRoleUpdateRequest {
+  roles: unknown[];
+}
+
 export interface ValidationError {
   loc: unknown[];
   msg: string;
@@ -997,6 +1206,7 @@ export interface WatcherCheckResponse {
 
 export interface WhatIfApplyRequest {
   overrides: Record<string, unknown>;
+  expected_version?: unknown;
 }
 
 export interface WhatIfSimulationRequest {
@@ -1005,6 +1215,7 @@ export interface WhatIfSimulationRequest {
 
 export interface WhatIfSimulationResult {
   case_id: string;
+  case_version?: unknown;
   overrides: Record<string, unknown>;
   baseline_routes: unknown[];
   simulated_routes: unknown[];

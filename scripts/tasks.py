@@ -31,6 +31,13 @@ def get_pnpm_cmd() -> str:
     return "pnpm.cmd" if is_windows() else "pnpm"
 
 
+def get_backend_python() -> list[str]:
+    appdata_venv = Path(os.environ.get("LOCALAPPDATA", "")) / "claimcraft-venv" / "Scripts" / "python.exe"
+    if appdata_venv.exists():
+        return [str(appdata_venv)]
+    return ["uv", "run", "python"]
+
+
 def compute_sha256(filepath: Path) -> str:
     raw = filepath.read_bytes()
     h_raw = hashlib.sha256(raw).hexdigest().upper()
@@ -200,7 +207,7 @@ def cmd_check(args):
 
         print("\n--- 3. Backend Ruff Lint Check ---")
         backend_dir = ROOT_DIR / "services" / "backend"
-        subprocess.check_call(["uv", "run", "ruff", "check", "app"], cwd=backend_dir)
+        subprocess.check_call([*get_backend_python(), "-m", "ruff", "check", "app"], cwd=backend_dir)
 
         print("\n--- 3. Web Next.js Build / Typecheck ---")
         # Keep production checks separate from an active development server.
@@ -215,7 +222,7 @@ def cmd_check(args):
     elif scope == "core":
         print("\n--- Backend Pytest Suites ---")
         backend_dir = ROOT_DIR / "services" / "backend"
-        subprocess.check_call(["uv", "run", "pytest"], cwd=backend_dir)
+        subprocess.check_call([*get_backend_python(), "-m", "pytest"], cwd=backend_dir)
         print("\n[SUCCESS] Core test checks passed completely.")
 
     elif scope == "release":
@@ -231,7 +238,7 @@ def cmd_check(args):
 def cmd_contracts(args):
     print("Exporting OpenAPI and regenerating TypeScript contracts...")
     backend_dir = ROOT_DIR / "services" / "backend"
-    subprocess.check_call(["uv", "run", "python", str(ROOT_DIR / "scripts" / "contracts.py")], cwd=backend_dir)
+    subprocess.check_call([*get_backend_python(), str(ROOT_DIR / "scripts" / "contracts.py")], cwd=backend_dir)
     print("Contracts generation verified.")
 
 
@@ -261,7 +268,7 @@ def free_port(port: int):
 
 def cmd_dev(args):
     print("==================================================")
-    print(" ClaimCraft BD — Local Development Stack")
+    print(" Ebarki — Local Development Stack")
     print("==================================================")
 
     # 0. Free ports 8000 and 3000 if occupied by stale processes
@@ -278,9 +285,20 @@ def cmd_dev(args):
     web_dir = ROOT_DIR
 
     print("Starting Backend API on http://127.0.0.1:8000...")
+    py_target = get_backend_python()
+    if len(py_target) == 1:
+        backend_args = [py_target[0], "-m", "uvicorn", "app.main:app", "--host", "127.0.0.1", "--port", "8000"]
+        backend_env = {**os.environ, "PYTHONPATH": str(backend_dir)}
+    else:
+        backend_args = ["uv", "run", "uvicorn", "app.main:app", "--host", "127.0.0.1", "--port", "8000"]
+        backend_env = os.environ.copy()
+
+    if not args.no_reload:
+        backend_args.append("--reload")
     backend_proc = subprocess.Popen(
-        ["uv", "run", "uvicorn", "app.main:app", "--host", "127.0.0.1", "--port", "8000", "--reload"],
+        backend_args,
         cwd=backend_dir,
+        env=backend_env,
     )
 
     print("Starting Web UI on http://localhost:3000...")
@@ -290,7 +308,7 @@ def cmd_dev(args):
         cwd=web_dir,
     )
 
-    print("\nClaimCraft BD dev services are running:")
+    print("\nEbarki dev services are running:")
     print("  - Backend API: http://127.0.0.1:8000")
     print("  - Web Frontend: http://localhost:3000")
     print("\nPress Ctrl+C to terminate both services.\n")
@@ -341,7 +359,14 @@ def cmd_backend(args):
     """Run a uv command in the backend workspace."""
     if not args.backend_args:
         raise SystemExit("Usage: python scripts/tasks.py backend <uv command>")
-    raise SystemExit(subprocess.call(["uv", *args.backend_args], cwd=ROOT_DIR / "services" / "backend"))
+    backend_command = args.backend_args
+    interpreter = get_backend_python()
+    if len(interpreter) == 1 and backend_command[0] == "run" and len(backend_command) > 1:
+        tail = backend_command[1:]
+        backend_command = [*interpreter, *(tail[1:] if tail[0] == "python" else ["-m", *tail])]
+    else:
+        backend_command = ["uv", *backend_command]
+    raise SystemExit(subprocess.call(backend_command, cwd=ROOT_DIR / "services" / "backend"))
 
 
 def main():
@@ -369,6 +394,7 @@ def main():
     seed_demo_parser.set_defaults(func=cmd_seed_demo)
 
     dev_parser = subparsers.add_parser("dev", help="Show instructions for running development servers")
+    dev_parser.add_argument("--no-reload", action="store_true", help="Keep API stable during live-provider QA")
     dev_parser.set_defaults(func=cmd_dev)
 
     web_parser = subparsers.add_parser("web", help="Run a command in the web workspace")

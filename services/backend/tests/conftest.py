@@ -1,10 +1,19 @@
 from collections.abc import AsyncGenerator
 import pytest_asyncio
+import pytest
 from httpx import ASGITransport, AsyncClient
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
 from app.core.database import Base, get_db_session
 from app.main import app
+from app.core.config import settings
+
+
+@pytest.fixture(autouse=True)
+def isolated_provider_credentials(monkeypatch):
+    """Regression tests are deterministic; real-provider checks run explicitly."""
+    monkeypatch.setattr(settings, 'GROQ_API_KEY', None)
+    monkeypatch.setattr(settings, 'GEMINI_API_KEY', None)
 
 # In-memory SQLite for testing
 TEST_DB_URL = "sqlite+aiosqlite:///:memory:"

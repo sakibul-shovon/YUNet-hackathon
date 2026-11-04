@@ -107,6 +107,8 @@ class FactService:
             payload.original_text,
         )
 
+        c.row_version += 1
+        c.updated_at = datetime.datetime.now(datetime.UTC)
         assertion = FactAssertion(
             id=uuid.uuid4(),
             case_id=c.id,
@@ -177,6 +179,8 @@ class FactService:
             conflict_msg_en = f"Conflict detected for {proposal.field_name}: Existing {existing.origin} ({existing.original_text}) vs new {proposal.origin} ({orig_text}). Routed to user review."
             conflict_msg_bn = f"{proposal.field_name} তথ্যের ক্ষেত্রে অমিল পাওয়া গেছে: পূর্বের {existing.origin} ({existing.original_text}) বনাম নতুন {proposal.origin} ({orig_text})। ব্যবহারকারীর পর্যালোচনার জন্য পাঠানো হয়েছে।"
 
+        case.row_version += 1
+        case.updated_at = datetime.datetime.now(datetime.UTC)
         assertion = FactAssertion(
             id=uuid.uuid4(),
             case_id=case.id,
@@ -271,6 +275,8 @@ class FactService:
                 detail="Fact assertion not found in case",
             )
 
+        c.row_version += 1
+        c.updated_at = datetime.datetime.now(datetime.UTC)
         correction_id = None
         if submission.review_outcome == "corrected":
             if submission.corrected_value is None:

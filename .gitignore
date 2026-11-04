@@ -87,5 +87,9 @@ pnpm-debug.log*
 # Graphify transient caches
 graphify-out/cache/
 graphify-out/.graphify_*
+graphify-out/20??-??-??/
+
+# Local QA output; the reviewed, credential-free copy lives in docs/qa/
+.agent/live-ai-report.json
 
 

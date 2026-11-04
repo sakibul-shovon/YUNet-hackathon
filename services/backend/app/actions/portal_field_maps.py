@@ -29,11 +29,11 @@ class PortalFieldMapOut(BaseModel):
     fields: list[PortalFieldDef]
     disclaimer_en: str = (
         "Copy values per field into the verified official government portal. "
-        "ClaimCraft BD never asks for, enters, or stores portal credentials (T33)."
+        "Ebarki never asks for, enters, or stores portal credentials (T33)."
     )
     disclaimer_bn: str = (
         "সরকারি অফিশিয়াল পোর্টালে ফিল্ড অনুযায়ী তথ্য কপি করে বসান। "
-        "ক্লেইমক্রাফট বিডি কখনোই আপনার পোর্টাল পাসওয়ার্ড চায় না বা স্বয়ংক্রিয়ভাবে প্রবেশ করে না (T33)।"
+        "Ebarki কখনোই আপনার পোর্টাল পাসওয়ার্ড চায় না বা স্বয়ংক্রিয়ভাবে প্রবেশ করে না (T33)।"
     )
 
 
@@ -42,7 +42,7 @@ PORTAL_MAP_REGISTRY: dict[str, dict[str, Any]] = {
         "portal_id": "dncrp_ccms",
         "portal_name_en": "DNCRP Central Complaint Management System (CCMS)",
         "portal_name_bn": "ভোক্তা অধিকার সংরক্ষণ অধিদপ্তর সিসিএমএস পোর্টাল",
-        "official_destination_url": "https://ccms.dncrp.com/",
+        "official_destination_url": "https://dncrp.com/",
         "map_version": "2026.1",
         "is_stale": False,
         "stale_reason": None,
@@ -78,8 +78,8 @@ PORTAL_MAP_REGISTRY: dict[str, dict[str, Any]] = {
             },
             {
                 "field_key": "desired_relief",
-                "label_en": "Remedy Claimed (Section 76)",
-                "label_bn": "প্রার্থিত আইনানুগ প্রতিকার (৭৬ ধারা)",
+                "label_en": "Outcome You Are Requesting",
+                "label_bn": "যে সমাধান চাইছেন",
                 "fact_source": "desired_outcomes",
                 "required": True,
             },

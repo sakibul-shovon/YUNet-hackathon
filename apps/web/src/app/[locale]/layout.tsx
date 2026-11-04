@@ -7,6 +7,9 @@ import '@/app/globals.css';
 import { AppShell } from '@/features/workspace/AppShell';
 import '@/features/workspace/workspace.css';
 import '@/features/workspace/sections.css';
+import '@/features/agent/agent.css';
+import '@/features/agent/surfaces.css';
+import '@/features/agent/experience.css';
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));

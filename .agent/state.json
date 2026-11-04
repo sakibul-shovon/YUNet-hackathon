@@ -1,6 +1,6 @@
 {
   "plan_version": "1.2",
-  "updated_at": "2026-11-03T18:36:53.391779+00:00",
+  "updated_at": "2026-11-04T18:31:47.321384+00:00",
   "current_task": "P21.1",
   "last_completed_task": "P14.6",
   "tasks": {
@@ -2150,20 +2150,28 @@
     "P21.1": {
       "id": "P21.1",
       "phase": "P21",
-      "title": "Full Ebarki product redesign, honest agent UX, and natural Bangla copy",
+      "title": "Approved Ebarki Agentic Experience V2 across the bilingual application",
       "status": "IN_PROGRESS",
       "is_optional": false,
       "started_at": "2026-11-03T18:36:53.391779+00:00",
       "completed_at": null,
       "dependencies": [],
-      "changed_paths": [],
-      "acceptance_evidence": null,
+      "changed_paths": [
+        "apps/web/src/features/agent",
+        "apps/web/src/features/landing",
+        "services/backend/app/operations",
+        "services/backend/app/actions",
+        "services/backend/app/evidence",
+        "packages/contracts",
+        "docs/EBARKI_CONNECTED_EXPERIENCE.md"
+      ],
+      "acceptance_evidence": "Implementation checkpoint: foundation passed; 155 core tests passed with 7 warnings; contracts regenerated; knowledge graph refreshed; 18 real-provider BFF checks passed with fictional records. See docs/qa/connected-ai-live-2026-11-05.json. Fresh connected-screen browser QA remains unverified because Windows Computer Use could not determine the active browser URL.",
       "validation_commands": [
         "python scripts/tasks.py check --scope foundation",
         "python scripts/tasks.py check --scope core"
       ],
       "blocker": null,
-      "next_action": "Build shared shell and replace all product route compositions."
+      "next_action": "Push the user-requested checkpoint; then run the independent final-system audit and complete browser visual/interaction acceptance before marking this task DONE."
     }
   },
   "phases": {

@@ -8,7 +8,12 @@ from sqlalchemy import JSON, DateTime, ForeignKey, Integer, String, Uuid, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import Mapped, mapped_column
 
-from app.actions.document_ast import DocumentASTService, EditableDocumentAST
+from app.actions.document_ast import (
+    DocumentASTService,
+    DocumentSectionAST,
+    DocumentSentenceAST,
+    EditableDocumentAST,
+)
 from app.core.database import Base
 from app.evidence.models import EvidenceItem
 from app.facts.models import FactAssertion
@@ -63,6 +68,17 @@ async def load_document(
     )
     doc.case_version = case.row_version
     doc.revision = 1
+    from app.operations.connected_records import connected_records
+    records = await connected_records(case, principal, db)
+    moments = [item for item in records['timeline'] if item['review'] == 'confirmed']
+    if moments:
+        doc.sections.append(DocumentSectionAST(section_id='reviewed_chronology',
+            section_title_en='Chronology reviewed by the consumer', section_title_bn='ভোক্তার মিলিয়ে দেখা ঘটনাক্রম',
+            sentences=[DocumentSentenceAST(sentence_id=f'moment_{item["id"]}',
+                text=f'{item["occurred_on"] + " — " if item["occurred_on"] else ""}{item["quote"]}',
+                statement_type='user_allegation', supporting_record={
+                    key: item[key] for key in ('source_id', 'source_line', 'quote', 'page', 'box', 'start', 'end')
+                }) for item in moments[:20]]))
     await save_document(doc, principal.id, db)
     return doc
 

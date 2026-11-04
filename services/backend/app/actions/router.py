@@ -124,12 +124,20 @@ async def export_case_document(
     document_type: str = Query("dncrp_ccms_complaint"),
     include_evidence_index: bool = Query(True),
     include_originals: bool = Query(False),
+    document_id: uuid.UUID | None = Query(None),
+    expected_case_version: int | None = Query(None),
+    expected_revision: int | None = Query(None),
     evidence_ids: list[uuid.UUID] = Query(default=[]),
     principal: Principal = Depends(get_current_principal),
     db: AsyncSession = Depends(get_db_session),
 ):
     """Exports a reviewed preparation copy. Never marks a case as filed."""
-    doc = await load_document(case_id, principal, db, document_type, locale)
+    doc = await load_document(case_id, principal, db, document_type, locale, document_id)
+    case = await FactService.get_authorized_case(case_id, principal, db)
+    if expected_case_version is not None and (case.row_version != expected_case_version or doc.case_version != expected_case_version):
+        raise HTTPException(409, 'Your case changed. Review the current draft before downloading.')
+    if expected_revision is not None and doc.revision != expected_revision:
+        raise HTTPException(409, 'The draft changed. Review the current revision before downloading.')
     doc = doc.model_copy(deep=True)
     if not include_evidence_index:
         doc.evidence_index = []

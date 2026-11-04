@@ -1,0 +1,109 @@
+{
+  "tested_on": "2026-11-05",
+  "transport": "Next.js web BFF",
+  "data": "fictional QA records only",
+  "results": [
+    {
+      "check": "accepted image/png",
+      "passed": true
+    },
+    {
+      "check": "accepted audio/wav",
+      "passed": true
+    },
+    {
+      "check": "en real run stages",
+      "passed": true,
+      "status": "needs_review",
+      "stages": 6
+    },
+    {
+      "check": "en model summary",
+      "passed": true,
+      "method": "groq/openai/gpt-oss-120b",
+      "text": "The user paid BDT 5,500 for a phone on 2026‑10‑20, with the seller promising delivery by 2026‑10‑22. The phone has not arrived as of now."
+    },
+    {
+      "check": "groq_vision",
+      "passed": true,
+      "text": "Ebanki / TEST RECEIPT\nFICTIONAL DATA. NO REAL PURCHASE.\nনমুনা ইলেকট্রনিকস\nDate: 2026-10-20\nReference: EBANKI-QA-5000\nPaid BDT 5,000\nপরিশোধ করা টাকা 5,000\nA clearly labeled test record for Ebanki.",
+      "segments": 8,
+      "reason": null,
+      "provider_status": null
+    },
+    {
+      "check": "groq_transcription",
+      "passed": true,
+      "text": " This is an ebaki test. I paid 5,500 Taka for a phone. The phone has not arrived.",
+      "segments": 3,
+      "reason": null,
+      "provider_status": null
+    },
+    {
+      "check": "bn real run stages",
+      "passed": true,
+      "status": "needs_review",
+      "stages": 6
+    },
+    {
+      "check": "bn model summary",
+      "passed": true,
+      "method": "groq/openai/gpt-oss-120b",
+      "text": "আপনি ২০২৬-১০-২০ তারিখে BDT 5,500 দিয়ে একটি ফোন কিনেছেন এবং বিক্রেতা ২০২৬-১০-২২ তারিখে ডেলিভারি দেবেন বলে প্রতিশ্রুতি দিয়েছিলেন। তবে এখন পর্যন্ত ফোনটি পৌঁছায়নি।"
+    },
+    {
+      "check": "source-linked image human review",
+      "passed": true,
+      "has_box": true
+    },
+    {
+      "check": "receipt ledger detects actual 500 taka gap",
+      "passed": true,
+      "linked_minor": 500000,
+      "gap_minor": 50000
+    },
+    {
+      "check": "en copilot model explanation",
+      "passed": true,
+      "mode": "model_explanation",
+      "text": "Here’s what to look at next:\n\n1. **Order details** – Verify the order number, exact amount paid, and the payment method you used.  \n2. **Seller communication** – Gather any emails, messages, or receipts that show the promised delivery date and any follow‑up you’ve sent.  \n3. **Shipping info** – Check if you received a tracking number, courier name, or shipping status updates.  \n4. **Proof of non‑delivery** – Note the date you expected the phone and confirm it hasn’t arrived, plus any attempts you made to contact the seller.  \n\nCollecting these pieces will give you a clear picture before moving to the next step in the case workflow."
+    },
+    {
+      "check": "en model reply preparation",
+      "passed": true,
+      "method": "groq/openai/gpt-oss-120b",
+      "text": "Thank you for your response. Could you please share the terms that applied when I purchased and explain your decision about my complaint in writing? I would like to compare this with the order and payment records I have. Let me know the next step you can offer to help resolve the issue."
+    },
+    {
+      "check": "bn copilot model explanation",
+      "passed": true,
+      "mode": "model_explanation",
+      "text": "১. অর্ডার রসিদ/ইনভয়েস – পরিমাণ, তারিখ, পেমেন্ট পদ্ধতি।  \n২. বিক্রেতার প্রতিশ্রুতি – ডেলিভারির তারিখ ও লিখিত নিশ্চিতকরণ (ইমেইল/চ্যাট)।  \n৩. যোগাযোগের রেকর্ড – বিক্রেতার সাথে সব মেসেজ, কলের নোট, রিকোয়েস্টের উত্তর।  \n৪. ডেলিভারি না হওয়ার প্রমাণ – ট্র্যাকিং স্ক্রিনশট, শিপিং কোম্পানির নোটিশ, প্যাকেজের অনুপস্থিতি।  \n\nএই তথ্যগুলো একসাথে রাখুন, তারিখের ক্রমানুসারে সাজান, যাতে পরবর্তী অভিযোগ বা রিকোয়েস্টে সহজে ব্যবহার করতে পারেন।"
+    },
+    {
+      "check": "bn model reply preparation",
+      "passed": true,
+      "method": "groq/openai/gpt-oss-120b",
+      "text": "আমি আপনার উত্তর পেয়েছি। দয়া করে কেনার শর্ত এবং আমার অভিযোগের বিষয়ে আপনার লিখিত সিদ্ধান্ত জানাবেন। প্রয়োজন হলে অর্ডার ও লেনদেনের নথি যাচাই করতে চাই। সমস্যার সমাধানের পরবর্তী পদক্ষেপ কী হবে, দয়া করে জানান।"
+    },
+    {
+      "check": "what-if conditions with immutable baseline",
+      "passed": true,
+      "route_count": 6
+    },
+    {
+      "check": "en current reviewed PDF export",
+      "passed": true,
+      "bytes": 15007
+    },
+    {
+      "check": "bn current reviewed PDF export",
+      "passed": true,
+      "bytes": 26523
+    },
+    {
+      "check": "guided official handoff",
+      "passed": true
+    }
+  ]
+}

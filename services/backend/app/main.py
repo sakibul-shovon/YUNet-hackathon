@@ -37,7 +37,7 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(
-    title="ClaimCraft BD API",
+    title="Ebarki API",
     version="0.1.0",
     description="Bangladesh-first consumer resolution copilot API. Grounded dispute preparation and follow-up.",
     docs_url="/docs" if settings.APP_ENV != "production" else None,
@@ -86,7 +86,9 @@ async def health_ready():
         "app": "claimcraft-bd",
         "environment": settings.APP_ENV,
         "capabilities": {
-            "ai_provider": "gemini" if settings.GEMINI_API_KEY else "synthetic_development",
+            "ai_provider": "groq" if settings.GROQ_API_KEY else "gemini" if settings.GEMINI_API_KEY else "manual_workflow",
+            "image_reading_configured": bool((settings.GROQ_API_KEY and settings.GROQ_VISION_MODEL) or (settings.GEMINI_API_KEY and settings.GEMINI_RECORD_READER_MODEL)),
+            "speech_transcription_configured": bool(settings.GROQ_API_KEY),
             "stt_provider": "google_stt"
             if settings.GOOGLE_APPLICATION_CREDENTIALS
             else "browser_fallback",
@@ -97,7 +99,7 @@ async def health_ready():
 
 @app.get("/api/v1/ping", tags=["System"])
 async def api_ping():
-    return {"message": "ClaimCraft BD API v1 is operational"}
+    return {"message": "Ebarki API v1 is operational"}
 
 
 # Include domain routers with canonical /v1 and BFF /api/v1 support

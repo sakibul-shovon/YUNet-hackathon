@@ -16,6 +16,7 @@ class DocumentSentenceAST(BaseModel):
     statement_type: str  # 'reviewed_fact', 'user_allegation', 'statutory_basis', 'procedural_note'
     supporting_fact_id: uuid.UUID | None = None
     supporting_citation: str | None = None
+    supporting_record: dict[str, Any] | None = None
     is_user_edited: bool = False
 
 
@@ -582,5 +583,6 @@ class DocumentASTService:
                         sent.statement_type = "user_allegation"
                         sent.supporting_fact_id = None
                         sent.supporting_citation = None
+                        sent.supporting_record = None
                         return doc
         return doc

@@ -1,7 +1,7 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "ClaimCraft BD API",
+    "title": "Ebarki API",
     "description": "Bangladesh-first consumer resolution copilot API. Grounded dispute preparation and follow-up.",
     "version": "0.1.0"
   },
@@ -105,6 +105,28 @@
         }
       }
     },
+    "/v1/auth/guest": {
+      "post": {
+        "tags": [
+          "Identity & Sessions"
+        ],
+        "summary": "Auth Guest",
+        "description": "Initializes or resumes an isolated anonymous guest session with HttpOnly cookie & JWT.",
+        "operationId": "auth_guest_v1_auth_guest_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GuestSessionResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/auth/guest": {
       "post": {
         "tags": [
@@ -125,6 +147,53 @@
             }
           }
         }
+      }
+    },
+    "/v1/auth/upgrade": {
+      "post": {
+        "tags": [
+          "Identity & Sessions"
+        ],
+        "summary": "Auth Upgrade",
+        "description": "Upgrades an anonymous guest account to a permanent verified account, retaining cases.",
+        "operationId": "auth_upgrade_v1_auth_upgrade_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpgradeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpgradeResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
       }
     },
     "/auth/upgrade": {
@@ -172,6 +241,292 @@
             "HTTPBearer": []
           }
         ]
+      }
+    },
+    "/v1/auth/register": {
+      "post": {
+        "tags": [
+          "Identity & Sessions"
+        ],
+        "summary": "Auth Register",
+        "description": "Registers a new permanent user with email, password, and name.",
+        "operationId": "auth_register_v1_auth_register_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserRegisterRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthUserOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "tags": [
+          "Identity & Sessions"
+        ],
+        "summary": "Auth Register",
+        "description": "Registers a new permanent user with email, password, and name.",
+        "operationId": "auth_register_auth_register_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserRegisterRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthUserOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/auth/login": {
+      "post": {
+        "tags": [
+          "Identity & Sessions"
+        ],
+        "summary": "Auth Login",
+        "description": "Logs in an existing user with email and password.",
+        "operationId": "auth_login_v1_auth_login_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserLoginRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthUserOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "Identity & Sessions"
+        ],
+        "summary": "Auth Login",
+        "description": "Logs in an existing user with email and password.",
+        "operationId": "auth_login_auth_login_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserLoginRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthUserOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/auth/judge-demo": {
+      "post": {
+        "tags": [
+          "Identity & Sessions"
+        ],
+        "summary": "Auth Judge Demo",
+        "description": "1-Click Hackathon Judge Demo Login: creates or logs into demo judge account with pre-seeded cases.",
+        "operationId": "auth_judge_demo_v1_auth_judge_demo_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthUserOut"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/judge-demo": {
+      "post": {
+        "tags": [
+          "Identity & Sessions"
+        ],
+        "summary": "Auth Judge Demo",
+        "description": "1-Click Hackathon Judge Demo Login: creates or logs into demo judge account with pre-seeded cases.",
+        "operationId": "auth_judge_demo_auth_judge_demo_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthUserOut"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/auth/me": {
+      "get": {
+        "tags": [
+          "Identity & Sessions"
+        ],
+        "summary": "Get Auth User",
+        "description": "Returns current logged-in user profile, or guest fallback.",
+        "operationId": "get_auth_user_v1_auth_me_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthUserOut"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/auth/me": {
+      "get": {
+        "tags": [
+          "Identity & Sessions"
+        ],
+        "summary": "Get Auth User",
+        "description": "Returns current logged-in user profile, or guest fallback.",
+        "operationId": "get_auth_user_auth_me_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthUserOut"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/v1/auth/logout": {
+      "post": {
+        "tags": [
+          "Identity & Sessions"
+        ],
+        "summary": "Auth Logout",
+        "description": "Terminates the current session and clears session cookie.",
+        "operationId": "auth_logout_v1_auth_logout_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
       }
     },
     "/auth/logout": {
@@ -2726,7 +3081,7 @@
           "Case Actions, Documents & Filing Companion"
         ],
         "summary": "Export Case Document",
-        "description": "P09.4 & T27: Exports dispute document as Markdown or HTML. Never marks case as filed.",
+        "description": "Exports a reviewed preparation copy. Never marks a case as filed.",
         "operationId": "export_case_document_v1_cases__case_id__export__format_type__post",
         "security": [
           {
@@ -2772,6 +3127,89 @@
               "type": "string",
               "default": "dncrp_ccms_complaint",
               "title": "Document Type"
+            }
+          },
+          {
+            "name": "include_evidence_index",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": true,
+              "title": "Include Evidence Index"
+            }
+          },
+          {
+            "name": "include_originals",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Include Originals"
+            }
+          },
+          {
+            "name": "document_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Document Id"
+            }
+          },
+          {
+            "name": "expected_case_version",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Expected Case Version"
+            }
+          },
+          {
+            "name": "expected_revision",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Expected Revision"
+            }
+          },
+          {
+            "name": "evidence_ids",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "default": [],
+              "title": "Evidence Ids"
             }
           }
         ],
@@ -2989,6 +3427,108 @@
                 "schema": {
                   "$ref": "#/components/schemas/DraftRequestOut"
                 }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/cases/{case_id}/documents/history": {
+      "get": {
+        "tags": [
+          "Case Actions, Documents & Filing Companion"
+        ],
+        "summary": "Document History",
+        "operationId": "document_history_v1_cases__case_id__documents_history_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/cases/{case_id}/documents/versions/{document_id}": {
+      "get": {
+        "tags": [
+          "Case Actions, Documents & Filing Companion"
+        ],
+        "summary": "Document Version",
+        "operationId": "document_version_v1_cases__case_id__documents_versions__document_id__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "document_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Document Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
               }
             }
           },
@@ -3646,6 +4186,66 @@
         }
       }
     },
+    "/v1/audio/transcribe": {
+      "post": {
+        "tags": [
+          "Multimodal Audio & Voice Notes"
+        ],
+        "summary": "Transcribe Case Audio",
+        "description": "T22: Ingests voice note, validates container & codec, enforces consent, and transcribes speech to text with uncertainty tags.",
+        "operationId": "transcribe_case_audio_v1_audio_transcribe_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "default": "00000000-0000-0000-0000-000000000000",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_transcribe_case_audio_v1_audio_transcribe_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AudioTranscriptOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v1/cases/{case_id}/audio/transcribe": {
       "post": {
         "tags": [
@@ -4105,6 +4705,562 @@
         }
       }
     },
+    "/v1/cases/{case_id}/sample-payment": {
+      "post": {
+        "tags": [
+          "Case Operations & Pipeline History"
+        ],
+        "summary": "Add Second Sample Payment",
+        "operationId": "add_second_sample_payment_v1_cases__case_id__sample_payment_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/cases/{case_id}/facts/{fact_id}/provenance": {
+      "get": {
+        "tags": [
+          "Case Operations & Pipeline History"
+        ],
+        "summary": "Fact Provenance",
+        "operationId": "fact_provenance_v1_cases__case_id__facts__fact_id__provenance_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "fact_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Fact Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/cases/{case_id}/evidence/{evidence_id}/page-preview": {
+      "get": {
+        "tags": [
+          "Case Operations & Pipeline History",
+          "Connected Evidence & Reply Preparation"
+        ],
+        "summary": "Pdf Page Preview",
+        "operationId": "pdf_page_preview_v1_cases__case_id__evidence__evidence_id__page_preview_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "evidence_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Evidence Id"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1,
+              "title": "Page"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/cases/{case_id}/connected-records": {
+      "get": {
+        "tags": [
+          "Case Operations & Pipeline History",
+          "Connected Evidence & Reply Preparation"
+        ],
+        "summary": "Get Records",
+        "operationId": "get_records_v1_cases__case_id__connected_records_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/cases/{case_id}/connected-records/sources": {
+      "post": {
+        "tags": [
+          "Case Operations & Pipeline History",
+          "Connected Evidence & Reply Preparation"
+        ],
+        "summary": "Add Source",
+        "operationId": "add_source_v1_cases__case_id__connected_records_sources_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SourceInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/cases/{case_id}/connected-records/review": {
+      "post": {
+        "tags": [
+          "Case Operations & Pipeline History",
+          "Connected Evidence & Reply Preparation"
+        ],
+        "summary": "Review Moment",
+        "operationId": "review_moment_v1_cases__case_id__connected_records_review_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReviewInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/cases/{case_id}/reply-preparations": {
+      "get": {
+        "tags": [
+          "Case Operations & Pipeline History",
+          "Connected Evidence & Reply Preparation"
+        ],
+        "summary": "Saved Replies",
+        "operationId": "saved_replies_v1_cases__case_id__reply_preparations_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Case Operations & Pipeline History",
+          "Connected Evidence & Reply Preparation"
+        ],
+        "summary": "Make Reply",
+        "operationId": "make_reply_v1_cases__case_id__reply_preparations_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReplyInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/cases/{case_id}/reply-preparations/{reply_id}": {
+      "put": {
+        "tags": [
+          "Case Operations & Pipeline History",
+          "Connected Evidence & Reply Preparation"
+        ],
+        "summary": "Edit Reply",
+        "operationId": "edit_reply_v1_cases__case_id__reply_preparations__reply_id__put",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "reply_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Reply Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReplyEdit"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/cases/{case_id}/filing-handoff": {
+      "get": {
+        "tags": [
+          "Case Operations & Pipeline History",
+          "Connected Evidence & Reply Preparation"
+        ],
+        "summary": "Filing Handoff",
+        "operationId": "filing_handoff_v1_cases__case_id__filing_handoff_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "portal_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "dncrp_ccms",
+              "title": "Portal Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v1/cases/{case_id}/pipeline-runs": {
       "get": {
         "tags": [
@@ -4142,6 +5298,274 @@
                   },
                   "title": "Response Get Case Pipeline Runs V1 Cases  Case Id  Pipeline Runs Get"
                 }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/cases/{case_id}/runs": {
+      "post": {
+        "tags": [
+          "Case Operations & Pipeline History"
+        ],
+        "summary": "Start Case Run",
+        "operationId": "start_case_run_v1_cases__case_id__runs_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RunRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Case Operations & Pipeline History"
+        ],
+        "summary": "List Case Runs",
+        "operationId": "list_case_runs_v1_cases__case_id__runs_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/cases/{case_id}/runs/{run_id}": {
+      "get": {
+        "tags": [
+          "Case Operations & Pipeline History"
+        ],
+        "summary": "Get Case Run",
+        "operationId": "get_case_run_v1_cases__case_id__runs__run_id__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "run_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Run Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/cases/{case_id}/runs/{run_id}/cancel": {
+      "post": {
+        "tags": [
+          "Case Operations & Pipeline History"
+        ],
+        "summary": "Cancel Case Run",
+        "operationId": "cancel_case_run_v1_cases__case_id__runs__run_id__cancel_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "run_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Run Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/cases/{case_id}/runs/{run_id}/events": {
+      "get": {
+        "tags": [
+          "Case Operations & Pipeline History"
+        ],
+        "summary": "Stream Case Run",
+        "operationId": "stream_case_run_v1_cases__case_id__runs__run_id__events_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "run_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Run Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
               }
             }
           },
@@ -4624,6 +6048,856 @@
         }
       }
     },
+    "/v1/merchants/intelligence": {
+      "get": {
+        "tags": [
+          "Merchant Intelligence & Scam Radar"
+        ],
+        "summary": "Get Merchant Intelligence",
+        "description": "Searches prior consumer complaints, risk assessment, fraud patterns, and victim counts.",
+        "operationId": "get_merchant_intelligence_v1_merchants_intelligence_get",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Merchant, shop, or Facebook page name",
+              "title": "Query"
+            },
+            "description": "Merchant, shop, or Facebook page name"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MerchantIntelligenceOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/merchants/radar": {
+      "get": {
+        "tags": [
+          "Merchant Intelligence & Scam Radar"
+        ],
+        "summary": "Get Scam Radar Leaderboard",
+        "description": "Returns community-indexed repeat offender watchlist and dispute statistics.",
+        "operationId": "get_scam_radar_leaderboard_v1_merchants_radar_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MerchantRadarResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/community/posts": {
+      "get": {
+        "tags": [
+          "Community Consumer Help Forum"
+        ],
+        "summary": "List Community Posts",
+        "description": "Returns consumer grievance posts with mutual-support discussions.",
+        "operationId": "list_community_posts_v1_community_posts_get",
+        "parameters": [
+          {
+            "name": "category",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Optional category filter (e.g. E-Commerce, MFS / Fintech)",
+              "title": "Category"
+            },
+            "description": "Optional category filter (e.g. E-Commerce, MFS / Fintech)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CommunityPostOut"
+                  },
+                  "title": "Response List Community Posts V1 Community Posts Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Community Consumer Help Forum"
+        ],
+        "summary": "Create Community Post",
+        "description": "Publishes a consumer dispute help request to the public community board.",
+        "operationId": "create_community_post_v1_community_posts_post",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CommunityPostCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommunityPostOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/community/posts/{id}/me-too": {
+      "post": {
+        "tags": [
+          "Community Consumer Help Forum"
+        ],
+        "summary": "Increment Me Too",
+        "description": "Increments the 'Me Too / \u0986\u09ae\u09be\u09b0 \u09b8\u09be\u09a5\u09c7\u0993 \u098f\u09ae\u09a8 \u09b9\u09df\u09c7\u099b\u09c7' counter for a dispute.",
+        "operationId": "increment_me_too_v1_community_posts__id__me_too_post",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/community/posts/{id}/comments": {
+      "post": {
+        "tags": [
+          "Community Consumer Help Forum"
+        ],
+        "summary": "Add Community Comment",
+        "description": "Adds a consumer or legal volunteer advice comment to a community post.",
+        "operationId": "add_community_comment_v1_community_posts__id__comments_post",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CommunityCommentCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommunityCommentOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/copilot/chat": {
+      "post": {
+        "tags": [
+          "AI Consumer Resolution Copilot"
+        ],
+        "summary": "Chat With Copilot",
+        "description": "Conversational AI Copilot grounded in Bangladesh Consumer Law.",
+        "operationId": "chat_with_copilot_v1_copilot_chat_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CopilotChatRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CopilotChatResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/v1/admin/stats": {
+      "get": {
+        "tags": [
+          "Super Admin & Platform Operations"
+        ],
+        "summary": "Get Admin Stats",
+        "description": "Returns platform-wide executive metrics, health checks, and resolution statistics.",
+        "operationId": "get_admin_stats_v1_admin_stats_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/v1/admin/cases": {
+      "get": {
+        "tags": [
+          "Super Admin & Platform Operations"
+        ],
+        "summary": "List Admin Cases",
+        "description": "Returns master list of all consumer cases with search and status filtering.",
+        "operationId": "list_admin_cases_v1_admin_cases_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "search",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "Search by title, reference, or merchant",
+              "default": "",
+              "title": "Search"
+            },
+            "description": "Search by title, reference, or merchant"
+          },
+          {
+            "name": "status_filter",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "Filter by lifecycle status",
+              "default": "",
+              "title": "Status Filter"
+            },
+            "description": "Filter by lifecycle status"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/cases/{case_id}/override": {
+      "post": {
+        "tags": [
+          "Super Admin & Platform Operations"
+        ],
+        "summary": "Override Case",
+        "description": "Administrative status override for dispute lifecycle with immutable audit trace.",
+        "operationId": "override_case_v1_admin_cases__case_id__override_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CaseOverrideRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/users": {
+      "get": {
+        "tags": [
+          "Super Admin & Platform Operations"
+        ],
+        "summary": "List Admin Users",
+        "description": "Returns all registered user accounts with roles and ban status.",
+        "operationId": "list_admin_users_v1_admin_users_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/v1/admin/users/{user_id}/toggle-ban": {
+      "post": {
+        "tags": [
+          "Super Admin & Platform Operations"
+        ],
+        "summary": "Toggle Ban",
+        "description": "Toggles ban and deactivation status for a consumer or suspicious user.",
+        "operationId": "toggle_ban_v1_admin_users__user_id__toggle_ban_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "User Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/users/{user_id}/roles": {
+      "post": {
+        "tags": [
+          "Super Admin & Platform Operations"
+        ],
+        "summary": "Update Roles",
+        "description": "Promotes or alters administrative roles (admin, reviewer, publisher, operator).",
+        "operationId": "update_roles_v1_admin_users__user_id__roles_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "User Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserRoleUpdateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/merchants": {
+      "get": {
+        "tags": [
+          "Super Admin & Platform Operations"
+        ],
+        "summary": "List Admin Merchants",
+        "description": "Returns all tracked merchants, scam probabilities, and blacklist statuses.",
+        "operationId": "list_admin_merchants_v1_admin_merchants_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/v1/admin/merchants/{slug}/override": {
+      "post": {
+        "tags": [
+          "Super Admin & Platform Operations"
+        ],
+        "summary": "Override Merchant",
+        "description": "Overrides merchant scam risk, blacklist status, and verification badge.",
+        "operationId": "override_merchant_v1_admin_merchants__slug__override_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Slug"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MerchantOverrideRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/community/posts": {
+      "get": {
+        "tags": [
+          "Super Admin & Platform Operations"
+        ],
+        "summary": "List Admin Community Posts",
+        "description": "Returns community grievances with moderation flags and report counts.",
+        "operationId": "list_admin_community_posts_v1_admin_community_posts_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/v1/admin/community/posts/{post_id}/moderate": {
+      "post": {
+        "tags": [
+          "Super Admin & Platform Operations"
+        ],
+        "summary": "Moderate Post",
+        "description": "Moderates community post: pin, hide, unhide, or dismiss reports.",
+        "operationId": "moderate_post_v1_admin_community_posts__post_id__moderate_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "post_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Post Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CommunityModerateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/alerts": {
+      "get": {
+        "tags": [
+          "Super Admin & Platform Operations"
+        ],
+        "summary": "Get Alerts",
+        "description": "Public endpoint to fetch active consumer warning banners.",
+        "operationId": "get_alerts_v1_admin_alerts_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Super Admin & Platform Operations"
+        ],
+        "summary": "Create Alert",
+        "description": "Creates a new broadcast alert banner across ClaimCraft BD.",
+        "operationId": "create_alert_v1_admin_alerts_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AlertCreateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/v1/admin/audit-logs": {
+      "get": {
+        "tags": [
+          "Super Admin & Platform Operations"
+        ],
+        "summary": "Get Audit Logs",
+        "description": "Returns immutable log of all administrative actions with SHA-256 hashes.",
+        "operationId": "get_audit_logs_v1_admin_audit_logs_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/v1/admin/statutory/candidates": {
+      "get": {
+        "tags": [
+          "Super Admin & Platform Operations"
+        ],
+        "summary": "List Statutory Candidates",
+        "description": "Lists legal source watcher candidates pending human review.",
+        "operationId": "list_statutory_candidates_v1_admin_statutory_candidates_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
     "/api/v1/capabilities": {
       "get": {
         "tags": [
@@ -4664,6 +6938,28 @@
         }
       }
     },
+    "/api/v1/auth/guest": {
+      "post": {
+        "tags": [
+          "Identity & Sessions"
+        ],
+        "summary": "Auth Guest",
+        "description": "Initializes or resumes an isolated anonymous guest session with HttpOnly cookie & JWT.",
+        "operationId": "auth_guest_api_v1_auth_guest_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GuestSessionResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/auth/guest": {
       "post": {
         "tags": [
@@ -4684,6 +6980,53 @@
             }
           }
         }
+      }
+    },
+    "/api/v1/auth/upgrade": {
+      "post": {
+        "tags": [
+          "Identity & Sessions"
+        ],
+        "summary": "Auth Upgrade",
+        "description": "Upgrades an anonymous guest account to a permanent verified account, retaining cases.",
+        "operationId": "auth_upgrade_api_v1_auth_upgrade_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpgradeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpgradeResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
       }
     },
     "/api/auth/upgrade": {
@@ -4731,6 +7074,292 @@
             "HTTPBearer": []
           }
         ]
+      }
+    },
+    "/api/v1/auth/register": {
+      "post": {
+        "tags": [
+          "Identity & Sessions"
+        ],
+        "summary": "Auth Register",
+        "description": "Registers a new permanent user with email, password, and name.",
+        "operationId": "auth_register_api_v1_auth_register_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserRegisterRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthUserOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/register": {
+      "post": {
+        "tags": [
+          "Identity & Sessions"
+        ],
+        "summary": "Auth Register",
+        "description": "Registers a new permanent user with email, password, and name.",
+        "operationId": "auth_register_api_auth_register_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserRegisterRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthUserOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/login": {
+      "post": {
+        "tags": [
+          "Identity & Sessions"
+        ],
+        "summary": "Auth Login",
+        "description": "Logs in an existing user with email and password.",
+        "operationId": "auth_login_api_v1_auth_login_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserLoginRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthUserOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "tags": [
+          "Identity & Sessions"
+        ],
+        "summary": "Auth Login",
+        "description": "Logs in an existing user with email and password.",
+        "operationId": "auth_login_api_auth_login_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserLoginRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthUserOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/judge-demo": {
+      "post": {
+        "tags": [
+          "Identity & Sessions"
+        ],
+        "summary": "Auth Judge Demo",
+        "description": "1-Click Hackathon Judge Demo Login: creates or logs into demo judge account with pre-seeded cases.",
+        "operationId": "auth_judge_demo_api_v1_auth_judge_demo_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthUserOut"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/judge-demo": {
+      "post": {
+        "tags": [
+          "Identity & Sessions"
+        ],
+        "summary": "Auth Judge Demo",
+        "description": "1-Click Hackathon Judge Demo Login: creates or logs into demo judge account with pre-seeded cases.",
+        "operationId": "auth_judge_demo_api_auth_judge_demo_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthUserOut"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/me": {
+      "get": {
+        "tags": [
+          "Identity & Sessions"
+        ],
+        "summary": "Get Auth User",
+        "description": "Returns current logged-in user profile, or guest fallback.",
+        "operationId": "get_auth_user_api_v1_auth_me_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthUserOut"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/auth/me": {
+      "get": {
+        "tags": [
+          "Identity & Sessions"
+        ],
+        "summary": "Get Auth User",
+        "description": "Returns current logged-in user profile, or guest fallback.",
+        "operationId": "get_auth_user_api_auth_me_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthUserOut"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/auth/logout": {
+      "post": {
+        "tags": [
+          "Identity & Sessions"
+        ],
+        "summary": "Auth Logout",
+        "description": "Terminates the current session and clears session cookie.",
+        "operationId": "auth_logout_api_v1_auth_logout_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
       }
     },
     "/api/auth/logout": {
@@ -7285,7 +9914,7 @@
           "Case Actions, Documents & Filing Companion"
         ],
         "summary": "Export Case Document",
-        "description": "P09.4 & T27: Exports dispute document as Markdown or HTML. Never marks case as filed.",
+        "description": "Exports a reviewed preparation copy. Never marks a case as filed.",
         "operationId": "export_case_document_api_v1_cases__case_id__export__format_type__post",
         "security": [
           {
@@ -7331,6 +9960,89 @@
               "type": "string",
               "default": "dncrp_ccms_complaint",
               "title": "Document Type"
+            }
+          },
+          {
+            "name": "include_evidence_index",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": true,
+              "title": "Include Evidence Index"
+            }
+          },
+          {
+            "name": "include_originals",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Include Originals"
+            }
+          },
+          {
+            "name": "document_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Document Id"
+            }
+          },
+          {
+            "name": "expected_case_version",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Expected Case Version"
+            }
+          },
+          {
+            "name": "expected_revision",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Expected Revision"
+            }
+          },
+          {
+            "name": "evidence_ids",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "default": [],
+              "title": "Evidence Ids"
             }
           }
         ],
@@ -7548,6 +10260,108 @@
                 "schema": {
                   "$ref": "#/components/schemas/DraftRequestOut"
                 }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{case_id}/documents/history": {
+      "get": {
+        "tags": [
+          "Case Actions, Documents & Filing Companion"
+        ],
+        "summary": "Document History",
+        "operationId": "document_history_api_v1_cases__case_id__documents_history_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{case_id}/documents/versions/{document_id}": {
+      "get": {
+        "tags": [
+          "Case Actions, Documents & Filing Companion"
+        ],
+        "summary": "Document Version",
+        "operationId": "document_version_api_v1_cases__case_id__documents_versions__document_id__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "document_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Document Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
               }
             }
           },
@@ -8205,6 +11019,66 @@
         }
       }
     },
+    "/api/v1/audio/transcribe": {
+      "post": {
+        "tags": [
+          "Multimodal Audio & Voice Notes"
+        ],
+        "summary": "Transcribe Case Audio",
+        "description": "T22: Ingests voice note, validates container & codec, enforces consent, and transcribes speech to text with uncertainty tags.",
+        "operationId": "transcribe_case_audio_api_v1_audio_transcribe_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "default": "00000000-0000-0000-0000-000000000000",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_transcribe_case_audio_api_v1_audio_transcribe_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AudioTranscriptOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/cases/{case_id}/audio/transcribe": {
       "post": {
         "tags": [
@@ -8664,6 +11538,562 @@
         }
       }
     },
+    "/api/v1/cases/{case_id}/sample-payment": {
+      "post": {
+        "tags": [
+          "Case Operations & Pipeline History"
+        ],
+        "summary": "Add Second Sample Payment",
+        "operationId": "add_second_sample_payment_api_v1_cases__case_id__sample_payment_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{case_id}/facts/{fact_id}/provenance": {
+      "get": {
+        "tags": [
+          "Case Operations & Pipeline History"
+        ],
+        "summary": "Fact Provenance",
+        "operationId": "fact_provenance_api_v1_cases__case_id__facts__fact_id__provenance_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "fact_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Fact Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{case_id}/evidence/{evidence_id}/page-preview": {
+      "get": {
+        "tags": [
+          "Case Operations & Pipeline History",
+          "Connected Evidence & Reply Preparation"
+        ],
+        "summary": "Pdf Page Preview",
+        "operationId": "pdf_page_preview_api_v1_cases__case_id__evidence__evidence_id__page_preview_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "evidence_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Evidence Id"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1,
+              "title": "Page"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{case_id}/connected-records": {
+      "get": {
+        "tags": [
+          "Case Operations & Pipeline History",
+          "Connected Evidence & Reply Preparation"
+        ],
+        "summary": "Get Records",
+        "operationId": "get_records_api_v1_cases__case_id__connected_records_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{case_id}/connected-records/sources": {
+      "post": {
+        "tags": [
+          "Case Operations & Pipeline History",
+          "Connected Evidence & Reply Preparation"
+        ],
+        "summary": "Add Source",
+        "operationId": "add_source_api_v1_cases__case_id__connected_records_sources_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SourceInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{case_id}/connected-records/review": {
+      "post": {
+        "tags": [
+          "Case Operations & Pipeline History",
+          "Connected Evidence & Reply Preparation"
+        ],
+        "summary": "Review Moment",
+        "operationId": "review_moment_api_v1_cases__case_id__connected_records_review_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReviewInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{case_id}/reply-preparations": {
+      "get": {
+        "tags": [
+          "Case Operations & Pipeline History",
+          "Connected Evidence & Reply Preparation"
+        ],
+        "summary": "Saved Replies",
+        "operationId": "saved_replies_api_v1_cases__case_id__reply_preparations_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Case Operations & Pipeline History",
+          "Connected Evidence & Reply Preparation"
+        ],
+        "summary": "Make Reply",
+        "operationId": "make_reply_api_v1_cases__case_id__reply_preparations_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReplyInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{case_id}/reply-preparations/{reply_id}": {
+      "put": {
+        "tags": [
+          "Case Operations & Pipeline History",
+          "Connected Evidence & Reply Preparation"
+        ],
+        "summary": "Edit Reply",
+        "operationId": "edit_reply_api_v1_cases__case_id__reply_preparations__reply_id__put",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "reply_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Reply Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReplyEdit"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{case_id}/filing-handoff": {
+      "get": {
+        "tags": [
+          "Case Operations & Pipeline History",
+          "Connected Evidence & Reply Preparation"
+        ],
+        "summary": "Filing Handoff",
+        "operationId": "filing_handoff_api_v1_cases__case_id__filing_handoff_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "portal_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "dncrp_ccms",
+              "title": "Portal Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/cases/{case_id}/pipeline-runs": {
       "get": {
         "tags": [
@@ -8701,6 +12131,274 @@
                   },
                   "title": "Response Get Case Pipeline Runs Api V1 Cases  Case Id  Pipeline Runs Get"
                 }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{case_id}/runs": {
+      "post": {
+        "tags": [
+          "Case Operations & Pipeline History"
+        ],
+        "summary": "Start Case Run",
+        "operationId": "start_case_run_api_v1_cases__case_id__runs_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RunRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Case Operations & Pipeline History"
+        ],
+        "summary": "List Case Runs",
+        "operationId": "list_case_runs_api_v1_cases__case_id__runs_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{case_id}/runs/{run_id}": {
+      "get": {
+        "tags": [
+          "Case Operations & Pipeline History"
+        ],
+        "summary": "Get Case Run",
+        "operationId": "get_case_run_api_v1_cases__case_id__runs__run_id__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "run_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Run Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{case_id}/runs/{run_id}/cancel": {
+      "post": {
+        "tags": [
+          "Case Operations & Pipeline History"
+        ],
+        "summary": "Cancel Case Run",
+        "operationId": "cancel_case_run_api_v1_cases__case_id__runs__run_id__cancel_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "run_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Run Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{case_id}/runs/{run_id}/events": {
+      "get": {
+        "tags": [
+          "Case Operations & Pipeline History"
+        ],
+        "summary": "Stream Case Run",
+        "operationId": "stream_case_run_api_v1_cases__case_id__runs__run_id__events_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "run_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Run Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
               }
             }
           },
@@ -9182,6 +12880,856 @@
           }
         }
       }
+    },
+    "/api/v1/merchants/intelligence": {
+      "get": {
+        "tags": [
+          "Merchant Intelligence & Scam Radar"
+        ],
+        "summary": "Get Merchant Intelligence",
+        "description": "Searches prior consumer complaints, risk assessment, fraud patterns, and victim counts.",
+        "operationId": "get_merchant_intelligence_api_v1_merchants_intelligence_get",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Merchant, shop, or Facebook page name",
+              "title": "Query"
+            },
+            "description": "Merchant, shop, or Facebook page name"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MerchantIntelligenceOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/merchants/radar": {
+      "get": {
+        "tags": [
+          "Merchant Intelligence & Scam Radar"
+        ],
+        "summary": "Get Scam Radar Leaderboard",
+        "description": "Returns community-indexed repeat offender watchlist and dispute statistics.",
+        "operationId": "get_scam_radar_leaderboard_api_v1_merchants_radar_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MerchantRadarResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/community/posts": {
+      "get": {
+        "tags": [
+          "Community Consumer Help Forum"
+        ],
+        "summary": "List Community Posts",
+        "description": "Returns consumer grievance posts with mutual-support discussions.",
+        "operationId": "list_community_posts_api_v1_community_posts_get",
+        "parameters": [
+          {
+            "name": "category",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Optional category filter (e.g. E-Commerce, MFS / Fintech)",
+              "title": "Category"
+            },
+            "description": "Optional category filter (e.g. E-Commerce, MFS / Fintech)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CommunityPostOut"
+                  },
+                  "title": "Response List Community Posts Api V1 Community Posts Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Community Consumer Help Forum"
+        ],
+        "summary": "Create Community Post",
+        "description": "Publishes a consumer dispute help request to the public community board.",
+        "operationId": "create_community_post_api_v1_community_posts_post",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CommunityPostCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommunityPostOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/community/posts/{id}/me-too": {
+      "post": {
+        "tags": [
+          "Community Consumer Help Forum"
+        ],
+        "summary": "Increment Me Too",
+        "description": "Increments the 'Me Too / \u0986\u09ae\u09be\u09b0 \u09b8\u09be\u09a5\u09c7\u0993 \u098f\u09ae\u09a8 \u09b9\u09df\u09c7\u099b\u09c7' counter for a dispute.",
+        "operationId": "increment_me_too_api_v1_community_posts__id__me_too_post",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/community/posts/{id}/comments": {
+      "post": {
+        "tags": [
+          "Community Consumer Help Forum"
+        ],
+        "summary": "Add Community Comment",
+        "description": "Adds a consumer or legal volunteer advice comment to a community post.",
+        "operationId": "add_community_comment_api_v1_community_posts__id__comments_post",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CommunityCommentCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommunityCommentOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/copilot/chat": {
+      "post": {
+        "tags": [
+          "AI Consumer Resolution Copilot"
+        ],
+        "summary": "Chat With Copilot",
+        "description": "Conversational AI Copilot grounded in Bangladesh Consumer Law.",
+        "operationId": "chat_with_copilot_api_v1_copilot_chat_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CopilotChatRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CopilotChatResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/admin/stats": {
+      "get": {
+        "tags": [
+          "Super Admin & Platform Operations"
+        ],
+        "summary": "Get Admin Stats",
+        "description": "Returns platform-wide executive metrics, health checks, and resolution statistics.",
+        "operationId": "get_admin_stats_api_v1_admin_stats_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/admin/cases": {
+      "get": {
+        "tags": [
+          "Super Admin & Platform Operations"
+        ],
+        "summary": "List Admin Cases",
+        "description": "Returns master list of all consumer cases with search and status filtering.",
+        "operationId": "list_admin_cases_api_v1_admin_cases_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "search",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "Search by title, reference, or merchant",
+              "default": "",
+              "title": "Search"
+            },
+            "description": "Search by title, reference, or merchant"
+          },
+          {
+            "name": "status_filter",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "Filter by lifecycle status",
+              "default": "",
+              "title": "Status Filter"
+            },
+            "description": "Filter by lifecycle status"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/admin/cases/{case_id}/override": {
+      "post": {
+        "tags": [
+          "Super Admin & Platform Operations"
+        ],
+        "summary": "Override Case",
+        "description": "Administrative status override for dispute lifecycle with immutable audit trace.",
+        "operationId": "override_case_api_v1_admin_cases__case_id__override_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CaseOverrideRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/admin/users": {
+      "get": {
+        "tags": [
+          "Super Admin & Platform Operations"
+        ],
+        "summary": "List Admin Users",
+        "description": "Returns all registered user accounts with roles and ban status.",
+        "operationId": "list_admin_users_api_v1_admin_users_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/admin/users/{user_id}/toggle-ban": {
+      "post": {
+        "tags": [
+          "Super Admin & Platform Operations"
+        ],
+        "summary": "Toggle Ban",
+        "description": "Toggles ban and deactivation status for a consumer or suspicious user.",
+        "operationId": "toggle_ban_api_v1_admin_users__user_id__toggle_ban_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "User Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/admin/users/{user_id}/roles": {
+      "post": {
+        "tags": [
+          "Super Admin & Platform Operations"
+        ],
+        "summary": "Update Roles",
+        "description": "Promotes or alters administrative roles (admin, reviewer, publisher, operator).",
+        "operationId": "update_roles_api_v1_admin_users__user_id__roles_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "User Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserRoleUpdateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/admin/merchants": {
+      "get": {
+        "tags": [
+          "Super Admin & Platform Operations"
+        ],
+        "summary": "List Admin Merchants",
+        "description": "Returns all tracked merchants, scam probabilities, and blacklist statuses.",
+        "operationId": "list_admin_merchants_api_v1_admin_merchants_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/admin/merchants/{slug}/override": {
+      "post": {
+        "tags": [
+          "Super Admin & Platform Operations"
+        ],
+        "summary": "Override Merchant",
+        "description": "Overrides merchant scam risk, blacklist status, and verification badge.",
+        "operationId": "override_merchant_api_v1_admin_merchants__slug__override_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Slug"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MerchantOverrideRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/admin/community/posts": {
+      "get": {
+        "tags": [
+          "Super Admin & Platform Operations"
+        ],
+        "summary": "List Admin Community Posts",
+        "description": "Returns community grievances with moderation flags and report counts.",
+        "operationId": "list_admin_community_posts_api_v1_admin_community_posts_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/admin/community/posts/{post_id}/moderate": {
+      "post": {
+        "tags": [
+          "Super Admin & Platform Operations"
+        ],
+        "summary": "Moderate Post",
+        "description": "Moderates community post: pin, hide, unhide, or dismiss reports.",
+        "operationId": "moderate_post_api_v1_admin_community_posts__post_id__moderate_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "post_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Post Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CommunityModerateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/admin/alerts": {
+      "get": {
+        "tags": [
+          "Super Admin & Platform Operations"
+        ],
+        "summary": "Get Alerts",
+        "description": "Public endpoint to fetch active consumer warning banners.",
+        "operationId": "get_alerts_api_v1_admin_alerts_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Super Admin & Platform Operations"
+        ],
+        "summary": "Create Alert",
+        "description": "Creates a new broadcast alert banner across ClaimCraft BD.",
+        "operationId": "create_alert_api_v1_admin_alerts_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AlertCreateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/admin/audit-logs": {
+      "get": {
+        "tags": [
+          "Super Admin & Platform Operations"
+        ],
+        "summary": "Get Audit Logs",
+        "description": "Returns immutable log of all administrative actions with SHA-256 hashes.",
+        "operationId": "get_audit_logs_api_v1_admin_audit_logs_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/admin/statutory/candidates": {
+      "get": {
+        "tags": [
+          "Super Admin & Platform Operations"
+        ],
+        "summary": "List Statutory Candidates",
+        "description": "Lists legal source watcher candidates pending human review.",
+        "operationId": "list_statutory_candidates_api_v1_admin_statutory_candidates_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
     }
   },
   "components": {
@@ -9300,6 +13848,39 @@
           "status"
         ],
         "title": "ActionNode"
+      },
+      "AlertCreateRequest": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "title_en": {
+            "type": "string",
+            "title": "Title En"
+          },
+          "severity": {
+            "type": "string",
+            "title": "Severity",
+            "default": "warning"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "active": {
+            "type": "boolean",
+            "title": "Active",
+            "default": true
+          }
+        },
+        "type": "object",
+        "required": [
+          "title",
+          "title_en",
+          "message"
+        ],
+        "title": "AlertCreateRequest"
       },
       "AssessmentRouteOut": {
         "properties": {
@@ -9460,6 +14041,125 @@
         ],
         "title": "AudioTranscriptOut"
       },
+      "AuthUserOut": {
+        "properties": {
+          "logged_in": {
+            "type": "boolean",
+            "title": "Logged In"
+          },
+          "principal_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Principal Id"
+          },
+          "email": {
+            "type": "string",
+            "title": "Email"
+          },
+          "full_name": {
+            "type": "string",
+            "title": "Full Name"
+          },
+          "phone": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Phone"
+          },
+          "is_demo_judge": {
+            "type": "boolean",
+            "title": "Is Demo Judge",
+            "default": false
+          },
+          "roles": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Roles"
+          },
+          "access_token": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Access Token"
+          },
+          "token_type": {
+            "type": "string",
+            "title": "Token Type",
+            "default": "bearer"
+          },
+          "demo_case_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Demo Case Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "logged_in",
+          "principal_id",
+          "email",
+          "full_name"
+        ],
+        "title": "AuthUserOut"
+      },
+      "Body_transcribe_case_audio_api_v1_audio_transcribe_post": {
+        "properties": {
+          "audio_file": {
+            "type": "string",
+            "contentMediaType": "application/octet-stream",
+            "title": "Audio File",
+            "description": "Recorded audio payload"
+          },
+          "consent_granted": {
+            "type": "boolean",
+            "title": "Consent Granted",
+            "description": "Explicit consumer consent for voice processing"
+          },
+          "language_hint": {
+            "type": "string",
+            "title": "Language Hint",
+            "description": "Optional language hint: bn-BD, en-BD, auto",
+            "default": "auto"
+          },
+          "client_duration": {
+            "type": "number",
+            "title": "Client Duration",
+            "description": "Client measured duration in seconds",
+            "default": 0.0
+          },
+          "client_transcript": {
+            "type": "string",
+            "title": "Client Transcript",
+            "description": "Optional client transcribed text",
+            "default": ""
+          }
+        },
+        "type": "object",
+        "required": [
+          "audio_file",
+          "consent_granted"
+        ],
+        "title": "Body_transcribe_case_audio_api_v1_audio_transcribe_post"
+      },
       "Body_transcribe_case_audio_api_v1_cases__case_id__audio_transcribe_post": {
         "properties": {
           "audio_file": {
@@ -9484,6 +14184,12 @@
             "title": "Client Duration",
             "description": "Client measured duration in seconds",
             "default": 0.0
+          },
+          "client_transcript": {
+            "type": "string",
+            "title": "Client Transcript",
+            "description": "Optional client transcribed text",
+            "default": ""
           }
         },
         "type": "object",
@@ -9492,6 +14198,45 @@
           "consent_granted"
         ],
         "title": "Body_transcribe_case_audio_api_v1_cases__case_id__audio_transcribe_post"
+      },
+      "Body_transcribe_case_audio_v1_audio_transcribe_post": {
+        "properties": {
+          "audio_file": {
+            "type": "string",
+            "contentMediaType": "application/octet-stream",
+            "title": "Audio File",
+            "description": "Recorded audio payload"
+          },
+          "consent_granted": {
+            "type": "boolean",
+            "title": "Consent Granted",
+            "description": "Explicit consumer consent for voice processing"
+          },
+          "language_hint": {
+            "type": "string",
+            "title": "Language Hint",
+            "description": "Optional language hint: bn-BD, en-BD, auto",
+            "default": "auto"
+          },
+          "client_duration": {
+            "type": "number",
+            "title": "Client Duration",
+            "description": "Client measured duration in seconds",
+            "default": 0.0
+          },
+          "client_transcript": {
+            "type": "string",
+            "title": "Client Transcript",
+            "description": "Optional client transcribed text",
+            "default": ""
+          }
+        },
+        "type": "object",
+        "required": [
+          "audio_file",
+          "consent_granted"
+        ],
+        "title": "Body_transcribe_case_audio_v1_audio_transcribe_post"
       },
       "Body_transcribe_case_audio_v1_cases__case_id__audio_transcribe_post": {
         "properties": {
@@ -9517,6 +14262,12 @@
             "title": "Client Duration",
             "description": "Client measured duration in seconds",
             "default": 0.0
+          },
+          "client_transcript": {
+            "type": "string",
+            "title": "Client Transcript",
+            "description": "Optional client transcribed text",
+            "default": ""
           }
         },
         "type": "object",
@@ -9781,7 +14532,7 @@
           "disclaimer_notice": {
             "type": "string",
             "title": "Disclaimer Notice",
-            "default": "PREPARATION MATERIAL ONLY \u2014 NOT SUBMITTED BY CLAIMCRAFT BD. Generating or downloading this document does not constitute official submission (T27)."
+            "default": "PREPARATION MATERIAL ONLY \u2014 NOT SUBMITTED BY EBARKI. Generating or downloading this document does not constitute official submission (T27)."
           },
           "is_filed": {
             "type": "boolean",
@@ -9943,6 +14694,26 @@
           "updated_at"
         ],
         "title": "CaseOut"
+      },
+      "CaseOverrideRequest": {
+        "properties": {
+          "new_status": {
+            "type": "string",
+            "title": "New Status",
+            "description": "active, resolved, escalated, dismissed, fraudulent"
+          },
+          "admin_notes": {
+            "type": "string",
+            "title": "Admin Notes",
+            "description": "Reason and administrative justification",
+            "default": ""
+          }
+        },
+        "type": "object",
+        "required": [
+          "new_status"
+        ],
+        "title": "CaseOverrideRequest"
       },
       "CaseReassessmentResult": {
         "properties": {
@@ -10250,6 +15021,180 @@
         ],
         "title": "CitationValidationResponse"
       },
+      "CommunityCommentCreate": {
+        "properties": {
+          "author_name": {
+            "type": "string",
+            "title": "Author Name",
+            "default": "Anonymous Consumer"
+          },
+          "content": {
+            "type": "string",
+            "maxLength": 1000,
+            "minLength": 2,
+            "title": "Content"
+          }
+        },
+        "type": "object",
+        "required": [
+          "content"
+        ],
+        "title": "CommunityCommentCreate"
+      },
+      "CommunityCommentOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "author_name": {
+            "type": "string",
+            "title": "Author Name"
+          },
+          "content": {
+            "type": "string",
+            "title": "Content"
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At"
+          },
+          "is_legal_volunteer": {
+            "type": "boolean",
+            "title": "Is Legal Volunteer",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "author_name",
+          "content",
+          "created_at"
+        ],
+        "title": "CommunityCommentOut"
+      },
+      "CommunityModerateRequest": {
+        "properties": {
+          "action": {
+            "type": "string",
+            "title": "Action",
+            "description": "pin, unpin, hide, unhide, dismiss_reports"
+          }
+        },
+        "type": "object",
+        "required": [
+          "action"
+        ],
+        "title": "CommunityModerateRequest"
+      },
+      "CommunityPostCreate": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 5,
+            "title": "Title"
+          },
+          "story": {
+            "type": "string",
+            "maxLength": 4000,
+            "minLength": 10,
+            "title": "Story"
+          },
+          "category": {
+            "type": "string",
+            "title": "Category",
+            "default": "E-Commerce"
+          },
+          "merchant_name": {
+            "type": "string",
+            "title": "Merchant Name",
+            "default": "Unknown Merchant"
+          },
+          "disputed_amount_bdt": {
+            "type": "number",
+            "title": "Disputed Amount Bdt",
+            "default": 0.0
+          }
+        },
+        "type": "object",
+        "required": [
+          "title",
+          "story"
+        ],
+        "title": "CommunityPostCreate"
+      },
+      "CommunityPostOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "story": {
+            "type": "string",
+            "title": "Story"
+          },
+          "category": {
+            "type": "string",
+            "title": "Category"
+          },
+          "merchant_name": {
+            "type": "string",
+            "title": "Merchant Name"
+          },
+          "disputed_amount_bdt": {
+            "type": "number",
+            "title": "Disputed Amount Bdt"
+          },
+          "author_name": {
+            "type": "string",
+            "title": "Author Name"
+          },
+          "me_too_count": {
+            "type": "integer",
+            "title": "Me Too Count"
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At"
+          },
+          "has_converted_case": {
+            "type": "boolean",
+            "title": "Has Converted Case",
+            "default": false
+          },
+          "comments_count": {
+            "type": "integer",
+            "title": "Comments Count"
+          },
+          "comments": {
+            "items": {
+              "$ref": "#/components/schemas/CommunityCommentOut"
+            },
+            "type": "array",
+            "title": "Comments"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "story",
+          "category",
+          "merchant_name",
+          "disputed_amount_bdt",
+          "author_name",
+          "me_too_count",
+          "created_at",
+          "comments_count"
+        ],
+        "title": "CommunityPostOut"
+      },
       "ComplaintDestinationOut": {
         "properties": {
           "destination_id": {
@@ -10439,6 +15384,130 @@
         ],
         "title": "ConsentOut"
       },
+      "CopilotActionSuggestion": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "label_en": {
+            "type": "string",
+            "title": "Label En"
+          },
+          "label_bn": {
+            "type": "string",
+            "title": "Label Bn"
+          },
+          "action_type": {
+            "type": "string",
+            "title": "Action Type"
+          },
+          "payload": {
+            "type": "string",
+            "title": "Payload"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "label_en",
+          "label_bn",
+          "action_type",
+          "payload"
+        ],
+        "title": "CopilotActionSuggestion"
+      },
+      "CopilotChatRequest": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "maxLength": 2000,
+            "minLength": 1,
+            "title": "Message"
+          },
+          "locale": {
+            "type": "string",
+            "title": "Locale",
+            "default": "bn"
+          },
+          "case_context": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Case Context"
+          },
+          "case_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Case Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "message"
+        ],
+        "title": "CopilotChatRequest"
+      },
+      "CopilotChatResponse": {
+        "properties": {
+          "reply_en": {
+            "type": "string",
+            "title": "Reply En"
+          },
+          "reply_bn": {
+            "type": "string",
+            "title": "Reply Bn"
+          },
+          "relevant_statute": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Relevant Statute"
+          },
+          "suggested_actions": {
+            "items": {
+              "$ref": "#/components/schemas/CopilotActionSuggestion"
+            },
+            "type": "array",
+            "title": "Suggested Actions"
+          },
+          "mode": {
+            "type": "string",
+            "title": "Mode",
+            "default": "workflow_guide"
+          },
+          "citations": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Citations"
+          }
+        },
+        "type": "object",
+        "required": [
+          "reply_en",
+          "reply_bn"
+        ],
+        "title": "CopilotChatResponse"
+      },
       "DeletionRequestCreate": {
         "properties": {
           "case_id": {
@@ -10556,6 +15625,22 @@
           "new_text": {
             "type": "string",
             "title": "New Text"
+          },
+          "locale": {
+            "type": "string",
+            "title": "Locale",
+            "default": "en"
+          },
+          "expected_revision": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expected Revision"
           }
         },
         "type": "object",
@@ -10690,6 +15775,18 @@
               }
             ],
             "title": "Supporting Citation"
+          },
+          "supporting_record": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Supporting Record"
           },
           "is_user_edited": {
             "type": "boolean",
@@ -10937,7 +16034,7 @@
           "unsubmitted_disclaimer_en": {
             "type": "string",
             "title": "Unsubmitted Disclaimer En",
-            "default": "PREPARATION MATERIAL ONLY \u2014 NOT SUBMITTED BY CLAIMCRAFT BD. Review carefully and file personally via official portal or merchant contact."
+            "default": "PREPARATION MATERIAL ONLY \u2014 NOT SUBMITTED BY EBARKI. Review carefully and file personally via official portal or merchant contact."
           },
           "unsubmitted_disclaimer_bn": {
             "type": "string",
@@ -10962,6 +16059,16 @@
           "created_at": {
             "type": "string",
             "title": "Created At"
+          },
+          "case_version": {
+            "type": "integer",
+            "title": "Case Version",
+            "default": 1
+          },
+          "revision": {
+            "type": "integer",
+            "title": "Revision",
+            "default": 1
           }
         },
         "type": "object",
@@ -11409,6 +16516,17 @@
             "type": "string",
             "format": "date-time",
             "title": "Created At"
+          },
+          "review_outcome": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Review Outcome"
           }
         },
         "type": "object",
@@ -12050,6 +17168,214 @@
         ],
         "title": "ManualImportRequest"
       },
+      "MerchantComplaintSummary": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "date": {
+            "type": "string",
+            "title": "Date"
+          },
+          "issue_type": {
+            "type": "string",
+            "title": "Issue Type"
+          },
+          "amount_bdt": {
+            "type": "number",
+            "title": "Amount Bdt"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "summary_preview": {
+            "type": "string",
+            "title": "Summary Preview"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "date",
+          "issue_type",
+          "amount_bdt",
+          "status",
+          "summary_preview"
+        ],
+        "title": "MerchantComplaintSummary"
+      },
+      "MerchantIntelligenceOut": {
+        "properties": {
+          "merchant_name": {
+            "type": "string",
+            "title": "Merchant Name"
+          },
+          "risk_level": {
+            "type": "string",
+            "title": "Risk Level"
+          },
+          "complaint_count": {
+            "type": "integer",
+            "title": "Complaint Count"
+          },
+          "total_disputed_bdt": {
+            "type": "number",
+            "title": "Total Disputed Bdt"
+          },
+          "common_patterns": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Common Patterns"
+          },
+          "victim_count": {
+            "type": "integer",
+            "title": "Victim Count"
+          },
+          "is_known_offender": {
+            "type": "boolean",
+            "title": "Is Known Offender"
+          },
+          "platform": {
+            "type": "string",
+            "title": "Platform"
+          },
+          "recommended_action": {
+            "type": "string",
+            "title": "Recommended Action"
+          },
+          "recent_complaints": {
+            "items": {
+              "$ref": "#/components/schemas/MerchantComplaintSummary"
+            },
+            "type": "array",
+            "title": "Recent Complaints"
+          }
+        },
+        "type": "object",
+        "required": [
+          "merchant_name",
+          "risk_level",
+          "complaint_count",
+          "total_disputed_bdt",
+          "common_patterns",
+          "victim_count",
+          "is_known_offender",
+          "platform",
+          "recommended_action"
+        ],
+        "title": "MerchantIntelligenceOut"
+      },
+      "MerchantOverrideRequest": {
+        "properties": {
+          "is_blacklisted": {
+            "type": "boolean",
+            "title": "Is Blacklisted"
+          },
+          "is_verified": {
+            "type": "boolean",
+            "title": "Is Verified"
+          },
+          "risk_percent": {
+            "type": "integer",
+            "title": "Risk Percent"
+          },
+          "admin_note": {
+            "type": "string",
+            "title": "Admin Note"
+          }
+        },
+        "type": "object",
+        "required": [
+          "is_blacklisted",
+          "is_verified",
+          "risk_percent",
+          "admin_note"
+        ],
+        "title": "MerchantOverrideRequest"
+      },
+      "MerchantRadarLeaderboardItem": {
+        "properties": {
+          "merchant_name": {
+            "type": "string",
+            "title": "Merchant Name"
+          },
+          "platform": {
+            "type": "string",
+            "title": "Platform"
+          },
+          "category": {
+            "type": "string",
+            "title": "Category"
+          },
+          "complaint_count": {
+            "type": "integer",
+            "title": "Complaint Count"
+          },
+          "total_disputed_bdt": {
+            "type": "number",
+            "title": "Total Disputed Bdt"
+          },
+          "risk_level": {
+            "type": "string",
+            "title": "Risk Level"
+          },
+          "primary_allegation": {
+            "type": "string",
+            "title": "Primary Allegation"
+          },
+          "last_reported_date": {
+            "type": "string",
+            "title": "Last Reported Date"
+          }
+        },
+        "type": "object",
+        "required": [
+          "merchant_name",
+          "platform",
+          "category",
+          "complaint_count",
+          "total_disputed_bdt",
+          "risk_level",
+          "primary_allegation",
+          "last_reported_date"
+        ],
+        "title": "MerchantRadarLeaderboardItem"
+      },
+      "MerchantRadarResponse": {
+        "properties": {
+          "total_tracked_merchants": {
+            "type": "integer",
+            "title": "Total Tracked Merchants"
+          },
+          "total_complaints_indexed": {
+            "type": "integer",
+            "title": "Total Complaints Indexed"
+          },
+          "total_disputed_amount_bdt": {
+            "type": "number",
+            "title": "Total Disputed Amount Bdt"
+          },
+          "top_offenders": {
+            "items": {
+              "$ref": "#/components/schemas/MerchantRadarLeaderboardItem"
+            },
+            "type": "array",
+            "title": "Top Offenders"
+          }
+        },
+        "type": "object",
+        "required": [
+          "total_tracked_merchants",
+          "total_complaints_indexed",
+          "total_disputed_amount_bdt",
+          "top_offenders"
+        ],
+        "title": "MerchantRadarResponse"
+      },
       "MultiIssueAssessmentOut": {
         "properties": {
           "case_id": {
@@ -12611,12 +17937,12 @@
           "disclaimer_en": {
             "type": "string",
             "title": "Disclaimer En",
-            "default": "Copy values per field into the verified official government portal. ClaimCraft BD never asks for, enters, or stores portal credentials (T33)."
+            "default": "Copy values per field into the verified official government portal. Ebarki never asks for, enters, or stores portal credentials (T33)."
           },
           "disclaimer_bn": {
             "type": "string",
             "title": "Disclaimer Bn",
-            "default": "\u09b8\u09b0\u0995\u09be\u09b0\u09bf \u0985\u09ab\u09bf\u09b6\u09bf\u09df\u09be\u09b2 \u09aa\u09cb\u09b0\u09cd\u099f\u09be\u09b2\u09c7 \u09ab\u09bf\u09b2\u09cd\u09a1 \u0985\u09a8\u09c1\u09af\u09be\u09df\u09c0 \u09a4\u09a5\u09cd\u09af \u0995\u09aa\u09bf \u0995\u09b0\u09c7 \u09ac\u09b8\u09be\u09a8\u0964 \u0995\u09cd\u09b2\u09c7\u0987\u09ae\u0995\u09cd\u09b0\u09be\u09ab\u099f \u09ac\u09bf\u09a1\u09bf \u0995\u0996\u09a8\u09cb\u0987 \u0986\u09aa\u09a8\u09be\u09b0 \u09aa\u09cb\u09b0\u09cd\u099f\u09be\u09b2 \u09aa\u09be\u09b8\u0993\u09df\u09be\u09b0\u09cd\u09a1 \u099a\u09be\u09df \u09a8\u09be \u09ac\u09be \u09b8\u09cd\u09ac\u09df\u0982\u0995\u09cd\u09b0\u09bf\u09df\u09ad\u09be\u09ac\u09c7 \u09aa\u09cd\u09b0\u09ac\u09c7\u09b6 \u0995\u09b0\u09c7 \u09a8\u09be (T33)\u0964"
+            "default": "\u09b8\u09b0\u0995\u09be\u09b0\u09bf \u0985\u09ab\u09bf\u09b6\u09bf\u09df\u09be\u09b2 \u09aa\u09cb\u09b0\u09cd\u099f\u09be\u09b2\u09c7 \u09ab\u09bf\u09b2\u09cd\u09a1 \u0985\u09a8\u09c1\u09af\u09be\u09df\u09c0 \u09a4\u09a5\u09cd\u09af \u0995\u09aa\u09bf \u0995\u09b0\u09c7 \u09ac\u09b8\u09be\u09a8\u0964 Ebarki \u0995\u0996\u09a8\u09cb\u0987 \u0986\u09aa\u09a8\u09be\u09b0 \u09aa\u09cb\u09b0\u09cd\u099f\u09be\u09b2 \u09aa\u09be\u09b8\u0993\u09df\u09be\u09b0\u09cd\u09a1 \u099a\u09be\u09df \u09a8\u09be \u09ac\u09be \u09b8\u09cd\u09ac\u09df\u0982\u0995\u09cd\u09b0\u09bf\u09df\u09ad\u09be\u09ac\u09c7 \u09aa\u09cd\u09b0\u09ac\u09c7\u09b6 \u0995\u09b0\u09c7 \u09a8\u09be (T33)\u0964"
           }
         },
         "type": "object",
@@ -13281,6 +18607,97 @@
         ],
         "title": "ReminderOut"
       },
+      "ReplyEdit": {
+        "properties": {
+          "draft": {
+            "type": "string",
+            "maxLength": 4000,
+            "minLength": 4,
+            "title": "Draft"
+          },
+          "expected_version": {
+            "type": "integer",
+            "title": "Expected Version"
+          }
+        },
+        "type": "object",
+        "required": [
+          "draft",
+          "expected_version"
+        ],
+        "title": "ReplyEdit"
+      },
+      "ReplyInput": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "maxLength": 6000,
+            "minLength": 4,
+            "title": "Message"
+          },
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "bn"
+            ],
+            "title": "Locale",
+            "default": "en"
+          },
+          "expected_version": {
+            "type": "integer",
+            "title": "Expected Version"
+          }
+        },
+        "type": "object",
+        "required": [
+          "message",
+          "expected_version"
+        ],
+        "title": "ReplyInput"
+      },
+      "ReviewInput": {
+        "properties": {
+          "item_id": {
+            "type": "string",
+            "maxLength": 24,
+            "minLength": 24,
+            "title": "Item Id"
+          },
+          "outcome": {
+            "type": "string",
+            "enum": [
+              "confirmed",
+              "dismissed",
+              "proposed"
+            ],
+            "title": "Outcome"
+          },
+          "corrected_date": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Corrected Date"
+          },
+          "expected_version": {
+            "type": "integer",
+            "title": "Expected Version"
+          }
+        },
+        "type": "object",
+        "required": [
+          "item_id",
+          "outcome",
+          "expected_version"
+        ],
+        "title": "ReviewInput"
+      },
       "ReviewResultOut": {
         "properties": {
           "id": {
@@ -13401,6 +18818,43 @@
           "not_supported"
         ],
         "title": "RouteStatus"
+      },
+      "RunRequest": {
+        "properties": {
+          "operation": {
+            "type": "string",
+            "enum": [
+              "extract",
+              "assess",
+              "draft",
+              "resolve"
+            ],
+            "title": "Operation",
+            "default": "assess"
+          },
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "bn"
+            ],
+            "title": "Locale",
+            "default": "en"
+          },
+          "expected_version": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expected Version"
+          }
+        },
+        "type": "object",
+        "title": "RunRequest"
       },
       "ScreenshotAnalysisResult": {
         "properties": {
@@ -13692,6 +19146,56 @@
         },
         "type": "object",
         "title": "SourceHealthResponse"
+      },
+      "SourceInput": {
+        "properties": {
+          "text": {
+            "type": "string",
+            "maxLength": 10000,
+            "minLength": 4,
+            "title": "Text"
+          },
+          "label": {
+            "type": "string",
+            "maxLength": 180,
+            "minLength": 2,
+            "title": "Label",
+            "default": "A message I provided"
+          },
+          "source_type": {
+            "type": "string",
+            "enum": [
+              "pasted_text",
+              "pasted_message",
+              "voice_dictation",
+              "manual_transcript"
+            ],
+            "title": "Source Type",
+            "default": "pasted_message"
+          },
+          "evidence_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Evidence Id"
+          },
+          "expected_version": {
+            "type": "integer",
+            "title": "Expected Version"
+          }
+        },
+        "type": "object",
+        "required": [
+          "text",
+          "expected_version"
+        ],
+        "title": "SourceInput"
       },
       "SourceProvisionOut": {
         "properties": {
@@ -14202,6 +19706,86 @@
         ],
         "title": "UploadIntentOut"
       },
+      "UserLoginRequest": {
+        "properties": {
+          "email": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 3,
+            "title": "Email"
+          },
+          "password": {
+            "type": "string",
+            "maxLength": 128,
+            "minLength": 6,
+            "title": "Password"
+          }
+        },
+        "type": "object",
+        "required": [
+          "email",
+          "password"
+        ],
+        "title": "UserLoginRequest"
+      },
+      "UserRegisterRequest": {
+        "properties": {
+          "email": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 3,
+            "title": "Email"
+          },
+          "password": {
+            "type": "string",
+            "maxLength": 128,
+            "minLength": 6,
+            "title": "Password"
+          },
+          "full_name": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 2,
+            "title": "Full Name"
+          },
+          "phone": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 32
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Phone"
+          }
+        },
+        "type": "object",
+        "required": [
+          "email",
+          "password",
+          "full_name"
+        ],
+        "title": "UserRegisterRequest"
+      },
+      "UserRoleUpdateRequest": {
+        "properties": {
+          "roles": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Roles",
+            "description": "List of roles: admin, reviewer, publisher, operator, consumer"
+          }
+        },
+        "type": "object",
+        "required": [
+          "roles"
+        ],
+        "title": "UserRoleUpdateRequest"
+      },
       "ValidationError": {
         "properties": {
           "loc": {
@@ -14369,6 +19953,17 @@
             "type": "object",
             "minProperties": 1,
             "title": "Overrides"
+          },
+          "expected_version": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expected Version"
           }
         },
         "type": "object",
@@ -14397,6 +19992,17 @@
             "type": "string",
             "format": "uuid",
             "title": "Case Id"
+          },
+          "case_version": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Case Version"
           },
           "overrides": {
             "additionalProperties": true,

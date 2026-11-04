@@ -3,11 +3,13 @@ from typing import Any
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import BaseModel, Field
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.database import get_db_session
 from app.core.security import get_current_principal
-from app.facts.schemas import FactAssertionCreate, FactAssertionOut
+from app.facts.models import FactAssertion
+from app.facts.schemas import FactAssertionCreate, FactAssertionOut, FactReviewSubmission
 from app.facts.service import FactService
 from app.identity.models import Principal
 from app.policy.domain_catalogue import (
@@ -38,6 +40,7 @@ class NBQSkipRequest(BaseModel):
 
 class WhatIfApplyRequest(BaseModel):
     overrides: dict[str, Any] = Field(..., min_length=1)
+    expected_version: int | None = None
 
 
 # In-memory skipped questions tracking per case for this runtime session
@@ -104,6 +107,8 @@ async def apply_what_if_overrides(
 ):
     """Explicit workflow to commit simulated facts into the actual case as reviewed assertions."""
     case = await FactService.get_authorized_case(case_id, principal, db)
+    if payload.expected_version is not None and payload.expected_version != case.row_version:
+        raise HTTPException(409, 'New case information is available. Compare again before applying this change.')
 
     # Check for forbidden credential fields (T32)
     for k in payload.overrides:
@@ -125,18 +130,27 @@ async def apply_what_if_overrides(
         else:
             ft = "string"
 
+        if ft == 'money' and (not isinstance(value, int) or value < 0):
+            raise HTTPException(400, 'Money must be a nonnegative integer number of poisha.')
+        previous = (await db.scalars(select(FactAssertion).where(FactAssertion.case_id == case.id,
+            FactAssertion.field_name == field_name, FactAssertion.is_active.is_(True)))).all()
+        for old in previous:
+            old.is_active = False
         assertion = await FactService.create_assertion(
             case.id,
             FactAssertionCreate(
                 field_name=field_name,
                 field_type=ft,
-                raw_value=value,
+                raw_value={'currency': 'BDT', 'minor_units': int(value)} if ft == 'money' else value,
+                original_text=f'BDT {int(value)//100}.{int(value)%100:02d}' if ft == 'money' else None,
                 origin="what_if_adopted",
             ),
             principal,
             db,
         )
-        applied_assertions.append(assertion)
+        await FactService.review_assertion(case.id, assertion.id,
+            FactReviewSubmission(review_outcome='accepted'), principal, db)
+        applied_assertions.append(assertion.model_copy(update={'review_outcome': 'accepted'}))
 
     return applied_assertions
 

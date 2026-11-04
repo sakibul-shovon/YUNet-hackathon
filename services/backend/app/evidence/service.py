@@ -1,5 +1,4 @@
 import datetime
-import re
 import secrets
 import uuid
 from pathlib import Path
@@ -28,6 +27,7 @@ from app.evidence.schemas import (
 )
 from app.evidence.storage import get_storage_backend
 from app.facts.models import FactAssertion, FactSourceLink
+from app.facts.normalization import normalize_bdt_money
 from app.facts.service import FactService
 from app.identity.models import Principal
 
@@ -679,23 +679,31 @@ class EvidenceService:
                 parsed = None
 
             extracted_minor = 0
-            bn_trans = str.maketrans("০১২৩৪৫৬৭৮৯", "0123456789")
-            if parsed and parsed.regions:
+            reviewed_values = {(link.locator_meta or {}).get('reviewed_money_minor_units')
+                for link in all_links if (link.locator_meta or {}).get('evidence_id') == str(item.id)
+                and (link.locator_meta or {}).get('evidence_sha256') == item.sha256_hash
+                and (link.locator_meta or {}).get('reviewed_by') == str(principal.id)
+                and isinstance((link.locator_meta or {}).get('reviewed_money_minor_units'), int)}
+            if len(reviewed_values) == 1:
+                extracted_minor = next(iter(reviewed_values))
+            if extracted_minor == 0 and parsed and parsed.regions:
                 for r in parsed.regions:
                     if r.is_critical_token and r.critical_token_type == "money":
-                        nums = re.findall(r"\d+", r.text.translate(bn_trans).replace(",", ""))
-                        if nums:
-                            val = int(nums[0])
-                            extracted_minor = val * 100
+                        try:
+                            extracted_minor = normalize_bdt_money(r.text).minor_units
                             break
+                        except ValueError:
+                            continue
 
             if extracted_minor == 0 and parsed and parsed.full_text:
                 matches = DocumentParser.MONEY_PAT.findall(parsed.full_text)
                 for m in matches:
-                    nums = re.findall(r"\d+", m.translate(bn_trans).replace(",", ""))
-                    if nums and int(nums[0]) > 0:
-                        extracted_minor = int(nums[0]) * 100
-                        break
+                    try:
+                        extracted_minor = normalize_bdt_money(m).minor_units
+                        if extracted_minor > 0:
+                            break
+                    except ValueError:
+                        continue
 
             is_dup = item.sha256_hash in seen_hashes if item.sha256_hash else False
             if item.sha256_hash:
@@ -797,6 +805,18 @@ class EvidenceService:
             if meta.get("evidence_id") == target_str:
                 await db.delete(l)
                 deleted_links_count += 1
+
+        # OCR/transcript derivatives must not remain in run history after a file
+        # is removed. Other files and timing receipts remain intact.
+        from app.operations.models import CaseRun
+        runs = (await db.scalars(select(CaseRun).where(CaseRun.case_id == case_id,
+            CaseRun.principal_id == principal.id))).all()
+        for run in runs:
+            result = dict(run.result or {})
+            for key in ('readings', 'evidence_findings'):
+                if key in result:
+                    result[key] = [source for source in result[key] if source.get('id') != target_str]
+            run.result = result
 
         # 3. Mark evidence status as deleted and release quota
         item.status = "deleted"

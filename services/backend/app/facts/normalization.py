@@ -125,7 +125,7 @@ def normalize_bdt_money(val: Any, original_text: str | None = None) -> MoneyValu
     text = bengali_to_ascii_digits(raw_str)
 
     # Step 2: Strip currency signs and labels (৳, Tk, Tk., BDT, টাকা, etc.)
-    text = re.sub(r"(?i)[৳]|bdt|tk\.?|টাকা", "", text).strip()
+    text = re.sub(r"(?i)[৳]|bdt|taka|tk\.?|টাকা", "", text).strip()
 
     # Step 3: Remove thousands commas (e.g. 5,500.50 -> 5500.50)
     text = text.replace(",", "").strip()

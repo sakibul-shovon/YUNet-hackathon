@@ -20,15 +20,20 @@ class Settings(BaseSettings):
     JWT_AUDIENCE: str = "claimcraft-bd-api"
     SESSION_COOKIE_NAME: str = "cc_session"
     SESSION_MAX_AGE_SECONDS: int = 7 * 24 * 3600  # 7 days
+    BOOTSTRAP_ADMIN_EMAIL: str | None = None
+    BOOTSTRAP_ADMIN_PASSWORD: str | None = None
     SUPABASE_URL: str | None = None
     SUPABASE_JWKS_URL: str | None = None
 
     # AI Models (Groq LLaMA 3.3 / Gemini)
     GROQ_API_KEY: str | None = None
-    GROQ_MODEL: str = "llama-3.3-70b-versatile"
+    GROQ_MODEL: str = "openai/gpt-oss-120b"
+    GROQ_VISION_MODEL: str = "qwen/qwen3.8-27b"
     GEMINI_API_KEY: str | None = None
     GEMINI_MODEL_FLASH: str = "gemini-3.8-flash"
     GEMINI_MODEL_STRONG: str | None = None
+    GEMINI_RECORD_READER_MODEL: str | None = None
+    GROQ_TRANSCRIBE_MODEL: str = "whisper-large-v3"
 
     # Google Cloud STT
     GOOGLE_APPLICATION_CREDENTIALS: str | None = None

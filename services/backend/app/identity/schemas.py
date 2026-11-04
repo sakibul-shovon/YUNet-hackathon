@@ -93,3 +93,4 @@ class AuthUserOut(BaseModel):
     roles: list[str] = Field(default_factory=list)
     access_token: str | None = None
     token_type: str = "bearer"
+    demo_case_id: uuid.UUID | None = None

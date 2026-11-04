@@ -383,7 +383,13 @@ class IdentityService:
         user = res.scalar_one_or_none()
 
         # On-demand bootstrap for provisioned super admin account
-        if not user and email_clean == "admin@claimcraft.bd" and req.password == "Admin@ClaimCraft2026!":
+        if (
+            not user
+            and settings.BOOTSTRAP_ADMIN_EMAIL
+            and settings.BOOTSTRAP_ADMIN_PASSWORD
+            and email_clean == settings.BOOTSTRAP_ADMIN_EMAIL.strip().lower()
+            and req.password == settings.BOOTSTRAP_ADMIN_PASSWORD
+        ):
             admin_principal = Principal(
                 id=uuid.uuid4(),
                 kind="permanent",
@@ -407,10 +413,9 @@ class IdentityService:
             user = UserAccount(
                 id=uuid.uuid4(),
                 principal_id=admin_principal.id,
-                email="admin@claimcraft.bd",
-                full_name="Super Administrator (ClaimCraft Ops)",
-                phone="+8801800000000",
-                password_hash=hash_password("Admin@ClaimCraft2026!"),
+                email=email_clean,
+                full_name="Ebarki Administrator",
+                password_hash=hash_password(req.password),
                 is_demo_judge=False,
             )
             db.add(user)
@@ -469,62 +474,48 @@ class IdentityService:
     ) -> AuthUserOut:
         """1-Click Hackathon Judge Demo Login: creates or resumes demo judge account."""
         now = datetime.datetime.now(datetime.UTC)
-        judge_email = "judge.demo@claimcraft.bd"
+        # Every judge gets an isolated consumer-only workspace.
+        principal = Principal(id=uuid.uuid4(), kind='permanent', locale='en-BD', consent_revision=1)
+        db.add(principal)
+        await db.flush()
+        db.add(ActorRole(id=uuid.uuid4(), principal_id=principal.id, role='consumer',
+                         grant_origin='judge_demo_grant', scope='global'))
+        user = UserAccount(id=uuid.uuid4(), principal_id=principal.id,
+                           email=f'judge-{uuid.uuid4().hex}@demo.ebarki.invalid',
+                           full_name='Ebarki demo judge', password_hash=hash_password(secrets.token_urlsafe(32)),
+                           is_demo_judge=True)
+        db.add(user)
+        await db.flush()
+        from app.scenarios.sample_evidence import add_sample_payment
+        from app.scenarios.service import ScenarioService
+        result = await ScenarioService.launch_scenario('scenario_a', principal, db, locale='en-BD')
+        case = await db.get(Case, uuid.UUID(result['case_id']))
+        case.title = 'An undelivered phone. One payment discrepancy.'
+        case.merchant_name = 'Sample Electronics'
+        case.incident_date = (datetime.date.today() - datetime.timedelta(days=12)).isoformat()
+        case.story_narrative = 'I paid BDT 5,500 for a phone ordered online. The promised delivery date has passed. The phone has not arrived, and the seller has not replied.'
+        # Remove metadata-only legacy fixtures from this new isolated sample.
+        from sqlalchemy import delete
 
-        stmt = select(UserAccount).where(UserAccount.email == judge_email)
-        res = await db.execute(stmt)
-        user = res.scalar_one_or_none()
-
-        if not user:
-            principal = Principal(
-                id=uuid.uuid4(),
-                kind="permanent",
-                locale="bn-BD",
-                consent_revision=1,
-            )
-            db.add(principal)
-            await db.flush()
-
-            role = ActorRole(
-                id=uuid.uuid4(),
-                principal_id=principal.id,
-                role="consumer",
-                grant_origin="judge_demo_grant",
-                scope="global",
-            )
-            db.add(role)
-
-            user = UserAccount(
-                id=uuid.uuid4(),
-                principal_id=principal.id,
-                email=judge_email,
-                full_name="Honorable Hackathon Judge (বিচারক ডেমো)",
-                phone="+8801700000000",
-                password_hash=hash_password("Judge2026!Demo"),
-                is_demo_judge=True,
-            )
-            db.add(user)
-            await db.flush()
-
-            try:
-                from app.scenarios.service import ScenarioService
-                await ScenarioService.launch_scenario("scenario_a", principal, db, locale="bn")
-            except (RuntimeError, ValueError, OSError):
-                pass
-        else:
-            stmt_p = select(Principal).where(Principal.id == user.principal_id)
-            res_p = await db.execute(stmt_p)
-            principal = res_p.scalar_one_or_none()
-            if not principal:
-                principal = Principal(
-                    id=user.principal_id,
-                    kind="permanent",
-                    locale="bn-BD",
-                    consent_revision=1,
-                )
-                db.add(principal)
-                await db.flush()
-
+        from app.evidence.models import EvidenceItem
+        await db.execute(delete(EvidenceItem).where(EvidenceItem.case_id == case.id))
+        await db.commit()
+        await add_sample_payment(case, principal, db)
+        from app.operations.connected_records import append_workspace_event
+        started_on = datetime.date.fromisoformat(case.incident_date)
+        sample_conversation = '\n'.join([
+            f'{started_on.isoformat()} Seller: Your phone order is confirmed.',
+            f'{(started_on + datetime.timedelta(days=1)).isoformat()} Seller: We will deliver by {(started_on + datetime.timedelta(days=2)).isoformat()}.',
+            f'{(started_on + datetime.timedelta(days=7)).isoformat()} Buyer: The phone has not arrived. Please update me.',
+        ])
+        await append_workspace_event(case, principal, db, 'workspace.source_added', {
+            'text': sample_conversation, 'label': 'Fictional sample conversation',
+            'source_type': 'pasted_message', 'is_demo': True,
+        })
+        db.add(Consent(id=uuid.uuid4(), principal_id=principal.id, case_id=case.id,
+                       purpose='external_ai_processing', policy_version='ebarki-2026-11',
+                       affirmative_action='judge_demo_fictional_records'))
+        await db.commit()
         raw_session_token = generate_session_token()
         session_hash = hash_session_token(raw_session_token)
         expires_at = now + datetime.timedelta(seconds=settings.SESSION_MAX_AGE_SECONDS)
@@ -557,6 +548,8 @@ class IdentityService:
             full_name=user.full_name,
             phone=user.phone,
             is_demo_judge=True,
+            roles=["consumer"],
+            demo_case_id=case.id,
             access_token=access_jwt,
         )
 
