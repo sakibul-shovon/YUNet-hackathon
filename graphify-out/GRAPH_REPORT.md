@@ -6,23 +6,23 @@
 - Unclassified: 37 file(s) not represented in the graph (top: .css 9, .woff2 7, (none) 5)
 
 ## Summary
-- 4082 nodes · 10447 edges · 263 communities (207 shown, 56 thin omitted)
+- 4081 nodes · 10447 edges · 259 communities (208 shown, 51 thin omitted)
 - Extraction: 93% EXTRACTED · 7% INFERRED · 0% AMBIGUOUS · INFERRED: 730 edges (avg confidence: 0.94)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `9d50c6f0`
+- Built from commit: `05087be8`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
 - Generated
 - evaluator.py
-- test_t10_t11_evidence_upload.py
+- .get_authorized_case
 - actions/router.py
-- Principal
+- CaseService
 - Compose
-- sqlalchemy_ext_asyncio
+- identity/models.py
 - identity/service.py
 - test_final_audit_regressions.py
 - ClaimCraft BD — Complete Engineering & Architecture Manual
@@ -37,7 +37,7 @@
 - Provision Service / Test T24 Hierarchical Provisions
 - web/package.json
 - audit_final_system.py
-- CaseExtractor
+- normalize_bdt_money
 - time
 - document_parser.py
 - Storage
@@ -49,11 +49,12 @@
 - Telecom Billing And Outage
 - AsyncSession
 - ClaimCraft_BD_Master_Product_Blueprint_v4.1_Knowledge_AI_Engineering.md
-- test_t25_hybrid_retrieval_and_rrf.py
+- CaseExtractor
 - cn
 - Notice
 - Product Safety Hazard
-- .approve_candidate
+- update_case
+- .reconcile_case_payments
 - Tsconfig
 - README.bn.md
 - words
@@ -67,7 +68,7 @@
 - Runner / Metrics
 - knowledge/router.py
 - CommunityService
-- export_case_document
+- AsyncClient
 - AsyncClient
 - Whywhynottraceview / Whatifdrawer
 - test_p13_security_redteam_privacy_suite.py
@@ -77,15 +78,15 @@
 - Badge
 - AgentWorkspace.tsx
 - AdminService
-- document_store.py
+- actions/router.py
 - test_t25_bengali_bm25s_tokenization_and_snapshot_roundtrip
 - Package
 - build_final_audit_fixtures.py
-- stt_adapter.py
+- uuid
 - merchants/router.py
 - words
 - runs.py
-- pytest
+- httpx
 - retrieval/router.py
 - Kleene
 - Badge.tsx
@@ -94,16 +95,16 @@
 - test_stabilization_followup.py
 - Admin.tsx
 - 6. Core innovation: multimodal evidence-to-action intelligence
-- LocalDiskStorageBackend
+- test_t22_audio_transcription_and_codecs.py
 - Ebarki — Agentic Experience V2
 - voice.py
 - Test P08 5 Nbq And Safety Priority
-- test_agentic_v2.py
+- test_ebarki_workspace.py
 - 10. Technical architecture, data model, API and contracts
 - .dense_search
 - test_p02_4_account_upgrade_preserves_cases
 - DraftRequestGenerator
-- FactAssertion
+- re
 - pathlib
 - Package
 - ClaimCraft BD — Agent Execution Plan
@@ -160,7 +161,7 @@
 - 12. Security, privacy, safety and human-review policy
 - audit_browser.mjs
 - capture.mjs
-- 27. Evaluation, acceptance tests, source governance and runbooks
+- copilot/router.py
 - 3. Customer problem, target users, market differentiation
 - 7. Complete consumer experience, screens and UX principles
 - ClaimCraft BD — Provider Capabilities, Terms & Data Handling Register
@@ -169,7 +170,7 @@
 - 10. Contracts, API and concurrency
 - 18. Test catalogue and measurable release gates
 - 4. User journeys and experience design
-- AsyncClient
+- vision/router.py
 - ADR-103: Orthogonal Fact Model and Assertion Provenance
 - ADR-104: Policy AST and Deterministic Three-Valued Evaluator
 - ADR-105: Release and Index Atomicity
@@ -181,7 +182,7 @@
 - 2. Hackathon alignment, product boundaries ও outcomes
 - AsyncClient
 - 5. Final product scope: domains, issues, remedies
-- conftest.py
+- 26. Data contracts, workers, APIs, indexes and release infrastructure
 - ClaimCraft BD — Pinned Toolchain & Dependency Register
 - ClaimCraft BD — Evaluation and Ablation Benchmark Report
 - 15. Security, consent and deletion
@@ -202,7 +203,7 @@
 - ClaimCraft BD Backend Service
 - CLAUDE.md
 - 4. Review comparison, critical errors ও merged decision log
-- get_candidate_diff
+- audit_browser.mjs
 - Site-wide expression
 - 9. Technical implementation and migration
 - [locale]/layout.tsx
@@ -213,7 +214,7 @@
 - tailwindcss
 - 23. Agent handoff prompt and completion contract
 - Six signature interactions to build exceptionally well
-- test_t13_native_pdf_critical_token_extraction
+- reply_preparation.py
 - test_p06_4_multimodal_facts_same_atomic_store_and_provenance
 - Ebarki — বাংলা লেখার নির্দেশনা
 - make_dummy_screenshot
@@ -221,21 +222,18 @@
 - generate_datasets.py
 - Ebarki — Connected AI Experience
 - .probe_file
-- get_current_principal
+- page_preview.py
 - Ebarki final system audit
 - verify_live_ai.py
 - test_p08_1_paired_jurisdictions.py
 - Ebarki agent handoff
-- test_t21_duplicate_receipt_exclusion
 - Settings
 - json
 - parse_condition_node
 - test_t49_t50_bilingual_themes.py
-- verify_official_sources.py
+- test_t08_extract_endpoint_and_auto_persist
 - Ebarki stabilization follow-up
-- get_capabilities
 - test_t19_t20_procedural_assessment.py
-- .delete_evidence_item
 - gsap
 - 17. Risks, open questions and definition of done
 - review_frames.mjs
@@ -244,78 +242,76 @@
 - react
 - diff_service.py
 - OfficialSourceWatcher
-- test_t01_cross_tenant_isolation
-- ReassessmentQueueService
+- database.py
+- action_dag.py
 - citation_validator.py
-- get_storage_backend
+- validate_file_signature
 - 13. Evaluation, benchmarks, baselines and red-team tests
 - test_p06_6_complete_multimodal_combination_to_downstream_pipeline
 - test_t04_case_crud_persistence_and_version_conflict
 - test_p08_4_what_if_zero_persistence_t31
-- test_p08_6_pipeline_runs_and_receipts_t53
 - test_t09_review_preserves_origin_and_no_verification_inflation
-- require_role
 
 ## God Nodes (most connected - your core abstractions)
 1. `Principal` - 251 edges
 2. `words()` - 122 edges
-3. `FactService` - 80 edges
-4. `Glyph()` - 76 edges
-5. `apiFetch()` - 74 edges
-6. `Button` - 61 edges
-7. `Badge()` - 60 edges
-8. `Notice()` - 59 edges
-9. `Button()` - 54 edges
-10. `send()` - 52 edges
+3. `react` - 94 edges
+4. `FactService` - 80 edges
+5. `Glyph()` - 76 edges
+6. `apiFetch()` - 74 edges
+7. `Button` - 61 edges
+8. `Badge()` - 60 edges
+9. `Notice()` - 59 edges
+10. `Button()` - 54 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `T31: In-Memory What-If Simulations` --references--> `ActionDAGService`  [INFERRED]
   docs/pitch/scenario-coverage.md → services/backend/app/actions/action_dag.py
 - `10.7 Event-sourcing and audit design` --references--> `CaseEvent`  [INFERRED]
   docs/ClaimCraft_BD_Master_Product_Blueprint_v4.1_Knowledge_AI_Engineering.md → services/backend/app/cases/models.py
-- `Implementation map` --references--> `AgentWorkspace()`  [INFERRED]
-  docs/EBARKI_CONNECTED_EXPERIENCE.md → apps/web/src/features/agent/AgentWorkspace.tsx
+- `Fixed or contained defects` --references--> `Case`  [INFERRED]
+  docs/qa/EBARKI_ISSUE_LEDGER.md → services/backend/app/cases/models.py
 - `Implementation map` --references--> `ChangePreview()`  [INFERRED]
   docs/EBARKI_CONNECTED_EXPERIENCE.md → apps/web/src/features/agent/ChangePreview.tsx
-- `Implementation map` --references--> `FilingHandoff()`  [INFERRED]
-  docs/EBARKI_CONNECTED_EXPERIENCE.md → apps/web/src/features/agent/FilingHandoff.tsx
+- `1. Release Decision Summary` --references--> `test_t01_cross_tenant_isolation()`  [INFERRED]
+  evaluation/reports/hard_release_gate_report.md → services/backend/tests/security/test_t01_t02_t03_tenancy_and_auth.py
 
 ## Import Cycles
 - 2-file cycle: `apps/web/src/features/landing/bangla.ts -> apps/web/src/features/landing/copy.ts -> apps/web/src/features/landing/bangla.ts`
 
-## Communities (263 total, 56 thin omitted)
+## Communities (259 total, 51 thin omitted)
 
 ### Community 0 - "Generated"
 Cohesion: 0.02
 Nodes (132): ActionDAGOut, ActionNode, AlertCreateRequest, ApiLiveHealth, ApiPing, ApiReadyHealth, AssessmentRouteOut, AudioTranscriptOut (+124 more)
 
 ### Community 1 - "evaluator.py"
-Cohesion: 0.26
-Nodes (16): AllNode, AnyNode, ASTNode, DateCompareNode, EqNode, ExistsNode, HasVerifiedExternalRecordNode, InNode (+8 more)
+Cohesion: 0.33
+Nodes (15): AllNode, AnyNode, ASTNode, DateCompareNode, EqNode, ExistsNode, HasVerifiedExternalRecordNode, InNode (+7 more)
 
-### Community 2 - "test_t10_t11_evidence_upload.py"
-Cohesion: 0.27
-Nodes (5): test_t01_evidence_tenant_isolation(), test_t10_mime_spoofing_and_binary_validation(), test_t10_reused_intent_and_successful_accepted_flow(), test_t11_case_quota_reservation_limits(), test_t11_upload_token_lifespan_and_sweeper()
+### Community 2 - ".get_authorized_case"
+Cohesion: 0.13
+Nodes (9): answer_next_best_question(), apply_what_if_overrides(), get_case_assessment(), NBQAnswerRequest, NBQSkipRequest, simulate_what_if_scenario(), skip_next_best_question(), trigger_case_assessment() (+1 more)
 
 ### Community 3 - "actions/router.py"
-Cohesion: 0.06
-Nodes (28): ActionDAGOut, ActionDAGService, ActionNode, ComplaintDestinationOut, ComplaintDestinationService, DraftRequestOut, PortalFieldDef, PortalFieldMapOut (+20 more)
+Cohesion: 0.11
+Nodes (14): ComplaintDestinationOut, ComplaintDestinationService, PortalFieldDef, PortalFieldMapOut, PortalFieldMapService, get_complaint_destination(), test_p09_3_portal_field_maps_and_stale_fallback_t33(), test_filing_preparation_rejects_unknown_channel_and_keeps_zero_amount() (+6 more)
 
-### Community 4 - "Principal"
-Cohesion: 0.07
-Nodes (21): CaseEvent, CaseSnapshot, OutboxMessage, create_case(), delete_case(), get_case(), get_case_activity(), list_cases() (+13 more)
+### Community 4 - "CaseService"
+Cohesion: 0.17
+Nodes (8): CaseSnapshot, OutboxMessage, CaseCreate, CaseEventOut, CaseListOut, CaseOut, CaseUpdate, CaseService
 
 ### Community 5 - "Compose"
 Cohesion: 0.05
 Nodes (48): build, depends_on, environment, ports, restart, context, dockerfile, postgres (+40 more)
 
-### Community 6 - "sqlalchemy_ext_asyncio"
-Cohesion: 0.04
-Nodes (31): main(), AdminAuditEntry, AdminRecord, Base, get_db_session(), scoped_tenant_session(), EvidenceItem, ParserProbe (+23 more)
+### Community 6 - "identity/models.py"
+Cohesion: 0.05
+Nodes (25): seed_demo_case(), _do_seed(), AdminAuditEntry, Case, CaseEvent, Base, FactAssertion, FactResolution (+17 more)
 
 ### Community 7 - "identity/service.py"
-Cohesion: 0.07
-Nodes (38): main(), save_private_configuration(), create_access_jwt(), csrf_for_session(), generate_session_token(), hash_session_token(), ActorRole, Consent (+30 more)
+Cohesion: 0.05
+Nodes (43): main(), save_private_configuration(), create_access_jwt(), csrf_for_session(), decode_and_verify_jwt(), generate_session_token(), get_current_principal(), get_optional_principal() (+35 more)
 
 ### Community 8 - "test_final_audit_regressions.py"
 Cohesion: 0.15
@@ -327,7 +323,7 @@ Nodes (33): active(), useAgentRun(), accept(), connect(), poll(), 10. Automated 
 
 ### Community 10 - "ProceduralAssessmentEngine"
 Cohesion: 0.13
-Nodes (12): Case, AssessmentRouteOut, NextBestQuestion, ProceduralAssessmentEngine, ProceduralAssessmentOut, RouteDiffItem, select_facts(), WhatIfSimulationRequest (+4 more)
+Nodes (10): AssessmentRouteOut, NextBestQuestion, ProceduralAssessmentEngine, ProceduralAssessmentOut, RouteDiffItem, select_facts(), WhatIfSimulationRequest, WhatIfSimulationResult (+2 more)
 
 ### Community 11 - "Ebarki"
 Cohesion: 0.18
@@ -342,19 +338,19 @@ Cohesion: 0.14
 Nodes (15): create_case_issue(), get_multi_issue_assessment(), list_case_issues(), merge_case_issues(), review_case_issue(), split_case_issue(), IssueCreate, IssueMergeRequest (+7 more)
 
 ### Community 14 - "Timeline Service / Timeline Router"
-Cohesion: 0.14
-Nodes (15): CaseReminder, ExternalReference, cancel_case_reminder(), create_case_reminder(), get_case_timeline(), list_case_reminders(), list_case_snapshots(), record_case_external_update() (+7 more)
+Cohesion: 0.15
+Nodes (15): CaseReminder, cancel_case_reminder(), create_case_reminder(), get_case_timeline(), list_case_reminders(), list_case_snapshots(), record_case_external_update(), CaseSnapshotOut (+7 more)
 
 ### Community 15 - "Page / Card"
 Cohesion: 0.13
 Nodes (40): ActionStudioClient(), ActionDraftViewer(), ActionDraftViewerProps, DraftData, CaseContextSidebar(), CaseContextSidebarProps, CaseDetails, FactAssertion (+32 more)
 
 ### Community 16 - "FactService"
-Cohesion: 0.07
-Nodes (26): extract_case_narrative(), FactSourceLink, create_case_fact(), list_case_facts(), propose_multimodal_case_fact(), review_case_fact(), FactAssertionCreate, FactAssertionOut (+18 more)
+Cohesion: 0.12
+Nodes (17): get_db_session(), extract_case_narrative(), FactSourceLink, create_case_fact(), list_case_facts(), propose_multimodal_case_fact(), review_case_fact(), FactAssertionCreate (+9 more)
 
 ### Community 17 - "workbench_router.py"
-Cohesion: 0.24
+Cohesion: 0.26
 Nodes (16): append_workspace_event(), connected_records(), owned_case(), add_source(), edit_reply(), filing_handoff(), get_records(), make_reply() (+8 more)
 
 ### Community 18 - "Provision Service / Test T24 Hierarchical Provisions"
@@ -369,9 +365,9 @@ Nodes (26): devDependencies, autoprefixer@^10.4.20, jsdom@^30.1.3, postcss@^8.5.
 Cohesion: 0.31
 Nodes (12): main(), check(), guest(), matrix(), new_case(), req(), run(), save() (+4 more)
 
-### Community 21 - "CaseExtractor"
-Cohesion: 0.06
-Nodes (19): CaseExtractor, FactProposal, FactProposalSet, TextSpan, ascii_to_bengali_digits(), bengali_to_ascii_digits(), DateValue, MoneyValue (+11 more)
+### Community 21 - "normalize_bdt_money"
+Cohesion: 0.10
+Nodes (10): ascii_to_bengali_digits(), bengali_to_ascii_digits(), DateValue, MoneyValue, normalize_bd_date(), normalize_bdt_money(), test_p04_1_fact_assertions_and_review_api(), test_t05_bdt_money_normalization_and_roundtrip() (+2 more)
 
 ### Community 22 - "time"
 Cohesion: 0.18
@@ -380,6 +376,10 @@ Nodes (6): main(), reader_task(), run_load_test(), writer_pipeline_task(), check
 ### Community 23 - "document_parser.py"
 Cohesion: 0.14
 Nodes (4): DocumentParser, DocumentParseResult, TextRegion, test_image_metadata_never_becomes_a_payment_finding()
+
+### Community 24 - "Storage"
+Cohesion: 0.10
+Nodes (3): LocalDiskStorageBackend, StorageBackend, test_vault_rejects_paths_outside_configured_area()
 
 ### Community 25 - "Mfs Unauthorized Charge"
 Cohesion: 0.09
@@ -406,16 +406,16 @@ Cohesion: 0.09
 Nodes (24): eq, allowed_actions, conditions, all, date_basis, fact, value, exclusions (+16 more)
 
 ### Community 31 - "AsyncSession"
-Cohesion: 0.15
-Nodes (8): get_case_evidence_item(), get_evidence_preview(), get_evidence_regions(), get_payment_reconciliation(), init_upload(), list_case_evidence(), list_evidence_spans(), upload_raw_quarantine_data()
+Cohesion: 0.13
+Nodes (10): complete_upload(), delete_case_evidence(), get_case_evidence_item(), get_evidence_preview(), get_evidence_regions(), get_payment_reconciliation(), list_case_evidence(), list_evidence_spans() (+2 more)
 
 ### Community 32 - "ClaimCraft_BD_Master_Product_Blueprint_v4.1_Knowledge_AI_Engineering.md"
 Cohesion: 0.10
-Nodes (19): 18.1 What the final idea is **not**, 18. Full decision history and superseded ideas, 19.1 Confirmed examples vs design assumptions, 19.2 Review source provenance, 19. Official source register and provenance, 26.1 New entities extending Section 10.3, 26.2 Required indexes and partitioning, 26.3 Additional REST/admin endpoints (extend Section 10.5) (+11 more)
+Nodes (19): 18.1 What the final idea is **not**, 18. Full decision history and superseded ideas, 19.1 Confirmed examples vs design assumptions, 19.2 Review source provenance, 19. Official source register and provenance, 27.1 Mandatory test suites, 27.2 Proposed quantitative reporting (all targets TBD), 27.3 Suggested golden evaluation scenarios (+11 more)
 
-### Community 33 - "test_t25_hybrid_retrieval_and_rrf.py"
-Cohesion: 0.15
-Nodes (3): HybridRetriever, test_t25_channel_ablations_and_degraded_reporting(), test_t25_hybrid_retrieval_and_rrf_fusion()
+### Community 33 - "CaseExtractor"
+Cohesion: 0.17
+Nodes (8): CaseExtractor, FactProposal, FactProposalSet, TextSpan, test_date_extraction_does_not_reinterpret_refund_promise_as_incident(), test_t08_bangla_text_extraction(), test_t08_banglish_and_english_extraction(), test_t08_extra_fields_and_foreign_span_ids_rejected()
 
 ### Community 34 - "cn"
 Cohesion: 0.13
@@ -428,6 +428,10 @@ Nodes (45): metadata, Page(), Layout(), metadata, Page(), metadata, Page(), meta
 ### Community 36 - "Product Safety Hazard"
 Cohesion: 0.08
 Nodes (23): eq, allowed_actions, conditions, all, date_basis, fact, value, exclusions (+15 more)
+
+### Community 37 - "update_case"
+Cohesion: 0.14
+Nodes (7): create_case(), delete_case(), get_case(), get_case_activity(), list_cases(), update_case(), withdraw_case_consent()
 
 ### Community 39 - "Tsconfig"
 Cohesion: 0.10
@@ -450,7 +454,7 @@ Cohesion: 0.11
 Nodes (26): loadPortalFields(), loadStudioData(), CaseHeaderBanner(), CaseHeaderBannerProps, handleAnswerNbq(), handleSubmit(), loadData(), refreshCases() (+18 more)
 
 ### Community 44 - "tasks.py"
-Cohesion: 0.16
+Cohesion: 0.20
 Nodes (17): cmd_backend(), cmd_bootstrap(), cmd_check(), cmd_contracts(), cmd_dev(), cmd_doctor(), cmd_graphify(), cmd_seed_demo() (+9 more)
 
 ### Community 45 - "Ci"
@@ -463,39 +467,39 @@ Nodes (27): metadata, Page(), HomePage(), AgentHome(), AgentMark(), CaseAIConsen
 
 ### Community 47 - "KnowledgeService"
 Cohesion: 0.10
-Nodes (13): SourceApproval, SourceFamily, SourceVersion, KnowledgeService, publisher_client(), reviewer_client(), test_p11_1_official_watchers_and_manual_import_t42(), test_p11_2_section_aware_diff_and_commencement_t43() (+5 more)
+Nodes (13): SourceApproval, SourceProvision, SourceVersion, KnowledgeService, publisher_client(), reviewer_client(), test_p11_1_official_watchers_and_manual_import_t42(), test_p11_2_section_aware_diff_and_commencement_t43() (+5 more)
 
 ### Community 48 - "uuid"
 Cohesion: 0.16
 Nodes (9): get_source_by_id(), get_source_registry(), is_private_or_restricted_ip(), is_url_allowlisted(), SourceRegistryEntry, test_get_source_by_id_lookup(), test_official_host_allowlist_validation(), test_source_registry_integrity_and_no_fake_verified() (+1 more)
 
 ### Community 49 - "Runner / Metrics"
-Cohesion: 0.13
+Cohesion: 0.12
 Nodes (3): EvaluationDatasetLoader, EvaluationMetrics, EvaluationRunner
 
 ### Community 50 - "knowledge/router.py"
-Cohesion: 0.21
-Nodes (19): AdminKnowledgeService, KnowledgeRelease, build_release(), get_source_health(), CandidateDiffOut, CaseReassessmentResult, KnowledgeReleaseOut, ManualImportRequest (+11 more)
+Cohesion: 0.08
+Nodes (33): list_statutory_candidates(), AdminKnowledgeService, KnowledgeRelease, ReassessmentQueueService, approve_candidate(), build_release(), disable_release(), flag_impacted_cases() (+25 more)
 
 ### Community 51 - "CommunityService"
 Cohesion: 0.22
 Nodes (9): add_community_comment(), create_community_post(), increment_me_too(), list_community_posts(), CommunityCommentCreate, CommunityCommentOut, CommunityPostCreate, CommunityPostOut (+1 more)
 
-### Community 52 - "export_case_document"
-Cohesion: 0.10
-Nodes (11): CaseExportOut, ExportService, RasterRedactionRequest, render_pdf(), export_case_document(), test_p09_1_action_dag_dependency_and_non_forced_seller_notice(), test_p09_1_action_dag_financial_stage_hierarchy_t20(), test_p09_2_document_ast_and_user_edit_t26_t29() (+3 more)
+### Community 52 - "AsyncClient"
+Cohesion: 0.23
+Nodes (5): test_p09_1_action_dag_dependency_and_non_forced_seller_notice(), test_p09_1_action_dag_financial_stage_hierarchy_t20(), test_p09_2_document_ast_and_user_edit_t26_t29(), test_p09_4_export_markdown_and_html_t27_t34(), test_p09_7_destination_registry_and_link_health_t54()
 
 ### Community 53 - "AsyncClient"
-Cohesion: 0.14
-Nodes (8): judge(), test_all_eight_scenarios_e2e_launch_assessment_and_reset(), test_catalogue_contains_all_eight_scenarios_and_three_quick_starts(), test_scenario_a_whatif_capabilities(), test_scenario_h_living_case_diff_and_adversarial_isolation(), test_t49_bilingual_translation_parity(), extract_keys(), test_t54_official_destination_registry()
+Cohesion: 0.19
+Nodes (5): judge(), test_all_eight_scenarios_e2e_launch_assessment_and_reset(), test_catalogue_contains_all_eight_scenarios_and_three_quick_starts(), test_scenario_a_whatif_capabilities(), test_scenario_h_living_case_diff_and_adversarial_isolation()
 
 ### Community 54 - "Whywhynottraceview / Whatifdrawer"
 Cohesion: 0.14
 Nodes (23): PipelineRun, PipelineStageReceipt, ProcessingDetailsDrawer(), ProcessingDetailsDrawerProps, RouteDiffItem, WhatIfDrawer(), WhatIfDrawerProps, WhatIfSimulationResult (+15 more)
 
 ### Community 55 - "test_p13_security_redteam_privacy_suite.py"
-Cohesion: 0.17
-Nodes (8): T01–T03: Tenancy Isolation, Authorization & Non-Custodial Data Handling, request_logging_and_correlation(), other_consumer(), test_consumer(), test_redteam_input_abuse_and_payload_limits(), test_t01_t02_t44_privilege_escalation_and_admin_tampering(), test_t35_raster_redaction_pixel_destruction_and_metadata_stripping(), test_t37_consent_withdrawal_blocks_external_provider_dispatch()
+Cohesion: 0.22
+Nodes (6): T01–T03: Tenancy Isolation, Authorization & Non-Custodial Data Handling, other_consumer(), test_consumer(), test_redteam_input_abuse_and_payload_limits(), test_t01_t02_t44_privilege_escalation_and_admin_tampering(), test_t37_consent_withdrawal_blocks_external_provider_dispatch()
 
 ### Community 56 - "17. Phase/task execution ledger"
 Cohesion: 0.11
@@ -506,8 +510,8 @@ Cohesion: 0.07
 Nodes (27): dependencies, @claimcraft/contracts@workspace:*, clsx@^2.1.1, @fontsource-variable/bricolage-grotesque@^5.3.0, @fontsource-variable/noto-sans-bengali@^5.3.0, @fontsource-variable/source-sans-3@^5.3.1, @gsap/react@^2.1.2, lucide-react@^0.474.0 (+19 more)
 
 ### Community 58 - "EvidenceService"
-Cohesion: 0.26
-Nodes (10): create_evidence_span_link(), EvidenceItemOut, EvidenceSpanLinkCreate, EvidenceSpanLinkOut, PaymentReconciliationResult, ReconciliationItem, UploadCompleteRequest, UploadIntentCreate (+2 more)
+Cohesion: 0.23
+Nodes (11): create_evidence_span_link(), init_upload(), EvidenceItemOut, EvidenceSpanLinkCreate, EvidenceSpanLinkOut, PaymentReconciliationResult, ReconciliationItem, UploadCompleteRequest (+3 more)
 
 ### Community 59 - "Badge"
 Cohesion: 0.11
@@ -517,21 +521,25 @@ Nodes (17): AIReasoningTrace(), AIReasoningTraceProps, DEFAULT_STEPS, ReasoningS
 Cohesion: 0.09
 Nodes (29): metadata, Page(), metadata, Page(), AgentWorkspace(), addSamplePayment(), ask(), confirmDetails() (+21 more)
 
-### Community 62 - "document_store.py"
-Cohesion: 0.20
-Nodes (10): DocumentASTService, sentence(), DocumentEditRequest, DocumentSectionAST, DocumentSentenceAST, EditableDocumentAST, load_document(), PreparedDocument (+2 more)
+### Community 62 - "actions/router.py"
+Cohesion: 0.09
+Nodes (23): DocumentASTService, sentence(), DocumentEditRequest, DocumentSectionAST, DocumentSentenceAST, EditableDocumentAST, load_document(), PreparedDocument (+15 more)
+
+### Community 63 - "test_t25_bengali_bm25s_tokenization_and_snapshot_roundtrip"
+Cohesion: 0.12
+Nodes (5): BengaliBM25Adapter, HybridRetriever, test_t25_bengali_bm25s_tokenization_and_snapshot_roundtrip(), test_t25_channel_ablations_and_degraded_reporting(), test_t25_hybrid_retrieval_and_rrf_fusion()
 
 ### Community 64 - "Package"
 Cohesion: 0.15
 Nodes (12): description, engines, node, name, packageManager, private, scripts, check:foundation (+4 more)
 
 ### Community 65 - "build_final_audit_fixtures.py"
-Cohesion: 0.15
-Nodes (4): receipt_image(), receipt_pdf(), register(), render_page()
+Cohesion: 0.12
+Nodes (7): receipt_image(), receipt_pdf(), register(), generate_chat_screenshot(), generate_invoice_pdf(), generate_nagad_payment_slip(), get_default_font()
 
-### Community 66 - "stt_adapter.py"
-Cohesion: 0.08
-Nodes (14): detect_audio_mime_from_bytes(), validate_audio_file(), transcribe_case_audio(), AudioTranscriptOut, UncertainSpan, WordTimestamp, STTAdapter, test_cascading_privacy_cleanup_t37() (+6 more)
+### Community 66 - "uuid"
+Cohesion: 0.11
+Nodes (14): EvidenceItem, AudioTranscriptOut, UncertainSpan, WordTimestamp, STTAdapter, add_sample_payment(), test_cascading_privacy_cleanup_t37(), test_committed_audio_metadata_is_not_speech_recognition() (+6 more)
 
 ### Community 67 - "merchants/router.py"
 Cohesion: 0.26
@@ -542,12 +550,12 @@ Cohesion: 0.19
 Nodes (18): EvidenceStory(), refresh(), review(), kindLabel, ConnectedRecords, ConnectedSource, EvidenceMoment, RecordLine (+10 more)
 
 ### Community 69 - "runs.py"
-Cohesion: 0.11
-Nodes (17): CaseRun, PipelineRunOut, PipelineRunService, PipelineStageReceipt, cancel_case_run(), get_case_pipeline_runs(), get_case_run(), list_case_runs() (+9 more)
+Cohesion: 0.09
+Nodes (25): CaseRun, PipelineRunOut, PipelineRunService, PipelineStageReceipt, cancel_case_run(), get_case_pipeline_runs(), get_case_run(), list_case_runs() (+17 more)
 
-### Community 70 - "pytest"
-Cohesion: 0.10
-Nodes (13): generate_chat_screenshot(), generate_invoice_pdf(), generate_nagad_payment_slip(), get_default_font(), create_test_image(), create_test_pdf(), test_t12_encrypted_pdf_and_active_javascript_rejection(), test_t12_pdf_page_bomb_rejection() (+5 more)
+### Community 70 - "httpx"
+Cohesion: 0.05
+Nodes (19): test_p09_5_true_raster_redaction_t35(), test_t54_official_destination_registry(), test_p08_6_pipeline_runs_and_receipts_t53(), test_t35_raster_redaction_pixel_destruction_and_metadata_stripping(), create_test_image(), create_test_pdf(), test_t12_encrypted_pdf_and_active_javascript_rejection(), test_t12_pdf_page_bomb_rejection() (+11 more)
 
 ### Community 71 - "retrieval/router.py"
 Cohesion: 0.29
@@ -563,15 +571,15 @@ Nodes (9): IntakeFormProps, VoiceNoteRecorder(), VoiceNoteRecorderProps, BadgePr
 
 ### Community 74 - "admin/router.py"
 Cohesion: 0.09
-Nodes (21): AlertCreateRequest, CaseOverrideRequest, CommunityModerateRequest, create_alert(), get_admin_stats(), get_alerts(), get_audit_logs(), list_admin_cases() (+13 more)
+Nodes (20): AlertCreateRequest, CaseOverrideRequest, CommunityModerateRequest, create_alert(), get_admin_stats(), get_alerts(), get_audit_logs(), list_admin_cases() (+12 more)
 
 ### Community 75 - "route.ts"
 Cohesion: 0.25
 Nodes (6): DELETE, DEMO_SLUG_MAP, GET, PATCH, POST, PUT
 
 ### Community 76 - "test_stabilization_followup.py"
-Cohesion: 0.21
-Nodes (10): decode_and_verify_jwt(), account(), test_admin_entry_rejects_consumers_before_creating_cookie(), test_alerts_audit_and_validation_are_durable_and_role_protected(), test_bearer_logout_revokes_session_and_rejects_replay(), test_cookie_csrf_is_session_bound_and_origins_guard_login(), test_durable_ban_revokes_access_and_unban_does_not_restore_old_session(), test_readiness_rejects_an_unconfigured_storage_adapter() (+2 more)
+Cohesion: 0.26
+Nodes (10): AdminRecord, account(), test_admin_entry_rejects_consumers_before_creating_cookie(), test_alerts_audit_and_validation_are_durable_and_role_protected(), test_bearer_logout_revokes_session_and_rejects_replay(), test_cookie_csrf_is_session_bound_and_origins_guard_login(), test_durable_ban_revokes_access_and_unban_does_not_restore_old_session(), test_readiness_rejects_an_unconfigured_storage_adapter() (+2 more)
 
 ### Community 78 - "Admin.tsx"
 Cohesion: 0.07
@@ -581,37 +589,37 @@ Nodes (45): AdminDashboardClient(), metadata, Page(), metadata, Page(), metadata
 Cohesion: 0.12
 Nodes (16): 6.10 Official Filing Companion (new core capability), 6.11 Deadline Guard / Urgency Triage, 6.12 Living Case + Decision Change Log, 6.13 Human handoff and difficult situations, 6.1 Multimodal Case Compiler, 6.2 Evidence Intelligence and explicit provenance, 6.3 Case Evidence Graph, but not a misleading legal tri-map, 6.4 Multi-Issue Decomposition (+8 more)
 
+### Community 80 - "test_t22_audio_transcription_and_codecs.py"
+Cohesion: 0.17
+Nodes (6): detect_audio_mime_from_bytes(), validate_audio_file(), make_dummy_audio_bytes(), test_t22_audio_codec_validation_and_spoof_rejection(), test_t22_audio_replay_stream_and_deletion(), test_t22_consent_enforcement_and_private_stt_transcription()
+
 ### Community 81 - "Ebarki — Agentic Experience V2"
 Cohesion: 0.13
 Nodes (15): Acceptance criteria, Active case: Workstream + Working Canvas, Agent presence and motion system, Art direction: The Evidence Thread, Build priorities, Ebarki — Agentic Experience V2, Feature-specific treatment, Home: give Ebarki a job (+7 more)
 
 ### Community 82 - "voice.py"
-Cohesion: 0.14
+Cohesion: 0.12
 Nodes (3): align(), fetch(), synth()
 
 ### Community 83 - "Test P08 5 Nbq And Safety Priority"
-Cohesion: 0.33
+Cohesion: 0.32
 Nodes (3): test_p08_5_nbq_skip_preserves_unknown_t32(), test_p08_5_safety_hazard_priority_t32(), test_p08_5_strict_otp_pin_prohibition_t32()
 
-### Community 84 - "test_agentic_v2.py"
-Cohesion: 0.19
-Nodes (14): create_run(), RunRequest, test_a_cancelled_run_does_not_start_any_tool(), test_draft_run_creates_a_saved_reviewable_artifact(), test_failed_tools_are_visible_and_the_case_can_be_retried(), test_interrupted_runs_expire_without_losing_case_work(), test_judge_workspaces_are_isolated_and_have_real_evidence(), test_real_case_cannot_add_sample_evidence_and_stale_runs_are_rejected() (+6 more)
+### Community 84 - "test_ebarki_workspace.py"
+Cohesion: 0.42
+Nodes (6): own_case(), test_bangla_pdf_and_zip_are_real_downloads_and_never_submit(), test_cancelled_run_does_not_execute_and_corrected_review_is_visible(), test_document_edits_survive_reload_and_export_and_clear_inherited_support(), test_run_document_and_assistant_access_is_owner_scoped(), test_runs_execute_record_real_methods_and_replay_without_reexecution()
 
 ### Community 85 - "10. Technical architecture, data model, API and contracts"
 Cohesion: 0.25
 Nodes (8): 10.1 High-level system architecture, 10.2 Recommended technology stack, 10.3 Database model (normalized conceptual schema), 10.4 Case lifecycle state machine, 10.5 Proposed REST endpoints (and permissions), 10.6 Typed AI output contract (illustrative), 10.7 Event-sourcing and audit design, 10. Technical architecture, data model, API and contracts
 
 ### Community 88 - "DraftRequestGenerator"
-Cohesion: 0.17
-Nodes (4): DraftRequestGenerator, test_t26_draft_api_endpoint_and_tenant_isolation(), test_t26_draft_generation_invariants(), test_t26_threat_and_false_claim_rejection()
-
-### Community 89 - "FactAssertion"
-Cohesion: 0.25
-Nodes (6): seed_demo_case(), _do_seed(), FactAssertion, FactResolution, FactReview, test_p04_6_e2e_m1_vertical_slice()
+Cohesion: 0.15
+Nodes (5): DraftRequestGenerator, DraftRequestOut, test_t26_draft_api_endpoint_and_tenant_isolation(), test_t26_draft_generation_invariants(), test_t26_threat_and_false_claim_rejection()
 
 ### Community 90 - "pathlib"
-Cohesion: 0.07
-Nodes (4): audit_nginx_tls(), audit_secret_leakage(), main(), run_comprehensive_case_test()
+Cohesion: 0.08
+Nodes (6): audit_nginx_tls(), audit_secret_leakage(), main(), run_comprehensive_case_test(), get_keys(), main()
 
 ### Community 91 - "Package"
 Cohesion: 0.40
@@ -638,7 +646,7 @@ Cohesion: 0.29
 Nodes (6): Ebarki - five-slide submission content, Slide 1 - An everyday consumer problem, Slide 2 - Follow the evidence, Slide 3 - Meaningful AI with inspectable boundaries, Slide 4 - A useful next action, Slide 5 - Solo builder and evidence
 
 ### Community 97 - "test_p08_2_issue_crud_and_brand_track_rejection"
-Cohesion: 0.33
+Cohesion: 0.32
 Nodes (3): test_p08_2_issue_crud_and_brand_track_rejection(), test_p08_2_issue_split_and_merge(), test_p08_2_multi_issue_independent_evaluation()
 
 ### Community 98 - "20. Appendices: templates, payloads, glossary and historical schedule"
@@ -658,8 +666,8 @@ Cohesion: 0.14
 Nodes (10): Ebarki administration guide, Ebarki release audit integrity decisions, ADR-111: Ebarki follow-up integrity boundaries, Ebarki release approval status, Ebarki submission copy, Ebarki feature and test matrix, Ebarki release issue ledger, Remaining open limitations and release gates (+2 more)
 
 ### Community 119 - "record_reader.py"
-Cohesion: 0.09
-Nodes (21): chat_with_copilot(), CopilotActionSuggestion, CopilotChatRequest, CopilotChatResponse, CopilotService, has_external_consent(), pdf_lines(), read_evidence() (+13 more)
+Cohesion: 0.13
+Nodes (13): pdf_lines(), read_evidence(), provider_receipt(), reasoning_options(), Situation, understand_situation(), prepare_image(), read_visual() (+5 more)
 
 ### Community 130 - "ClaimCraft BD — Moderated User Usability & Comprehension Study Report"
 Cohesion: 0.20
@@ -718,8 +726,8 @@ Cohesion: 0.29
 Nodes (7): 11.1 Journey A — Facebook seller non-delivery (consumer track), 11.2 Journey B — Money debited, recipient did not receive transfer (MFS provider track), 11.3 Journey C — Telecom complaint (domain-pack test), 11.4 Journey D — Public grievance / GRS (secondary, not hero B2C), 11.5 Journey E — Suspected phishing / urgent account danger, 11.6 A deliberate counterexample, 11. Worked user journeys and realistic case examples
 
 ### Community 144 - "14. Small-model training and GraphRAG experiment"
-Cohesion: 0.13
-Nodes (12): 14.1 Question to answer, 14.2 Candidate model approaches, 14.3 Dataset plan, 14.4 Evaluation gate for deployment, 14.5 Vision model selection, 14.6 GraphRAG research track, 14. Small-model training and GraphRAG experiment, text() (+4 more)
+Cohesion: 0.33
+Nodes (6): 14.1 Question to answer, 14.2 Candidate model approaches, 14.4 Evaluation gate for deployment, 14.5 Vision model selection, 14.6 GraphRAG research track, 14. Small-model training and GraphRAG experiment
 
 ### Community 145 - "15. Release levels, expansion strategy and product operations"
 Cohesion: 0.29
@@ -738,8 +746,8 @@ Cohesion: 0.29
 Nodes (7): 9.1 Source-governed legal reasoning, 9.2 Versioned Regulatory Decision Graph (practical alternative to hype-driven GraphRAG), 9.3 Public-law / regulator catalogue by domain, 9.4 Correct distinction: consumer redress vs state enforcement, 9.5 Regulatory update policy, 9. Law-aware architecture, decision graph and source governance, Example rule contract (illustrative only)
 
 ### Community 149 - "film/package.json"
-Cohesion: 0.19
-Nodes (13): dependencies, react@19.0.0, react-dom@19.0.0, remotion@4.0.541, @remotion/cli@4.0.541, react, react-dom, name (+5 more)
+Cohesion: 0.17
+Nodes (14): dependencies, playwright@1.56.1, react@19.0.0, react-dom@19.0.0, remotion@4.0.541, @remotion/cli@4.0.541, name, private (+6 more)
 
 ### Community 150 - "InfoPages.tsx"
 Cohesion: 0.16
@@ -806,16 +814,16 @@ Cohesion: 0.33
 Nodes (6): 12.1 Threat model, 12.2 Mandatory safeguards, 12.3 Legal-adjacent guardrails, 12.4 Safer answer matrix, 12.5 Data Protection Act and deployment, 12. Security, privacy, safety and human-review policy
 
 ### Community 166 - "audit_browser.mjs"
-Cohesion: 0.10
-Nodes (19): errors, responses, results, root, display, root, scenes, text (+11 more)
+Cohesion: 0.12
+Nodes (13): display, root, scenes, text, id, root, u, id (+5 more)
 
 ### Community 167 - "capture.mjs"
 Cohesion: 0.24
 Nodes (12): canvas(), caseURL, click(), clips, job(), move(), only, pause() (+4 more)
 
-### Community 168 - "27. Evaluation, acceptance tests, source governance and runbooks"
-Cohesion: 0.33
-Nodes (6): 27.1 Mandatory test suites, 27.2 Proposed quantitative reporting (all targets TBD), 27.3 Suggested golden evaluation scenarios, 27.4 Legal-source review checklist, 27.5 Monitoring dashboards and incident runbooks, 27. Evaluation, acceptance tests, source governance and runbooks
+### Community 168 - "copilot/router.py"
+Cohesion: 0.36
+Nodes (5): chat_with_copilot(), CopilotActionSuggestion, CopilotChatRequest, CopilotChatResponse, CopilotService
 
 ### Community 169 - "3. Customer problem, target users, market differentiation"
 Cohesion: 0.33
@@ -849,9 +857,9 @@ Nodes (6): 18.1 Mandatory behavior tests, 18.2 Dataset design, 18.3 Baselines an
 Cohesion: 0.33
 Nodes (6): 4.1 Information architecture, 4.2 Hero journey A — prepaid purchase, contradictory amount, 4.3 Hero journey B — provider service failure, 4.4 Other essential journeys, 4.5 Learning through interaction, 4. User journeys and experience design
 
-### Community 177 - "AsyncClient"
-Cohesion: 0.23
-Nodes (6): test_t51_matrix_row1_english_text_only(), test_t51_matrix_row2_bangla_banglish_text_only(), test_t51_matrix_row3_voice_recording_only(), test_t51_matrix_row4_screenshot_only_preserves_uncertainty(), test_t51_matrix_row6_multimodal_cross_conflict_reconciliation(), test_t51_matrix_row7_unsupported_file_safe_rejection()
+### Community 177 - "vision/router.py"
+Cohesion: 0.11
+Nodes (12): analyze_screenshot_layout(), ChatBubbleProposal, OCRDisagreement, ScreenshotAnalysisResult, ScreenshotAdapter, test_t51_matrix_row1_english_text_only(), test_t51_matrix_row2_bangla_banglish_text_only(), test_t51_matrix_row3_voice_recording_only() (+4 more)
 
 ### Community 178 - "ADR-103: Orthogonal Fact Model and Assertion Provenance"
 Cohesion: 0.40
@@ -890,16 +898,16 @@ Cohesion: 0.40
 Nodes (5): 2.1 Competition scope (confirmed from rules; see [H01]), 2.2 Published primary-round score breakdown (see [H02]), 2.3 In-scope outcomes, 2.4 Explicit out-of-scope / prohibited positioning, 2. Hackathon alignment, product boundaries ও outcomes
 
 ### Community 187 - "AsyncClient"
-Cohesion: 0.29
-Nodes (4): test_p10_1_user_reported_update_and_origin_tracking_t38(), test_p10_2_semantic_decision_diff_and_snapshots_t39(), test_p10_4_personal_reminders_and_cancellation_t40(), test_p10_5_stale_tab_optimistic_concurrency_t41()
+Cohesion: 0.27
+Nodes (5): ExternalReference, test_p10_1_user_reported_update_and_origin_tracking_t38(), test_p10_2_semantic_decision_diff_and_snapshots_t39(), test_p10_4_personal_reminders_and_cancellation_t40(), test_p10_5_stale_tab_optimistic_concurrency_t41()
 
 ### Community 188 - "5. Final product scope: domains, issues, remedies"
 Cohesion: 0.40
 Nodes (5): 5.1 One engine, multiple verified domain packs, 5.2 One Case → many Issue Tracks, 5.3 Remedy-aware decisioning, 5.4 Domain pack template, 5. Final product scope: domains, issues, remedies
 
-### Community 189 - "conftest.py"
-Cohesion: 0.20
-Nodes (3): client(), db_session(), isolated_provider_credentials()
+### Community 189 - "26. Data contracts, workers, APIs, indexes and release infrastructure"
+Cohesion: 0.33
+Nodes (6): 26.1 New entities extending Section 10.3, 26.2 Required indexes and partitioning, 26.3 Additional REST/admin endpoints (extend Section 10.5), 26.4 Worker queues and task retry, 26.5 Configuration defaults to measure, not dogma, 26. Data contracts, workers, APIs, indexes and release infrastructure
 
 ### Community 190 - "ClaimCraft BD — Pinned Toolchain & Dependency Register"
 Cohesion: 0.40
@@ -950,8 +958,8 @@ Cohesion: 0.50
 Nodes (3): 1. Drill Execution Summary, 2. Recovery Gate Verdict, ClaimCraft BD — P14.3 Recovery & Deletion-Suppression Drill Report
 
 ### Community 202 - "PolicyRule"
-Cohesion: 0.31
-Nodes (6): PolicyRule, get_repo_root(), test_finance_mfs_unauthorized_charge_evaluation(), test_shopping_delivery_failure_evaluation(), test_source_cards_exist_and_contain_required_metadata(), test_starter_rules_parse_into_typed_ast()
+Cohesion: 0.22
+Nodes (8): PolicyRule, RouteStatus, test_t18_security_injection_and_test_only_rejection(), get_repo_root(), test_finance_mfs_unauthorized_charge_evaluation(), test_shopping_delivery_failure_evaluation(), test_source_cards_exist_and_contain_required_metadata(), test_starter_rules_parse_into_typed_ast()
 
 ### Community 203 - "scripts"
 Cohesion: 0.33
@@ -969,9 +977,9 @@ Nodes (9): ActionDAG, ActionNode, ComplaintDestination, DocumentSection, Documen
 Cohesion: 0.40
 Nodes (5): 4.1 Review provenance and interpretation, 4.2 Reviewer comparison, 4.3 Critical corrections: do NOT inherit these reviewer claims, 4.4 Feature merge matrix (canonical), 4. Review comparison, critical errors ও merged decision log
 
-### Community 210 - "get_candidate_diff"
-Cohesion: 0.18
-Nodes (4): get_active_release(), get_candidate_diff(), get_source_provision(), list_source_candidates()
+### Community 210 - "audit_browser.mjs"
+Cohesion: 0.33
+Nodes (4): errors, responses, results, root
 
 ### Community 211 - "Site-wide expression"
 Cohesion: 0.25
@@ -986,8 +994,8 @@ Cohesion: 0.13
 Nodes (8): nextConfig, withNextIntl, LocaleLayout(), defaultLocale, Locale, locales, config, next-intl
 
 ### Community 214 - "DomainCatalogueService"
-Cohesion: 0.21
-Nodes (3): DomainCatalogueService, check_domain_support(), get_domain_catalogue()
+Cohesion: 0.17
+Nodes (5): DomainCapabilityEntry, DomainCatalogueResponse, DomainCatalogueService, check_domain_support(), get_domain_catalogue()
 
 ### Community 215 - "test_p14_2_judge_scenarios_and_isolation.py"
 Cohesion: 0.29
@@ -1009,16 +1017,16 @@ Nodes (4): 23.1 Copy-ready initial prompt, 23.2 Copy-ready resume prompt, 23.3 W
 Cohesion: 0.29
 Nodes (7): 1. Watch the case take shape, 2. Resolve one meaningful contradiction, 3. Inspect the evidence behind any statement, 4. Try a change before applying it, 5. Produce a document that remains inspectable, 6. Continue when the story changes, Six signature interactions to build exceptionally well
 
-### Community 221 - "test_t13_native_pdf_critical_token_extraction"
-Cohesion: 0.33
-Nodes (3): test_t13_native_pdf_critical_token_extraction(), test_t14_multicolumn_reading_order(), test_t14_rotated_page_coordinates_normalization_and_viewport_resize()
+### Community 221 - "reply_preparation.py"
+Cohesion: 0.40
+Nodes (3): has_external_consent(), prepare_reply(), ReplyWording
 
 ### Community 223 - "Ebarki — বাংলা লেখার নির্দেশনা"
 Cohesion: 0.33
 Nodes (5): Ebarki — বাংলা লেখার নির্দেশনা, উদাহরণ, যাচাই, শব্দের ব্যবহার, স্বর
 
 ### Community 224 - "make_dummy_screenshot"
-Cohesion: 0.30
+Cohesion: 0.29
 Nodes (4): make_dummy_screenshot(), test_t23_ocr_vs_vlm_disagreement_flagged_for_user_review(), test_t23_screenshot_dark_theme_and_bubble_role_uncertainty(), test_t23_vision_api_endpoint_and_tenant_isolation()
 
 ### Community 225 - "3. Product scope and deliberate improvements"
@@ -1032,10 +1040,6 @@ Nodes (6): build_counterfactual_pairs(), build_evidence_conflicts(), build_retri
 ### Community 227 - "Ebarki — Connected AI Experience"
 Cohesion: 0.20
 Nodes (10): Ebarki — Connected AI Experience, Live results, Privacy, versions, and integrity, Product decision, Real AI versus deterministic work, Setup and verification, Sources for provider and destination decisions, Suggested judge walkthrough (+2 more)
-
-### Community 229 - "get_current_principal"
-Cohesion: 0.31
-Nodes (3): get_current_principal(), get_optional_principal(), verify_csrf_protection()
 
 ### Community 230 - "Ebarki final system audit"
 Cohesion: 0.25
@@ -1053,25 +1057,17 @@ Nodes (3): test_p08_1_date_limitation_and_uncertainty_t30(), test_p08_1_paired_j
 Cohesion: 0.50
 Nodes (3): Cinematic film review cut — 5 November 2026, Ebarki agent handoff, Evaluation & Judge Admin Update (5 Nov 2026)
 
-### Community 234 - "test_t21_duplicate_receipt_exclusion"
-Cohesion: 0.36
-Nodes (3): make_pdf_with_amount(), test_t21_duplicate_receipt_exclusion(), test_t21_payment_conflict_and_multi_receipt_resolution()
-
 ### Community 235 - "Settings"
 Cohesion: 0.33
 Nodes (3): Settings, test_production_rejects_published_development_signing_keys(), test_doctor_readiness_no_secret_leak()
 
 ### Community 236 - "json"
-Cohesion: 0.17
-Nodes (13): appendix(), captions(), mux(), render(), run(), command(), probe(), export_openapi() (+5 more)
+Cohesion: 0.13
+Nodes (16): appendix(), captions(), mux(), render(), run(), main(), compare(), export_openapi() (+8 more)
 
 ### Community 238 - "test_t49_t50_bilingual_themes.py"
 Cohesion: 0.29
 Nodes (4): get_all_keys(), test_t49_bilingual_message_parity(), test_t49_english_default_configuration(), test_t50_theme_default_and_tokens()
-
-### Community 239 - "verify_official_sources.py"
-Cohesion: 0.29
-Nodes (4): compare(), main(), inspect(), schema_ready()
 
 ### Community 240 - "Ebarki stabilization follow-up"
 Cohesion: 0.40
@@ -1085,29 +1081,33 @@ Nodes (4): @fontsource/ibm-plex-mono@^5.3.0, gsap@^3.15.0, @fontsource/ibm-plex-
 Cohesion: 0.50
 Nodes (4): 17.1 Risk register, 17.2 Questions requiring confirmation before real-user launch, 17.3 Definition of Done for a trustworthy end-to-end consumer journey, 17. Risks, open questions and definition of done
 
+### Community 250 - "delete_audio_recording"
+Cohesion: 0.20
+Nodes (3): delete_audio_recording(), stream_audio_recording(), transcribe_case_audio()
+
 ### Community 274 - "react"
 Cohesion: 0.11
-Nodes (21): AgentCommandPalette(), CommandItem, AICopilotDrawer(), AICopilotDrawerProps, CopilotMessage, JudgeQuickStartDrawer(), JudgeQuickStartDrawerProps, LiveAgentTelemetryTicker() (+13 more)
+Nodes (22): AgentCommandPalette(), CommandItem, AICopilotDrawer(), AICopilotDrawerProps, CopilotMessage, JudgeQuickStartDrawer(), JudgeQuickStartDrawerProps, LiveAgentTelemetryTicker() (+14 more)
 
 ### Community 291 - "diff_service.py"
-Cohesion: 0.20
-Nodes (6): CandidateImpactProposal, ParsedProvision, ProvisionDiffItem, SectionAwareDiffService, RetrievalChunk, SourceProvision
+Cohesion: 0.18
+Nodes (4): CandidateImpactProposal, ParsedProvision, ProvisionDiffItem, SectionAwareDiffService
 
 ### Community 320 - "OfficialSourceWatcher"
-Cohesion: 0.10
-Nodes (10): SourceCandidate, approve_candidate(), disable_release(), flag_impacted_cases(), manual_source_import(), promote_release(), rollback_release(), run_watcher_check() (+2 more)
+Cohesion: 0.18
+Nodes (4): SourceFamily, manual_source_import(), OfficialSourceWatcher, WatcherFetchResult
 
-### Community 334 - "test_t01_cross_tenant_isolation"
-Cohesion: 0.16
-Nodes (7): 1. Release Decision Summary, 2. Performance & Latency Budgets (Section 18.5), 3. Documented Boundaries & Non-Supported Scenarios, ClaimCraft BD — Hard Release Gate Evaluation Report, test_t01_cross_tenant_isolation(), test_t02_token_verification_and_role_escalation(), test_t03_connection_pool_tenant_context_hygiene()
+### Community 334 - "database.py"
+Cohesion: 0.04
+Nodes (27): 14.3 Dataset plan, 1. Release Decision Summary, 2. Performance & Latency Budgets (Section 18.5), 3. Documented Boundaries & Non-Supported Scenarios, ClaimCraft BD — Hard Release Gate Evaluation Report, text(), scoped_tenant_session(), get_capabilities() (+19 more)
+
+### Community 335 - "action_dag.py"
+Cohesion: 0.17
+Nodes (3): ActionDAGOut, ActionDAGService, ActionNode
 
 ### Community 346 - "citation_validator.py"
 Cohesion: 0.24
 Nodes (3): CitationValidationResult, CitationValidator, test_t28_t29_citation_validator()
-
-### Community 370 - "get_storage_backend"
-Cohesion: 0.14
-Nodes (5): detect_mime_from_bytes(), validate_file_signature(), complete_upload(), sweep_expired_uploads(), ensure_utc()
 
 ### Community 375 - "13. Evaluation, benchmarks, baselines and red-team tests"
 Cohesion: 0.33
@@ -1116,22 +1116,22 @@ Nodes (6): 13.1 What counts as success, 13.2 Proposed datasets and splits (illus
 ## Knowledge Gaps
 - **1 isolated node(s):** `claimcraft-backend`
   These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 1863 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **56 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **51 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `Ebarki release issue ledger` connect `EBARKI_FINAL_SYSTEM_AUDIT.md` to `test_final_audit_regressions.py`?**
-  _High betweenness centrality (0.291) - this node is a cross-community bridge._
+  _High betweenness centrality (0.286) - this node is a cross-community bridge._
 - **Are the 147 inferred relationships involving `Principal` (e.g. with `seed_demo_case()` and `ActionDAGService`) actually correct?**
   _`Principal` has 147 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `claimcraft-backend` to the rest of the system?**
   _1 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Generated` be split into smaller, more focused modules?**
   _Cohesion score 0.015037593984962405 - nodes in this community are weakly interconnected._
-- **Why does `Fixed or contained defects` connect `test_final_audit_regressions.py` to `EBARKI_FINAL_SYSTEM_AUDIT.md`, `ProceduralAssessmentEngine`?**
-  _High betweenness centrality (0.291) - this node is a cross-community bridge._
+- **Why does `Fixed or contained defects` connect `test_final_audit_regressions.py` to `EBARKI_FINAL_SYSTEM_AUDIT.md`, `identity/models.py`?**
+  _High betweenness centrality (0.286) - this node is a cross-community bridge._
 - **Are the 52 inferred relationships involving `FactService` (e.g. with `ActionDAGService` and `load_document()`) actually correct?**
   _`FactService` has 52 INFERRED edges - model-reasoned connections that need verification._
-- **Should `actions/router.py` be split into smaller, more focused modules?**
-  _Cohesion score 0.061971830985915494 - nodes in this community are weakly interconnected._
+- **Should `.get_authorized_case` be split into smaller, more focused modules?**
+  _Cohesion score 0.1268939393939394 - nodes in this community are weakly interconnected._
