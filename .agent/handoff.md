@@ -17,3 +17,11 @@ Browser host remains unavailable; earlier Windows UI control stopped on uncertai
 Official read-only checks: 8 PASS, 3 BLOCKED. BB direct form remains unconfirmed with official-guide fallback. No numbers/emails were contacted and no portal form was submitted. Markdown deck has five sections; exported deck is deferred. Sticker image visually inspected; exact organizer-file provenance remains UNVERIFIED because the source Drive link is truncated and current rules expose no download. Deadline header/body conflict remains unresolved.
 
 Use the task runner and graph-first protocol. Local dev: python scripts/tasks.py dev --no-reload. Keep credentials in ignored server configuration. Exclude generated Next.js type/config changes, local databases, logs, build caches and graph locks from staging. Authorized delivery is origin/main with remote receipt verification; actual SHA is recorded in Git history and the response. P21.1 remains in progress and the release is not certified ready.
+
+## Evaluation & Judge Admin Update (5 Nov 2026)
+- **Judge Admin 1-Click Evaluation**: Added dedicated 1-click evaluation access for hackathon judges (`/auth/judge-admin-demo`) granting full administrative roles (`admin`, `reviewer`, `publisher`, `operator`), logging audit trails, and landing directly in `/admin`.
+- **Admin Login UI**: Updated `apps/web/src/features/agent/Access.tsx` and `SessionEntry.tsx` to feature the Judge Admin 1-Click button prominently on `/admin/login` and an auto-fill button for bootstrap credentials (`admin@claimcraft.bd`).
+- **Chatbot Conversational Greeting**: Fixed `/v1/copilot/chat` to respond with natural, polite consumer greetings in English and Bengali when users say "hi"/"hello", avoiding repetitive 4-bullet procedural instruction essays.
+- **Community & Merchant Scam Radar Data**: Seeded 5 realistic Bangladesh consumer grievance posts with volunteer legal guidance and 5 high-risk merchant profiles across Daraz, bKash, and F-Commerce shops, fully controllable and overridable via the Admin Console.
+- **Admin Knowledge Release Panel**: Fixed 404 crash by seeding baseline approved release `rel-crpa-2026.01` and adding graceful UI fallback in `Admin.tsx`.
+- **Validation**: All 184 backend Pytest + 27 web Vitest tests pass (211/211 = 100% PASS).

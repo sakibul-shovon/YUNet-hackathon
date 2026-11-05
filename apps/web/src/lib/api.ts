@@ -1,101 +1,103 @@
-/**
- * Client-side authenticated fetch utility for ClaimCraft BD.
- *
- * Ensures every browser visitor has a stable anonymous guest token
- * persisted across navigations, tabs, and reloads in localStorage and HttpOnly cookies,
- * with proactive JWT expiration checks and automatic 401 retry.
- */
-
+/** Ebarki authenticated transport and coordinated browser-session transitions. */
+export const SESSION_EVENT = 'ebarki:session-changed';
+export const SESSION_STORAGE_EVENT = 'ebarki_session_event';
+const SESSION_KEYS = ['ebarki_token', 'cc_token', 'ebarki_principal_id', 'cc_principal_id'];
 let guestSessionRequest: Promise<string> | null = null;
+let logoutRequest: Promise<void> | null = null;
+let changingSession = false;
+let generation = 0;
 
+type SessionCredentials = { access_token?: string | null; principal_id: string };
+export function invalidateSessionRequests() { generation += 1; }
+function storedToken() { return localStorage.getItem('ebarki_token') || localStorage.getItem('cc_token') || ''; }
+function storeCredentials(session: SessionCredentials) {
+  if (session.access_token) for (const key of ['ebarki_token', 'cc_token']) localStorage.setItem(key, session.access_token);
+  for (const key of ['ebarki_principal_id', 'cc_principal_id']) localStorage.setItem(key, session.principal_id);
+}
+function announceSession(type: 'signed_in' | 'signed_out') {
+  const detail = { type, nonce: crypto.randomUUID() };
+  localStorage.setItem(SESSION_STORAGE_EVENT, JSON.stringify(detail));
+  window.dispatchEvent(new CustomEvent(SESSION_EVENT, { detail }));
+}
+export function rememberClientSession(session: SessionCredentials) {
+  invalidateSessionRequests();
+  storeCredentials(session);
+  announceSession('signed_in');
+}
+export async function logoutClientSession(): Promise<void> {
+  if (logoutRequest) return logoutRequest;
+  changingSession = true;
+  invalidateSessionRequests();
+  logoutRequest = (async () => {
+    // A pending bootstrap can set a cookie even if its response is ignored.
+    // Finish it before the logout request so that cookie is revoked as well.
+    await guestSessionRequest?.catch(() => '');
+    const token = storedToken();
+    const response = await fetch('/api/v1/auth/logout', {
+      method: 'POST', credentials: 'include', cache: 'no-store',
+      signal: AbortSignal.timeout(15000),
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
+    });
+    if (!response.ok) throw new Error('Ebarki could not end the session. Try logging out again.');
+    for (const key of SESSION_KEYS) localStorage.removeItem(key);
+    announceSession('signed_out');
+  })();
+  try { await logoutRequest; }
+  finally { logoutRequest = null; changingSession = false; }
+}
 function parseJwtExp(token: string): number | null {
   try {
-    const parts = token.split('.');
-    if (parts.length < 2) return null;
-    const base64 = parts[1].replace(/-/g, '+').replace(/_/g, '/');
-    const jsonStr = decodeURIComponent(
-      atob(base64)
-        .split('')
-        .map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
-        .join('')
-    );
-    const payload = JSON.parse(jsonStr);
-    return typeof payload.exp === 'number' ? payload.exp : null;
-  } catch {
-    return null;
-  }
+    const part = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
+    const data = JSON.parse(atob(part));
+    return typeof data.exp === 'number' ? data.exp : null;
+  } catch { return null; }
 }
-
 export async function getClientSessionToken(forceRefresh = false): Promise<string> {
-  if (typeof window === 'undefined') return '';
-
+  if (typeof window === 'undefined' || changingSession) return '';
   if (!forceRefresh) {
-    const storedToken = localStorage.getItem('ebarki_token') || localStorage.getItem('cc_token');
-    if (storedToken) {
-      const exp = parseJwtExp(storedToken);
-      // Valid if remaining lifetime > 30 seconds
-      if (exp && exp > Math.floor(Date.now() / 1000) + 30) {
-        return storedToken;
-      }
-    }
+    const token = storedToken();
+    const expiry = token && parseJwtExp(token);
+    if (expiry && expiry > Date.now()/1000 + 30) return token;
   }
-
   if (guestSessionRequest) return guestSessionRequest;
-  guestSessionRequest = createGuestSession();
-  try { return await guestSessionRequest; } finally { guestSessionRequest = null; }
-}
-
-async function createGuestSession(): Promise<string> {
-  try {
-    const res = await fetch('/api/v1/auth/guest', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'include',
+  const current = generation;
+  guestSessionRequest = (async () => {
+    const response = await fetch('/api/v1/auth/guest', {
+      method: 'POST', credentials: 'include', headers: { 'Content-Type': 'application/json' },
+      signal: AbortSignal.timeout(15000),
     });
-    if (res.ok) {
-      const data = await res.json();
-      if (data.access_token) {
-        localStorage.setItem('cc_token', data.access_token);
-        localStorage.setItem('cc_principal_id', data.principal_id);
-        localStorage.setItem('ebarki_token', data.access_token);
-        localStorage.setItem('ebarki_principal_id', data.principal_id);
-        return data.access_token;
-      }
-    }
-  } catch (err) {
-    console.error('Failed to establish guest session:', err);
-  }
-
-  return localStorage.getItem('ebarki_token') || localStorage.getItem('cc_token') || '';
+    if (!response.ok) return '';
+    const session = await response.json() as SessionCredentials;
+    if (generation !== current || changingSession || !session.access_token) return '';
+    storeCredentials(session);
+    return session.access_token;
+  })();
+  try { return await guestSessionRequest; }
+  finally { guestSessionRequest = null; }
 }
-
+function credentialsEndpoint(input: RequestInfo | URL) {
+  const value = typeof input === 'string' ? input : input instanceof URL ? input.href : input.url;
+  return /\/auth\/(?:login|admin-login|register|judge-demo|judge-admin-demo|guest|logout)(?:[?#]|$)/.test(value);
+}
 export async function apiFetch(input: RequestInfo | URL, init?: RequestInit): Promise<Response> {
-  let token = await getClientSessionToken();
+  if (changingSession) throw new DOMException('Ebarki session is changing.', 'AbortError');
+  const started = generation;
+  const credentialRequest = credentialsEndpoint(input);
+  let token = credentialRequest ? '' : await getClientSessionToken();
+  if (changingSession || started !== generation) throw new DOMException('Ebarki session is changing.', 'AbortError');
+  const current = generation;
   const headers = new Headers(init?.headers);
-
-  if (token && !headers.has('Authorization')) {
-    headers.set('Authorization', `Bearer ${token}`);
-  }
-
-  let res = await fetch(input, {
-    ...init,
-    headers,
-    credentials: 'include',
-  });
-
-  // If 401 Unauthorized, token might have expired or principal was recreated.
-  // Refresh token once and retry.
-  if (res.status === 401 && typeof window !== 'undefined') {
-    const freshToken = await getClientSessionToken(true);
-    if (freshToken) {
-      headers.set('Authorization', `Bearer ${freshToken}`);
-      res = await fetch(input, {
-        ...init,
-        headers,
-        credentials: 'include',
-      });
+  if (token && !headers.has('Authorization')) headers.set('Authorization', `Bearer ${token}`);
+  let response = await fetch(input, { ...init, headers, credentials: 'include' });
+  if (generation !== current || changingSession) throw new DOMException('Ebarki session changed.', 'AbortError');
+  // A failed credential submission must never bootstrap a guest or retry a password.
+  if (response.status === 401 && !credentialRequest && typeof window !== 'undefined') {
+    token = await getClientSessionToken(true);
+    if (token && generation === current && !changingSession) {
+      headers.set('Authorization', `Bearer ${token}`);
+      response = await fetch(input, { ...init, headers, credentials: 'include' });
     }
   }
-
-  return res;
+  if (generation !== current || changingSession) throw new DOMException('Ebarki session changed.', 'AbortError');
+  return response;
 }

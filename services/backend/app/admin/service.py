@@ -13,6 +13,7 @@ from app.cases.models import Case, CaseEvent
 from app.community.service import COMMUNITY_POSTS_STORE
 from app.identity.models import ActorRole, UserAccount, WebSession
 from app.knowledge.models import SourceCandidate
+from app.merchants.service import KNOWN_OFFENDER_REGISTRY
 
 
 class AdminService:
@@ -280,10 +281,40 @@ class AdminService:
 
     @classmethod
     async def list_merchants(cls, db):
-        records = list((await db.scalars(select(AdminRecord).where(AdminRecord.key.like('merchant:%')))).all())
-        return [{'slug': record.key.removeprefix('merchant:'),
-                 'canonical_name': record.key.removeprefix('merchant:'),
-                 'source': 'administrative_record', **record.payload} for record in records]
+        overrides = {r.key.removeprefix('merchant:'): r.payload for r in (await db.scalars(select(AdminRecord).where(AdminRecord.key.like('merchant:%')))).all() if isinstance(r.payload, dict)}
+        results = []
+        for slug, m in KNOWN_OFFENDER_REGISTRY.items():
+            override = overrides.get(slug, {})
+            is_blacklisted = override.get("is_blacklisted", m.get("is_blacklisted", False))
+            is_verified = override.get("is_verified", m.get("is_verified", False))
+            risk_percent = override.get("risk_percent", m.get("risk_percent", 50))
+            status_label = "BLACKLISTED" if is_blacklisted else "VERIFIED" if is_verified else f"RISK {risk_percent}%"
+            results.append({
+                "id": slug,
+                "slug": slug,
+                "merchant_name": m["merchant_name"],
+                "status": status_label,
+                "platform": m.get("platform", "Online"),
+                "category": m.get("category", "E-Commerce"),
+                "risk_percent": risk_percent,
+                "is_blacklisted": is_blacklisted,
+                "is_verified": is_verified,
+                "complaint_count": m.get("complaint_count", 0),
+                "total_disputed_bdt": m.get("total_disputed_bdt", 0),
+                "admin_note": override.get("admin_note", ""),
+                "source": "curated_radar",
+            })
+        for slug, payload in overrides.items():
+            if slug not in KNOWN_OFFENDER_REGISTRY:
+                results.append({
+                    "id": slug,
+                    "slug": slug,
+                    "merchant_name": slug.replace('-', ' ').title(),
+                    "status": "CUSTOM_OVERRIDE",
+                    "source": "administrative_record",
+                    **payload,
+                })
+        return results
 
     @classmethod
     async def update_merchant_risk(cls, slug, is_blacklisted, is_verified, risk_percent, admin_note, admin_email, db):
@@ -296,11 +327,63 @@ class AdminService:
 
     @classmethod
     async def list_community_posts(cls, db):
-        return []  # Public publishing is unavailable; do not manufacture moderation targets.
+        overrides = {r.key.removeprefix('community_post:'): r.payload for r in (await db.scalars(select(AdminRecord).where(AdminRecord.key.like('community_post:%')))).all() if isinstance(r.payload, dict)}
+        results = []
+        for p in COMMUNITY_POSTS_STORE:
+            override = overrides.get(p["id"], {})
+            is_pinned = override.get("is_pinned", p.get("is_pinned", False))
+            is_hidden = override.get("is_hidden", p.get("is_hidden", False))
+            status_label = "PINNED" if is_pinned else "HIDDEN" if is_hidden else "ACTIVE"
+            results.append({
+                "id": p["id"],
+                "title": p["title"],
+                "status": status_label,
+                "author_name": p["author_name"],
+                "category": p["category"],
+                "merchant_name": p.get("merchant_name", "—"),
+                "disputed_amount_bdt": p.get("disputed_amount_bdt", 0),
+                "me_too_count": p.get("me_too_count", 0),
+                "comments_count": len(p.get("comments", [])),
+                "is_pinned": is_pinned,
+                "is_hidden": is_hidden,
+                "created_at": p.get("created_at", "Recently"),
+            })
+        return results
 
     @classmethod
     async def moderate_community_post(cls, post_id, action, admin_email, db):
-        raise HTTPException(404, 'No persisted community post exists to moderate.')
+        target_post = None
+        for p in COMMUNITY_POSTS_STORE:
+            if p["id"] == post_id:
+                target_post = p
+                break
+        if not target_post:
+            raise HTTPException(404, f'Community post {post_id} not found to moderate.')
+
+        key = f"community_post:{post_id}"
+        existing = (await cls.state(db, key)) or {}
+        if action == "pin":
+            existing["is_pinned"] = True
+            target_post["is_pinned"] = True
+        elif action == "unpin":
+            existing["is_pinned"] = False
+            target_post["is_pinned"] = False
+        elif action == "hide":
+            existing["is_hidden"] = True
+            target_post["is_hidden"] = True
+        elif action == "unhide":
+            existing["is_hidden"] = False
+            target_post["is_hidden"] = False
+        elif action == "dismiss_reports":
+            existing["report_count"] = 0
+            target_post["report_count"] = 0
+        else:
+            raise HTTPException(422, f"Unsupported action: {action}")
+
+        await cls.save_state(db, key, existing)
+        await cls.record_audit(db, admin_email, 'MODERATE_COMMUNITY_POST', post_id, f"Action: {action}")
+        await db.commit()
+        return {"success": True, "post_id": post_id, "action": action, "post_state": existing}
 
     @classmethod
     async def list_alerts(cls, db, active_only=True):

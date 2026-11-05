@@ -1,0 +1,103 @@
+{
+  "product": "Ebarki",
+  "scope": "Local live Next BFF + FastAPI HTTP, synthetic consumer and repaired local administrator; not browser acceptance.",
+  "credential_values_recorded": false,
+  "checks": [
+    {
+      "test": "en/login server route renders session-check state",
+      "result": "PASS"
+    },
+    {
+      "test": "en/admin/login server route renders session-check state",
+      "result": "PASS"
+    },
+    {
+      "test": "en/admin server route renders session-check state",
+      "result": "PASS"
+    },
+    {
+      "test": "bn/login server route renders session-check state",
+      "result": "PASS"
+    },
+    {
+      "test": "bn/admin/login server route renders session-check state",
+      "result": "PASS"
+    },
+    {
+      "test": "bn/admin server route renders session-check state",
+      "result": "PASS"
+    },
+    {
+      "test": "BFF synthetic consumer registration",
+      "result": "PASS"
+    },
+    {
+      "test": "BFF signed-in consumer profile",
+      "result": "PASS"
+    },
+    {
+      "test": "BFF consumer staff login denied without replacing cookie",
+      "result": "PASS"
+    },
+    {
+      "test": "BFF consumer cannot read admin stats",
+      "result": "PASS"
+    },
+    {
+      "test": "BFF new synthetic case creation",
+      "result": "PASS"
+    },
+    {
+      "test": "BFF consumer logout clears cookie",
+      "result": "PASS"
+    },
+    {
+      "test": "BFF logged-out consumer JWT rejected",
+      "result": "PASS"
+    },
+    {
+      "test": "BFF logged-out consumer private case rejected",
+      "result": "PASS"
+    },
+    {
+      "test": "BFF consumer can log in again",
+      "result": "PASS"
+    },
+    {
+      "test": "BFF owned case persists after logout and relogin",
+      "result": "PASS"
+    },
+    {
+      "test": "BFF historical exposed admin password rejected",
+      "result": "PASS"
+    },
+    {
+      "test": "BFF privately configured administrator login",
+      "result": "PASS"
+    },
+    {
+      "test": "BFF authenticated administrator has admin role",
+      "result": "PASS"
+    },
+    {
+      "test": "BFF administrator cookie resolves signed-in profile",
+      "result": "PASS"
+    },
+    {
+      "test": "BFF administrator stats endpoint serves actual metrics",
+      "result": "PASS"
+    },
+    {
+      "test": "BFF administrator users panel authorized",
+      "result": "PASS"
+    },
+    {
+      "test": "BFF administrator logout succeeds",
+      "result": "PASS"
+    },
+    {
+      "test": "BFF logged-out admin JWT rejected",
+      "result": "PASS"
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+SUCCESS: Exact 1:1 i18n parity verified across 223 message keys!
+All checks passed!
+$ next build
+   ▲ Next.js 15.5.28
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 19.4s
+   Linting and checking validity of types ...
+
+   We detected TypeScript in your project and reconfigured your tsconfig.json file for you.
+   The following suggested values were added to your tsconfig.json. These values can be changed to fit your project's needs:
+
+   	- include was updated to add '.next-auth-check/types/**/*.ts'
+
+   Collecting page data ...
+   Generating static pages (0/38) ...
+   Generating static pages (9/38) 
+   Generating static pages (18/38) 
+   Generating static pages (28/38) 
+ ✓ Generating static pages (38/38)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS
+┌ ○ /_not-found                            993 B         103 kB
+├ ● /[locale]                            22.8 kB         186 kB
+├   ├ /en
+├   └ /bn
+├ ● /[locale]/admin                         6 kB         117 kB
+├   ├ /en/admin
+├   └ /bn/admin
+├ ● /[locale]/admin/login                  180 B         160 kB
+├   ├ /en/admin/login
+├   └ /bn/admin/login
+├ ● /[locale]/cases                      5.96 kB         161 kB
+├   ├ /en/cases
+├   └ /bn/cases
+├ ƒ /[locale]/cases/[id]                 15.5 kB         214 kB
+├ ƒ /[locale]/cases/[id]/actions           176 B         178 kB
+├ ƒ /[locale]/cases/[id]/activity         3.6 kB         163 kB
+├ ƒ /[locale]/cases/[id]/evidence         3.6 kB         165 kB
+├ ƒ /[locale]/cases/[id]/paths           8.39 kB         169 kB
+├ ƒ /[locale]/cases/[id]/review          3.21 kB         170 kB
+├ ● /[locale]/cases/new                    172 B         164 kB
+├   ├ /en/cases/new
+├   └ /bn/cases/new
+├ ● /[locale]/community                  4.21 kB         115 kB
+├   ├ /en/community
+├   └ /bn/community
+├ ● /[locale]/help                         128 B         115 kB
+├   ├ /en/help
+├   └ /bn/help
+├ ● /[locale]/how-it-works                 128 B         115 kB
+├   ├ /en/how-it-works
+├   └ /bn/how-it-works
+├ ● /[locale]/limitations                  128 B         115 kB
+├   ├ /en/limitations
+├   └ /bn/limitations
+├ ● /[locale]/login                        180 B         160 kB
+├   ├ /en/login
+├   └ /bn/login
+├ ● /[locale]/merchants                  2.43 kB         113 kB
+├   ├ /en/merchants
+├   └ /bn/merchants
+├ ● /[locale]/privacy                      127 B         115 kB
+├   ├ /en/privacy
+├   └ /bn/privacy
+├ ● /[locale]/register                     180 B         160 kB
+├   ├ /en/register
+├   └ /bn/register
+├ ● /[locale]/scenarios                  2.57 kB         113 kB
+├   ├ /en/scenarios
+├   └ /bn/scenarios
+├ ● /[locale]/settings                   4.03 kB         164 kB
+├   ├ /en/settings
+├   └ /bn/settings
+├ ● /[locale]/sources                    3.19 kB         114 kB
+├   ├ /en/sources
+├   └ /bn/sources
+├ ● /[locale]/technology                   128 B         115 kB
+├   ├ /en/technology
+├   └ /bn/technology
+├ ƒ /api/v1/[...path]                      131 B         103 kB
+└ ○ /icon.svg                                0 B            0 B
++ First Load JS shared by all             102 kB
+  ├ chunks/1363-04c74819da739d38.js        46 kB
+  ├ chunks/d3dc8d93-9624e47fd447f0b4.js  54.2 kB
+  └ other shared chunks (total)          2.18 kB
+
+
+ƒ Middleware                             52.6 kB
+
+○  (Static)   prerendered as static content
+●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ƒ  (Dynamic)  server-rendered on demand
+
+Running checks for scope: foundation...
+
+--- 1. Document Integrity & Ledger ---
+==================================================
+ ClaimCraft BD — Task Ledger & Status
+==================================================
+Plan Version: 1.2
+Current Task: P21.1
+Last Completed: P14.6
+Mode: development
+
+--- Source Document Integrity ---
+  [VERIFIED] ClaimCraft_BD_Master_Product_Blueprint_v4.1_Knowledge_AI_Engineering.md
+  [VERIFIED] hacakthon details.txt
+  [VERIFIED] plan.md
+
+--- Git & Remote Status ---
+  Working Branch: main
+  Remotes:
+    origin	https://github.com/sakibul-shovon/YUNet-hackathon.git (fetch)
+    origin	https://github.com/sakibul-shovon/YUNet-hackathon.git (push)
+
+--- Progress ---
+Required Tasks: 86/87 (98.9% complete, 0 blocked)
+
+--- Next Dependency-Ready Eligible Tasks ---
+  * P15.1 [OPTIONAL]: Banglish encoder/classifier or small-model experiment with lawful dataset (Status: TODO)
+  * P21.1: Approved Ebarki Agentic Experience V2 across the bilingual application (Status: IN_PROGRESS)
+
+--- 2. Bilingual i18n Message Parity Check ---
+
+--- 3. Backend Ruff Lint Check ---
+
+--- 3. Web Next.js Build / Typecheck ---
+
+[SUCCESS] Foundation checks passed completely.

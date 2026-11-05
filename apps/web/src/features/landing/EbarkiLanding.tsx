@@ -8,6 +8,8 @@ import { bangla, english, type LandingCopy } from './copy';
 import { AgentShowcase } from './AgentShowcase';
 import { ConnectedExperience } from './ConnectedExperience';
 import { JudgeDemoButton } from '@/features/agent/SessionEntry';
+import { AccountMenu } from '@/features/agent/AuthControls';
+import { signedInHome, useAuthSession } from '@/features/agent/AuthSession';
 import './agent-showcase.css';
 
 type IconName = 'arrow' | 'check' | 'plus' | 'file' | 'mic' | 'link' | 'search' | 'shield' | 'clock' | 'sun' | 'moon' | 'menu' | 'close' | 'reset' | 'external' | 'chevron';
@@ -104,6 +106,7 @@ function FeatureArt({ index, copy, money }: { index: number; copy: LandingCopy; 
 
 export function EbarkiLanding({ locale }: { locale: string }) {
   const copy = locale === 'bn' ? bangla : english;
+  const session = useAuthSession();
   const root = useRef<HTMLDivElement>(null);
   const [dark, setDark] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -172,9 +175,9 @@ export function EbarkiLanding({ locale }: { locale: string }) {
       <div className="eb-container eb-header-inner">
         <Link href={`/${locale}`} aria-label="Ebarki" className="eb-home"><Brand /></Link>
         <nav className="eb-desktop-nav" aria-label={locale === 'bn' ? 'প্রধান নেভিগেশন' : 'Main navigation'}><a href="#how-it-works">{copy.nav.how}</a><a href="#toolkit">{copy.nav.toolkit}</a><a href="#trust">{copy.nav.trust}</a></nav>
-        <div className="eb-header-actions"><Link href={locale === 'bn' ? '/en' : '/bn'} className="eb-language" lang={locale === 'bn' ? 'en' : 'bn'}>{copy.nav.language}</Link><button className="eb-theme" onClick={toggleTheme} aria-label={dark ? copy.nav.light : copy.nav.theme} aria-pressed={dark}><Icon name={dark ? 'sun' : 'moon'} /></button><Link href={`/${locale}/login`} className="eb-login">{copy.nav.login}</Link><JudgeDemoButton locale={locale} /><button id="eb-menu-button" className="eb-menu-toggle" aria-label={menuOpen ? copy.nav.close : copy.nav.menu} aria-expanded={menuOpen} aria-controls="eb-mobile-nav" onClick={() => setMenuOpen(!menuOpen)}><Icon name={menuOpen ? 'close' : 'menu'} /></button></div>
+        <div className="eb-header-actions"><Link href={locale === 'bn' ? '/en' : '/bn'} className="eb-language" lang={locale === 'bn' ? 'en' : 'bn'}>{copy.nav.language}</Link><button className="eb-theme" onClick={toggleTheme} aria-label={dark ? copy.nav.light : copy.nav.theme} aria-pressed={dark}><Icon name={dark ? 'sun' : 'moon'} /></button><AccountMenu locale={locale} />{!session.profile?.logged_in && <JudgeDemoButton locale={locale} />}<button id="eb-menu-button" className="eb-menu-toggle" aria-label={menuOpen ? copy.nav.close : copy.nav.menu} aria-expanded={menuOpen} aria-controls="eb-mobile-nav" onClick={() => setMenuOpen(!menuOpen)}><Icon name={menuOpen ? 'close' : 'menu'} /></button></div>
       </div>
-      {menuOpen && <nav id="eb-mobile-nav" className="eb-mobile-nav" aria-label={copy.nav.menu}><a href="#how-it-works" onClick={() => setMenuOpen(false)}>{copy.nav.how}</a><a href="#toolkit" onClick={() => setMenuOpen(false)}>{copy.nav.toolkit}</a><a href="#trust" onClick={() => setMenuOpen(false)}>{copy.nav.trust}</a><Link href={`/${locale}/login`}>{copy.nav.login}</Link><Link href={`/${locale}/cases/new`}>{copy.nav.start}<Icon name="arrow" /></Link></nav>}
+      {menuOpen && <nav id="eb-mobile-nav" className="eb-mobile-nav" aria-label={copy.nav.menu}><a href="#how-it-works" onClick={() => setMenuOpen(false)}>{copy.nav.how}</a><a href="#toolkit" onClick={() => setMenuOpen(false)}>{copy.nav.toolkit}</a><a href="#trust" onClick={() => setMenuOpen(false)}>{copy.nav.trust}</a><Link href={session.profile?.logged_in ? signedInHome(session.profile, locale) : `/${locale}/login`}>{session.profile?.logged_in ? (locale === 'bn' ? 'আমার কাজের জায়গা' : 'My workspace') : copy.nav.login}</Link><Link href={`/${locale}/cases/new`}>{copy.nav.start}<Icon name="arrow" /></Link></nav>}
     </header>
 
     <main id="main-content">

@@ -596,6 +596,85 @@ class IdentityService:
         )
 
     @staticmethod
+    async def login_judge_admin_demo(
+        db: AsyncSession,
+        response: Response,
+    ) -> AuthUserOut:
+        """1-Click Hackathon Judge Admin Demo Login: creates or logs into an evaluation administrator session."""
+        now = datetime.datetime.now(datetime.UTC)
+        principal = Principal(id=uuid.uuid4(), kind='permanent', locale='en-BD', consent_revision=1)
+        db.add(principal)
+        await db.flush()
+
+        roles = ['admin', 'reviewer', 'publisher', 'operator']
+        for r_name in roles:
+            db.add(ActorRole(
+                id=uuid.uuid4(),
+                principal_id=principal.id,
+                role=r_name,
+                grant_origin='judge_admin_evaluation_grant',
+                scope='global'
+            ))
+
+        user = UserAccount(
+            id=uuid.uuid4(),
+            principal_id=principal.id,
+            email=f'judge-admin-{uuid.uuid4().hex[:8]}@demo.ebarki.invalid',
+            full_name='Ebarki Evaluation Judge (Admin)',
+            password_hash=hash_password(secrets.token_urlsafe(32)),
+            is_demo_judge=False,
+        )
+        db.add(user)
+        await db.flush()
+
+        raw_session_token = generate_session_token()
+        session_hash = hash_session_token(raw_session_token)
+        expires_at = now + datetime.timedelta(seconds=settings.SESSION_MAX_AGE_SECONDS)
+
+        session_record = WebSession(
+            id=uuid.uuid4(),
+            session_token_hash=session_hash,
+            principal_id=user.principal_id,
+            expires_at=expires_at,
+            last_seen_at=now,
+        )
+        db.add(session_record)
+
+        from app.admin.service import AdminService
+        await AdminService.record_audit(
+            db,
+            str(user.principal_id),
+            'JUDGE_ADMIN_EVALUATION_SESSION_STARTED',
+            user.email,
+            'Judge 1-click evaluation access with admin, reviewer, publisher roles'
+        )
+        await db.commit()
+
+        response.set_cookie(
+            key=settings.SESSION_COOKIE_NAME,
+            value=raw_session_token,
+            max_age=settings.SESSION_MAX_AGE_SECONDS,
+            httponly=True,
+            secure=settings.APP_ENV == "production",
+            samesite="lax",
+            path="/",
+        )
+
+        access_jwt = create_access_jwt(principal_id=user.principal_id, kind="permanent", session_id=session_record.id)
+        return AuthUserOut(
+            logged_in=True,
+            principal_id=user.principal_id,
+            email=user.email,
+            full_name=user.full_name,
+            phone=user.phone,
+            is_demo_judge=False,
+            roles=roles,
+            demo_case_id=None,
+            access_token=access_jwt,
+            csrf_token=csrf_for_session(raw_session_token),
+        )
+
+    @staticmethod
     async def get_current_user_profile(
         principal: Principal,
         db: AsyncSession,

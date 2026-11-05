@@ -11,11 +11,14 @@ if scope not in {'foundation', 'core', 'graph'}:
     raise SystemExit('Use foundation, core or graph.')
 environment = {**os.environ}
 if scope == 'foundation':
-    environment['EBARKI_NEXT_DIST_DIR'] = '.next-followup-verify'
+    environment['EBARKI_NEXT_DIST_DIR'] = os.environ.get('EBARKI_NEXT_DIST_DIR', '.next-followup-verify')
 if scope == 'graph':
     environment['PYTHONHASHSEED'] = '0'
     environment['GRAPHIFY_MAX_WORKERS'] = '1'
-target = ROOT/'docs/qa/evidence'/f'followup-{scope}-verified.txt'
+prefix = os.environ.get('EBARKI_AUDIT_PREFIX', 'followup')
+if not prefix.replace('-', '').isalnum():
+    raise SystemExit('Audit prefix must contain only letters, numbers or hyphens.')
+target = ROOT/'docs/qa/evidence'/f'{prefix}-{scope}-verified.txt'
 with target.open('wb') as output:
     arguments = ['graphify', 'update'] if scope == 'graph' else ['check', '--scope', scope]
     result = subprocess.run([sys.executable, str(ROOT/'scripts/tasks.py'), *arguments],

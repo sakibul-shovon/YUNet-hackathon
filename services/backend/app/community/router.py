@@ -28,11 +28,16 @@ def create_community_post(post: CommunityPostCreate):
 @router.post("/posts/{id}/me-too")
 def increment_me_too(id: str):
     """Increments the 'Me Too / আমার সাথেও এমন হয়েছে' counter for a dispute."""
-    raise HTTPException(503, 'Ebarki community responses are currently unavailable.')
+    count = CommunityService.increment_me_too(id)
+    if count == 0:
+        raise HTTPException(404, 'Post not found')
+    return {"me_too_count": count}
 
 
 @router.post("/posts/{id}/comments", response_model=CommunityCommentOut)
 def add_community_comment(id: str, comment: CommunityCommentCreate):
     """Adds a consumer or legal volunteer advice comment to a community post."""
-    raise HTTPException(503, 'Ebarki community discussions are currently unavailable.')
-
+    try:
+        return CommunityService.add_comment(id, comment)
+    except ValueError:
+        raise HTTPException(404, 'Post not found')

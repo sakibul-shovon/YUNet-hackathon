@@ -226,6 +226,8 @@ def cmd_check(args):
         print("\n--- Backend Pytest Suites ---")
         backend_dir = ROOT_DIR / "services" / "backend"
         subprocess.check_call([*get_backend_python(), "-m", "pytest"], cwd=backend_dir)
+        print("\n--- Web Authentication DOM / Transport Suites ---")
+        subprocess.check_call([get_pnpm_cmd(), "--filter", "@claimcraft/web", "test"], cwd=ROOT_DIR)
         print("\n[SUCCESS] Core test checks passed completely.")
 
     elif scope == "release":

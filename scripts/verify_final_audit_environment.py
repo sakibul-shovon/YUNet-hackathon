@@ -1,6 +1,7 @@
 """Ebarki release checks that do not need browser input; never prints secrets."""
 import hashlib
 import json
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -41,6 +42,15 @@ for path in paths:
 record('configured secrets absent from tracked files, QA artifacts and built client assets',
        'FAIL' if leaks else 'PASS', matches=leaks, files_checked=checked_paths)
 
+if '--auth' in sys.argv:
+    historical = subprocess.check_output(['git', 'show', '33c59b3:apps/web/src/features/workspace/Account.tsx'], cwd=ROOT, text=True, encoding='utf8')
+    match = re.search(r"auth/login['\"],\s*\{\s*email:\s*['\"]([^'\"]+)['\"],\s*password:\s*['\"]([^'\"]+)['\"]", historical)
+    current = [p for base in [ROOT/'apps/web/src', ROOT/'apps/web/.next-auth-check/static'] for p in base.rglob('*') if p.is_file()]
+    exposed = [str(p.relative_to(ROOT)) for p in current if match and match[2].encode() in p.read_bytes()]
+    record('historical exposed default removed from current web source and fresh client build',
+           'PASS' if match and not exposed else 'FAIL', matches=exposed, files_checked=len(current),
+           note='Historical Git revisions and obsolete build caches are not rewritten. That password has been revoked locally.')
+
 fixture_mismatches = []
 index_mismatches = []
 indexed = 0
@@ -67,14 +77,13 @@ record('Git preserves indexed fixture bytes without newline conversion',
        files_checked=indexed, note='Oversized PCM recording is intentionally ignored by Git.')
 
 with httpx.Client(timeout=40) as client:
-    if '--followup' in sys.argv:
+    if '--followup' in sys.argv or '--auth' in sys.argv:
         for language in ['en', 'bn']:
             for route in ['login', 'admin/login']:
                 response = client.get(f'http://127.0.0.1:3000/{language}/{route}')
-                valid = response.status_code == 200 and all(marker in response.text for marker in [
-                    'ag-access-options', 'ag-access-judge-prominent', f'href="/{language}/login"', f'href="/{language}/admin/login"'])
-                record(language+'/'+route+' access choices in server-rendered HTML', 'PASS' if valid else 'FAIL',
-                       note='HTML structure only; native rendered interaction remains BLOCKED.')
+                valid = response.status_code == 200 and 'ui-loading' in response.text and 'ag-access-form' not in response.text
+                record(language+'/'+route+' session guard in server-rendered HTML', 'PASS' if valid else 'FAIL',
+                       note='Session pending state only. Actual form/redirect logic covered by DOM tests, not browser acceptance.')
             response = client.get(f'http://127.0.0.1:3000/{language}/cases')
             record(language+' workspace near-top sticker in HTML',
                    'PASS' if response.status_code == 200 and 'ui-event-sticker' in response.text else 'FAIL',
@@ -93,6 +102,6 @@ with httpx.Client(timeout=40) as client:
     committed = json.loads((ROOT/'packages/contracts/openapi.json').read_text(encoding='utf8'))
     record('generated OpenAPI matches running API', 'PASS' if schema == committed else 'FAIL')
 record('public HTTPS deployment', 'UNVERIFIED', reason='Deferred by user for the follow-up; not tested here.')
-(OUT/('followup-environment-validation.json' if '--followup' in sys.argv else 'final-environment-validation.json' if '--final-only' in sys.argv else 'environment-validation.json')).write_text(json.dumps(checks,indent=2)+'\n',encoding='utf8')
+(OUT/('auth-environment-validation.json' if '--auth' in sys.argv else 'followup-environment-validation.json' if '--followup' in sys.argv else 'final-environment-validation.json' if '--final-only' in sys.argv else 'environment-validation.json')).write_text(json.dumps(checks,indent=2)+'\n',encoding='utf8')
 print('Checked '+str(len(checks))+' environment/route conditions.')
 raise SystemExit(1 if any(check['result'] == 'FAIL' for check in checks) else 0)

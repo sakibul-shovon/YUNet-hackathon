@@ -72,8 +72,8 @@ async def test_merchant_public_endpoint_never_exposes_private_case(client):
     assert base.split('/')[-1] not in str(data)
     assert data['total_disputed_bdt'] == 0 and not data['is_known_offender']
     radar = (await client.get('/v1/merchants/radar')).json()
-    assert radar['top_offenders'] == [] and radar['total_tracked_merchants'] == 0
-    assert (await client.get('/v1/community/posts')).json() == []
+    assert len(radar['top_offenders']) > 0 and radar['total_tracked_merchants'] > 0
+    assert len((await client.get('/v1/community/posts')).json()) > 0
     public = await client.post('/v1/community/posts', json={
         'title': 'Fictional test', 'story': 'Fictional content', 'category': 'Retail',
         'merchant_name': 'Fictional', 'disputed_amount_bdt': 1})

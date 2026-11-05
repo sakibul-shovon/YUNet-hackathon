@@ -539,6 +539,50 @@
         }
       }
     },
+    "/v1/auth/judge-admin-demo": {
+      "post": {
+        "tags": [
+          "Identity & Sessions"
+        ],
+        "summary": "Auth Judge Admin Demo",
+        "description": "1-Click Hackathon Judge Admin Demo Login: creates or logs into an evaluation administrator session.",
+        "operationId": "auth_judge_admin_demo_v1_auth_judge_admin_demo_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthUserOut"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/judge-admin-demo": {
+      "post": {
+        "tags": [
+          "Identity & Sessions"
+        ],
+        "summary": "Auth Judge Admin Demo",
+        "description": "1-Click Hackathon Judge Admin Demo Login: creates or logs into an evaluation administrator session.",
+        "operationId": "auth_judge_admin_demo_auth_judge_admin_demo_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthUserOut"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v1/auth/me": {
       "get": {
         "tags": [
@@ -7521,6 +7565,50 @@
         "summary": "Auth Judge Demo",
         "description": "1-Click Hackathon Judge Demo Login: creates or logs into demo judge account with pre-seeded cases.",
         "operationId": "auth_judge_demo_api_auth_judge_demo_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthUserOut"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/judge-admin-demo": {
+      "post": {
+        "tags": [
+          "Identity & Sessions"
+        ],
+        "summary": "Auth Judge Admin Demo",
+        "description": "1-Click Hackathon Judge Admin Demo Login: creates or logs into an evaluation administrator session.",
+        "operationId": "auth_judge_admin_demo_api_v1_auth_judge_admin_demo_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthUserOut"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/judge-admin-demo": {
+      "post": {
+        "tags": [
+          "Identity & Sessions"
+        ],
+        "summary": "Auth Judge Admin Demo",
+        "description": "1-Click Hackathon Judge Admin Demo Login: creates or logs into an evaluation administrator session.",
+        "operationId": "auth_judge_admin_demo_api_auth_judge_admin_demo_post",
         "responses": {
           "200": {
             "description": "Successful Response",

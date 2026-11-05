@@ -87,6 +87,16 @@ async def auth_judge_demo(
     return await IdentityService.login_judge_demo(db, response)
 
 
+@router.post("/auth/judge-admin-demo", response_model=AuthUserOut)
+@router.post("/v1/auth/judge-admin-demo", response_model=AuthUserOut)
+async def auth_judge_admin_demo(
+    response: Response,
+    db: AsyncSession = Depends(get_db_session),
+):
+    """1-Click Hackathon Judge Admin Demo Login: creates or logs into an evaluation administrator session."""
+    return await IdentityService.login_judge_admin_demo(db, response)
+
+
 @router.get("/auth/me", response_model=AuthUserOut)
 @router.get("/v1/auth/me", response_model=AuthUserOut)
 async def get_auth_user(

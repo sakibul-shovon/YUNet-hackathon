@@ -9,6 +9,7 @@ node_modules/
 .next-audit-check/
 .next-followup-check/
 .next-followup-verify/
+.next-auth-check/
 out/
 build/
 dist/
