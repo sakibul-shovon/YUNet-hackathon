@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="410" viewBox="0 0 1600 410" role="img" aria-labelledby="title desc">
+  <title id="title">Ebarki — The next step, made clear.</title>
+  <desc id="desc">Evidence, your review and a clearer next action.</desc>
+  <rect width="1600" height="410" rx="24" fill="#f7f5ef"/>
+  <path d="M0 343H1600M1070 0V410" stroke="#dcded6"/>
+  <g transform="translate(78 80)" fill="none" stroke="#b73e2b" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 0H59L80 23V106H4Z M59 0V23H80 M24 60H58 M46 48L58 60L46 72"/></g>
+  <g font-family="Arial, Helvetica, sans-serif" fill="#1c2b2c">
+    <text x="194" y="169" font-size="112" font-weight="700" letter-spacing="-6">Ebarki<tspan fill="#b73e2b">.</tspan></text>
+    <text x="83" y="253" font-size="38" letter-spacing="-.8">The next step, made clear.</text>
+    <text x="83" y="306" font-size="20" fill="#61716f">A consumer resolution workspace for Bangladesh</text>
+    <text x="83" y="383" font-size="15" letter-spacing="3" fill="#61716f">YOUR RECORDS. YOUR REVIEW. YOUR NEXT STEP.</text>
+    <text x="1150" y="96" font-size="15" letter-spacing="3" fill="#61716f">FOLLOW THE RECORD</text>
+    <path d="M1169 137V276" stroke="#a6bbb3" stroke-width="2"/>
+    <g fill="#14756d"><circle cx="1169" cy="143" r="8"/><circle cx="1169" cy="211" r="8"/><circle cx="1169" cy="279" r="8"/></g>
+    <text x="1200" y="151" font-size="27">Evidence</text><text x="1200" y="219" font-size="27">Your review</text><text x="1200" y="287" font-size="27">A clearer next action</text>
+  </g>
+</svg>

@@ -33,3 +33,27 @@ User-authorized film work is in production/film, separate from P21.1. Read READM
 Real isolated local app/provider calls and fictional evidence were captured; no API result mocks or official submissions. New community posts are unavailable; fictional seeded discussion/comment shown. Reply required user wording correction, preserved honestly. Matrix maps representative scenes for 78 of 125 families, 47 without a scene; grouped-feature completeness is explicitly not claimed. First mux timestamp-scale failure and failed workspace-search capture are retained as evidence. Authoritative renderer is finish.py hybrid with 90kHz-normalized segment streams, not an unverified full Remotion UI render.
 
 Local out/ includes MP4s, caption ZIP, editable-source ZIP, review sheets and hashes. Large generated media, model weights, database/session state and credentials are excluded from Git; source/captions/reports/fictional receipt records are checkpointed. Film servers on 3002/8002 were stopped; original 3000/8000 services were not intentionally changed. Restore-generated Next config/type files was completed. P21.1 and the product release remain unfinished; film delivery does not reverse the prior readiness verdict or deployment deferral.
+
+## Documentation refresh — owner review, no commit authorization
+
+Latest user instruction overrides earlier autonomous checkpoint policy: DO NOT COMMIT OR PUSH WITHOUT EXPLICIT PERMISSION. No commit/push/deployment/upload occurred during this refresh; base HEAD is 2da6400. The owner requested mock app/video/deck links and will supply final URLs later. Keep example.com placeholders visibly labeled and project-links.json consistent.
+
+Read docs/README.md and docs/qa/DOCUMENTATION_REFRESH_REPORT.md. English README, Bangla introduction, original cover, event graphic and five actual fictional-case screenshots are ready. Current features/setup/architecture/API/provider/privacy/admin guides replace stale claims; judge guide, pitch story/checklist and legacy benchmark scope were reconciled. Primary-source research and code/documentation audit are in docs/research/. No repository license was selected. Protected blueprint, event brief and plan were unchanged.
+
+Fresh core run passed 184 backend + 27 web tests with 7 backend warnings, exit 0. Documentation check passed 28 documents, 238 relative targets/anchors and 22 API operations. Local GitHub-like marked/Mermaid previews passed desktop/mobile English, Bangla and architecture; sampled images were visually inspected. These are not published GitHub screenshots or a new product readiness sign-off. Check evidence/documentation-*.json and PNGs.
+
+Source review confirmed the ungated one-click judge-admin route grants global admin/reviewer/publisher/operator roles. Documentation restricts it to isolated synthetic evaluation; product code was not changed. Community/merchant seed data and process-local mutations are preview-only; new public posts remain 503. No E5 model inference, universal zero retention or production readiness is claimed.
+
+An unrelated deletion of tracked ClaimCraft_BD_Conference_Demo_Video.mp4 appeared while work was in progress; its cause is unverified and it was not restored or included in this task. Preserve that deletion and the pre-existing untracked video prompt.txt unless the owner directs otherwise. No staging was performed.
+
+Documentation refresh final code/AST graph update PASS: 4,175 nodes, 10,660 edges, 257 communities. No LLM semantic rebuild claimed. All changes remain unstaged and uncommitted for owner review.
+
+## Urgent pitch PDF and final links
+
+Owner supplied https://www.youtube.com/watch?v=FE5Hs5RiUUw and https://ebarki.165.99.219.253.sslip.io/ . English/Bangla README and pitch docs now use those URLs; presentation points to docs/pitch/Ebarki_AIgnite_2026_Pitch_Deck.pdf. Exactly five 16:9 English PDF pages exported, all rendered and visually inspected, clickable app/video/repo links included. Cover logo spacing fixed. PDF verification is pitch-deck-verification.json. HTTP root redirect to /en returned 200; full hosted journey/video playback were not independently accepted. No upload, commit or push. Original no-commit-without-permission instruction still applies.
+
+## Submission story and public repository cleanup — PUSH AUTHORIZED
+
+The latest user explicitly requested GitHub update/push and removal of unnecessary/video-production files. This supersedes the earlier no-commit instruction for the current cleanup. Commit/push are now authorized. Final paste-ready English story: docs/pitch/DEVPOST_PROJECT_STORY.md; field values/tags/links: DEVPOST_FIELDS.md. Four 3:2 product gallery PNGs are in docs/assets/gallery.
+
+61 video-production files and obsolete root MP4 were removed from the Git index, with the local production directory preserved and ignored. Generated documentation preview PNGs and video prompt.txt are ignored. App source, regression fixtures, protected specs, product screenshots, deck PDF and meaningful audit evidence remain. No history rewrite/force push is authorized or performed. Public docs no longer link to excluded production files. Latest docs check PASS: 30 docs, 233 relative links, 22 API operations. Product code is unchanged, so earlier fresh 211-test core result applies; no new full acceptance claim. Remote receipt must be verified and reported after the authorized push.

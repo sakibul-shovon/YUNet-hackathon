@@ -1,0 +1,66 @@
+{
+  "checked_on": "2026-11-05",
+  "method": "Local marked/GFM render with GitHub-like light styling, Edge/Playwright, actual Mermaid rendering; not a screenshot of GitHub itself",
+  "results": [
+    {
+      "doc": "README.md",
+      "label": "readme-desktop",
+      "render": {
+        "done": true,
+        "diagrams": 1
+      },
+      "width": 1440,
+      "scrollWidth": 1440,
+      "brokenImages": [],
+      "mermaidText": [
+        "#mermaid-1793892402100{font-family:\"trebuchet ms\","
+      ],
+      "pageErrors": []
+    },
+    {
+      "doc": "README.md",
+      "label": "readme-mobile",
+      "render": {
+        "done": true,
+        "diagrams": 1
+      },
+      "width": 390,
+      "scrollWidth": 390,
+      "brokenImages": [],
+      "mermaidText": [
+        "#mermaid-1793892403871{font-family:\"trebuchet ms\","
+      ],
+      "pageErrors": []
+    },
+    {
+      "doc": "README.bn.md",
+      "label": "readme-bangla",
+      "render": {
+        "done": true,
+        "diagrams": 0
+      },
+      "width": 1200,
+      "scrollWidth": 1200,
+      "brokenImages": [],
+      "mermaidText": [],
+      "pageErrors": []
+    },
+    {
+      "doc": "docs/engineering/ARCHITECTURE.md",
+      "label": "architecture",
+      "render": {
+        "done": true,
+        "diagrams": 2
+      },
+      "width": 1440,
+      "scrollWidth": 1440,
+      "brokenImages": [],
+      "mermaidText": [
+        "#mermaid-1793892406185{font-family:\"trebuchet ms\",",
+        "Configured modelRun stagesAPIWeb / BFFConsumerConf"
+      ],
+      "pageErrors": []
+    }
+  ],
+  "result": "PASS"
+}

@@ -1,0 +1,33 @@
+{
+  "pages": 5,
+  "page_size_points": [
+    1280,
+    720
+  ],
+  "aspect_ratio": "16:9",
+  "clickable_links": [
+    "https://yunet-aignite26.devpost.com/",
+    "https://ebarki.165.99.219.253.sslip.io/",
+    "https://www.youtube.com/watch?v=FE5Hs5RiUUw",
+    "https://github.com/sakibul-shovon/YUNet-hackathon"
+  ],
+  "output_bytes": 1666040,
+  "text_present_per_page": [
+    386,
+    346,
+    419,
+    467,
+    558
+  ],
+  "body_type": "Native PDF text; actual application screenshot excerpts; existing event graphic",
+  "assistant_visual_review": "All five rendered pages inspected; cover logo spacing corrected; final changed pages re-inspected",
+  "requirements": {
+    "max_five_slides": true,
+    "problem": 1,
+    "solution": 2,
+    "how_it_works": 3,
+    "technical_implementation": 4,
+    "participant_introduction": 5
+  },
+  "sha256": "21ba449fc74fef041cfe62e5ab8f8bbbd4e3ad3b6749b2c0b1e84094c92cb35e"
+}

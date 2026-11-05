@@ -1,6 +1,6 @@
 # Ebarki - five-slide submission content
 
-Content source, updated 5 November 2026. This Markdown file is not an exported presentation deck. Verify the final deck and live deployment before submission.
+Content reference, updated 5 November 2026. The exported [five-slide PDF](Ebarki_AIgnite_2026_Pitch_Deck.pdf) is ready. Its final order is problem/product, solution, workflow, engineering and participant/evidence. App/video links are supplied; final submission and deployed journey checks remain separate.
 
 ## Slide 1 - An everyday consumer problem
 
@@ -20,4 +20,6 @@ Explore procedural conditions and what-if changes. Prepare and edit a reply or a
 
 ## Slide 5 - Solo builder and evidence
 
-Sakibul Islam Shovon - solo builder. Next.js, FastAPI, SQLAlchemy and owner-scoped evidence storage. Independent release-audit reports, synthetic fixtures and provider receipts are in `docs/qa/`. Current verdict: **NOT READY** until the recorded deployment, source-review and browser acceptance gaps are closed. Public merchant data is empty; community publishing is unavailable. Consented scanned-PDF reading is bounded to five image-only pages per attempt; provider quotas and human review apply.
+Sakibul Islam Shovon - solo builder. Next.js, FastAPI, SQLAlchemy and owner-scoped evidence storage. Independent audits, synthetic fixtures and provider receipts are linked from [current status](../qa/CURRENT_STATUS.md). Recorded core checks: 184 backend + 27 web tests. Community/merchant data is a seeded preview; new public posts are unavailable. Consented scanned-PDF reading is bounded to five image-only pages per attempt. Public hosting, qualified source review and complete browser acceptance remain open; privileged judge-admin entry requires isolation/gating. No recovery or user-traction metric is claimed.
+
+Use the [submission checklist](SUBMISSION_CHECKLIST.md) for final access checks. The PDF is exported; no claim is made that it has been uploaded or submitted.

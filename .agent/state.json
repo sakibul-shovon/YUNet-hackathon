@@ -1,6 +1,6 @@
 {
   "plan_version": "1.2",
-  "updated_at": "2026-11-05T14:59:52.561213+00:00",
+  "updated_at": "2026-11-05T15:46:53.067594+00:00",
   "current_task": "P21.1",
   "last_completed_task": "P14.6",
   "tasks": {
@@ -2446,22 +2446,56 @@
     "followup_report": "docs/qa/EBARKI_STABILIZATION_FOLLOWUP.md",
     "qualified_legal_review": "UNVERIFIED; primary-page comparison is recorded separately"
   },
-  "film_production": {
-    "status": "REVIEW_CUT_READY",
-    "scope": "User-requested cinematic film, separate from unfinished P21.1 release work",
-    "directory": "production/film",
-    "main_seconds": 240,
-    "supplementary_seconds": 144,
-    "main_resolution": "1920x1080",
-    "main_fps": 30,
-    "main_frames": 7200,
-    "coverage_families_with_representative_scene": 78,
-    "coverage_families_without_scene": 47,
-    "qa_report": "production/film/QUALITY_REPORT.bn.md",
-    "remaining_limits": [
-      "Complete feature/control coverage not achieved",
-      "Full human playback/listening and subjective caption/voice sign-off not certified"
-    ],
-    "git_binaries": "Generated MP4/stems/source ZIP stay local and ignored; editable scripts, captions, reports and receipts are source-controlled"
+  "documentation_refresh": {
+    "status": "AUTHORIZED_FOR_SUBMISSION_PUSH",
+    "date": "2026-11-05",
+    "base_commit": "2da640046c533ee112976bf002db14016f42684e",
+    "commit_requires_explicit_user_permission": true,
+    "commit_or_push_performed": false,
+    "primary_readme": "README.md",
+    "documentation_index": "docs/README.md",
+    "research": "docs/research/DOCUMENTATION_RESEARCH_2026-11-05.bn.md",
+    "validation": "docs/qa/DOCUMENTATION_REFRESH_REPORT.md",
+    "checked_documents": 28,
+    "relative_links": 238,
+    "api_operations_checked": 22,
+    "fresh_core": {
+      "exit_code": 0,
+      "backend_passed": 184,
+      "web_passed": 27,
+      "backend_warnings": 7
+    },
+    "public_links": "Live app and YouTube supplied by owner; five-slide PDF exported; no example.com placeholders in current README/pitch links",
+    "product_release_verdict": "Unchanged; NOT READY",
+    "graph_refresh": {
+      "result": "PASS",
+      "scope": "Code/AST refresh, no LLM semantic rebuild",
+      "nodes": 4175,
+      "edges": 10660,
+      "communities": 257
+    },
+    "commit_authorized_by_latest_user": true
+  },
+  "pitch_deck": {
+    "status": "EXPORTED_AND_VISUALLY_REVIEWED",
+    "path": "docs/pitch/Ebarki_AIgnite_2026_Pitch_Deck.pdf",
+    "slides": 5,
+    "language": "English",
+    "live_app": "https://ebarki.165.99.219.253.sslip.io/",
+    "video": "https://www.youtube.com/watch?v=FE5Hs5RiUUw",
+    "live_link_check": "HTTP redirect to /en, 200; not full deployed acceptance",
+    "video_check": "User supplied; playback not independently verified",
+    "commit_or_push_performed": false
+  },
+  "submission_cleanup": {
+    "status": "AUTHORIZED_READY_FOR_CHECKPOINT",
+    "authorization": "Latest user explicitly requested update, remove unnecessary/video-production files and push GitHub",
+    "public_story": "docs/pitch/DEVPOST_PROJECT_STORY.md",
+    "field_values": "docs/pitch/DEVPOST_FIELDS.md",
+    "removed_from_current_tree": "61 production files and obsolete root MP4; original local production directory preserved and ignored",
+    "gallery": "docs/assets/gallery",
+    "checks": "Documentation check PASS: 30 docs, 233 relative links, 22 API routes",
+    "core": "Latest earlier same-session 184 backend +27 web PASS; no app code changed",
+    "history": "No history rewrite or force push; older commits remain historical"
   }
 }

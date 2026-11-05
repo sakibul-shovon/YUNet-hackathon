@@ -2,6 +2,8 @@
 
 Implementation and live-provider verification: 5 November 2026.
 
+> This checkpoint describes the connected-workspace implementation. For later scanned-PDF, public-preview and privileged-admin changes, use the [current feature guide](product/FEATURES.md), [provider register](engineering/providers.md) and [evaluation status](qa/CURRENT_STATUS.md). Earlier evidence remains scoped to the execution recorded here.
+
 ## Product decision
 
 Intelligence becomes visible through connected work: **original record → proposed finding → human review → usable preparation**. The case workspace keeps the live workstream beside the object being reviewed. English and Bangla share this interaction model.

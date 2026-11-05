@@ -98,4 +98,13 @@ graphify-out/20??-??-??/
 # Local QA output; the reviewed, credential-free copy lives in docs/qa/
 .agent/live-ai-report.json
 
+# Local video production stays outside the public repository.
+/production/
+/video prompt.txt
+*.mp4
+graphify-out/.rebuild.lock
+
+# Generated documentation preview captures; product screenshots remain in docs/assets.
+docs/qa/evidence/documentation-*.png
+
 

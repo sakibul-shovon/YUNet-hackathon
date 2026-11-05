@@ -1,5 +1,7 @@
 # ClaimCraft BD — Multimodal Provider Benchmark & Evaluation Report (P06.5)
 
+> **Historical development artifact.** Its fixture/provider descriptions and metric claims are not a current live-model accuracy certification. Later audits found legacy adapter fabrication. Use the [current provider register](../engineering/providers.md), [actual AI receipts](../qa/connected-ai-live-2026-11-05.json) and [current status](../qa/CURRENT_STATUS.md) for observed execution and remaining limits. Original content is retained below for traceability.
+
 ## 1. Executive Summary
 This document records the reproducible mini-benchmark for speech-to-text (STT) and vision-language (VLM) layout comprehension across Bangladesh consumer dispute scenarios.
 

@@ -1,0 +1,12 @@
+{
+  "checked_on": "2026-11-05",
+  "documents": 30,
+  "relative_links_checked": 226,
+  "html_images_with_alt": 8,
+  "unique_external_urls": 29,
+  "documented_api_operations_checked": 22,
+  "intentional_placeholders": {},
+  "errors": [],
+  "result": "PASS",
+  "scope": "Local paths, anchors, case, SVG XML, API route presence and placeholder labels; not external availability or full product acceptance."
+}

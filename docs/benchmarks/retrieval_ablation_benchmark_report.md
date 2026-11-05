@@ -1,5 +1,7 @@
 # ClaimCraft BD — Hybrid Retrieval & Ablation Benchmark Report (P07.6)
 
+> **Historical development artifact.** The legacy E5-named adapter generates deterministic hashes, not pretrained E5 inference. These small-fixture metrics do not establish production retrieval quality. The active workspace uses lexical/exact retrieval with dense disabled. See [architecture](../engineering/ARCHITECTURE.md), [provider methods](../engineering/providers.md) and [current status](../qa/CURRENT_STATUS.md). Original content is retained below for traceability.
+
 ## 1. Executive Summary
 This report benchmarks the hybrid retrieval architecture of ClaimCraft BD against statutory provisions of the Consumers' Right Protection Act, 2009 (CRPA 2009) and Bangladesh Bank CIPC regulatory guidelines.
 
