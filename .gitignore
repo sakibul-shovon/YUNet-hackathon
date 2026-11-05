@@ -10,6 +10,7 @@ node_modules/
 .next-followup-check/
 .next-followup-verify/
 .next-auth-check/
+.next-film/
 out/
 build/
 dist/

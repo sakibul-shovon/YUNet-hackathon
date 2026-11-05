@@ -1,0 +1,275 @@
+1
+00:00:00,667 --> 00:00:01,633
+You paid for a phone.
+
+2
+00:00:02,000 --> 00:00:03,233
+The delivery date passed.
+
+3
+00:00:03,800 --> 00:00:06,333
+Now, even explaining what happened feels like work.
+
+4
+00:00:09,700 --> 00:00:10,333
+A receipt here.
+
+5
+00:00:10,733 --> 00:00:11,833
+A promise in a message.
+
+6
+00:00:12,400 --> 00:00:14,000
+Five thousand on one record.
+
+7
+00:00:14,500 --> 00:00:16,367
+Five thousand five hundred in your account.
+
+8
+00:00:19,700 --> 00:00:20,400
+Meet Ebarki.
+
+9
+00:00:21,033 --> 00:00:24,300
+A consumer resolution workspace built around your records, your
+
+10
+00:00:24,333 --> 00:00:25,733
+review, and your next step.
+
+11
+00:00:28,667 --> 00:00:29,767
+Begin with what you have.
+
+12
+00:00:30,267 --> 00:00:33,500
+Explore a clearly labeled sample, or start your own private
+
+13
+00:00:33,567 --> 00:00:33,800
+case.
+
+14
+00:00:34,433 --> 00:00:36,067
+No perfect wording required.
+
+15
+00:00:40,633 --> 00:00:41,633
+Describe the problem.
+
+16
+00:00:42,233 --> 00:00:44,600
+Add records and choose what processing you allow.
+
+17
+00:00:45,300 --> 00:00:47,933
+English and Bangla belong in the same experience.
+
+18
+00:00:53,633 --> 00:00:56,733
+With permission, AI helps summarize your situation.
+
+19
+00:00:57,367 --> 00:00:59,500
+The workstream records what actually ran.
+
+20
+00:01:00,167 --> 00:01:03,000
+Findings stay connected to information you can inspect.
+
+21
+00:01:07,733 --> 00:01:09,533
+Open a moment in the evidence story.
+
+22
+00:01:10,200 --> 00:01:12,633
+See the original receipt or message beside it.
+
+23
+00:01:13,167 --> 00:01:16,167
+Confirm the date, correct it, or leave it uncertain.
+
+24
+00:01:22,667 --> 00:01:25,333
+The records reveal a five hundred taka difference.
+
+25
+00:01:26,033 --> 00:01:27,000
+Add the second payment.
+
+26
+00:01:27,600 --> 00:01:31,133
+The linked receipts now explain the total, without rewriting your
+
+27
+00:01:31,200 --> 00:01:32,033
+original account.
+
+28
+00:01:35,667 --> 00:01:37,767
+Bring an image or an audio recording.
+
+29
+00:01:38,300 --> 00:01:41,600
+Configured readers can extract text and transcribe speech.
+
+30
+00:01:42,267 --> 00:01:45,533
+Keep the original nearby, because AI can make mistakes.
+
+31
+00:01:48,667 --> 00:01:49,967
+What if one fact changes?
+
+32
+00:01:50,500 --> 00:01:52,100
+Compare the possible paths first.
+
+33
+00:01:52,800 --> 00:01:56,467
+Explicit conditions show why a result changes, while your saved
+
+34
+00:01:56,500 --> 00:01:57,533
+case stays separate.
+
+35
+00:02:01,667 --> 00:02:04,833
+When a seller replies, place their message beside your records.
+
+36
+00:02:05,500 --> 00:02:08,633
+Prepare a response, edit the wording, and decide what you
+
+37
+00:02:08,700 --> 00:02:09,767
+are comfortable using.
+
+38
+00:02:15,667 --> 00:02:17,033
+Build a reviewable draft.
+
+39
+00:02:17,600 --> 00:02:21,467
+Follow its supporting details, inspect the handoff, and download your
+
+40
+00:02:21,500 --> 00:02:22,067
+preparation.
+
+41
+00:02:22,733 --> 00:02:24,900
+You complete any official submission yourself.
+
+42
+00:02:28,667 --> 00:02:30,667
+Switch to Bangla without losing the case.
+
+43
+00:02:31,367 --> 00:02:34,600
+The same records, the same review, and the same control
+
+44
+00:02:34,733 --> 00:02:35,800
+over what happens next.
+
+45
+00:02:38,633 --> 00:02:42,033
+The community preview adds shared experiences and discussion.
+
+46
+00:02:42,667 --> 00:02:45,367
+This build keeps new public posts unavailable.
+
+47
+00:02:45,933 --> 00:02:48,667
+Private case records are not automatically published.
+
+48
+00:02:52,667 --> 00:02:57,000
+Behind the experience, administrators review cases, manage access,
+
+49
+00:02:57,400 --> 00:02:59,500
+moderate records, and publish notices.
+
+50
+00:03:00,267 --> 00:03:03,667
+Source review and release controls keep changes explicit and
+
+51
+00:03:03,733 --> 00:03:04,267
+inspectable.
+
+52
+00:03:07,667 --> 00:03:08,767
+Here is how it connects.
+
+53
+00:03:09,367 --> 00:03:12,733
+The bilingual web app reaches a Python API through a
+
+54
+00:03:12,800 --> 00:03:14,000
+same origin proxy.
+
+55
+00:03:14,733 --> 00:03:17,233
+Ownership checks protect access to case records.
+
+56
+00:03:21,733 --> 00:03:23,333
+Native documents use a parser.
+
+57
+00:03:23,900 --> 00:03:28,333
+With consent, configured models read images, transcribe audio, and
+
+58
+00:03:28,400 --> 00:03:29,167
+help with wording.
+
+59
+00:03:29,867 --> 00:03:32,600
+Each result returns with its source and review needs.
+
+60
+00:03:35,667 --> 00:03:38,900
+Reference lookup and explicit rules assess possible paths.
+
+61
+00:03:39,567 --> 00:03:41,233
+Unknown facts remain unknown.
+
+62
+00:03:42,000 --> 00:03:45,833
+Version checks guard changes, and recorded operations make the work
+
+63
+00:03:45,967 --> 00:03:46,600
+inspectable.
+
+64
+00:03:47,200 --> 00:03:50,533
+The result is preparation you can review, not a promised
+
+65
+00:03:50,633 --> 00:03:51,167
+resolution.
+
+66
+00:03:52,667 --> 00:03:54,800
+From scattered records to a clearer next step.
+
+67
+00:03:55,433 --> 00:03:55,800
+Ebarki.
+
+68
+00:03:55,900 --> 00:03:56,533
+Your evidence.
+
+69
+00:03:56,900 --> 00:03:57,567
+Your next move.

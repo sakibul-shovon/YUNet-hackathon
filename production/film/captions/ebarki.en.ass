@@ -1,0 +1,82 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1920
+PlayResY: 1080
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Film,Segoe UI,34,&H00FFFFFF,&H00FFFFFF,&H001C2B2C,&H001C2B2C,0,0,0,0,100,100,0,0,3,12,0,2,210,210,38,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.67,0:00:01.63,Film,,0,0,0,,You paid for a phone.
+Dialogue: 0,0:00:02.00,0:00:03.23,Film,,0,0,0,,The delivery date passed.
+Dialogue: 0,0:00:03.80,0:00:06.33,Film,,0,0,0,,Now, even explaining what happened feels like work.
+Dialogue: 0,0:00:09.70,0:00:10.33,Film,,0,0,0,,A receipt here.
+Dialogue: 0,0:00:10.73,0:00:11.83,Film,,0,0,0,,A promise in a message.
+Dialogue: 0,0:00:12.40,0:00:14.00,Film,,0,0,0,,Five thousand on one record.
+Dialogue: 0,0:00:14.50,0:00:16.37,Film,,0,0,0,,Five thousand five hundred in your account.
+Dialogue: 0,0:00:19.70,0:00:20.40,Film,,0,0,0,,Meet Ebarki.
+Dialogue: 0,0:00:21.03,0:00:24.30,Film,,0,0,0,,A consumer resolution workspace built around your records, your
+Dialogue: 0,0:00:24.33,0:00:25.73,Film,,0,0,0,,review, and your next step.
+Dialogue: 0,0:00:28.67,0:00:29.77,Film,,0,0,0,,Begin with what you have.
+Dialogue: 0,0:00:30.27,0:00:33.50,Film,,0,0,0,,Explore a clearly labeled sample, or start your own private
+Dialogue: 0,0:00:33.57,0:00:33.80,Film,,0,0,0,,case.
+Dialogue: 0,0:00:34.43,0:00:36.07,Film,,0,0,0,,No perfect wording required.
+Dialogue: 0,0:00:40.63,0:00:41.63,Film,,0,0,0,,Describe the problem.
+Dialogue: 0,0:00:42.23,0:00:44.60,Film,,0,0,0,,Add records and choose what processing you allow.
+Dialogue: 0,0:00:45.30,0:00:47.93,Film,,0,0,0,,English and Bangla belong in the same experience.
+Dialogue: 0,0:00:53.63,0:00:56.73,Film,,0,0,0,,With permission, AI helps summarize your situation.
+Dialogue: 0,0:00:57.37,0:00:59.50,Film,,0,0,0,,The workstream records what actually ran.
+Dialogue: 0,0:01:00.17,0:01:03.00,Film,,0,0,0,,Findings stay connected to information you can inspect.
+Dialogue: 0,0:01:07.73,0:01:09.53,Film,,0,0,0,,Open a moment in the evidence story.
+Dialogue: 0,0:01:10.20,0:01:12.63,Film,,0,0,0,,See the original receipt or message beside it.
+Dialogue: 0,0:01:13.17,0:01:16.17,Film,,0,0,0,,Confirm the date, correct it, or leave it uncertain.
+Dialogue: 0,0:01:22.67,0:01:25.33,Film,,0,0,0,,The records reveal a five hundred taka difference.
+Dialogue: 0,0:01:26.03,0:01:27.00,Film,,0,0,0,,Add the second payment.
+Dialogue: 0,0:01:27.60,0:01:31.13,Film,,0,0,0,,The linked receipts now explain the total, without rewriting your
+Dialogue: 0,0:01:31.20,0:01:32.03,Film,,0,0,0,,original account.
+Dialogue: 0,0:01:35.67,0:01:37.77,Film,,0,0,0,,Bring an image or an audio recording.
+Dialogue: 0,0:01:38.30,0:01:41.60,Film,,0,0,0,,Configured readers can extract text and transcribe speech.
+Dialogue: 0,0:01:42.27,0:01:45.53,Film,,0,0,0,,Keep the original nearby, because AI can make mistakes.
+Dialogue: 0,0:01:48.67,0:01:49.97,Film,,0,0,0,,What if one fact changes?
+Dialogue: 0,0:01:50.50,0:01:52.10,Film,,0,0,0,,Compare the possible paths first.
+Dialogue: 0,0:01:52.80,0:01:56.47,Film,,0,0,0,,Explicit conditions show why a result changes, while your saved
+Dialogue: 0,0:01:56.50,0:01:57.53,Film,,0,0,0,,case stays separate.
+Dialogue: 0,0:02:01.67,0:02:04.83,Film,,0,0,0,,When a seller replies, place their message beside your records.
+Dialogue: 0,0:02:05.50,0:02:08.63,Film,,0,0,0,,Prepare a response, edit the wording, and decide what you
+Dialogue: 0,0:02:08.70,0:02:09.77,Film,,0,0,0,,are comfortable using.
+Dialogue: 0,0:02:15.67,0:02:17.03,Film,,0,0,0,,Build a reviewable draft.
+Dialogue: 0,0:02:17.60,0:02:21.47,Film,,0,0,0,,Follow its supporting details, inspect the handoff, and download your
+Dialogue: 0,0:02:21.50,0:02:22.07,Film,,0,0,0,,preparation.
+Dialogue: 0,0:02:22.73,0:02:24.90,Film,,0,0,0,,You complete any official submission yourself.
+Dialogue: 0,0:02:28.67,0:02:30.67,Film,,0,0,0,,Switch to Bangla without losing the case.
+Dialogue: 0,0:02:31.37,0:02:34.60,Film,,0,0,0,,The same records, the same review, and the same control
+Dialogue: 0,0:02:34.73,0:02:35.80,Film,,0,0,0,,over what happens next.
+Dialogue: 0,0:02:38.63,0:02:42.03,Film,,0,0,0,,The community preview adds shared experiences and discussion.
+Dialogue: 0,0:02:42.67,0:02:45.37,Film,,0,0,0,,This build keeps new public posts unavailable.
+Dialogue: 0,0:02:45.93,0:02:48.67,Film,,0,0,0,,Private case records are not automatically published.
+Dialogue: 0,0:02:52.67,0:02:57.00,Film,,0,0,0,,Behind the experience, administrators review cases, manage access,
+Dialogue: 0,0:02:57.40,0:02:59.50,Film,,0,0,0,,moderate records, and publish notices.
+Dialogue: 0,0:03:00.27,0:03:03.67,Film,,0,0,0,,Source review and release controls keep changes explicit and
+Dialogue: 0,0:03:03.73,0:03:04.27,Film,,0,0,0,,inspectable.
+Dialogue: 0,0:03:07.67,0:03:08.77,Film,,0,0,0,,Here is how it connects.
+Dialogue: 0,0:03:09.37,0:03:12.73,Film,,0,0,0,,The bilingual web app reaches a Python API through a
+Dialogue: 0,0:03:12.80,0:03:14.00,Film,,0,0,0,,same origin proxy.
+Dialogue: 0,0:03:14.73,0:03:17.23,Film,,0,0,0,,Ownership checks protect access to case records.
+Dialogue: 0,0:03:21.73,0:03:23.33,Film,,0,0,0,,Native documents use a parser.
+Dialogue: 0,0:03:23.90,0:03:28.33,Film,,0,0,0,,With consent, configured models read images, transcribe audio, and
+Dialogue: 0,0:03:28.40,0:03:29.17,Film,,0,0,0,,help with wording.
+Dialogue: 0,0:03:29.87,0:03:32.60,Film,,0,0,0,,Each result returns with its source and review needs.
+Dialogue: 0,0:03:35.67,0:03:38.90,Film,,0,0,0,,Reference lookup and explicit rules assess possible paths.
+Dialogue: 0,0:03:39.57,0:03:41.23,Film,,0,0,0,,Unknown facts remain unknown.
+Dialogue: 0,0:03:42.00,0:03:45.83,Film,,0,0,0,,Version checks guard changes, and recorded operations make the work
+Dialogue: 0,0:03:45.97,0:03:46.60,Film,,0,0,0,,inspectable.
+Dialogue: 0,0:03:47.20,0:03:50.53,Film,,0,0,0,,The result is preparation you can review, not a promised
+Dialogue: 0,0:03:50.63,0:03:51.17,Film,,0,0,0,,resolution.
+Dialogue: 0,0:03:52.67,0:03:54.80,Film,,0,0,0,,From scattered records to a clearer next step.
+Dialogue: 0,0:03:55.43,0:03:55.80,Film,,0,0,0,,Ebarki.
+Dialogue: 0,0:03:55.90,0:03:56.53,Film,,0,0,0,,Your evidence.
+Dialogue: 0,0:03:56.90,0:03:57.57,Film,,0,0,0,,Your next move.

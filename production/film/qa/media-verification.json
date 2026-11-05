@@ -1,0 +1,68 @@
+{
+  "ebarki-master.mp4": {
+    "duration_seconds": 240.0,
+    "width": 1920,
+    "height": 1080,
+    "frame_rate": "30/1",
+    "frame_count": "7200",
+    "video_codec": "h264",
+    "audio_codec": "aac",
+    "audio_sample_rate": "48000",
+    "bytes": 27340681,
+    "sha256": "fcf22977a0fa5e4b0311676f27365a798f023566db92a5c3f695f719aa60044c",
+    "full_decode_exit": 0,
+    "decode_errors": "",
+    "whole_film_human_review": false
+  },
+  "ebarki-captioned.mp4": {
+    "duration_seconds": 240.0,
+    "width": 1920,
+    "height": 1080,
+    "frame_rate": "30/1",
+    "frame_count": "7200",
+    "video_codec": "h264",
+    "audio_codec": "aac",
+    "audio_sample_rate": "48000",
+    "bytes": 27890671,
+    "sha256": "053583fa7b190e775ce384c981446ecd77c09be4933b7be3ae588a0c5e05c5f9",
+    "full_decode_exit": 0,
+    "decode_errors": "",
+    "whole_film_human_review": false,
+    "loudness": {
+      "input_i": "-16.02",
+      "input_tp": "-0.99",
+      "input_lra": "7.00",
+      "input_thresh": "-26.22",
+      "output_i": "-15.79",
+      "output_tp": "-1.00",
+      "output_lra": "6.60",
+      "output_thresh": "-25.95",
+      "normalization_type": "dynamic",
+      "target_offset": "-0.21"
+    },
+    "black_intervals": []
+  },
+  "ebarki-coverage-reel.mp4": {
+    "duration_seconds": 144.0,
+    "width": 1920,
+    "height": 1080,
+    "frame_rate": "30/1",
+    "frame_count": "4320",
+    "video_codec": "h264",
+    "audio_codec": "aac",
+    "audio_sample_rate": "24000",
+    "bytes": 11463233,
+    "sha256": "7187675eae0424c575bf4a106b43504c252eb002e150699282016dc2617c00b0",
+    "full_decode_exit": 0,
+    "decode_errors": "",
+    "whole_film_human_review": false
+  },
+  "captions": {
+    "count": 69,
+    "overlaps": 0,
+    "negative_or_zero_duration": 0,
+    "max_characters_per_second": 23.793103448275815,
+    "cues_over_25_cps": [],
+    "alignment": "Acoustic CTC, quantized to 30fps; ASR comparison retained separately. Human listening review not certified."
+  }
+}

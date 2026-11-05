@@ -1,6 +1,6 @@
 {
   "plan_version": "1.2",
-  "updated_at": "2026-11-05T00:16:36.566085+00:00",
+  "updated_at": "2026-11-05T14:59:52.561213+00:00",
   "current_task": "P21.1",
   "last_completed_task": "P14.6",
   "tasks": {
@@ -2445,5 +2445,23 @@
     "public_url": "Deferred by user",
     "followup_report": "docs/qa/EBARKI_STABILIZATION_FOLLOWUP.md",
     "qualified_legal_review": "UNVERIFIED; primary-page comparison is recorded separately"
+  },
+  "film_production": {
+    "status": "REVIEW_CUT_READY",
+    "scope": "User-requested cinematic film, separate from unfinished P21.1 release work",
+    "directory": "production/film",
+    "main_seconds": 240,
+    "supplementary_seconds": 144,
+    "main_resolution": "1920x1080",
+    "main_fps": 30,
+    "main_frames": 7200,
+    "coverage_families_with_representative_scene": 78,
+    "coverage_families_without_scene": 47,
+    "qa_report": "production/film/QUALITY_REPORT.bn.md",
+    "remaining_limits": [
+      "Complete feature/control coverage not achieved",
+      "Full human playback/listening and subjective caption/voice sign-off not certified"
+    ],
+    "git_binaries": "Generated MP4/stems/source ZIP stay local and ignored; editable scripts, captions, reports and receipts are source-controlled"
   }
 }

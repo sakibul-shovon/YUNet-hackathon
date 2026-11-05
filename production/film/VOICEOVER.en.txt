@@ -1,0 +1,37 @@
+You paid for a phone. The delivery date passed. Now, even explaining what happened feels like work.
+
+A receipt here. A promise in a message. Five thousand on one record. Five thousand five hundred in your account.
+
+Meet Ebarki. A consumer resolution workspace built around your records, your review, and your next step.
+
+Begin with what you have. Explore a clearly labeled sample, or start your own private case. No perfect wording required.
+
+Describe the problem. Add records and choose what processing you allow. English and Bangla belong in the same experience.
+
+With permission, AI helps summarize your situation. The workstream records what actually ran. Findings stay connected to information you can inspect.
+
+Open a moment in the evidence story. See the original receipt or message beside it. Confirm the date, correct it, or leave it uncertain.
+
+The records reveal a five hundred taka difference. Add the second payment. The linked receipts now explain the total, without rewriting your original account.
+
+Bring an image or an audio recording. Configured readers can extract text and transcribe speech. Keep the original nearby, because AI can make mistakes.
+
+What if one fact changes? Compare the possible paths first. Explicit conditions show why a result changes, while your saved case stays separate.
+
+When a seller replies, place their message beside your records. Prepare a response, edit the wording, and decide what you are comfortable using.
+
+Build a reviewable draft. Follow its supporting details, inspect the handoff, and download your preparation. You complete any official submission yourself.
+
+Switch to Bangla without losing the case. The same records, the same review, and the same control over what happens next.
+
+The community preview adds shared experiences and discussion. This build keeps new public posts unavailable. Private case records are not automatically published.
+
+Behind the experience, administrators review cases, manage access, moderate records, and publish notices. Source review and release controls keep changes explicit and inspectable.
+
+Here is how it connects. The bilingual web app reaches a Python API through a same origin proxy. Ownership checks protect access to case records.
+
+Native documents use a parser. With consent, configured models read images, transcribe audio, and help with wording. Each result returns with its source and review needs.
+
+Reference lookup and explicit rules assess possible paths. Unknown facts remain unknown. Version checks guard changes, and recorded operations make the work inspectable. The result is preparation you can review, not a promised resolution.
+
+From scattered records to a clearer next step. Ebarki. Your evidence. Your next move.

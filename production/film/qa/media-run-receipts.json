@@ -1,0 +1,2971 @@
+[
+  {
+    "id": "bf14c3dc-00b8-424f-b827-710d8174756a",
+    "case_id": "fc6eaad3-f1da-4694-88ce-7256cc4d78be",
+    "operation": "resolve",
+    "locale": "en",
+    "status": "needs_review",
+    "case_version": 4,
+    "cancel_requested": false,
+    "stages": [
+      {
+        "stage_name": "case_understanding",
+        "status": "completed",
+        "method": "bounded_situation_summary",
+        "started_at": "2026-11-05T13:30:04.828963+00:00",
+        "duration_ms": 712,
+        "details": {
+          "method": "original_account",
+          "model_executed": false,
+          "execution_receipt": null
+        },
+        "finished_at": "2026-11-05T13:30:05.549505+00:00"
+      },
+      {
+        "stage_name": "text_extraction",
+        "status": "completed",
+        "method": "deterministic_pattern_extractor",
+        "started_at": "2026-11-05T13:30:05.574143+00:00",
+        "duration_ms": 20,
+        "details": {
+          "proposed_facts": 0,
+          "human_review_required": true
+        },
+        "finished_at": "2026-11-05T13:30:05.606327+00:00"
+      },
+      {
+        "stage_name": "evidence_review",
+        "status": "completed",
+        "method": "native_text_or_consent_scoped_media_reader",
+        "started_at": "2026-11-05T13:30:05.645521+00:00",
+        "duration_ms": 4071,
+        "details": {
+          "files_reviewed": 4,
+          "native_text_files": 2,
+          "provider_calls": 2,
+          "cached_readings": 2,
+          "providers": [
+            "groq"
+          ],
+          "readable_records": 4
+        },
+        "finished_at": "2026-11-05T13:30:09.724849+00:00"
+      },
+      {
+        "stage_name": "payment_reconciliation",
+        "status": "completed",
+        "method": "linked_receipt_comparison",
+        "started_at": "2026-11-05T13:30:09.750490+00:00",
+        "duration_ms": 78,
+        "details": {
+          "status": "reconciled",
+          "difference_minor_units": 0
+        },
+        "finished_at": "2026-11-05T13:30:09.838048+00:00"
+      },
+      {
+        "stage_name": "source_retrieval",
+        "status": "completed",
+        "method": "bm25_lexical_with_exact_lookup",
+        "started_at": "2026-11-05T13:30:09.855190+00:00",
+        "duration_ms": 5,
+        "details": {
+          "retrieved_count": 4,
+          "citation_handles": [
+            "crpa2009:sec:76",
+            "crpa2009:sec:45",
+            "bb_cipc:stage:provider_grievance",
+            "crpa2009:sec:76(4)"
+          ],
+          "dense_model_executed": false
+        },
+        "finished_at": "2026-11-05T13:30:09.870746+00:00"
+      },
+      {
+        "stage_name": "procedural_assessment",
+        "status": "completed",
+        "method": "kleene_three_valued_policy",
+        "started_at": "2026-11-05T13:30:09.897895+00:00",
+        "duration_ms": 8,
+        "details": {
+          "routes_evaluated": 6,
+          "supported_routes": 1,
+          "question_pending": false
+        },
+        "finished_at": "2026-11-05T13:30:09.935601+00:00"
+      }
+    ],
+    "result": {
+      "understanding": {
+        "summary": "I paid BDT 5,500 for a phone ordered online. The promised delivery date has passed. The phone has not arrived, and the seller has not replied.",
+        "method": "original_account",
+        "model_executed": false,
+        "provider_unavailable": true
+      },
+      "proposed_facts": 0,
+      "next_view": "review",
+      "readings": [
+        {
+          "id": "0264d50e-9d8a-42d3-9d46-14f7c6951f32",
+          "filename": "Ebarki-sample-payment.pdf",
+          "mime_type": "application/pdf",
+          "sha256": "c3cd21c695dabaff1b8378f9dddeabd6720611d551cb04a593377d2a7040ef42",
+          "text": "Ebarki / SAMPLE\nFICTIONAL DATA. NOT A REAL TRANSACTION.\nSample Electronics\nPayment for a sample phone order\nReference: SAMPLE-001\nDate: 2026-10-24\nAmount paid\nBDT 5,000\nFor the Ebarki scenario sandbox only.\nThis document proves no real purchase or payment.",
+          "lines": [
+            {
+              "text": "Ebarki / SAMPLE",
+              "page": 1,
+              "box": [
+                0.0905,
+                0.0746,
+                0.5317,
+                0.1156
+              ]
+            },
+            {
+              "text": "FICTIONAL DATA. NOT A REAL TRANSACTION.",
+              "page": 1,
+              "box": [
+                0.0905,
+                0.1448,
+                0.6236,
+                0.1626
+              ]
+            },
+            {
+              "text": "Sample Electronics",
+              "page": 1,
+              "box": [
+                0.0905,
+                0.2438,
+                0.4639,
+                0.2741
+              ]
+            },
+            {
+              "text": "Payment for a sample phone order",
+              "page": 1,
+              "box": [
+                0.0905,
+                0.3166,
+                0.4937,
+                0.3362
+              ]
+            },
+            {
+              "text": "Reference: SAMPLE-001",
+              "page": 1,
+              "box": [
+                0.0905,
+                0.3826,
+                0.3845,
+                0.4023
+              ]
+            },
+            {
+              "text": "Date: 2026-10-24",
+              "page": 1,
+              "box": [
+                0.0905,
+                0.4344,
+                0.2943,
+                0.4541
+              ]
+            },
+            {
+              "text": "Amount paid",
+              "page": 1,
+              "box": [
+                0.0905,
+                0.5469,
+                0.2375,
+                0.5666
+              ]
+            },
+            {
+              "text": "BDT 5,000",
+              "page": 1,
+              "box": [
+                0.0905,
+                0.5968,
+                0.4358,
+                0.6504
+              ]
+            },
+            {
+              "text": "For the Ebarki scenario sandbox only.",
+              "page": 1,
+              "box": [
+                0.0905,
+                0.7448,
+                0.4901,
+                0.7626
+              ]
+            },
+            {
+              "text": "This document proves no real purchase or payment.",
+              "page": 1,
+              "box": [
+                0.0905,
+                0.7805,
+                0.641,
+                0.7983
+              ]
+            }
+          ],
+          "model_executed": false,
+          "method": "native_pdf",
+          "reason": null,
+          "reader_version": 2,
+          "page_count": 1,
+          "pages_read": [
+            1
+          ],
+          "reused_from_run": "76f01014-3186-4903-81fa-a90a583c3009"
+        },
+        {
+          "id": "b5337c2b-7c2a-496c-8fd2-4523083b1d50",
+          "filename": "Ebarki-sample-second-payment.pdf",
+          "mime_type": "application/pdf",
+          "sha256": "38294d6d30e3e2bd9108625cf41c31899a193a10b93477ddcfb15a616b6143e2",
+          "text": "Ebarki / SAMPLE\nFICTIONAL DATA. NOT A REAL TRANSACTION.\nSample Electronics\nPayment for a sample phone order\nReference: SAMPLE-002\nDate: 2026-10-24\nAmount paid\nBDT 500\nFor the Ebarki scenario sandbox only.\nThis document proves no real purchase or payment.",
+          "lines": [
+            {
+              "text": "Ebarki / SAMPLE",
+              "page": 1,
+              "box": [
+                0.0905,
+                0.0746,
+                0.5317,
+                0.1156
+              ]
+            },
+            {
+              "text": "FICTIONAL DATA. NOT A REAL TRANSACTION.",
+              "page": 1,
+              "box": [
+                0.0905,
+                0.1448,
+                0.6236,
+                0.1626
+              ]
+            },
+            {
+              "text": "Sample Electronics",
+              "page": 1,
+              "box": [
+                0.0905,
+                0.2438,
+                0.4639,
+                0.2741
+              ]
+            },
+            {
+              "text": "Payment for a sample phone order",
+              "page": 1,
+              "box": [
+                0.0905,
+                0.3166,
+                0.4937,
+                0.3362
+              ]
+            },
+            {
+              "text": "Reference: SAMPLE-002",
+              "page": 1,
+              "box": [
+                0.0905,
+                0.3826,
+                0.3845,
+                0.4023
+              ]
+            },
+            {
+              "text": "Date: 2026-10-24",
+              "page": 1,
+              "box": [
+                0.0905,
+                0.4344,
+                0.2943,
+                0.4541
+              ]
+            },
+            {
+              "text": "Amount paid",
+              "page": 1,
+              "box": [
+                0.0905,
+                0.5469,
+                0.2375,
+                0.5666
+              ]
+            },
+            {
+              "text": "BDT 500",
+              "page": 1,
+              "box": [
+                0.0905,
+                0.5968,
+                0.3763,
+                0.6504
+              ]
+            },
+            {
+              "text": "For the Ebarki scenario sandbox only.",
+              "page": 1,
+              "box": [
+                0.0905,
+                0.7448,
+                0.4901,
+                0.7626
+              ]
+            },
+            {
+              "text": "This document proves no real purchase or payment.",
+              "page": 1,
+              "box": [
+                0.0905,
+                0.7805,
+                0.641,
+                0.7983
+              ]
+            }
+          ],
+          "model_executed": false,
+          "method": "native_pdf",
+          "reason": null,
+          "reader_version": 2,
+          "page_count": 1,
+          "pages_read": [
+            1
+          ],
+          "reused_from_run": "76f01014-3186-4903-81fa-a90a583c3009"
+        },
+        {
+          "id": "8dcc71a9-c2b4-41de-9e1f-21ee6367af4a",
+          "filename": "fictional-seller-messages.png",
+          "mime_type": "image/png",
+          "sha256": "c92e50fd9bb48e4da957ca73e58e0c62a0eeece0363148f638d4ff3332ce1d66",
+          "text": "FICTIONAL DEMONSTRATION — NOT A REAL CONVERSATION\nSample Electronics / Order messages\n25 October 2026 · Seller\nYour phone will be delivered by 26 October 2026.\nআপনার ফোন ২৬ অক্টোবর ২০২৬-এর মধ্যে পৌঁছে দেওয়া হবে।\n31 October 2026 · Buyer\nThe phone has not arrived. Please provide an update.\nফোনটি এখনো পাইনি। অনুগ্রহ করে সর্বশেষ খবর জানান।\nEbarki film evidence · Synthetic message sheet · No real business allegation",
+          "lines": [
+            {
+              "text": "FICTIONAL DEMONSTRATION — NOT A REAL CONVERSATION",
+              "page": 1,
+              "box": [
+                0.0616,
+                0.06661,
+                0.5347066666666667,
+                0.079768
+              ]
+            },
+            {
+              "text": "Sample Electronics / Order messages",
+              "page": 1,
+              "box": [
+                0.0616,
+                0.099892,
+                0.6717066666666666,
+                0.13240000000000002
+              ]
+            },
+            {
+              "text": "25 October 2026 · Seller",
+              "page": 1,
+              "box": [
+                0.10270000000000001,
+                0.188128,
+                0.3721333333333333,
+                0.20980000000000001
+              ]
+            },
+            {
+              "text": "Your phone will be delivered by 26 October 2026.",
+              "page": 1,
+              "box": [
+                0.10270000000000001,
+                0.24076,
+                0.6233000000000001,
+                0.26398
+              ]
+            },
+            {
+              "text": "আপনার ফোন ২৬ অক্টোবর ২০২৬-এর মধ্যে পৌঁছে দেওয়া হবে।",
+              "page": 1,
+              "box": [
+                0.10270000000000001,
+                0.29107,
+                0.6780999999999999,
+                0.31429
+              ]
+            },
+            {
+              "text": "31 October 2026 · Buyer",
+              "page": 1,
+              "box": [
+                0.10270000000000001,
+                0.36073,
+                0.3949666666666667,
+                0.38395
+              ]
+            },
+            {
+              "text": "The phone has not arrived. Please provide an update.",
+              "page": 1,
+              "box": [
+                0.10270000000000001,
+                0.412588,
+                0.6689666666666667,
+                0.435808
+              ]
+            },
+            {
+              "text": "ফোনটি এখনো পাইনি। অনুগ্রহ করে সর্বশেষ খবর জানান।",
+              "page": 1,
+              "box": [
+                0.10270000000000001,
+                0.46367200000000003,
+                0.62604,
+                0.48689200000000005
+              ]
+            },
+            {
+              "text": "Ebarki film evidence · Synthetic message sheet · No real business allegation",
+              "page": 1,
+              "box": [
+                0.0616,
+                0.56971,
+                0.5821999999999999,
+                0.5851900000000001
+              ]
+            }
+          ],
+          "model_executed": true,
+          "method": "groq_vision",
+          "reason": null,
+          "reader_version": 2,
+          "execution_receipt": {
+            "provider": "groq",
+            "model": "qwen/qwen3.8-27b",
+            "request_id": "req_01m6nydwbzeajtf8wg629hzq5n",
+            "response_status": 200
+          },
+          "model": "qwen/qwen3.8-27b"
+        },
+        {
+          "id": "24d0845d-4303-46ea-a580-eaa3c782efde",
+          "filename": "fictional-account.wav",
+          "mime_type": "audio/wav",
+          "sha256": "be941ad8fb7e1757869d01bf7075fa5218c9286d25317fed4389fcc63c00750e",
+          "text": " This is a fictional demonstration recording. I paid Sample Electronics 5000 taka and another 500 taka on October 24th, 2026. The phone was promised by October 26th. It has not arrived.",
+          "lines": [
+            {
+              "text": " This is a fictional demonstration recording. I paid Sample Electronics 5000 taka and another 500 taka on October 24th, 2026. The phone was promised by October 26th. It has not arrived.",
+              "start": 0,
+              "end": 14.9
+            }
+          ],
+          "model_executed": true,
+          "method": "groq_transcription",
+          "reason": null,
+          "reader_version": 2,
+          "model": "whisper-large-v3",
+          "execution_receipt": {
+            "provider": "groq",
+            "model": "whisper-large-v3",
+            "request_id": "req_01m6nydz3aegvt6hjnv7cwc0kn",
+            "response_status": 200
+          }
+        }
+      ],
+      "evidence_findings": [
+        {
+          "id": "0264d50e-9d8a-42d3-9d46-14f7c6951f32",
+          "filename": "Ebarki-sample-payment.pdf",
+          "text": "Ebarki / SAMPLE\nFICTIONAL DATA. NOT A REAL TRANSACTION.\nSample Electronics\nPayment for a sample phone order\nReference: SAMPLE-001\nDate: 2026-10-24\nAmount paid\nBDT 5,000\nFor the Ebarki scenario sandbox only.\nThis document proves no real purchase or payment.",
+          "requires_review": true,
+          "method": "native_pdf_text"
+        },
+        {
+          "id": "b5337c2b-7c2a-496c-8fd2-4523083b1d50",
+          "filename": "Ebarki-sample-second-payment.pdf",
+          "text": "Ebarki / SAMPLE\nFICTIONAL DATA. NOT A REAL TRANSACTION.\nSample Electronics\nPayment for a sample phone order\nReference: SAMPLE-002\nDate: 2026-10-24\nAmount paid\nBDT 500\nFor the Ebarki scenario sandbox only.\nThis document proves no real purchase or payment.",
+          "requires_review": true,
+          "method": "native_pdf_text"
+        },
+        {
+          "id": "8dcc71a9-c2b4-41de-9e1f-21ee6367af4a",
+          "filename": "fictional-seller-messages.png",
+          "requires_review": true,
+          "method": "original_file"
+        },
+        {
+          "id": "24d0845d-4303-46ea-a580-eaa3c782efde",
+          "filename": "fictional-account.wav",
+          "requires_review": true,
+          "method": "original_file"
+        }
+      ],
+      "reconciliation": {
+        "case_id": "fc6eaad3-f1da-4694-88ce-7256cc4d78be",
+        "narrated_amount_minor_units": 550000,
+        "linked_evidence_total_minor_units": 550000,
+        "discrepancy_minor_units": 0,
+        "is_reconciled": true,
+        "status": "reconciled",
+        "reconciled_items": [
+          {
+            "evidence_id": "0264d50e-9d8a-42d3-9d46-14f7c6951f32",
+            "filename": "Ebarki-sample-payment.pdf",
+            "amount_minor_units": 500000,
+            "is_duplicate": false,
+            "is_linked": true
+          },
+          {
+            "evidence_id": "b5337c2b-7c2a-496c-8fd2-4523083b1d50",
+            "filename": "Ebarki-sample-second-payment.pdf",
+            "amount_minor_units": 50000,
+            "is_duplicate": false,
+            "is_linked": true
+          }
+        ],
+        "unlinked_items": [
+          {
+            "evidence_id": "8dcc71a9-c2b4-41de-9e1f-21ee6367af4a",
+            "filename": "fictional-seller-messages.png",
+            "amount_minor_units": 0,
+            "is_duplicate": false,
+            "is_linked": false
+          },
+          {
+            "evidence_id": "24d0845d-4303-46ea-a580-eaa3c782efde",
+            "filename": "fictional-account.wav",
+            "amount_minor_units": 0,
+            "is_duplicate": false,
+            "is_linked": false
+          }
+        ],
+        "prompt_en": "All amounts reconciled (BDT 5,500.00).",
+        "prompt_bn": "টাকার পরিমাণ সম্পূর্ণভাবে মিলে গেছে (৳5,500.00)।"
+      },
+      "assessment": {
+        "case_id": "fc6eaad3-f1da-4694-88ce-7256cc4d78be",
+        "overall_status": "ready_for_merchant_notice",
+        "primary_action": "prepare_merchant_notice",
+        "primary_action_title_en": "Prepare Formal Merchant Notice",
+        "primary_action_title_bn": "বিক্রেতার কাছে আনুষ্ঠানিক নোটিশ প্রস্তুত করুন",
+        "secondary_actions": [
+          {
+            "action_id": "prepare_dncrp_complaint",
+            "title_en": "Prepare DNCRP CCMS Portal Complaint",
+            "title_bn": "ভোক্তা অধিকার সিসিএমএস অভিযোগ প্রস্তুত করুন"
+          }
+        ],
+        "routes": [
+          {
+            "route_id": "route_bd.shopping.ecommerce_delivery_failure",
+            "rule_id": "bd.shopping.ecommerce_delivery_failure",
+            "issue_type": "ecommerce_delivery_failure",
+            "status": "supported",
+            "reasons": [
+              "reasons.shopping.delivery_failure_eligible"
+            ],
+            "allowed_actions": [
+              "prepare_merchant_notice",
+              "prepare_dncrp_complaint"
+            ],
+            "source_dependencies": [
+              "bd_crpa_2009",
+              "dncrp_ccms_portal"
+            ],
+            "statutory_citations": [
+              "crpa2009:sec:45",
+              "crpa2009:sec:60",
+              "crpa2009:sec:76"
+            ],
+            "supported_remedies": [
+              "full_refund",
+              "replacement",
+              "statutory_fine_share_25pct"
+            ],
+            "unsupported_remedies": [
+              "criminal_prosecution_direct",
+              "punitive_damages_triple"
+            ],
+            "unsupported_remedy_warnings": [],
+            "condition_trace": [
+              {
+                "node_type": "eq",
+                "fact": "refund_already_issued",
+                "inspected_value": false,
+                "outcome": "FALSE",
+                "details": "expected True"
+              },
+              {
+                "node_type": "eq",
+                "fact": "order_cancelled_by_buyer_before_dispatch",
+                "inspected_value": false,
+                "outcome": "FALSE",
+                "details": "expected True"
+              },
+              {
+                "node_type": "eq",
+                "fact": "purchase_channel",
+                "inspected_value": "ecommerce",
+                "outcome": "TRUE",
+                "details": "expected ecommerce"
+              },
+              {
+                "node_type": "eq",
+                "fact": "goods_delivered",
+                "inspected_value": false,
+                "outcome": "TRUE",
+                "details": "expected False"
+              },
+              {
+                "node_type": "eq",
+                "fact": "promised_delivery_date_passed",
+                "inspected_value": true,
+                "outcome": "TRUE",
+                "details": "expected True"
+              }
+            ]
+          },
+          {
+            "route_id": "route_bd.safety.hazardous_product",
+            "rule_id": "bd.safety.hazardous_product",
+            "issue_type": "product_safety_hazard",
+            "status": "needs_facts",
+            "reasons": [
+              "reasons.safety.needs_hazard_facts"
+            ],
+            "allowed_actions": [
+              "call_dncrp_hotline_16121",
+              "preserve_hazardous_sample"
+            ],
+            "source_dependencies": [
+              "bd_crpa_2009",
+              "dncrp_hotline_16121"
+            ],
+            "statutory_citations": [
+              "crpa2009:sec:41",
+              "crpa2009:sec:76",
+              "dncrp_hotline_16121"
+            ],
+            "supported_remedies": [
+              "immediate_recall",
+              "hotline_alert",
+              "full_refund"
+            ],
+            "unsupported_remedies": [],
+            "unsupported_remedy_warnings": [],
+            "condition_trace": [
+              {
+                "node_type": "eq",
+                "fact": "product_presents_immediate_hazard",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              }
+            ]
+          },
+          {
+            "route_id": "route_bd.shopping.defective_goods",
+            "rule_id": "bd.shopping.defective_goods",
+            "issue_type": "defective_goods",
+            "status": "needs_facts",
+            "reasons": [
+              "reasons.shopping.defective_goods_needs_facts"
+            ],
+            "allowed_actions": [
+              "prepare_merchant_replacement_request",
+              "prepare_dncrp_complaint"
+            ],
+            "source_dependencies": [
+              "bd_crpa_2009",
+              "dncrp_ccms_portal"
+            ],
+            "statutory_citations": [
+              "crpa2009:sec:41",
+              "crpa2009:sec:44",
+              "crpa2009:sec:60",
+              "crpa2009:sec:76"
+            ],
+            "supported_remedies": [
+              "replacement",
+              "repair",
+              "full_refund",
+              "partial_refund"
+            ],
+            "unsupported_remedies": [
+              "criminal_prosecution_direct",
+              "punitive_damages_triple"
+            ],
+            "unsupported_remedy_warnings": [],
+            "condition_trace": [
+              {
+                "node_type": "eq",
+                "fact": "user_inflicted_damage",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              },
+              {
+                "node_type": "eq",
+                "fact": "goods_received_defective",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              },
+              {
+                "node_type": "eq",
+                "fact": "seller_notified_within_warranty",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              }
+            ]
+          },
+          {
+            "route_id": "route_bd.grs.public_service_grievance",
+            "rule_id": "bd.grs.public_service_grievance",
+            "issue_type": "public_service_grievance",
+            "status": "needs_facts",
+            "reasons": [
+              "reasons.grs.grievance_needs_submission_proof"
+            ],
+            "allowed_actions": [
+              "prepare_departmental_grievance",
+              "prepare_grs_submission"
+            ],
+            "source_dependencies": [
+              "cabinet_grs_portal"
+            ],
+            "statutory_citations": [],
+            "supported_remedies": [
+              "administrative_explanation",
+              "service_expedition",
+              "supervisory_review"
+            ],
+            "unsupported_remedies": [
+              "judicial_order_or_writ",
+              "monetary_compensation_direct"
+            ],
+            "unsupported_remedy_warnings": [],
+            "condition_trace": [
+              {
+                "node_type": "eq",
+                "fact": "subject_of_ongoing_court_litigation",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              },
+              {
+                "node_type": "eq",
+                "fact": "service_cadre_discipline_or_promotion",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              },
+              {
+                "node_type": "eq",
+                "fact": "alternative_statutory_appeal_pending",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              },
+              {
+                "node_type": "eq",
+                "fact": "public_service_request_submitted",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              },
+              {
+                "node_type": "eq",
+                "fact": "citizen_charter_timeline_exceeded",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              },
+              {
+                "node_type": "eq",
+                "fact": "relevant_office_contacted_first",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              }
+            ]
+          },
+          {
+            "route_id": "route_bd.insurance.insurance_claim_dispute",
+            "rule_id": "bd.insurance.insurance_claim_dispute",
+            "issue_type": "insurance_claim_dispute",
+            "status": "needs_facts",
+            "reasons": [
+              "reasons.insurance.claim_dispute_needs_policy_or_submission"
+            ],
+            "allowed_actions": [
+              "prepare_insurer_reconsideration_request",
+              "prepare_idra_grievance"
+            ],
+            "source_dependencies": [
+              "idra_insurance_guidelines"
+            ],
+            "statutory_citations": [],
+            "supported_remedies": [
+              "claim_reconsideration",
+              "written_explanation_of_denial",
+              "dispute_arbitration_referral"
+            ],
+            "unsupported_remedies": [
+              "guaranteed_claim_payout",
+              "bad_faith_punitive_damages"
+            ],
+            "unsupported_remedy_warnings": [],
+            "condition_trace": [
+              {
+                "node_type": "eq",
+                "fact": "subject_of_ongoing_court_litigation",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              },
+              {
+                "node_type": "eq",
+                "fact": "fraudulent_misrepresentation_admitted",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              },
+              {
+                "node_type": "eq",
+                "fact": "insurance_policy_documented",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              },
+              {
+                "node_type": "eq",
+                "fact": "formal_claim_submitted_to_insurer",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              },
+              {
+                "node_type": "eq",
+                "fact": "claim_denied_or_settlement_delayed_over_90d",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              }
+            ]
+          },
+          {
+            "route_id": "route_bd.telecom.telecom_billing_and_outage",
+            "rule_id": "bd.telecom.telecom_billing_and_outage",
+            "issue_type": "telecom_billing_and_outage",
+            "status": "needs_facts",
+            "reasons": [
+              "reasons.telecom.complaint_needs_provider_ticket"
+            ],
+            "allowed_actions": [
+              "prepare_telecom_provider_notice",
+              "prepare_btrc_complaint"
+            ],
+            "source_dependencies": [
+              "btrc_complaint_guidelines"
+            ],
+            "statutory_citations": [],
+            "supported_remedies": [
+              "service_credit_or_reversal",
+              "service_restoration",
+              "plan_correction"
+            ],
+            "unsupported_remedies": [
+              "punitive_consequential_damages",
+              "license_cancellation_direct"
+            ],
+            "unsupported_remedy_warnings": [],
+            "condition_trace": [
+              {
+                "node_type": "eq",
+                "fact": "issue_is_handset_hardware_only",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              },
+              {
+                "node_type": "eq",
+                "fact": "consumer_has_unpaid_due_prior_to_dispute",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              },
+              {
+                "node_type": "eq",
+                "fact": "telecom_provider_ticket_filed",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              },
+              {
+                "node_type": "eq",
+                "fact": "provider_response_overdue_or_unsatisfactory",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              },
+              {
+                "node_type": "eq",
+                "fact": "service_disruption_or_billing_error_documented",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              }
+            ]
+          }
+        ],
+        "next_best_question": null,
+        "source_cards": [
+          {
+            "id": "dncrp_ccms_portal",
+            "title_en": "DNCRP Consumer Complaint Management System (CCMS)",
+            "title_bn": "জাতীয় ভোক্তা-অধিকার সংরক্ষণ অধিদপ্তর সিসিএমএস পোর্টাল",
+            "issuer": "Directorate of National Consumer Rights Protection",
+            "official_url": "https://dncrp.com/",
+            "document_type": "portal_map",
+            "procedural_scope": "procedure_guidance",
+            "status": "observed",
+            "is_authoritative_for_penalties": false
+          },
+          {
+            "id": "idra_insurance_guidelines",
+            "title_en": "Insurance Development and Regulatory Authority (IDRA) Grievance Framework",
+            "title_bn": "বীমা উন্নয়ন ও নিয়ন্ত্রণ কর্তৃপক্ষ (আইডিআরএ) গ্রাহক অভিযোগ প্রতিকার কাঠামো",
+            "issuer": "Insurance Development and Regulatory Authority, Ministry of Finance",
+            "official_url": "https://cms.idra.org.bd/grievence-form",
+            "document_type": "procedure_guide",
+            "procedural_scope": "procedure_guidance",
+            "status": "observed",
+            "is_authoritative_for_penalties": false
+          },
+          {
+            "id": "bd_crpa_2009",
+            "title_en": "Consumer Rights Protection Act, 2009 (Act No. 26 of 2009)",
+            "title_bn": "ভোক্তা-অধিকার সংরক্ষণ আইন, ২০০৯ (২০০৯ সনের ২৬ নং আইন)",
+            "issuer": "Legislative and Parliamentary Affairs Division, Ministry of Law",
+            "official_url": "https://bdlaws.minlaw.gov.bd/act-print-1014.html",
+            "document_type": "statute",
+            "procedural_scope": "procedure_guidance",
+            "status": "observed",
+            "is_authoritative_for_penalties": true
+          },
+          {
+            "id": "dncrp_hotline_16121",
+            "title_en": "National Consumer Rights Dedicated Hotline 16121",
+            "title_bn": "ভোক্তা অধিকার হটলাইন ১৬১২১",
+            "issuer": "Directorate of National Consumer Rights Protection",
+            "official_url": "http://dncrp.portal.gov.bd/",
+            "document_type": "emergency_contact",
+            "procedural_scope": "procedure_guidance",
+            "status": "observed",
+            "is_authoritative_for_penalties": false
+          },
+          {
+            "id": "btrc_complaint_guidelines",
+            "title_en": "BTRC Telecom & Internet Consumer Grievance System",
+            "title_bn": "বিটিআরসি টেলিযোগাযোগ ও ইন্টারনেট গ্রাহক অভিযোগ প্রতিকার ব্যবস্থা",
+            "issuer": "Bangladesh Telecommunication Regulatory Commission",
+            "official_url": "https://crm.btrc.gov.bd/",
+            "document_type": "procedure_guide",
+            "procedural_scope": "procedure_guidance",
+            "status": "observed",
+            "is_authoritative_for_penalties": false
+          },
+          {
+            "id": "cabinet_grs_portal",
+            "title_en": "Government Grievance Redress System (GRS) Guidelines",
+            "title_bn": "সরকারি অভিযোগ প্রতিকার ব্যবস্থা (জিআরএস) নির্দেশিকা",
+            "issuer": "Cabinet Division, Government of the People's Republic of Bangladesh",
+            "official_url": "https://www.grs.gov.bd/",
+            "document_type": "procedure_guide",
+            "procedural_scope": "procedure_guidance",
+            "status": "observed",
+            "is_authoritative_for_penalties": false
+          }
+        ],
+        "limitation_warning_en": "The recorded date is 12 days ago. Section 60 refers to 30 days from the cause of action; the legal trigger is unverified, so Ebarki does not show a definitive cutoff or assume an extension. Check the original provision and obtain prompt guidance from the authority or a qualified adviser.",
+        "limitation_warning_bn": "দেওয়া তারিখটি 12 দিন আগের। ৬০ ধারায় কারণ উদ্ভব থেকে ৩০ দিনের কথা আছে। আইনি হিসাবের শুরুর তারিখ যাচাই হয়নি, তাই Ebarki নিশ্চিত শেষ তারিখ বা সময় বাড়ানোর সুযোগ ধরে নেয়নি। মূল ধারা মিলিয়ে অধিদপ্তর বা যোগ্য পরামর্শকের কাছ থেকে দ্রুত নির্দেশনা নিন।",
+        "days_remaining_in_limitation": null,
+        "is_deadline_uncertain": true
+      }
+    },
+    "error_code": null,
+    "created_at": "2026-11-05T13:30:04.783679",
+    "finished_at": "2026-11-05T13:30:09.961245",
+    "events": [
+      {
+        "id": "bf14c3dc-00b8-424f-b827-710d8174756a:0:start",
+        "sequence": 1,
+        "type": "tool.started",
+        "task": "case_understanding",
+        "timestamp": "2026-11-05T13:30:04.828963+00:00"
+      },
+      {
+        "id": "bf14c3dc-00b8-424f-b827-710d8174756a:0:end",
+        "sequence": 2,
+        "type": "tool.completed",
+        "task": "case_understanding",
+        "timestamp": "2026-11-05T13:30:05.549505+00:00",
+        "details": {
+          "method": "original_account",
+          "model_executed": false,
+          "execution_receipt": null
+        }
+      },
+      {
+        "id": "bf14c3dc-00b8-424f-b827-710d8174756a:1:start",
+        "sequence": 3,
+        "type": "tool.started",
+        "task": "text_extraction",
+        "timestamp": "2026-11-05T13:30:05.574143+00:00"
+      },
+      {
+        "id": "bf14c3dc-00b8-424f-b827-710d8174756a:1:end",
+        "sequence": 4,
+        "type": "tool.completed",
+        "task": "text_extraction",
+        "timestamp": "2026-11-05T13:30:05.606327+00:00",
+        "details": {
+          "proposed_facts": 0,
+          "human_review_required": true
+        }
+      },
+      {
+        "id": "bf14c3dc-00b8-424f-b827-710d8174756a:2:start",
+        "sequence": 5,
+        "type": "tool.started",
+        "task": "evidence_review",
+        "timestamp": "2026-11-05T13:30:05.645521+00:00"
+      },
+      {
+        "id": "bf14c3dc-00b8-424f-b827-710d8174756a:2:end",
+        "sequence": 6,
+        "type": "tool.completed",
+        "task": "evidence_review",
+        "timestamp": "2026-11-05T13:30:09.724849+00:00",
+        "details": {
+          "files_reviewed": 4,
+          "native_text_files": 2,
+          "provider_calls": 2,
+          "cached_readings": 2,
+          "providers": [
+            "groq"
+          ],
+          "readable_records": 4
+        }
+      },
+      {
+        "id": "bf14c3dc-00b8-424f-b827-710d8174756a:3:start",
+        "sequence": 7,
+        "type": "tool.started",
+        "task": "payment_reconciliation",
+        "timestamp": "2026-11-05T13:30:09.750490+00:00"
+      },
+      {
+        "id": "bf14c3dc-00b8-424f-b827-710d8174756a:3:end",
+        "sequence": 8,
+        "type": "tool.completed",
+        "task": "payment_reconciliation",
+        "timestamp": "2026-11-05T13:30:09.838048+00:00",
+        "details": {
+          "status": "reconciled",
+          "difference_minor_units": 0
+        }
+      },
+      {
+        "id": "bf14c3dc-00b8-424f-b827-710d8174756a:4:start",
+        "sequence": 9,
+        "type": "tool.started",
+        "task": "source_retrieval",
+        "timestamp": "2026-11-05T13:30:09.855190+00:00"
+      },
+      {
+        "id": "bf14c3dc-00b8-424f-b827-710d8174756a:4:end",
+        "sequence": 10,
+        "type": "tool.completed",
+        "task": "source_retrieval",
+        "timestamp": "2026-11-05T13:30:09.870746+00:00",
+        "details": {
+          "retrieved_count": 4,
+          "citation_handles": [
+            "crpa2009:sec:76",
+            "crpa2009:sec:45",
+            "bb_cipc:stage:provider_grievance",
+            "crpa2009:sec:76(4)"
+          ],
+          "dense_model_executed": false
+        }
+      },
+      {
+        "id": "bf14c3dc-00b8-424f-b827-710d8174756a:5:start",
+        "sequence": 11,
+        "type": "tool.started",
+        "task": "procedural_assessment",
+        "timestamp": "2026-11-05T13:30:09.897895+00:00"
+      },
+      {
+        "id": "bf14c3dc-00b8-424f-b827-710d8174756a:5:end",
+        "sequence": 12,
+        "type": "tool.completed",
+        "task": "procedural_assessment",
+        "timestamp": "2026-11-05T13:30:09.935601+00:00",
+        "details": {
+          "routes_evaluated": 6,
+          "supported_routes": 1,
+          "question_pending": false
+        }
+      },
+      {
+        "id": "bf14c3dc-00b8-424f-b827-710d8174756a:end",
+        "sequence": 13,
+        "type": "input.required",
+        "timestamp": "2026-11-05T13:30:09.961245"
+      }
+    ]
+  },
+  {
+    "id": "76f01014-3186-4903-81fa-a90a583c3009",
+    "case_id": "fc6eaad3-f1da-4694-88ce-7256cc4d78be",
+    "operation": "resolve",
+    "locale": "en",
+    "status": "needs_review",
+    "case_version": 3,
+    "cancel_requested": false,
+    "stages": [
+      {
+        "stage_name": "case_understanding",
+        "status": "completed",
+        "method": "bounded_situation_summary",
+        "started_at": "2026-11-05T13:27:00.856287+00:00",
+        "duration_ms": 798,
+        "details": {
+          "method": "groq/openai/gpt-oss-120b",
+          "model_executed": true,
+          "execution_receipt": {
+            "provider": "groq",
+            "model": "openai/gpt-oss-120b",
+            "request_id": "req_01m6ny87hhe94rnj7td65fmwse",
+            "response_status": 200
+          }
+        },
+        "finished_at": "2026-11-05T13:27:01.678132+00:00"
+      },
+      {
+        "stage_name": "text_extraction",
+        "status": "completed",
+        "method": "deterministic_pattern_extractor",
+        "started_at": "2026-11-05T13:27:01.709185+00:00",
+        "duration_ms": 27,
+        "details": {
+          "proposed_facts": 0,
+          "human_review_required": true
+        },
+        "finished_at": "2026-11-05T13:27:01.766213+00:00"
+      },
+      {
+        "stage_name": "evidence_review",
+        "status": "completed",
+        "method": "native_text_or_consent_scoped_media_reader",
+        "started_at": "2026-11-05T13:27:01.793746+00:00",
+        "duration_ms": 219,
+        "details": {
+          "files_reviewed": 2,
+          "native_text_files": 2,
+          "provider_calls": 0,
+          "cached_readings": 1,
+          "providers": [],
+          "readable_records": 2
+        },
+        "finished_at": "2026-11-05T13:27:02.022631+00:00"
+      },
+      {
+        "stage_name": "payment_reconciliation",
+        "status": "completed",
+        "method": "linked_receipt_comparison",
+        "started_at": "2026-11-05T13:27:02.244277+00:00",
+        "duration_ms": 85,
+        "details": {
+          "status": "reconciled",
+          "difference_minor_units": 0
+        },
+        "finished_at": "2026-11-05T13:27:02.344861+00:00"
+      },
+      {
+        "stage_name": "source_retrieval",
+        "status": "completed",
+        "method": "bm25_lexical_with_exact_lookup",
+        "started_at": "2026-11-05T13:27:02.455384+00:00",
+        "duration_ms": 7,
+        "details": {
+          "retrieved_count": 4,
+          "citation_handles": [
+            "crpa2009:sec:76",
+            "crpa2009:sec:45",
+            "bb_cipc:stage:provider_grievance",
+            "crpa2009:sec:76(4)"
+          ],
+          "dense_model_executed": false
+        },
+        "finished_at": "2026-11-05T13:27:02.523574+00:00"
+      },
+      {
+        "stage_name": "procedural_assessment",
+        "status": "completed",
+        "method": "kleene_three_valued_policy",
+        "started_at": "2026-11-05T13:27:02.607273+00:00",
+        "duration_ms": 5,
+        "details": {
+          "routes_evaluated": 6,
+          "supported_routes": 1,
+          "question_pending": false
+        },
+        "finished_at": "2026-11-05T13:27:02.630276+00:00"
+      }
+    ],
+    "result": {
+      "understanding": {
+        "summary": "The user paid BDT 5,500 for a phone ordered online, but the promised delivery date has passed. The phone has not arrived and the seller has not responded.",
+        "method": "groq/openai/gpt-oss-120b",
+        "model_executed": true,
+        "execution_receipt": {
+          "provider": "groq",
+          "model": "openai/gpt-oss-120b",
+          "request_id": "req_01m6ny87hhe94rnj7td65fmwse",
+          "response_status": 200
+        }
+      },
+      "proposed_facts": 0,
+      "next_view": "review",
+      "readings": [
+        {
+          "id": "0264d50e-9d8a-42d3-9d46-14f7c6951f32",
+          "filename": "Ebarki-sample-payment.pdf",
+          "mime_type": "application/pdf",
+          "sha256": "c3cd21c695dabaff1b8378f9dddeabd6720611d551cb04a593377d2a7040ef42",
+          "text": "Ebarki / SAMPLE\nFICTIONAL DATA. NOT A REAL TRANSACTION.\nSample Electronics\nPayment for a sample phone order\nReference: SAMPLE-001\nDate: 2026-10-24\nAmount paid\nBDT 5,000\nFor the Ebarki scenario sandbox only.\nThis document proves no real purchase or payment.",
+          "lines": [
+            {
+              "text": "Ebarki / SAMPLE",
+              "page": 1,
+              "box": [
+                0.0905,
+                0.0746,
+                0.5317,
+                0.1156
+              ]
+            },
+            {
+              "text": "FICTIONAL DATA. NOT A REAL TRANSACTION.",
+              "page": 1,
+              "box": [
+                0.0905,
+                0.1448,
+                0.6236,
+                0.1626
+              ]
+            },
+            {
+              "text": "Sample Electronics",
+              "page": 1,
+              "box": [
+                0.0905,
+                0.2438,
+                0.4639,
+                0.2741
+              ]
+            },
+            {
+              "text": "Payment for a sample phone order",
+              "page": 1,
+              "box": [
+                0.0905,
+                0.3166,
+                0.4937,
+                0.3362
+              ]
+            },
+            {
+              "text": "Reference: SAMPLE-001",
+              "page": 1,
+              "box": [
+                0.0905,
+                0.3826,
+                0.3845,
+                0.4023
+              ]
+            },
+            {
+              "text": "Date: 2026-10-24",
+              "page": 1,
+              "box": [
+                0.0905,
+                0.4344,
+                0.2943,
+                0.4541
+              ]
+            },
+            {
+              "text": "Amount paid",
+              "page": 1,
+              "box": [
+                0.0905,
+                0.5469,
+                0.2375,
+                0.5666
+              ]
+            },
+            {
+              "text": "BDT 5,000",
+              "page": 1,
+              "box": [
+                0.0905,
+                0.5968,
+                0.4358,
+                0.6504
+              ]
+            },
+            {
+              "text": "For the Ebarki scenario sandbox only.",
+              "page": 1,
+              "box": [
+                0.0905,
+                0.7448,
+                0.4901,
+                0.7626
+              ]
+            },
+            {
+              "text": "This document proves no real purchase or payment.",
+              "page": 1,
+              "box": [
+                0.0905,
+                0.7805,
+                0.641,
+                0.7983
+              ]
+            }
+          ],
+          "model_executed": false,
+          "method": "native_pdf",
+          "reason": null,
+          "reader_version": 2,
+          "page_count": 1,
+          "pages_read": [
+            1
+          ],
+          "reused_from_run": "ee67c3a6-b23c-4781-8121-5020ba13305d"
+        },
+        {
+          "id": "b5337c2b-7c2a-496c-8fd2-4523083b1d50",
+          "filename": "Ebarki-sample-second-payment.pdf",
+          "mime_type": "application/pdf",
+          "sha256": "38294d6d30e3e2bd9108625cf41c31899a193a10b93477ddcfb15a616b6143e2",
+          "text": "Ebarki / SAMPLE\nFICTIONAL DATA. NOT A REAL TRANSACTION.\nSample Electronics\nPayment for a sample phone order\nReference: SAMPLE-002\nDate: 2026-10-24\nAmount paid\nBDT 500\nFor the Ebarki scenario sandbox only.\nThis document proves no real purchase or payment.",
+          "lines": [
+            {
+              "text": "Ebarki / SAMPLE",
+              "page": 1,
+              "box": [
+                0.0905,
+                0.0746,
+                0.5317,
+                0.1156
+              ]
+            },
+            {
+              "text": "FICTIONAL DATA. NOT A REAL TRANSACTION.",
+              "page": 1,
+              "box": [
+                0.0905,
+                0.1448,
+                0.6236,
+                0.1626
+              ]
+            },
+            {
+              "text": "Sample Electronics",
+              "page": 1,
+              "box": [
+                0.0905,
+                0.2438,
+                0.4639,
+                0.2741
+              ]
+            },
+            {
+              "text": "Payment for a sample phone order",
+              "page": 1,
+              "box": [
+                0.0905,
+                0.3166,
+                0.4937,
+                0.3362
+              ]
+            },
+            {
+              "text": "Reference: SAMPLE-002",
+              "page": 1,
+              "box": [
+                0.0905,
+                0.3826,
+                0.3845,
+                0.4023
+              ]
+            },
+            {
+              "text": "Date: 2026-10-24",
+              "page": 1,
+              "box": [
+                0.0905,
+                0.4344,
+                0.2943,
+                0.4541
+              ]
+            },
+            {
+              "text": "Amount paid",
+              "page": 1,
+              "box": [
+                0.0905,
+                0.5469,
+                0.2375,
+                0.5666
+              ]
+            },
+            {
+              "text": "BDT 500",
+              "page": 1,
+              "box": [
+                0.0905,
+                0.5968,
+                0.3763,
+                0.6504
+              ]
+            },
+            {
+              "text": "For the Ebarki scenario sandbox only.",
+              "page": 1,
+              "box": [
+                0.0905,
+                0.7448,
+                0.4901,
+                0.7626
+              ]
+            },
+            {
+              "text": "This document proves no real purchase or payment.",
+              "page": 1,
+              "box": [
+                0.0905,
+                0.7805,
+                0.641,
+                0.7983
+              ]
+            }
+          ],
+          "model_executed": false,
+          "method": "native_pdf",
+          "reason": null,
+          "reader_version": 2,
+          "page_count": 1,
+          "pages_read": [
+            1
+          ]
+        }
+      ],
+      "evidence_findings": [
+        {
+          "id": "0264d50e-9d8a-42d3-9d46-14f7c6951f32",
+          "filename": "Ebarki-sample-payment.pdf",
+          "text": "Ebarki / SAMPLE\nFICTIONAL DATA. NOT A REAL TRANSACTION.\nSample Electronics\nPayment for a sample phone order\nReference: SAMPLE-001\nDate: 2026-10-24\nAmount paid\nBDT 5,000\nFor the Ebarki scenario sandbox only.\nThis document proves no real purchase or payment.",
+          "requires_review": true,
+          "method": "native_pdf_text"
+        },
+        {
+          "id": "b5337c2b-7c2a-496c-8fd2-4523083b1d50",
+          "filename": "Ebarki-sample-second-payment.pdf",
+          "text": "Ebarki / SAMPLE\nFICTIONAL DATA. NOT A REAL TRANSACTION.\nSample Electronics\nPayment for a sample phone order\nReference: SAMPLE-002\nDate: 2026-10-24\nAmount paid\nBDT 500\nFor the Ebarki scenario sandbox only.\nThis document proves no real purchase or payment.",
+          "requires_review": true,
+          "method": "native_pdf_text"
+        }
+      ],
+      "reconciliation": {
+        "case_id": "fc6eaad3-f1da-4694-88ce-7256cc4d78be",
+        "narrated_amount_minor_units": 550000,
+        "linked_evidence_total_minor_units": 550000,
+        "discrepancy_minor_units": 0,
+        "is_reconciled": true,
+        "status": "reconciled",
+        "reconciled_items": [
+          {
+            "evidence_id": "0264d50e-9d8a-42d3-9d46-14f7c6951f32",
+            "filename": "Ebarki-sample-payment.pdf",
+            "amount_minor_units": 500000,
+            "is_duplicate": false,
+            "is_linked": true
+          },
+          {
+            "evidence_id": "b5337c2b-7c2a-496c-8fd2-4523083b1d50",
+            "filename": "Ebarki-sample-second-payment.pdf",
+            "amount_minor_units": 50000,
+            "is_duplicate": false,
+            "is_linked": true
+          }
+        ],
+        "unlinked_items": [],
+        "prompt_en": "All amounts reconciled (BDT 5,500.00).",
+        "prompt_bn": "টাকার পরিমাণ সম্পূর্ণভাবে মিলে গেছে (৳5,500.00)।"
+      },
+      "assessment": {
+        "case_id": "fc6eaad3-f1da-4694-88ce-7256cc4d78be",
+        "overall_status": "ready_for_merchant_notice",
+        "primary_action": "prepare_merchant_notice",
+        "primary_action_title_en": "Prepare Formal Merchant Notice",
+        "primary_action_title_bn": "বিক্রেতার কাছে আনুষ্ঠানিক নোটিশ প্রস্তুত করুন",
+        "secondary_actions": [
+          {
+            "action_id": "prepare_dncrp_complaint",
+            "title_en": "Prepare DNCRP CCMS Portal Complaint",
+            "title_bn": "ভোক্তা অধিকার সিসিএমএস অভিযোগ প্রস্তুত করুন"
+          }
+        ],
+        "routes": [
+          {
+            "route_id": "route_bd.shopping.ecommerce_delivery_failure",
+            "rule_id": "bd.shopping.ecommerce_delivery_failure",
+            "issue_type": "ecommerce_delivery_failure",
+            "status": "supported",
+            "reasons": [
+              "reasons.shopping.delivery_failure_eligible"
+            ],
+            "allowed_actions": [
+              "prepare_merchant_notice",
+              "prepare_dncrp_complaint"
+            ],
+            "source_dependencies": [
+              "bd_crpa_2009",
+              "dncrp_ccms_portal"
+            ],
+            "statutory_citations": [
+              "crpa2009:sec:45",
+              "crpa2009:sec:60",
+              "crpa2009:sec:76"
+            ],
+            "supported_remedies": [
+              "full_refund",
+              "replacement",
+              "statutory_fine_share_25pct"
+            ],
+            "unsupported_remedies": [
+              "criminal_prosecution_direct",
+              "punitive_damages_triple"
+            ],
+            "unsupported_remedy_warnings": [],
+            "condition_trace": [
+              {
+                "node_type": "eq",
+                "fact": "refund_already_issued",
+                "inspected_value": false,
+                "outcome": "FALSE",
+                "details": "expected True"
+              },
+              {
+                "node_type": "eq",
+                "fact": "order_cancelled_by_buyer_before_dispatch",
+                "inspected_value": false,
+                "outcome": "FALSE",
+                "details": "expected True"
+              },
+              {
+                "node_type": "eq",
+                "fact": "purchase_channel",
+                "inspected_value": "ecommerce",
+                "outcome": "TRUE",
+                "details": "expected ecommerce"
+              },
+              {
+                "node_type": "eq",
+                "fact": "goods_delivered",
+                "inspected_value": false,
+                "outcome": "TRUE",
+                "details": "expected False"
+              },
+              {
+                "node_type": "eq",
+                "fact": "promised_delivery_date_passed",
+                "inspected_value": true,
+                "outcome": "TRUE",
+                "details": "expected True"
+              }
+            ]
+          },
+          {
+            "route_id": "route_bd.safety.hazardous_product",
+            "rule_id": "bd.safety.hazardous_product",
+            "issue_type": "product_safety_hazard",
+            "status": "needs_facts",
+            "reasons": [
+              "reasons.safety.needs_hazard_facts"
+            ],
+            "allowed_actions": [
+              "call_dncrp_hotline_16121",
+              "preserve_hazardous_sample"
+            ],
+            "source_dependencies": [
+              "bd_crpa_2009",
+              "dncrp_hotline_16121"
+            ],
+            "statutory_citations": [
+              "crpa2009:sec:41",
+              "crpa2009:sec:76",
+              "dncrp_hotline_16121"
+            ],
+            "supported_remedies": [
+              "immediate_recall",
+              "hotline_alert",
+              "full_refund"
+            ],
+            "unsupported_remedies": [],
+            "unsupported_remedy_warnings": [],
+            "condition_trace": [
+              {
+                "node_type": "eq",
+                "fact": "product_presents_immediate_hazard",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              }
+            ]
+          },
+          {
+            "route_id": "route_bd.shopping.defective_goods",
+            "rule_id": "bd.shopping.defective_goods",
+            "issue_type": "defective_goods",
+            "status": "needs_facts",
+            "reasons": [
+              "reasons.shopping.defective_goods_needs_facts"
+            ],
+            "allowed_actions": [
+              "prepare_merchant_replacement_request",
+              "prepare_dncrp_complaint"
+            ],
+            "source_dependencies": [
+              "bd_crpa_2009",
+              "dncrp_ccms_portal"
+            ],
+            "statutory_citations": [
+              "crpa2009:sec:41",
+              "crpa2009:sec:44",
+              "crpa2009:sec:60",
+              "crpa2009:sec:76"
+            ],
+            "supported_remedies": [
+              "replacement",
+              "repair",
+              "full_refund",
+              "partial_refund"
+            ],
+            "unsupported_remedies": [
+              "criminal_prosecution_direct",
+              "punitive_damages_triple"
+            ],
+            "unsupported_remedy_warnings": [],
+            "condition_trace": [
+              {
+                "node_type": "eq",
+                "fact": "user_inflicted_damage",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              },
+              {
+                "node_type": "eq",
+                "fact": "goods_received_defective",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              },
+              {
+                "node_type": "eq",
+                "fact": "seller_notified_within_warranty",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              }
+            ]
+          },
+          {
+            "route_id": "route_bd.grs.public_service_grievance",
+            "rule_id": "bd.grs.public_service_grievance",
+            "issue_type": "public_service_grievance",
+            "status": "needs_facts",
+            "reasons": [
+              "reasons.grs.grievance_needs_submission_proof"
+            ],
+            "allowed_actions": [
+              "prepare_departmental_grievance",
+              "prepare_grs_submission"
+            ],
+            "source_dependencies": [
+              "cabinet_grs_portal"
+            ],
+            "statutory_citations": [],
+            "supported_remedies": [
+              "administrative_explanation",
+              "service_expedition",
+              "supervisory_review"
+            ],
+            "unsupported_remedies": [
+              "judicial_order_or_writ",
+              "monetary_compensation_direct"
+            ],
+            "unsupported_remedy_warnings": [],
+            "condition_trace": [
+              {
+                "node_type": "eq",
+                "fact": "subject_of_ongoing_court_litigation",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              },
+              {
+                "node_type": "eq",
+                "fact": "service_cadre_discipline_or_promotion",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              },
+              {
+                "node_type": "eq",
+                "fact": "alternative_statutory_appeal_pending",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              },
+              {
+                "node_type": "eq",
+                "fact": "public_service_request_submitted",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              },
+              {
+                "node_type": "eq",
+                "fact": "citizen_charter_timeline_exceeded",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              },
+              {
+                "node_type": "eq",
+                "fact": "relevant_office_contacted_first",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              }
+            ]
+          },
+          {
+            "route_id": "route_bd.insurance.insurance_claim_dispute",
+            "rule_id": "bd.insurance.insurance_claim_dispute",
+            "issue_type": "insurance_claim_dispute",
+            "status": "needs_facts",
+            "reasons": [
+              "reasons.insurance.claim_dispute_needs_policy_or_submission"
+            ],
+            "allowed_actions": [
+              "prepare_insurer_reconsideration_request",
+              "prepare_idra_grievance"
+            ],
+            "source_dependencies": [
+              "idra_insurance_guidelines"
+            ],
+            "statutory_citations": [],
+            "supported_remedies": [
+              "claim_reconsideration",
+              "written_explanation_of_denial",
+              "dispute_arbitration_referral"
+            ],
+            "unsupported_remedies": [
+              "guaranteed_claim_payout",
+              "bad_faith_punitive_damages"
+            ],
+            "unsupported_remedy_warnings": [],
+            "condition_trace": [
+              {
+                "node_type": "eq",
+                "fact": "subject_of_ongoing_court_litigation",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              },
+              {
+                "node_type": "eq",
+                "fact": "fraudulent_misrepresentation_admitted",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              },
+              {
+                "node_type": "eq",
+                "fact": "insurance_policy_documented",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              },
+              {
+                "node_type": "eq",
+                "fact": "formal_claim_submitted_to_insurer",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              },
+              {
+                "node_type": "eq",
+                "fact": "claim_denied_or_settlement_delayed_over_90d",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              }
+            ]
+          },
+          {
+            "route_id": "route_bd.telecom.telecom_billing_and_outage",
+            "rule_id": "bd.telecom.telecom_billing_and_outage",
+            "issue_type": "telecom_billing_and_outage",
+            "status": "needs_facts",
+            "reasons": [
+              "reasons.telecom.complaint_needs_provider_ticket"
+            ],
+            "allowed_actions": [
+              "prepare_telecom_provider_notice",
+              "prepare_btrc_complaint"
+            ],
+            "source_dependencies": [
+              "btrc_complaint_guidelines"
+            ],
+            "statutory_citations": [],
+            "supported_remedies": [
+              "service_credit_or_reversal",
+              "service_restoration",
+              "plan_correction"
+            ],
+            "unsupported_remedies": [
+              "punitive_consequential_damages",
+              "license_cancellation_direct"
+            ],
+            "unsupported_remedy_warnings": [],
+            "condition_trace": [
+              {
+                "node_type": "eq",
+                "fact": "issue_is_handset_hardware_only",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              },
+              {
+                "node_type": "eq",
+                "fact": "consumer_has_unpaid_due_prior_to_dispute",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              },
+              {
+                "node_type": "eq",
+                "fact": "telecom_provider_ticket_filed",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              },
+              {
+                "node_type": "eq",
+                "fact": "provider_response_overdue_or_unsatisfactory",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              },
+              {
+                "node_type": "eq",
+                "fact": "service_disruption_or_billing_error_documented",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              }
+            ]
+          }
+        ],
+        "next_best_question": null,
+        "source_cards": [
+          {
+            "id": "dncrp_ccms_portal",
+            "title_en": "DNCRP Consumer Complaint Management System (CCMS)",
+            "title_bn": "জাতীয় ভোক্তা-অধিকার সংরক্ষণ অধিদপ্তর সিসিএমএস পোর্টাল",
+            "issuer": "Directorate of National Consumer Rights Protection",
+            "official_url": "https://dncrp.com/",
+            "document_type": "portal_map",
+            "procedural_scope": "procedure_guidance",
+            "status": "observed",
+            "is_authoritative_for_penalties": false
+          },
+          {
+            "id": "idra_insurance_guidelines",
+            "title_en": "Insurance Development and Regulatory Authority (IDRA) Grievance Framework",
+            "title_bn": "বীমা উন্নয়ন ও নিয়ন্ত্রণ কর্তৃপক্ষ (আইডিআরএ) গ্রাহক অভিযোগ প্রতিকার কাঠামো",
+            "issuer": "Insurance Development and Regulatory Authority, Ministry of Finance",
+            "official_url": "https://cms.idra.org.bd/grievence-form",
+            "document_type": "procedure_guide",
+            "procedural_scope": "procedure_guidance",
+            "status": "observed",
+            "is_authoritative_for_penalties": false
+          },
+          {
+            "id": "bd_crpa_2009",
+            "title_en": "Consumer Rights Protection Act, 2009 (Act No. 26 of 2009)",
+            "title_bn": "ভোক্তা-অধিকার সংরক্ষণ আইন, ২০০৯ (২০০৯ সনের ২৬ নং আইন)",
+            "issuer": "Legislative and Parliamentary Affairs Division, Ministry of Law",
+            "official_url": "https://bdlaws.minlaw.gov.bd/act-print-1014.html",
+            "document_type": "statute",
+            "procedural_scope": "procedure_guidance",
+            "status": "observed",
+            "is_authoritative_for_penalties": true
+          },
+          {
+            "id": "dncrp_hotline_16121",
+            "title_en": "National Consumer Rights Dedicated Hotline 16121",
+            "title_bn": "ভোক্তা অধিকার হটলাইন ১৬১২১",
+            "issuer": "Directorate of National Consumer Rights Protection",
+            "official_url": "http://dncrp.portal.gov.bd/",
+            "document_type": "emergency_contact",
+            "procedural_scope": "procedure_guidance",
+            "status": "observed",
+            "is_authoritative_for_penalties": false
+          },
+          {
+            "id": "btrc_complaint_guidelines",
+            "title_en": "BTRC Telecom & Internet Consumer Grievance System",
+            "title_bn": "বিটিআরসি টেলিযোগাযোগ ও ইন্টারনেট গ্রাহক অভিযোগ প্রতিকার ব্যবস্থা",
+            "issuer": "Bangladesh Telecommunication Regulatory Commission",
+            "official_url": "https://crm.btrc.gov.bd/",
+            "document_type": "procedure_guide",
+            "procedural_scope": "procedure_guidance",
+            "status": "observed",
+            "is_authoritative_for_penalties": false
+          },
+          {
+            "id": "cabinet_grs_portal",
+            "title_en": "Government Grievance Redress System (GRS) Guidelines",
+            "title_bn": "সরকারি অভিযোগ প্রতিকার ব্যবস্থা (জিআরএস) নির্দেশিকা",
+            "issuer": "Cabinet Division, Government of the People's Republic of Bangladesh",
+            "official_url": "https://www.grs.gov.bd/",
+            "document_type": "procedure_guide",
+            "procedural_scope": "procedure_guidance",
+            "status": "observed",
+            "is_authoritative_for_penalties": false
+          }
+        ],
+        "limitation_warning_en": "The recorded date is 12 days ago. Section 60 refers to 30 days from the cause of action; the legal trigger is unverified, so Ebarki does not show a definitive cutoff or assume an extension. Check the original provision and obtain prompt guidance from the authority or a qualified adviser.",
+        "limitation_warning_bn": "দেওয়া তারিখটি 12 দিন আগের। ৬০ ধারায় কারণ উদ্ভব থেকে ৩০ দিনের কথা আছে। আইনি হিসাবের শুরুর তারিখ যাচাই হয়নি, তাই Ebarki নিশ্চিত শেষ তারিখ বা সময় বাড়ানোর সুযোগ ধরে নেয়নি। মূল ধারা মিলিয়ে অধিদপ্তর বা যোগ্য পরামর্শকের কাছ থেকে দ্রুত নির্দেশনা নিন।",
+        "days_remaining_in_limitation": null,
+        "is_deadline_uncertain": true
+      }
+    },
+    "error_code": null,
+    "created_at": "2026-11-05T13:27:00.826644",
+    "finished_at": "2026-11-05T13:27:02.682982",
+    "events": [
+      {
+        "id": "76f01014-3186-4903-81fa-a90a583c3009:0:start",
+        "sequence": 1,
+        "type": "tool.started",
+        "task": "case_understanding",
+        "timestamp": "2026-11-05T13:27:00.856287+00:00"
+      },
+      {
+        "id": "76f01014-3186-4903-81fa-a90a583c3009:0:end",
+        "sequence": 2,
+        "type": "tool.completed",
+        "task": "case_understanding",
+        "timestamp": "2026-11-05T13:27:01.678132+00:00",
+        "details": {
+          "method": "groq/openai/gpt-oss-120b",
+          "model_executed": true,
+          "execution_receipt": {
+            "provider": "groq",
+            "model": "openai/gpt-oss-120b",
+            "request_id": "req_01m6ny87hhe94rnj7td65fmwse",
+            "response_status": 200
+          }
+        }
+      },
+      {
+        "id": "76f01014-3186-4903-81fa-a90a583c3009:1:start",
+        "sequence": 3,
+        "type": "tool.started",
+        "task": "text_extraction",
+        "timestamp": "2026-11-05T13:27:01.709185+00:00"
+      },
+      {
+        "id": "76f01014-3186-4903-81fa-a90a583c3009:1:end",
+        "sequence": 4,
+        "type": "tool.completed",
+        "task": "text_extraction",
+        "timestamp": "2026-11-05T13:27:01.766213+00:00",
+        "details": {
+          "proposed_facts": 0,
+          "human_review_required": true
+        }
+      },
+      {
+        "id": "76f01014-3186-4903-81fa-a90a583c3009:2:start",
+        "sequence": 5,
+        "type": "tool.started",
+        "task": "evidence_review",
+        "timestamp": "2026-11-05T13:27:01.793746+00:00"
+      },
+      {
+        "id": "76f01014-3186-4903-81fa-a90a583c3009:2:end",
+        "sequence": 6,
+        "type": "tool.completed",
+        "task": "evidence_review",
+        "timestamp": "2026-11-05T13:27:02.022631+00:00",
+        "details": {
+          "files_reviewed": 2,
+          "native_text_files": 2,
+          "provider_calls": 0,
+          "cached_readings": 1,
+          "providers": [],
+          "readable_records": 2
+        }
+      },
+      {
+        "id": "76f01014-3186-4903-81fa-a90a583c3009:3:start",
+        "sequence": 7,
+        "type": "tool.started",
+        "task": "payment_reconciliation",
+        "timestamp": "2026-11-05T13:27:02.244277+00:00"
+      },
+      {
+        "id": "76f01014-3186-4903-81fa-a90a583c3009:3:end",
+        "sequence": 8,
+        "type": "tool.completed",
+        "task": "payment_reconciliation",
+        "timestamp": "2026-11-05T13:27:02.344861+00:00",
+        "details": {
+          "status": "reconciled",
+          "difference_minor_units": 0
+        }
+      },
+      {
+        "id": "76f01014-3186-4903-81fa-a90a583c3009:4:start",
+        "sequence": 9,
+        "type": "tool.started",
+        "task": "source_retrieval",
+        "timestamp": "2026-11-05T13:27:02.455384+00:00"
+      },
+      {
+        "id": "76f01014-3186-4903-81fa-a90a583c3009:4:end",
+        "sequence": 10,
+        "type": "tool.completed",
+        "task": "source_retrieval",
+        "timestamp": "2026-11-05T13:27:02.523574+00:00",
+        "details": {
+          "retrieved_count": 4,
+          "citation_handles": [
+            "crpa2009:sec:76",
+            "crpa2009:sec:45",
+            "bb_cipc:stage:provider_grievance",
+            "crpa2009:sec:76(4)"
+          ],
+          "dense_model_executed": false
+        }
+      },
+      {
+        "id": "76f01014-3186-4903-81fa-a90a583c3009:5:start",
+        "sequence": 11,
+        "type": "tool.started",
+        "task": "procedural_assessment",
+        "timestamp": "2026-11-05T13:27:02.607273+00:00"
+      },
+      {
+        "id": "76f01014-3186-4903-81fa-a90a583c3009:5:end",
+        "sequence": 12,
+        "type": "tool.completed",
+        "task": "procedural_assessment",
+        "timestamp": "2026-11-05T13:27:02.630276+00:00",
+        "details": {
+          "routes_evaluated": 6,
+          "supported_routes": 1,
+          "question_pending": false
+        }
+      },
+      {
+        "id": "76f01014-3186-4903-81fa-a90a583c3009:end",
+        "sequence": 13,
+        "type": "input.required",
+        "timestamp": "2026-11-05T13:27:02.682982"
+      }
+    ]
+  },
+  {
+    "id": "ee67c3a6-b23c-4781-8121-5020ba13305d",
+    "case_id": "fc6eaad3-f1da-4694-88ce-7256cc4d78be",
+    "operation": "resolve",
+    "locale": "en",
+    "status": "needs_review",
+    "case_version": 1,
+    "cancel_requested": false,
+    "stages": [
+      {
+        "stage_name": "case_understanding",
+        "status": "completed",
+        "method": "bounded_situation_summary",
+        "started_at": "2026-11-05T13:10:45.225870+00:00",
+        "duration_ms": 1014,
+        "details": {
+          "method": "groq/openai/gpt-oss-120b",
+          "model_executed": true,
+          "execution_receipt": {
+            "provider": "groq",
+            "model": "openai/gpt-oss-120b",
+            "request_id": "req_01m6nxaf0rey6aqnf85bv137ws",
+            "response_status": 200
+          }
+        },
+        "finished_at": "2026-11-05T13:10:46.250657+00:00"
+      },
+      {
+        "stage_name": "text_extraction",
+        "status": "completed",
+        "method": "deterministic_pattern_extractor",
+        "started_at": "2026-11-05T13:10:46.287325+00:00",
+        "duration_ms": 97,
+        "details": {
+          "proposed_facts": 0,
+          "human_review_required": true
+        },
+        "finished_at": "2026-11-05T13:10:46.399821+00:00"
+      },
+      {
+        "stage_name": "evidence_review",
+        "status": "completed",
+        "method": "native_text_or_consent_scoped_media_reader",
+        "started_at": "2026-11-05T13:10:46.437847+00:00",
+        "duration_ms": 436,
+        "details": {
+          "files_reviewed": 1,
+          "native_text_files": 1,
+          "provider_calls": 0,
+          "cached_readings": 0,
+          "providers": [],
+          "readable_records": 1
+        },
+        "finished_at": "2026-11-05T13:10:46.883440+00:00"
+      },
+      {
+        "stage_name": "payment_reconciliation",
+        "status": "completed",
+        "method": "linked_receipt_comparison",
+        "started_at": "2026-11-05T13:10:46.933284+00:00",
+        "duration_ms": 230,
+        "details": {
+          "status": "discrepancy",
+          "difference_minor_units": 50000
+        },
+        "finished_at": "2026-11-05T13:10:47.187143+00:00"
+      },
+      {
+        "stage_name": "source_retrieval",
+        "status": "completed",
+        "method": "bm25_lexical_with_exact_lookup",
+        "started_at": "2026-11-05T13:10:47.231354+00:00",
+        "duration_ms": 34,
+        "details": {
+          "retrieved_count": 4,
+          "citation_handles": [
+            "crpa2009:sec:76",
+            "crpa2009:sec:45",
+            "bb_cipc:stage:provider_grievance",
+            "crpa2009:sec:76(4)"
+          ],
+          "dense_model_executed": false
+        },
+        "finished_at": "2026-11-05T13:10:47.288354+00:00"
+      },
+      {
+        "stage_name": "procedural_assessment",
+        "status": "completed",
+        "method": "kleene_three_valued_policy",
+        "started_at": "2026-11-05T13:10:47.334314+00:00",
+        "duration_ms": 5,
+        "details": {
+          "routes_evaluated": 6,
+          "supported_routes": 1,
+          "question_pending": false
+        },
+        "finished_at": "2026-11-05T13:10:47.369450+00:00"
+      }
+    ],
+    "result": {
+      "understanding": {
+        "summary": "The user paid BDT 5,500 for a phone ordered online, but the promised delivery date has passed. The phone has not arrived and the seller has not responded.",
+        "method": "groq/openai/gpt-oss-120b",
+        "model_executed": true,
+        "execution_receipt": {
+          "provider": "groq",
+          "model": "openai/gpt-oss-120b",
+          "request_id": "req_01m6nxaf0rey6aqnf85bv137ws",
+          "response_status": 200
+        }
+      },
+      "proposed_facts": 0,
+      "next_view": "review",
+      "readings": [
+        {
+          "id": "0264d50e-9d8a-42d3-9d46-14f7c6951f32",
+          "filename": "Ebarki-sample-payment.pdf",
+          "mime_type": "application/pdf",
+          "sha256": "c3cd21c695dabaff1b8378f9dddeabd6720611d551cb04a593377d2a7040ef42",
+          "text": "Ebarki / SAMPLE\nFICTIONAL DATA. NOT A REAL TRANSACTION.\nSample Electronics\nPayment for a sample phone order\nReference: SAMPLE-001\nDate: 2026-10-24\nAmount paid\nBDT 5,000\nFor the Ebarki scenario sandbox only.\nThis document proves no real purchase or payment.",
+          "lines": [
+            {
+              "text": "Ebarki / SAMPLE",
+              "page": 1,
+              "box": [
+                0.0905,
+                0.0746,
+                0.5317,
+                0.1156
+              ]
+            },
+            {
+              "text": "FICTIONAL DATA. NOT A REAL TRANSACTION.",
+              "page": 1,
+              "box": [
+                0.0905,
+                0.1448,
+                0.6236,
+                0.1626
+              ]
+            },
+            {
+              "text": "Sample Electronics",
+              "page": 1,
+              "box": [
+                0.0905,
+                0.2438,
+                0.4639,
+                0.2741
+              ]
+            },
+            {
+              "text": "Payment for a sample phone order",
+              "page": 1,
+              "box": [
+                0.0905,
+                0.3166,
+                0.4937,
+                0.3362
+              ]
+            },
+            {
+              "text": "Reference: SAMPLE-001",
+              "page": 1,
+              "box": [
+                0.0905,
+                0.3826,
+                0.3845,
+                0.4023
+              ]
+            },
+            {
+              "text": "Date: 2026-10-24",
+              "page": 1,
+              "box": [
+                0.0905,
+                0.4344,
+                0.2943,
+                0.4541
+              ]
+            },
+            {
+              "text": "Amount paid",
+              "page": 1,
+              "box": [
+                0.0905,
+                0.5469,
+                0.2375,
+                0.5666
+              ]
+            },
+            {
+              "text": "BDT 5,000",
+              "page": 1,
+              "box": [
+                0.0905,
+                0.5968,
+                0.4358,
+                0.6504
+              ]
+            },
+            {
+              "text": "For the Ebarki scenario sandbox only.",
+              "page": 1,
+              "box": [
+                0.0905,
+                0.7448,
+                0.4901,
+                0.7626
+              ]
+            },
+            {
+              "text": "This document proves no real purchase or payment.",
+              "page": 1,
+              "box": [
+                0.0905,
+                0.7805,
+                0.641,
+                0.7983
+              ]
+            }
+          ],
+          "model_executed": false,
+          "method": "native_pdf",
+          "reason": null,
+          "reader_version": 2,
+          "page_count": 1,
+          "pages_read": [
+            1
+          ]
+        }
+      ],
+      "evidence_findings": [
+        {
+          "id": "0264d50e-9d8a-42d3-9d46-14f7c6951f32",
+          "filename": "Ebarki-sample-payment.pdf",
+          "text": "Ebarki / SAMPLE\nFICTIONAL DATA. NOT A REAL TRANSACTION.\nSample Electronics\nPayment for a sample phone order\nReference: SAMPLE-001\nDate: 2026-10-24\nAmount paid\nBDT 5,000\nFor the Ebarki scenario sandbox only.\nThis document proves no real purchase or payment.",
+          "requires_review": true,
+          "method": "native_pdf_text"
+        }
+      ],
+      "reconciliation": {
+        "case_id": "fc6eaad3-f1da-4694-88ce-7256cc4d78be",
+        "narrated_amount_minor_units": 550000,
+        "linked_evidence_total_minor_units": 500000,
+        "discrepancy_minor_units": 50000,
+        "is_reconciled": false,
+        "status": "discrepancy",
+        "reconciled_items": [
+          {
+            "evidence_id": "0264d50e-9d8a-42d3-9d46-14f7c6951f32",
+            "filename": "Ebarki-sample-payment.pdf",
+            "amount_minor_units": 500000,
+            "is_duplicate": false,
+            "is_linked": true
+          }
+        ],
+        "unlinked_items": [],
+        "prompt_en": "Discrepancy: Narrated amount (BDT 5,500.00) vs linked receipts (BDT 5,000.00). Please clarify or upload missing proof.",
+        "prompt_bn": "বর্ণনাকৃত টাকার পরিমাণ (৳5,500.00) এবং যুক্ত রশিদের (৳5,000.00) মধ্যে অমিল রয়েছে। অনুগ্রহ করে তথ্য স্পষ্ট করুন বা প্রমাণ আপলোড করুন।"
+      },
+      "assessment": {
+        "case_id": "fc6eaad3-f1da-4694-88ce-7256cc4d78be",
+        "overall_status": "ready_for_merchant_notice",
+        "primary_action": "prepare_merchant_notice",
+        "primary_action_title_en": "Prepare Formal Merchant Notice",
+        "primary_action_title_bn": "বিক্রেতার কাছে আনুষ্ঠানিক নোটিশ প্রস্তুত করুন",
+        "secondary_actions": [
+          {
+            "action_id": "prepare_dncrp_complaint",
+            "title_en": "Prepare DNCRP CCMS Portal Complaint",
+            "title_bn": "ভোক্তা অধিকার সিসিএমএস অভিযোগ প্রস্তুত করুন"
+          }
+        ],
+        "routes": [
+          {
+            "route_id": "route_bd.shopping.ecommerce_delivery_failure",
+            "rule_id": "bd.shopping.ecommerce_delivery_failure",
+            "issue_type": "ecommerce_delivery_failure",
+            "status": "supported",
+            "reasons": [
+              "reasons.shopping.delivery_failure_eligible"
+            ],
+            "allowed_actions": [
+              "prepare_merchant_notice",
+              "prepare_dncrp_complaint"
+            ],
+            "source_dependencies": [
+              "bd_crpa_2009",
+              "dncrp_ccms_portal"
+            ],
+            "statutory_citations": [
+              "crpa2009:sec:45",
+              "crpa2009:sec:60",
+              "crpa2009:sec:76"
+            ],
+            "supported_remedies": [
+              "full_refund",
+              "replacement",
+              "statutory_fine_share_25pct"
+            ],
+            "unsupported_remedies": [
+              "criminal_prosecution_direct",
+              "punitive_damages_triple"
+            ],
+            "unsupported_remedy_warnings": [],
+            "condition_trace": [
+              {
+                "node_type": "eq",
+                "fact": "refund_already_issued",
+                "inspected_value": false,
+                "outcome": "FALSE",
+                "details": "expected True"
+              },
+              {
+                "node_type": "eq",
+                "fact": "order_cancelled_by_buyer_before_dispatch",
+                "inspected_value": false,
+                "outcome": "FALSE",
+                "details": "expected True"
+              },
+              {
+                "node_type": "eq",
+                "fact": "purchase_channel",
+                "inspected_value": "ecommerce",
+                "outcome": "TRUE",
+                "details": "expected ecommerce"
+              },
+              {
+                "node_type": "eq",
+                "fact": "goods_delivered",
+                "inspected_value": false,
+                "outcome": "TRUE",
+                "details": "expected False"
+              },
+              {
+                "node_type": "eq",
+                "fact": "promised_delivery_date_passed",
+                "inspected_value": true,
+                "outcome": "TRUE",
+                "details": "expected True"
+              }
+            ]
+          },
+          {
+            "route_id": "route_bd.safety.hazardous_product",
+            "rule_id": "bd.safety.hazardous_product",
+            "issue_type": "product_safety_hazard",
+            "status": "needs_facts",
+            "reasons": [
+              "reasons.safety.needs_hazard_facts"
+            ],
+            "allowed_actions": [
+              "call_dncrp_hotline_16121",
+              "preserve_hazardous_sample"
+            ],
+            "source_dependencies": [
+              "bd_crpa_2009",
+              "dncrp_hotline_16121"
+            ],
+            "statutory_citations": [
+              "crpa2009:sec:41",
+              "crpa2009:sec:76",
+              "dncrp_hotline_16121"
+            ],
+            "supported_remedies": [
+              "immediate_recall",
+              "hotline_alert",
+              "full_refund"
+            ],
+            "unsupported_remedies": [],
+            "unsupported_remedy_warnings": [],
+            "condition_trace": [
+              {
+                "node_type": "eq",
+                "fact": "product_presents_immediate_hazard",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              }
+            ]
+          },
+          {
+            "route_id": "route_bd.shopping.defective_goods",
+            "rule_id": "bd.shopping.defective_goods",
+            "issue_type": "defective_goods",
+            "status": "needs_facts",
+            "reasons": [
+              "reasons.shopping.defective_goods_needs_facts"
+            ],
+            "allowed_actions": [
+              "prepare_merchant_replacement_request",
+              "prepare_dncrp_complaint"
+            ],
+            "source_dependencies": [
+              "bd_crpa_2009",
+              "dncrp_ccms_portal"
+            ],
+            "statutory_citations": [
+              "crpa2009:sec:41",
+              "crpa2009:sec:44",
+              "crpa2009:sec:60",
+              "crpa2009:sec:76"
+            ],
+            "supported_remedies": [
+              "replacement",
+              "repair",
+              "full_refund",
+              "partial_refund"
+            ],
+            "unsupported_remedies": [
+              "criminal_prosecution_direct",
+              "punitive_damages_triple"
+            ],
+            "unsupported_remedy_warnings": [],
+            "condition_trace": [
+              {
+                "node_type": "eq",
+                "fact": "user_inflicted_damage",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              },
+              {
+                "node_type": "eq",
+                "fact": "goods_received_defective",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              },
+              {
+                "node_type": "eq",
+                "fact": "seller_notified_within_warranty",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              }
+            ]
+          },
+          {
+            "route_id": "route_bd.grs.public_service_grievance",
+            "rule_id": "bd.grs.public_service_grievance",
+            "issue_type": "public_service_grievance",
+            "status": "needs_facts",
+            "reasons": [
+              "reasons.grs.grievance_needs_submission_proof"
+            ],
+            "allowed_actions": [
+              "prepare_departmental_grievance",
+              "prepare_grs_submission"
+            ],
+            "source_dependencies": [
+              "cabinet_grs_portal"
+            ],
+            "statutory_citations": [],
+            "supported_remedies": [
+              "administrative_explanation",
+              "service_expedition",
+              "supervisory_review"
+            ],
+            "unsupported_remedies": [
+              "judicial_order_or_writ",
+              "monetary_compensation_direct"
+            ],
+            "unsupported_remedy_warnings": [],
+            "condition_trace": [
+              {
+                "node_type": "eq",
+                "fact": "subject_of_ongoing_court_litigation",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              },
+              {
+                "node_type": "eq",
+                "fact": "service_cadre_discipline_or_promotion",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              },
+              {
+                "node_type": "eq",
+                "fact": "alternative_statutory_appeal_pending",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              },
+              {
+                "node_type": "eq",
+                "fact": "public_service_request_submitted",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              },
+              {
+                "node_type": "eq",
+                "fact": "citizen_charter_timeline_exceeded",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              },
+              {
+                "node_type": "eq",
+                "fact": "relevant_office_contacted_first",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              }
+            ]
+          },
+          {
+            "route_id": "route_bd.insurance.insurance_claim_dispute",
+            "rule_id": "bd.insurance.insurance_claim_dispute",
+            "issue_type": "insurance_claim_dispute",
+            "status": "needs_facts",
+            "reasons": [
+              "reasons.insurance.claim_dispute_needs_policy_or_submission"
+            ],
+            "allowed_actions": [
+              "prepare_insurer_reconsideration_request",
+              "prepare_idra_grievance"
+            ],
+            "source_dependencies": [
+              "idra_insurance_guidelines"
+            ],
+            "statutory_citations": [],
+            "supported_remedies": [
+              "claim_reconsideration",
+              "written_explanation_of_denial",
+              "dispute_arbitration_referral"
+            ],
+            "unsupported_remedies": [
+              "guaranteed_claim_payout",
+              "bad_faith_punitive_damages"
+            ],
+            "unsupported_remedy_warnings": [],
+            "condition_trace": [
+              {
+                "node_type": "eq",
+                "fact": "subject_of_ongoing_court_litigation",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              },
+              {
+                "node_type": "eq",
+                "fact": "fraudulent_misrepresentation_admitted",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              },
+              {
+                "node_type": "eq",
+                "fact": "insurance_policy_documented",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              },
+              {
+                "node_type": "eq",
+                "fact": "formal_claim_submitted_to_insurer",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              },
+              {
+                "node_type": "eq",
+                "fact": "claim_denied_or_settlement_delayed_over_90d",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              }
+            ]
+          },
+          {
+            "route_id": "route_bd.telecom.telecom_billing_and_outage",
+            "rule_id": "bd.telecom.telecom_billing_and_outage",
+            "issue_type": "telecom_billing_and_outage",
+            "status": "needs_facts",
+            "reasons": [
+              "reasons.telecom.complaint_needs_provider_ticket"
+            ],
+            "allowed_actions": [
+              "prepare_telecom_provider_notice",
+              "prepare_btrc_complaint"
+            ],
+            "source_dependencies": [
+              "btrc_complaint_guidelines"
+            ],
+            "statutory_citations": [],
+            "supported_remedies": [
+              "service_credit_or_reversal",
+              "service_restoration",
+              "plan_correction"
+            ],
+            "unsupported_remedies": [
+              "punitive_consequential_damages",
+              "license_cancellation_direct"
+            ],
+            "unsupported_remedy_warnings": [],
+            "condition_trace": [
+              {
+                "node_type": "eq",
+                "fact": "issue_is_handset_hardware_only",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              },
+              {
+                "node_type": "eq",
+                "fact": "consumer_has_unpaid_due_prior_to_dispute",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              },
+              {
+                "node_type": "eq",
+                "fact": "telecom_provider_ticket_filed",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              },
+              {
+                "node_type": "eq",
+                "fact": "provider_response_overdue_or_unsatisfactory",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              },
+              {
+                "node_type": "eq",
+                "fact": "service_disruption_or_billing_error_documented",
+                "inspected_value": null,
+                "outcome": "UNKNOWN",
+                "details": "expected True"
+              }
+            ]
+          }
+        ],
+        "next_best_question": null,
+        "source_cards": [
+          {
+            "id": "dncrp_ccms_portal",
+            "title_en": "DNCRP Consumer Complaint Management System (CCMS)",
+            "title_bn": "জাতীয় ভোক্তা-অধিকার সংরক্ষণ অধিদপ্তর সিসিএমএস পোর্টাল",
+            "issuer": "Directorate of National Consumer Rights Protection",
+            "official_url": "https://dncrp.com/",
+            "document_type": "portal_map",
+            "procedural_scope": "procedure_guidance",
+            "status": "observed",
+            "is_authoritative_for_penalties": false
+          },
+          {
+            "id": "idra_insurance_guidelines",
+            "title_en": "Insurance Development and Regulatory Authority (IDRA) Grievance Framework",
+            "title_bn": "বীমা উন্নয়ন ও নিয়ন্ত্রণ কর্তৃপক্ষ (আইডিআরএ) গ্রাহক অভিযোগ প্রতিকার কাঠামো",
+            "issuer": "Insurance Development and Regulatory Authority, Ministry of Finance",
+            "official_url": "https://cms.idra.org.bd/grievence-form",
+            "document_type": "procedure_guide",
+            "procedural_scope": "procedure_guidance",
+            "status": "observed",
+            "is_authoritative_for_penalties": false
+          },
+          {
+            "id": "bd_crpa_2009",
+            "title_en": "Consumer Rights Protection Act, 2009 (Act No. 26 of 2009)",
+            "title_bn": "ভোক্তা-অধিকার সংরক্ষণ আইন, ২০০৯ (২০০৯ সনের ২৬ নং আইন)",
+            "issuer": "Legislative and Parliamentary Affairs Division, Ministry of Law",
+            "official_url": "https://bdlaws.minlaw.gov.bd/act-print-1014.html",
+            "document_type": "statute",
+            "procedural_scope": "procedure_guidance",
+            "status": "observed",
+            "is_authoritative_for_penalties": true
+          },
+          {
+            "id": "dncrp_hotline_16121",
+            "title_en": "National Consumer Rights Dedicated Hotline 16121",
+            "title_bn": "ভোক্তা অধিকার হটলাইন ১৬১২১",
+            "issuer": "Directorate of National Consumer Rights Protection",
+            "official_url": "http://dncrp.portal.gov.bd/",
+            "document_type": "emergency_contact",
+            "procedural_scope": "procedure_guidance",
+            "status": "observed",
+            "is_authoritative_for_penalties": false
+          },
+          {
+            "id": "btrc_complaint_guidelines",
+            "title_en": "BTRC Telecom & Internet Consumer Grievance System",
+            "title_bn": "বিটিআরসি টেলিযোগাযোগ ও ইন্টারনেট গ্রাহক অভিযোগ প্রতিকার ব্যবস্থা",
+            "issuer": "Bangladesh Telecommunication Regulatory Commission",
+            "official_url": "https://crm.btrc.gov.bd/",
+            "document_type": "procedure_guide",
+            "procedural_scope": "procedure_guidance",
+            "status": "observed",
+            "is_authoritative_for_penalties": false
+          },
+          {
+            "id": "cabinet_grs_portal",
+            "title_en": "Government Grievance Redress System (GRS) Guidelines",
+            "title_bn": "সরকারি অভিযোগ প্রতিকার ব্যবস্থা (জিআরএস) নির্দেশিকা",
+            "issuer": "Cabinet Division, Government of the People's Republic of Bangladesh",
+            "official_url": "https://www.grs.gov.bd/",
+            "document_type": "procedure_guide",
+            "procedural_scope": "procedure_guidance",
+            "status": "observed",
+            "is_authoritative_for_penalties": false
+          }
+        ],
+        "limitation_warning_en": "The recorded date is 12 days ago. Section 60 refers to 30 days from the cause of action; the legal trigger is unverified, so Ebarki does not show a definitive cutoff or assume an extension. Check the original provision and obtain prompt guidance from the authority or a qualified adviser.",
+        "limitation_warning_bn": "দেওয়া তারিখটি 12 দিন আগের। ৬০ ধারায় কারণ উদ্ভব থেকে ৩০ দিনের কথা আছে। আইনি হিসাবের শুরুর তারিখ যাচাই হয়নি, তাই Ebarki নিশ্চিত শেষ তারিখ বা সময় বাড়ানোর সুযোগ ধরে নেয়নি। মূল ধারা মিলিয়ে অধিদপ্তর বা যোগ্য পরামর্শকের কাছ থেকে দ্রুত নির্দেশনা নিন।",
+        "days_remaining_in_limitation": null,
+        "is_deadline_uncertain": true
+      }
+    },
+    "error_code": null,
+    "created_at": "2026-11-05T13:10:45.166600",
+    "finished_at": "2026-11-05T13:10:47.395064",
+    "events": [
+      {
+        "id": "ee67c3a6-b23c-4781-8121-5020ba13305d:0:start",
+        "sequence": 1,
+        "type": "tool.started",
+        "task": "case_understanding",
+        "timestamp": "2026-11-05T13:10:45.225870+00:00"
+      },
+      {
+        "id": "ee67c3a6-b23c-4781-8121-5020ba13305d:0:end",
+        "sequence": 2,
+        "type": "tool.completed",
+        "task": "case_understanding",
+        "timestamp": "2026-11-05T13:10:46.250657+00:00",
+        "details": {
+          "method": "groq/openai/gpt-oss-120b",
+          "model_executed": true,
+          "execution_receipt": {
+            "provider": "groq",
+            "model": "openai/gpt-oss-120b",
+            "request_id": "req_01m6nxaf0rey6aqnf85bv137ws",
+            "response_status": 200
+          }
+        }
+      },
+      {
+        "id": "ee67c3a6-b23c-4781-8121-5020ba13305d:1:start",
+        "sequence": 3,
+        "type": "tool.started",
+        "task": "text_extraction",
+        "timestamp": "2026-11-05T13:10:46.287325+00:00"
+      },
+      {
+        "id": "ee67c3a6-b23c-4781-8121-5020ba13305d:1:end",
+        "sequence": 4,
+        "type": "tool.completed",
+        "task": "text_extraction",
+        "timestamp": "2026-11-05T13:10:46.399821+00:00",
+        "details": {
+          "proposed_facts": 0,
+          "human_review_required": true
+        }
+      },
+      {
+        "id": "ee67c3a6-b23c-4781-8121-5020ba13305d:2:start",
+        "sequence": 5,
+        "type": "tool.started",
+        "task": "evidence_review",
+        "timestamp": "2026-11-05T13:10:46.437847+00:00"
+      },
+      {
+        "id": "ee67c3a6-b23c-4781-8121-5020ba13305d:2:end",
+        "sequence": 6,
+        "type": "tool.completed",
+        "task": "evidence_review",
+        "timestamp": "2026-11-05T13:10:46.883440+00:00",
+        "details": {
+          "files_reviewed": 1,
+          "native_text_files": 1,
+          "provider_calls": 0,
+          "cached_readings": 0,
+          "providers": [],
+          "readable_records": 1
+        }
+      },
+      {
+        "id": "ee67c3a6-b23c-4781-8121-5020ba13305d:3:start",
+        "sequence": 7,
+        "type": "tool.started",
+        "task": "payment_reconciliation",
+        "timestamp": "2026-11-05T13:10:46.933284+00:00"
+      },
+      {
+        "id": "ee67c3a6-b23c-4781-8121-5020ba13305d:3:end",
+        "sequence": 8,
+        "type": "tool.completed",
+        "task": "payment_reconciliation",
+        "timestamp": "2026-11-05T13:10:47.187143+00:00",
+        "details": {
+          "status": "discrepancy",
+          "difference_minor_units": 50000
+        }
+      },
+      {
+        "id": "ee67c3a6-b23c-4781-8121-5020ba13305d:4:start",
+        "sequence": 9,
+        "type": "tool.started",
+        "task": "source_retrieval",
+        "timestamp": "2026-11-05T13:10:47.231354+00:00"
+      },
+      {
+        "id": "ee67c3a6-b23c-4781-8121-5020ba13305d:4:end",
+        "sequence": 10,
+        "type": "tool.completed",
+        "task": "source_retrieval",
+        "timestamp": "2026-11-05T13:10:47.288354+00:00",
+        "details": {
+          "retrieved_count": 4,
+          "citation_handles": [
+            "crpa2009:sec:76",
+            "crpa2009:sec:45",
+            "bb_cipc:stage:provider_grievance",
+            "crpa2009:sec:76(4)"
+          ],
+          "dense_model_executed": false
+        }
+      },
+      {
+        "id": "ee67c3a6-b23c-4781-8121-5020ba13305d:5:start",
+        "sequence": 11,
+        "type": "tool.started",
+        "task": "procedural_assessment",
+        "timestamp": "2026-11-05T13:10:47.334314+00:00"
+      },
+      {
+        "id": "ee67c3a6-b23c-4781-8121-5020ba13305d:5:end",
+        "sequence": 12,
+        "type": "tool.completed",
+        "task": "procedural_assessment",
+        "timestamp": "2026-11-05T13:10:47.369450+00:00",
+        "details": {
+          "routes_evaluated": 6,
+          "supported_routes": 1,
+          "question_pending": false
+        }
+      },
+      {
+        "id": "ee67c3a6-b23c-4781-8121-5020ba13305d:end",
+        "sequence": 13,
+        "type": "input.required",
+        "timestamp": "2026-11-05T13:10:47.395064"
+      }
+    ]
+  }
+]

@@ -1,0 +1,13 @@
+[
+ {"id":"A01","start":0,"end":12,"kind":"ui","clip":"settings","title":"Account, language and data controls"},
+ {"id":"A02","start":12,"end":26,"kind":"ui","clip":"scenarios","title":"Eight fictional scenarios. Isolated workspaces."},
+ {"id":"A03","start":26,"end":39,"kind":"ui","clip":"facts","title":"Review facts. Add what is missing."},
+ {"id":"A04","start":39,"end":53,"kind":"ui","clip":"paths","title":"Inspect the conditions behind a path."},
+ {"id":"A05","start":53,"end":69,"kind":"ui","clip":"activity","title":"Record an update. Set a personal follow-up."},
+ {"id":"A06","start":69,"end":83,"kind":"ui","clip":"originals","title":"Original records and evidence links"},
+ {"id":"A07","start":83,"end":93,"kind":"ui","clip":"merchant","title":"Merchant lookup. No record is not a safety verdict."},
+ {"id":"A08","start":93,"end":105,"kind":"ui","clip":"reference","title":"Reference library. Inspect the original sources."},
+ {"id":"A09","start":105,"end":114,"kind":"ui","clip":"handoff","title":"Filing preparation. You complete the official step."},
+ {"id":"A10","start":114,"end":134,"kind":"ui","clip":"admin-actions","title":"An actual administrative notice and its audit receipt"},
+ {"id":"A11","start":134,"end":144,"kind":"ui","clip":"help","title":"Help, boundaries and next steps"}
+]

@@ -1,0 +1,10 @@
+node_modules/
+.venv/
+capture/
+audio/
+out/
+tmp/
+*.log
+public/clips/
+public/audio/
+public/stills/

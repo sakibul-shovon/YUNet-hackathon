@@ -1,0 +1,3338 @@
+[
+  {
+    "word": "You",
+    "start": 0.6601,
+    "end": 0.7402,
+    "scene": "01",
+    "acoustic_score": 0.9999,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "paid",
+    "start": 0.8203,
+    "end": 1.0407,
+    "scene": "01",
+    "acoustic_score": 0.9424,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "for",
+    "start": 1.1008,
+    "end": 1.221,
+    "scene": "01",
+    "acoustic_score": 0.9571,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "a",
+    "start": 1.241,
+    "end": 1.261,
+    "scene": "01",
+    "acoustic_score": 0.3612,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "phone.",
+    "start": 1.3211,
+    "end": 1.6216,
+    "scene": "01",
+    "acoustic_score": 0.9691,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "The",
+    "start": 2.0022,
+    "end": 2.0823,
+    "scene": "01",
+    "acoustic_score": 0.9986,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "delivery",
+    "start": 2.1223,
+    "end": 2.543,
+    "scene": "01",
+    "acoustic_score": 0.9515,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "date",
+    "start": 2.6031,
+    "end": 2.8034,
+    "scene": "01",
+    "acoustic_score": 0.9807,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "passed.",
+    "start": 2.8835,
+    "end": 3.2441,
+    "scene": "01",
+    "acoustic_score": 0.7456,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "Now,",
+    "start": 3.7849,
+    "end": 3.9852,
+    "scene": "01",
+    "acoustic_score": 0.9975,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "even",
+    "start": 4.3257,
+    "end": 4.486,
+    "scene": "01",
+    "acoustic_score": 0.9462,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "explaining",
+    "start": 4.5661,
+    "end": 5.0268,
+    "scene": "01",
+    "acoustic_score": 0.9485,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "what",
+    "start": 5.0669,
+    "end": 5.167,
+    "scene": "01",
+    "acoustic_score": 1.0,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "happened",
+    "start": 5.2271,
+    "end": 5.5476,
+    "scene": "01",
+    "acoustic_score": 0.9887,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "feels",
+    "start": 5.6277,
+    "end": 5.8881,
+    "scene": "01",
+    "acoustic_score": 0.9717,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "like",
+    "start": 5.9282,
+    "end": 6.0684,
+    "scene": "01",
+    "acoustic_score": 0.982,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "work.",
+    "start": 6.1285,
+    "end": 6.3288,
+    "scene": "01",
+    "acoustic_score": 0.9915,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "A",
+    "start": 9.7002,
+    "end": 9.7202,
+    "scene": "02",
+    "acoustic_score": 0.9998,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "receipt",
+    "start": 9.7803,
+    "end": 10.1008,
+    "scene": "02",
+    "acoustic_score": 0.977,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "here.",
+    "start": 10.181,
+    "end": 10.3413,
+    "scene": "02",
+    "acoustic_score": 0.9943,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "A",
+    "start": 10.7419,
+    "end": 10.762,
+    "scene": "02",
+    "acoustic_score": 0.9998,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "promise",
+    "start": 10.8221,
+    "end": 11.2227,
+    "scene": "02",
+    "acoustic_score": 0.9704,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "in",
+    "start": 11.2828,
+    "end": 11.3229,
+    "scene": "02",
+    "acoustic_score": 0.9939,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "a",
+    "start": 11.383,
+    "end": 11.4031,
+    "scene": "02",
+    "acoustic_score": 0.9979,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "message.",
+    "start": 11.4632,
+    "end": 11.8238,
+    "scene": "02",
+    "acoustic_score": 0.9474,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "Five",
+    "start": 12.3847,
+    "end": 12.6051,
+    "scene": "02",
+    "acoustic_score": 1.0,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "thousand",
+    "start": 12.6852,
+    "end": 13.146,
+    "scene": "02",
+    "acoustic_score": 0.9724,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "on",
+    "start": 13.3063,
+    "end": 13.3463,
+    "scene": "02",
+    "acoustic_score": 0.9998,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "one",
+    "start": 13.5066,
+    "end": 13.6068,
+    "scene": "02",
+    "acoustic_score": 0.8393,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "record.",
+    "start": 13.6869,
+    "end": 14.0075,
+    "scene": "02",
+    "acoustic_score": 0.9775,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "Five",
+    "start": 14.4883,
+    "end": 14.7086,
+    "scene": "02",
+    "acoustic_score": 1.0,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "thousand",
+    "start": 14.7888,
+    "end": 15.1093,
+    "scene": "02",
+    "acoustic_score": 0.9567,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "five",
+    "start": 15.1494,
+    "end": 15.3698,
+    "scene": "02",
+    "acoustic_score": 0.9998,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "hundred",
+    "start": 15.4299,
+    "end": 15.7103,
+    "scene": "02",
+    "acoustic_score": 0.9838,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "in",
+    "start": 15.7905,
+    "end": 15.8305,
+    "scene": "02",
+    "acoustic_score": 0.9986,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "your",
+    "start": 15.8706,
+    "end": 15.9708,
+    "scene": "02",
+    "acoustic_score": 0.9998,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "account.",
+    "start": 16.0108,
+    "end": 16.3514,
+    "scene": "02",
+    "acoustic_score": 0.8996,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "Meet",
+    "start": 19.7002,
+    "end": 19.8606,
+    "scene": "03",
+    "acoustic_score": 0.9982,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "Ebarki.",
+    "start": 20.021,
+    "end": 20.4018,
+    "scene": "03",
+    "acoustic_score": 0.7134,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "A",
+    "start": 21.0433,
+    "end": 21.0633,
+    "scene": "03",
+    "acoustic_score": 0.9988,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "consumer",
+    "start": 21.1234,
+    "end": 21.5845,
+    "scene": "03",
+    "acoustic_score": 0.9996,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "resolution",
+    "start": 21.6446,
+    "end": 22.1257,
+    "scene": "03",
+    "acoustic_score": 0.9995,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "workspace",
+    "start": 22.1858,
+    "end": 22.687,
+    "scene": "03",
+    "acoustic_score": 0.9753,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "built",
+    "start": 22.7672,
+    "end": 22.9476,
+    "scene": "03",
+    "acoustic_score": 0.9266,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "around",
+    "start": 23.0278,
+    "end": 23.2282,
+    "scene": "03",
+    "acoustic_score": 0.9752,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "your",
+    "start": 23.2483,
+    "end": 23.3685,
+    "scene": "03",
+    "acoustic_score": 0.9953,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "records,",
+    "start": 23.4287,
+    "end": 23.8095,
+    "scene": "03",
+    "acoustic_score": 0.9566,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "your",
+    "start": 24.1503,
+    "end": 24.2906,
+    "scene": "03",
+    "acoustic_score": 0.9955,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "review,",
+    "start": 24.3307,
+    "end": 24.6113,
+    "scene": "03",
+    "acoustic_score": 0.9745,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "and",
+    "start": 24.9922,
+    "end": 25.0523,
+    "scene": "03",
+    "acoustic_score": 0.9998,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "your",
+    "start": 25.0924,
+    "end": 25.1926,
+    "scene": "03",
+    "acoustic_score": 0.9998,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "next",
+    "start": 25.2327,
+    "end": 25.4332,
+    "scene": "03",
+    "acoustic_score": 0.9409,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "step.",
+    "start": 25.4933,
+    "end": 25.7339,
+    "scene": "03",
+    "acoustic_score": 0.9999,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "Begin",
+    "start": 28.6602,
+    "end": 28.9009,
+    "scene": "04",
+    "acoustic_score": 0.9999,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "with",
+    "start": 29.0011,
+    "end": 29.1215,
+    "scene": "04",
+    "acoustic_score": 0.9997,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "what",
+    "start": 29.1817,
+    "end": 29.302,
+    "scene": "04",
+    "acoustic_score": 0.9934,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "you",
+    "start": 29.3421,
+    "end": 29.4223,
+    "scene": "04",
+    "acoustic_score": 1.0,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "have.",
+    "start": 29.5026,
+    "end": 29.7633,
+    "scene": "04",
+    "acoustic_score": 0.9731,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "Explore",
+    "start": 30.2647,
+    "end": 30.6659,
+    "scene": "04",
+    "acoustic_score": 0.987,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "a",
+    "start": 30.7662,
+    "end": 30.7862,
+    "scene": "04",
+    "acoustic_score": 0.9995,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "clearly",
+    "start": 30.8665,
+    "end": 31.2074,
+    "scene": "04",
+    "acoustic_score": 0.927,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "labeled",
+    "start": 31.2877,
+    "end": 31.6487,
+    "scene": "04",
+    "acoustic_score": 0.8771,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "sample,",
+    "start": 31.7089,
+    "end": 32.0899,
+    "scene": "04",
+    "acoustic_score": 0.9912,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "or",
+    "start": 32.4309,
+    "end": 32.4911,
+    "scene": "04",
+    "acoustic_score": 0.9965,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "start",
+    "start": 32.6114,
+    "end": 32.7919,
+    "scene": "04",
+    "acoustic_score": 0.9848,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "your",
+    "start": 32.8321,
+    "end": 32.9524,
+    "scene": "04",
+    "acoustic_score": 0.9974,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "own",
+    "start": 32.9925,
+    "end": 33.1129,
+    "scene": "04",
+    "acoustic_score": 0.8772,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "private",
+    "start": 33.1931,
+    "end": 33.514,
+    "scene": "04",
+    "acoustic_score": 0.9968,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "case.",
+    "start": 33.5541,
+    "end": 33.8149,
+    "scene": "04",
+    "acoustic_score": 1.0,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "No",
+    "start": 34.4366,
+    "end": 34.5369,
+    "scene": "04",
+    "acoustic_score": 1.0,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "perfect",
+    "start": 34.6773,
+    "end": 35.0584,
+    "scene": "04",
+    "acoustic_score": 0.9557,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "wording",
+    "start": 35.1386,
+    "end": 35.4595,
+    "scene": "04",
+    "acoustic_score": 0.9977,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "required.",
+    "start": 35.5398,
+    "end": 36.0613,
+    "scene": "04",
+    "acoustic_score": 0.8139,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "Describe",
+    "start": 40.6401,
+    "end": 41.1007,
+    "scene": "05",
+    "acoustic_score": 0.9726,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "the",
+    "start": 41.1608,
+    "end": 41.2409,
+    "scene": "05",
+    "acoustic_score": 0.9894,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "problem.",
+    "start": 41.2609,
+    "end": 41.6414,
+    "scene": "05",
+    "acoustic_score": 0.9341,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "Add",
+    "start": 42.2423,
+    "end": 42.3624,
+    "scene": "05",
+    "acoustic_score": 0.9974,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "records",
+    "start": 42.4626,
+    "end": 42.8431,
+    "scene": "05",
+    "acoustic_score": 0.9355,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "and",
+    "start": 42.9633,
+    "end": 43.0434,
+    "scene": "05",
+    "acoustic_score": 0.9934,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "choose",
+    "start": 43.1035,
+    "end": 43.4039,
+    "scene": "05",
+    "acoustic_score": 0.9799,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "what",
+    "start": 43.484,
+    "end": 43.6042,
+    "scene": "05",
+    "acoustic_score": 0.9218,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "processing",
+    "start": 43.6642,
+    "end": 44.1449,
+    "scene": "05",
+    "acoustic_score": 0.9919,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "you",
+    "start": 44.205,
+    "end": 44.2851,
+    "scene": "05",
+    "acoustic_score": 0.9259,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "allow.",
+    "start": 44.3652,
+    "end": 44.6056,
+    "scene": "05",
+    "acoustic_score": 0.9641,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "English",
+    "start": 45.3065,
+    "end": 45.627,
+    "scene": "05",
+    "acoustic_score": 0.9233,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "and",
+    "start": 45.7071,
+    "end": 45.7872,
+    "scene": "05",
+    "acoustic_score": 0.9976,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "Bangla",
+    "start": 45.8473,
+    "end": 46.2078,
+    "scene": "05",
+    "acoustic_score": 0.9833,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "belong",
+    "start": 46.3279,
+    "end": 46.6684,
+    "scene": "05",
+    "acoustic_score": 0.9952,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "in",
+    "start": 46.7686,
+    "end": 46.8086,
+    "scene": "05",
+    "acoustic_score": 0.9994,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "the",
+    "start": 46.8687,
+    "end": 46.9488,
+    "scene": "05",
+    "acoustic_score": 0.9973,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "same",
+    "start": 47.0089,
+    "end": 47.2292,
+    "scene": "05",
+    "acoustic_score": 0.9666,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "experience.",
+    "start": 47.3093,
+    "end": 47.9302,
+    "scene": "05",
+    "acoustic_score": 0.9869,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "With",
+    "start": 53.6401,
+    "end": 53.7603,
+    "scene": "06",
+    "acoustic_score": 0.9999,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "permission,",
+    "start": 53.8405,
+    "end": 54.2813,
+    "scene": "06",
+    "acoustic_score": 0.9851,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "AI",
+    "start": 54.7021,
+    "end": 54.9826,
+    "scene": "06",
+    "acoustic_score": 0.9839,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "helps",
+    "start": 55.143,
+    "end": 55.3834,
+    "scene": "06",
+    "acoustic_score": 0.8341,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "summarize",
+    "start": 55.4636,
+    "end": 55.9445,
+    "scene": "06",
+    "acoustic_score": 0.923,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "your",
+    "start": 55.9846,
+    "end": 56.0848,
+    "scene": "06",
+    "acoustic_score": 0.9105,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "situation.",
+    "start": 56.1248,
+    "end": 56.726,
+    "scene": "06",
+    "acoustic_score": 0.9618,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "The",
+    "start": 57.3672,
+    "end": 57.4474,
+    "scene": "06",
+    "acoustic_score": 0.9998,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "workstream",
+    "start": 57.4874,
+    "end": 57.9684,
+    "scene": "06",
+    "acoustic_score": 0.9491,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "records",
+    "start": 58.0886,
+    "end": 58.4894,
+    "scene": "06",
+    "acoustic_score": 0.9808,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "what",
+    "start": 58.5495,
+    "end": 58.6697,
+    "scene": "06",
+    "acoustic_score": 0.9896,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "actually",
+    "start": 58.83,
+    "end": 59.1907,
+    "scene": "06",
+    "acoustic_score": 0.9461,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "ran.",
+    "start": 59.2508,
+    "end": 59.4913,
+    "scene": "06",
+    "acoustic_score": 0.9375,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "Findings",
+    "start": 60.1525,
+    "end": 60.6134,
+    "scene": "06",
+    "acoustic_score": 0.8875,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "stay",
+    "start": 60.6735,
+    "end": 60.894,
+    "scene": "06",
+    "acoustic_score": 0.9724,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "connected",
+    "start": 60.9741,
+    "end": 61.3749,
+    "scene": "06",
+    "acoustic_score": 0.9998,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "to",
+    "start": 61.435,
+    "end": 61.4951,
+    "scene": "06",
+    "acoustic_score": 0.9998,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "information",
+    "start": 61.5552,
+    "end": 62.1363,
+    "scene": "06",
+    "acoustic_score": 0.965,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "you",
+    "start": 62.2365,
+    "end": 62.3167,
+    "scene": "06",
+    "acoustic_score": 0.9527,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "can",
+    "start": 62.3768,
+    "end": 62.477,
+    "scene": "06",
+    "acoustic_score": 0.9437,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "inspect.",
+    "start": 62.5572,
+    "end": 62.998,
+    "scene": "06",
+    "acoustic_score": 0.9999,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "Open",
+    "start": 67.7403,
+    "end": 67.9406,
+    "scene": "07",
+    "acoustic_score": 1.0,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "a",
+    "start": 68.0208,
+    "end": 68.0408,
+    "scene": "07",
+    "acoustic_score": 0.9999,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "moment",
+    "start": 68.121,
+    "end": 68.4215,
+    "scene": "07",
+    "acoustic_score": 0.9875,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "in",
+    "start": 68.5418,
+    "end": 68.5818,
+    "scene": "07",
+    "acoustic_score": 0.9999,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "the",
+    "start": 68.6419,
+    "end": 68.7221,
+    "scene": "07",
+    "acoustic_score": 0.9992,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "evidence",
+    "start": 68.8423,
+    "end": 69.1629,
+    "scene": "07",
+    "acoustic_score": 0.7753,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "story.",
+    "start": 69.223,
+    "end": 69.5436,
+    "scene": "07",
+    "acoustic_score": 0.9536,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "See",
+    "start": 70.2049,
+    "end": 70.3451,
+    "scene": "07",
+    "acoustic_score": 1.0,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "the",
+    "start": 70.4052,
+    "end": 70.4854,
+    "scene": "07",
+    "acoustic_score": 0.9767,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "original",
+    "start": 70.5655,
+    "end": 70.9863,
+    "scene": "07",
+    "acoustic_score": 0.9544,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "receipt",
+    "start": 71.0665,
+    "end": 71.4472,
+    "scene": "07",
+    "acoustic_score": 0.951,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "or",
+    "start": 71.6075,
+    "end": 71.6676,
+    "scene": "07",
+    "acoustic_score": 0.8776,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "message",
+    "start": 71.7477,
+    "end": 72.0683,
+    "scene": "07",
+    "acoustic_score": 0.9999,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "beside",
+    "start": 72.1685,
+    "end": 72.5092,
+    "scene": "07",
+    "acoustic_score": 0.9999,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "it.",
+    "start": 72.5893,
+    "end": 72.6294,
+    "scene": "07",
+    "acoustic_score": 0.9998,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "Confirm",
+    "start": 73.1704,
+    "end": 73.5511,
+    "scene": "07",
+    "acoustic_score": 0.9755,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "the",
+    "start": 73.6513,
+    "end": 73.7114,
+    "scene": "07",
+    "acoustic_score": 0.9999,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "date,",
+    "start": 73.7515,
+    "end": 73.9919,
+    "scene": "07",
+    "acoustic_score": 0.9976,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "correct",
+    "start": 74.2724,
+    "end": 74.593,
+    "scene": "07",
+    "acoustic_score": 1.0,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "it,",
+    "start": 74.7133,
+    "end": 74.7533,
+    "scene": "07",
+    "acoustic_score": 0.9999,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "or",
+    "start": 75.0739,
+    "end": 75.134,
+    "scene": "07",
+    "acoustic_score": 0.9978,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "leave",
+    "start": 75.2543,
+    "end": 75.4546,
+    "scene": "07",
+    "acoustic_score": 0.9991,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "it",
+    "start": 75.5148,
+    "end": 75.5749,
+    "scene": "07",
+    "acoustic_score": 0.8736,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "uncertain.",
+    "start": 75.6951,
+    "end": 76.176,
+    "scene": "07",
+    "acoustic_score": 0.9726,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "The",
+    "start": 82.6601,
+    "end": 82.7403,
+    "scene": "08",
+    "acoustic_score": 0.9995,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "records",
+    "start": 82.8205,
+    "end": 83.2013,
+    "scene": "08",
+    "acoustic_score": 0.9925,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "reveal",
+    "start": 83.3015,
+    "end": 83.6022,
+    "scene": "08",
+    "acoustic_score": 0.9791,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "a",
+    "start": 83.7225,
+    "end": 83.7425,
+    "scene": "08",
+    "acoustic_score": 0.9981,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "five",
+    "start": 83.8828,
+    "end": 84.1835,
+    "scene": "08",
+    "acoustic_score": 0.9999,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "hundred",
+    "start": 84.2636,
+    "end": 84.5442,
+    "scene": "08",
+    "acoustic_score": 0.9455,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "taka",
+    "start": 84.6244,
+    "end": 84.9451,
+    "scene": "08",
+    "acoustic_score": 0.7517,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "difference.",
+    "start": 85.0053,
+    "end": 85.346,
+    "scene": "08",
+    "acoustic_score": 0.9955,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "Add",
+    "start": 86.0475,
+    "end": 86.1678,
+    "scene": "08",
+    "acoustic_score": 0.9998,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "the",
+    "start": 86.2279,
+    "end": 86.2881,
+    "scene": "08",
+    "acoustic_score": 0.9987,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "second",
+    "start": 86.3482,
+    "end": 86.6088,
+    "scene": "08",
+    "acoustic_score": 0.9527,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "payment.",
+    "start": 86.6689,
+    "end": 87.0096,
+    "scene": "08",
+    "acoustic_score": 1.0,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "The",
+    "start": 87.611,
+    "end": 87.6911,
+    "scene": "08",
+    "acoustic_score": 0.9997,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "linked",
+    "start": 87.7513,
+    "end": 87.9918,
+    "scene": "08",
+    "acoustic_score": 0.976,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "receipts",
+    "start": 88.092,
+    "end": 88.4929,
+    "scene": "08",
+    "acoustic_score": 0.9406,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "now",
+    "start": 88.5731,
+    "end": 88.7134,
+    "scene": "08",
+    "acoustic_score": 0.9998,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "explain",
+    "start": 88.8537,
+    "end": 89.2545,
+    "scene": "08",
+    "acoustic_score": 0.9569,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "the",
+    "start": 89.3347,
+    "end": 89.3948,
+    "scene": "08",
+    "acoustic_score": 0.9995,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "total,",
+    "start": 89.4349,
+    "end": 89.7356,
+    "scene": "08",
+    "acoustic_score": 0.9461,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "without",
+    "start": 90.1164,
+    "end": 90.397,
+    "scene": "08",
+    "acoustic_score": 0.9713,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "rewriting",
+    "start": 90.4772,
+    "end": 90.9382,
+    "scene": "08",
+    "acoustic_score": 0.9669,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "your",
+    "start": 90.9984,
+    "end": 91.1186,
+    "scene": "08",
+    "acoustic_score": 0.9999,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "original",
+    "start": 91.1988,
+    "end": 91.6197,
+    "scene": "08",
+    "acoustic_score": 0.9967,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "account.",
+    "start": 91.6999,
+    "end": 92.0406,
+    "scene": "08",
+    "acoustic_score": 0.9993,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "Bring",
+    "start": 95.6601,
+    "end": 95.8405,
+    "scene": "09",
+    "acoustic_score": 0.9992,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "an",
+    "start": 95.9006,
+    "end": 95.9407,
+    "scene": "09",
+    "acoustic_score": 0.9976,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "image",
+    "start": 96.0409,
+    "end": 96.3014,
+    "scene": "09",
+    "acoustic_score": 0.9613,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "or",
+    "start": 96.602,
+    "end": 96.6621,
+    "scene": "09",
+    "acoustic_score": 0.9894,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "an",
+    "start": 96.7623,
+    "end": 96.8225,
+    "scene": "09",
+    "acoustic_score": 0.991,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "audio",
+    "start": 96.9627,
+    "end": 97.2032,
+    "scene": "09",
+    "acoustic_score": 0.9914,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "recording.",
+    "start": 97.3034,
+    "end": 97.7644,
+    "scene": "09",
+    "acoustic_score": 0.9883,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "Configured",
+    "start": 98.3054,
+    "end": 98.8265,
+    "scene": "09",
+    "acoustic_score": 0.966,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "readers",
+    "start": 98.8866,
+    "end": 99.2473,
+    "scene": "09",
+    "acoustic_score": 0.9606,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "can",
+    "start": 99.3475,
+    "end": 99.4678,
+    "scene": "09",
+    "acoustic_score": 0.9861,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "extract",
+    "start": 99.5479,
+    "end": 99.9488,
+    "scene": "09",
+    "acoustic_score": 0.9461,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "text",
+    "start": 100.049,
+    "end": 100.4297,
+    "scene": "09",
+    "acoustic_score": 0.7109,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "and",
+    "start": 100.57,
+    "end": 100.6502,
+    "scene": "09",
+    "acoustic_score": 0.9997,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "transcribe",
+    "start": 100.6902,
+    "end": 101.2714,
+    "scene": "09",
+    "acoustic_score": 0.9922,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "speech.",
+    "start": 101.3315,
+    "end": 101.6121,
+    "scene": "09",
+    "acoustic_score": 0.9988,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "Keep",
+    "start": 102.2734,
+    "end": 102.4338,
+    "scene": "09",
+    "acoustic_score": 0.9689,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "the",
+    "start": 102.4738,
+    "end": 102.574,
+    "scene": "09",
+    "acoustic_score": 0.9057,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "original",
+    "start": 102.6342,
+    "end": 103.0149,
+    "scene": "09",
+    "acoustic_score": 0.9983,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "nearby,",
+    "start": 103.075,
+    "end": 103.4758,
+    "scene": "09",
+    "acoustic_score": 0.9963,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "because",
+    "start": 103.9167,
+    "end": 104.1372,
+    "scene": "09",
+    "acoustic_score": 0.988,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "AI",
+    "start": 104.2975,
+    "end": 104.5981,
+    "scene": "09",
+    "acoustic_score": 0.866,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "can",
+    "start": 104.7183,
+    "end": 104.8186,
+    "scene": "09",
+    "acoustic_score": 0.9999,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "make",
+    "start": 104.8787,
+    "end": 104.9989,
+    "scene": "09",
+    "acoustic_score": 0.9652,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "mistakes.",
+    "start": 105.0791,
+    "end": 105.52,
+    "scene": "09",
+    "acoustic_score": 0.9537,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "What",
+    "start": 108.6601,
+    "end": 108.7803,
+    "scene": "10",
+    "acoustic_score": 0.999,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "if",
+    "start": 108.8404,
+    "end": 108.8804,
+    "scene": "10",
+    "acoustic_score": 1.0,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "one",
+    "start": 109.0407,
+    "end": 109.1208,
+    "scene": "10",
+    "acoustic_score": 1.0,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "fact",
+    "start": 109.2009,
+    "end": 109.4413,
+    "scene": "10",
+    "acoustic_score": 0.9713,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "changes?",
+    "start": 109.5214,
+    "end": 109.9821,
+    "scene": "10",
+    "acoustic_score": 0.9994,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "Compare",
+    "start": 110.5029,
+    "end": 110.8234,
+    "scene": "10",
+    "acoustic_score": 0.9409,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "the",
+    "start": 110.8635,
+    "end": 110.9236,
+    "scene": "10",
+    "acoustic_score": 0.9999,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "possible",
+    "start": 110.9636,
+    "end": 111.3843,
+    "scene": "10",
+    "acoustic_score": 0.9979,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "paths",
+    "start": 111.4444,
+    "end": 111.7248,
+    "scene": "10",
+    "acoustic_score": 0.9862,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "first.",
+    "start": 111.7849,
+    "end": 112.0853,
+    "scene": "10",
+    "acoustic_score": 0.9994,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "Explicit",
+    "start": 112.7864,
+    "end": 113.2471,
+    "scene": "10",
+    "acoustic_score": 0.9507,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "conditions",
+    "start": 113.3072,
+    "end": 113.848,
+    "scene": "10",
+    "acoustic_score": 0.9678,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "show",
+    "start": 113.9482,
+    "end": 114.1084,
+    "scene": "10",
+    "acoustic_score": 0.9892,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "why",
+    "start": 114.1885,
+    "end": 114.3488,
+    "scene": "10",
+    "acoustic_score": 0.9994,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "a",
+    "start": 114.469,
+    "end": 114.489,
+    "scene": "10",
+    "acoustic_score": 0.9968,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "result",
+    "start": 114.5491,
+    "end": 114.8896,
+    "scene": "10",
+    "acoustic_score": 0.9535,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "changes,",
+    "start": 114.9697,
+    "end": 115.4104,
+    "scene": "10",
+    "acoustic_score": 0.9659,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "while",
+    "start": 115.791,
+    "end": 115.9312,
+    "scene": "10",
+    "acoustic_score": 0.9998,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "your",
+    "start": 115.9512,
+    "end": 116.0915,
+    "scene": "10",
+    "acoustic_score": 0.9992,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "saved",
+    "start": 116.1315,
+    "end": 116.452,
+    "scene": "10",
+    "acoustic_score": 0.9852,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "case",
+    "start": 116.5121,
+    "end": 116.7925,
+    "scene": "10",
+    "acoustic_score": 0.9663,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "stays",
+    "start": 116.8526,
+    "end": 117.113,
+    "scene": "10",
+    "acoustic_score": 0.931,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "separate.",
+    "start": 117.1931,
+    "end": 117.5337,
+    "scene": "10",
+    "acoustic_score": 0.9923,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "When",
+    "start": 121.6602,
+    "end": 121.7605,
+    "scene": "11",
+    "acoustic_score": 0.9999,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "a",
+    "start": 121.8006,
+    "end": 121.8206,
+    "scene": "11",
+    "acoustic_score": 0.9978,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "seller",
+    "start": 121.9009,
+    "end": 122.1616,
+    "scene": "11",
+    "acoustic_score": 0.8332,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "replies,",
+    "start": 122.2419,
+    "end": 122.7433,
+    "scene": "11",
+    "acoustic_score": 0.9846,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "place",
+    "start": 123.0843,
+    "end": 123.305,
+    "scene": "11",
+    "acoustic_score": 0.9338,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "their",
+    "start": 123.3652,
+    "end": 123.5056,
+    "scene": "11",
+    "acoustic_score": 0.9767,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "message",
+    "start": 123.5658,
+    "end": 123.8867,
+    "scene": "11",
+    "acoustic_score": 0.9983,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "beside",
+    "start": 123.987,
+    "end": 124.2678,
+    "scene": "11",
+    "acoustic_score": 0.9864,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "your",
+    "start": 124.3079,
+    "end": 124.4283,
+    "scene": "11",
+    "acoustic_score": 0.9756,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "records.",
+    "start": 124.4684,
+    "end": 124.8495,
+    "scene": "11",
+    "acoustic_score": 0.9659,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "Prepare",
+    "start": 125.5115,
+    "end": 125.8525,
+    "scene": "11",
+    "acoustic_score": 0.9554,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "a",
+    "start": 125.9126,
+    "end": 125.9327,
+    "scene": "11",
+    "acoustic_score": 0.9969,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "response,",
+    "start": 125.9929,
+    "end": 126.4743,
+    "scene": "11",
+    "acoustic_score": 0.9995,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "edit",
+    "start": 126.8554,
+    "end": 127.0359,
+    "scene": "11",
+    "acoustic_score": 0.9175,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "the",
+    "start": 127.076,
+    "end": 127.1362,
+    "scene": "11",
+    "acoustic_score": 0.9994,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "wording,",
+    "start": 127.1763,
+    "end": 127.4973,
+    "scene": "11",
+    "acoustic_score": 0.991,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "and",
+    "start": 127.7982,
+    "end": 127.8583,
+    "scene": "11",
+    "acoustic_score": 0.9999,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "decide",
+    "start": 127.9185,
+    "end": 128.2996,
+    "scene": "11",
+    "acoustic_score": 0.9416,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "what",
+    "start": 128.3799,
+    "end": 128.5002,
+    "scene": "11",
+    "acoustic_score": 0.9621,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "you",
+    "start": 128.5604,
+    "end": 128.6406,
+    "scene": "11",
+    "acoustic_score": 0.9997,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "are",
+    "start": 128.7008,
+    "end": 128.781,
+    "scene": "11",
+    "acoustic_score": 0.9911,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "comfortable",
+    "start": 128.8813,
+    "end": 129.3026,
+    "scene": "11",
+    "acoustic_score": 0.9782,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "using.",
+    "start": 129.443,
+    "end": 129.7639,
+    "scene": "11",
+    "acoustic_score": 0.7256,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "Build",
+    "start": 135.6602,
+    "end": 135.9008,
+    "scene": "12",
+    "acoustic_score": 0.9998,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "a",
+    "start": 136.0411,
+    "end": 136.0612,
+    "scene": "12",
+    "acoustic_score": 0.9998,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "reviewable",
+    "start": 136.1213,
+    "end": 136.6025,
+    "scene": "12",
+    "acoustic_score": 0.9622,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "draft.",
+    "start": 136.6627,
+    "end": 137.0437,
+    "scene": "12",
+    "acoustic_score": 0.9122,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "Follow",
+    "start": 137.585,
+    "end": 137.8457,
+    "scene": "12",
+    "acoustic_score": 0.9999,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "its",
+    "start": 137.946,
+    "end": 138.0462,
+    "scene": "12",
+    "acoustic_score": 0.991,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "supporting",
+    "start": 138.0863,
+    "end": 138.5074,
+    "scene": "12",
+    "acoustic_score": 0.9995,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "details,",
+    "start": 138.5675,
+    "end": 139.0889,
+    "scene": "12",
+    "acoustic_score": 0.9932,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "inspect",
+    "start": 139.3896,
+    "end": 139.7706,
+    "scene": "12",
+    "acoustic_score": 0.9528,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "the",
+    "start": 139.8308,
+    "end": 139.911,
+    "scene": "12",
+    "acoustic_score": 0.8782,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "handoff,",
+    "start": 139.9511,
+    "end": 140.3922,
+    "scene": "12",
+    "acoustic_score": 0.9228,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "and",
+    "start": 140.6729,
+    "end": 140.7531,
+    "scene": "12",
+    "acoustic_score": 0.9094,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "download",
+    "start": 140.8333,
+    "end": 141.2945,
+    "scene": "12",
+    "acoustic_score": 0.9953,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "your",
+    "start": 141.3346,
+    "end": 141.4549,
+    "scene": "12",
+    "acoustic_score": 0.9927,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "preparation.",
+    "start": 141.495,
+    "end": 142.0564,
+    "scene": "12",
+    "acoustic_score": 0.9765,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "You",
+    "start": 142.7181,
+    "end": 142.7983,
+    "scene": "12",
+    "acoustic_score": 0.9994,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "complete",
+    "start": 142.8585,
+    "end": 143.1793,
+    "scene": "12",
+    "acoustic_score": 0.9987,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "any",
+    "start": 143.3397,
+    "end": 143.46,
+    "scene": "12",
+    "acoustic_score": 0.9347,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "official",
+    "start": 143.5402,
+    "end": 143.9011,
+    "scene": "12",
+    "acoustic_score": 0.9916,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "submission",
+    "start": 143.9813,
+    "end": 144.4024,
+    "scene": "12",
+    "acoustic_score": 0.959,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "yourself.",
+    "start": 144.4826,
+    "end": 144.9037,
+    "scene": "12",
+    "acoustic_score": 1.0,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "Switch",
+    "start": 148.6801,
+    "end": 148.9205,
+    "scene": "13",
+    "acoustic_score": 0.9908,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "to",
+    "start": 149.0206,
+    "end": 149.0807,
+    "scene": "13",
+    "acoustic_score": 0.991,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "Bangla",
+    "start": 149.1208,
+    "end": 149.4813,
+    "scene": "13",
+    "acoustic_score": 0.8555,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "without",
+    "start": 149.5815,
+    "end": 149.8619,
+    "scene": "13",
+    "acoustic_score": 0.9993,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "losing",
+    "start": 149.942,
+    "end": 150.2425,
+    "scene": "13",
+    "acoustic_score": 0.997,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "the",
+    "start": 150.2825,
+    "end": 150.3626,
+    "scene": "13",
+    "acoustic_score": 0.9985,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "case.",
+    "start": 150.3827,
+    "end": 150.6631,
+    "scene": "13",
+    "acoustic_score": 0.9991,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "The",
+    "start": 151.3641,
+    "end": 151.4443,
+    "scene": "13",
+    "acoustic_score": 0.986,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "same",
+    "start": 151.5044,
+    "end": 151.7247,
+    "scene": "13",
+    "acoustic_score": 0.9869,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "records,",
+    "start": 151.8248,
+    "end": 152.2254,
+    "scene": "13",
+    "acoustic_score": 0.9887,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "the",
+    "start": 152.5459,
+    "end": 152.626,
+    "scene": "13",
+    "acoustic_score": 0.9519,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "same",
+    "start": 152.6861,
+    "end": 152.9265,
+    "scene": "13",
+    "acoustic_score": 0.9256,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "review,",
+    "start": 152.9866,
+    "end": 153.287,
+    "scene": "13",
+    "acoustic_score": 0.9853,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "and",
+    "start": 153.6476,
+    "end": 153.7277,
+    "scene": "13",
+    "acoustic_score": 0.9895,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "the",
+    "start": 153.7677,
+    "end": 153.8479,
+    "scene": "13",
+    "acoustic_score": 1.0,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "same",
+    "start": 153.8879,
+    "end": 154.1083,
+    "scene": "13",
+    "acoustic_score": 0.9734,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "control",
+    "start": 154.1884,
+    "end": 154.609,
+    "scene": "13",
+    "acoustic_score": 0.9948,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "over",
+    "start": 154.7292,
+    "end": 154.8694,
+    "scene": "13",
+    "acoustic_score": 0.9956,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "what",
+    "start": 154.9295,
+    "end": 155.0497,
+    "scene": "13",
+    "acoustic_score": 0.999,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "happens",
+    "start": 155.0897,
+    "end": 155.4302,
+    "scene": "13",
+    "acoustic_score": 0.939,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "next.",
+    "start": 155.5104,
+    "end": 155.7908,
+    "scene": "13",
+    "acoustic_score": 0.9723,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "The",
+    "start": 158.64,
+    "end": 158.7001,
+    "scene": "14",
+    "acoustic_score": 0.9995,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "community",
+    "start": 158.7601,
+    "end": 159.1204,
+    "scene": "14",
+    "acoustic_score": 0.9801,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "preview",
+    "start": 159.1804,
+    "end": 159.5607,
+    "scene": "14",
+    "acoustic_score": 0.9784,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "adds",
+    "start": 159.8609,
+    "end": 160.021,
+    "scene": "14",
+    "acoustic_score": 0.9986,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "shared",
+    "start": 160.1211,
+    "end": 160.3813,
+    "scene": "14",
+    "acoustic_score": 0.9371,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "experiences",
+    "start": 160.4613,
+    "end": 161.2619,
+    "scene": "14",
+    "acoustic_score": 0.9795,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "and",
+    "start": 161.482,
+    "end": 161.5621,
+    "scene": "14",
+    "acoustic_score": 0.9612,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "discussion.",
+    "start": 161.6021,
+    "end": 162.0424,
+    "scene": "14",
+    "acoustic_score": 0.9913,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "This",
+    "start": 162.6629,
+    "end": 162.823,
+    "scene": "14",
+    "acoustic_score": 0.9368,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "build",
+    "start": 162.883,
+    "end": 163.0832,
+    "scene": "14",
+    "acoustic_score": 0.9459,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "keeps",
+    "start": 163.2233,
+    "end": 163.4635,
+    "scene": "14",
+    "acoustic_score": 0.973,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "new",
+    "start": 163.5835,
+    "end": 163.7036,
+    "scene": "14",
+    "acoustic_score": 0.9999,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "public",
+    "start": 163.8237,
+    "end": 164.1239,
+    "scene": "14",
+    "acoustic_score": 0.9612,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "posts",
+    "start": 164.224,
+    "end": 164.6043,
+    "scene": "14",
+    "acoustic_score": 0.9966,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "unavailable.",
+    "start": 164.7844,
+    "end": 165.3648,
+    "scene": "14",
+    "acoustic_score": 0.964,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "Private",
+    "start": 165.9452,
+    "end": 166.2855,
+    "scene": "14",
+    "acoustic_score": 0.9922,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "case",
+    "start": 166.3255,
+    "end": 166.5456,
+    "scene": "14",
+    "acoustic_score": 1.0,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "records",
+    "start": 166.6257,
+    "end": 166.9659,
+    "scene": "14",
+    "acoustic_score": 0.9863,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "are",
+    "start": 167.086,
+    "end": 167.1661,
+    "scene": "14",
+    "acoustic_score": 0.9999,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "not",
+    "start": 167.2261,
+    "end": 167.4063,
+    "scene": "14",
+    "acoustic_score": 0.9834,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "automatically",
+    "start": 167.5664,
+    "end": 168.1468,
+    "scene": "14",
+    "acoustic_score": 0.9374,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "published.",
+    "start": 168.2268,
+    "end": 168.6671,
+    "scene": "14",
+    "acoustic_score": 0.9585,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "Behind",
+    "start": 172.66,
+    "end": 172.9803,
+    "scene": "15",
+    "acoustic_score": 0.9998,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "the",
+    "start": 173.0403,
+    "end": 173.1204,
+    "scene": "15",
+    "acoustic_score": 0.9479,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "experience,",
+    "start": 173.1804,
+    "end": 173.8209,
+    "scene": "15",
+    "acoustic_score": 0.9613,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "administrators",
+    "start": 174.1411,
+    "end": 174.8216,
+    "scene": "15",
+    "acoustic_score": 0.9401,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "review",
+    "start": 174.9017,
+    "end": 175.1418,
+    "scene": "15",
+    "acoustic_score": 0.9559,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "cases,",
+    "start": 175.2219,
+    "end": 175.6222,
+    "scene": "15",
+    "acoustic_score": 0.9873,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "manage",
+    "start": 176.1225,
+    "end": 176.4628,
+    "scene": "15",
+    "acoustic_score": 0.9002,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "access,",
+    "start": 176.6229,
+    "end": 177.0032,
+    "scene": "15",
+    "acoustic_score": 0.9849,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "moderate",
+    "start": 177.3835,
+    "end": 177.7237,
+    "scene": "15",
+    "acoustic_score": 0.9216,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "records,",
+    "start": 177.7637,
+    "end": 178.144,
+    "scene": "15",
+    "acoustic_score": 0.9673,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "and",
+    "start": 178.5043,
+    "end": 178.5843,
+    "scene": "15",
+    "acoustic_score": 0.9341,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "publish",
+    "start": 178.6444,
+    "end": 178.9646,
+    "scene": "15",
+    "acoustic_score": 0.9595,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "notices.",
+    "start": 179.0647,
+    "end": 179.505,
+    "scene": "15",
+    "acoustic_score": 0.9834,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "Source",
+    "start": 180.2655,
+    "end": 180.5257,
+    "scene": "15",
+    "acoustic_score": 0.9893,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "review",
+    "start": 180.6058,
+    "end": 180.866,
+    "scene": "15",
+    "acoustic_score": 0.993,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "and",
+    "start": 181.0061,
+    "end": 181.0661,
+    "scene": "15",
+    "acoustic_score": 0.9975,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "release",
+    "start": 181.1062,
+    "end": 181.4064,
+    "scene": "15",
+    "acoustic_score": 0.9488,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "controls",
+    "start": 181.4664,
+    "end": 181.9267,
+    "scene": "15",
+    "acoustic_score": 0.9558,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "keep",
+    "start": 182.0468,
+    "end": 182.247,
+    "scene": "15",
+    "acoustic_score": 0.9748,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "changes",
+    "start": 182.3471,
+    "end": 182.7674,
+    "scene": "15",
+    "acoustic_score": 0.9495,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "explicit",
+    "start": 182.9075,
+    "end": 183.4078,
+    "scene": "15",
+    "acoustic_score": 0.957,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "and",
+    "start": 183.5879,
+    "end": 183.668,
+    "scene": "15",
+    "acoustic_score": 0.9921,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "inspectable.",
+    "start": 183.7281,
+    "end": 184.2684,
+    "scene": "15",
+    "acoustic_score": 0.9775,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "Here",
+    "start": 187.6601,
+    "end": 187.8603,
+    "scene": "16",
+    "acoustic_score": 0.9538,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "is",
+    "start": 188.0005,
+    "end": 188.0606,
+    "scene": "16",
+    "acoustic_score": 0.9561,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "how",
+    "start": 188.1207,
+    "end": 188.2409,
+    "scene": "16",
+    "acoustic_score": 0.9983,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "it",
+    "start": 188.321,
+    "end": 188.361,
+    "scene": "16",
+    "acoustic_score": 0.9998,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "connects.",
+    "start": 188.4011,
+    "end": 188.7816,
+    "scene": "16",
+    "acoustic_score": 0.991,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "The",
+    "start": 189.3624,
+    "end": 189.4224,
+    "scene": "16",
+    "acoustic_score": 0.9995,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "bilingual",
+    "start": 189.4825,
+    "end": 189.9832,
+    "scene": "16",
+    "acoustic_score": 0.8909,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "web",
+    "start": 190.0633,
+    "end": 190.2435,
+    "scene": "16",
+    "acoustic_score": 0.978,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "app",
+    "start": 190.3837,
+    "end": 190.4839,
+    "scene": "16",
+    "acoustic_score": 0.7219,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "reaches",
+    "start": 190.6241,
+    "end": 190.9245,
+    "scene": "16",
+    "acoustic_score": 0.9809,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "a",
+    "start": 191.0046,
+    "end": 191.0246,
+    "scene": "16",
+    "acoustic_score": 0.9987,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "Python",
+    "start": 191.1047,
+    "end": 191.4852,
+    "scene": "16",
+    "acoustic_score": 0.7448,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "API",
+    "start": 191.6054,
+    "end": 192.1261,
+    "scene": "16",
+    "acoustic_score": 0.9088,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "through",
+    "start": 192.4665,
+    "end": 192.6668,
+    "scene": "16",
+    "acoustic_score": 0.9459,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "a",
+    "start": 192.7269,
+    "end": 192.7469,
+    "scene": "16",
+    "acoustic_score": 0.9677,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "same",
+    "start": 192.807,
+    "end": 193.0473,
+    "scene": "16",
+    "acoustic_score": 0.9466,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "origin",
+    "start": 193.1875,
+    "end": 193.5279,
+    "scene": "16",
+    "acoustic_score": 0.93,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "proxy.",
+    "start": 193.588,
+    "end": 193.9886,
+    "scene": "16",
+    "acoustic_score": 0.9999,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "Ownership",
+    "start": 194.7296,
+    "end": 195.1301,
+    "scene": "16",
+    "acoustic_score": 0.977,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "checks",
+    "start": 195.2302,
+    "end": 195.4906,
+    "scene": "16",
+    "acoustic_score": 0.9982,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "protect",
+    "start": 195.5707,
+    "end": 195.8711,
+    "scene": "16",
+    "acoustic_score": 0.9446,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "access",
+    "start": 196.0714,
+    "end": 196.3918,
+    "scene": "16",
+    "acoustic_score": 0.9643,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "to",
+    "start": 196.4519,
+    "end": 196.512,
+    "scene": "16",
+    "acoustic_score": 1.0,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "case",
+    "start": 196.572,
+    "end": 196.7723,
+    "scene": "16",
+    "acoustic_score": 0.9956,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "records.",
+    "start": 196.8524,
+    "end": 197.2329,
+    "scene": "16",
+    "acoustic_score": 0.9566,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "Native",
+    "start": 201.7402,
+    "end": 202.0606,
+    "scene": "17",
+    "acoustic_score": 0.9998,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "documents",
+    "start": 202.1207,
+    "end": 202.6214,
+    "scene": "17",
+    "acoustic_score": 0.9801,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "use",
+    "start": 202.7416,
+    "end": 202.8417,
+    "scene": "17",
+    "acoustic_score": 0.9999,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "a",
+    "start": 202.9018,
+    "end": 202.9219,
+    "scene": "17",
+    "acoustic_score": 0.9989,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "parser.",
+    "start": 202.9819,
+    "end": 203.3425,
+    "scene": "17",
+    "acoustic_score": 0.881,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "With",
+    "start": 203.9032,
+    "end": 204.0434,
+    "scene": "17",
+    "acoustic_score": 0.9657,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "consent,",
+    "start": 204.1035,
+    "end": 204.5241,
+    "scene": "17",
+    "acoustic_score": 0.9967,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "configured",
+    "start": 204.9247,
+    "end": 205.4454,
+    "scene": "17",
+    "acoustic_score": 0.9927,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "models",
+    "start": 205.5055,
+    "end": 205.866,
+    "scene": "17",
+    "acoustic_score": 0.9683,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "read",
+    "start": 205.9662,
+    "end": 206.1264,
+    "scene": "17",
+    "acoustic_score": 0.9747,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "images,",
+    "start": 206.2065,
+    "end": 206.587,
+    "scene": "17",
+    "acoustic_score": 0.9746,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "transcribe",
+    "start": 206.9676,
+    "end": 207.5284,
+    "scene": "17",
+    "acoustic_score": 0.9987,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "audio,",
+    "start": 207.6886,
+    "end": 207.989,
+    "scene": "17",
+    "acoustic_score": 0.9101,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "and",
+    "start": 208.2694,
+    "end": 208.3495,
+    "scene": "17",
+    "acoustic_score": 0.9998,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "help",
+    "start": 208.4096,
+    "end": 208.5698,
+    "scene": "17",
+    "acoustic_score": 0.9452,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "with",
+    "start": 208.6499,
+    "end": 208.7701,
+    "scene": "17",
+    "acoustic_score": 0.9999,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "wording.",
+    "start": 208.8302,
+    "end": 209.1506,
+    "scene": "17",
+    "acoustic_score": 0.9306,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "Each",
+    "start": 209.8717,
+    "end": 210.0119,
+    "scene": "17",
+    "acoustic_score": 0.9095,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "result",
+    "start": 210.132,
+    "end": 210.4525,
+    "scene": "17",
+    "acoustic_score": 0.9391,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "returns",
+    "start": 210.5526,
+    "end": 210.9932,
+    "scene": "17",
+    "acoustic_score": 0.971,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "with",
+    "start": 211.0533,
+    "end": 211.1935,
+    "scene": "17",
+    "acoustic_score": 0.9703,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "its",
+    "start": 211.2536,
+    "end": 211.3337,
+    "scene": "17",
+    "acoustic_score": 0.9996,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "source",
+    "start": 211.4138,
+    "end": 211.7543,
+    "scene": "17",
+    "acoustic_score": 0.9777,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "and",
+    "start": 211.8544,
+    "end": 211.9346,
+    "scene": "17",
+    "acoustic_score": 0.9997,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "review",
+    "start": 211.9946,
+    "end": 212.235,
+    "scene": "17",
+    "acoustic_score": 0.4543,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "needs.",
+    "start": 212.2951,
+    "end": 212.6155,
+    "scene": "17",
+    "acoustic_score": 0.7993,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "Reference",
+    "start": 215.6801,
+    "end": 216.0405,
+    "scene": "18",
+    "acoustic_score": 0.9848,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "lookup",
+    "start": 216.1406,
+    "end": 216.481,
+    "scene": "18",
+    "acoustic_score": 0.9939,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "and",
+    "start": 216.6212,
+    "end": 216.7013,
+    "scene": "18",
+    "acoustic_score": 0.971,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "explicit",
+    "start": 216.7614,
+    "end": 217.2219,
+    "scene": "18",
+    "acoustic_score": 0.9575,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "rules",
+    "start": 217.282,
+    "end": 217.5823,
+    "scene": "18",
+    "acoustic_score": 0.9369,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "assess",
+    "start": 217.7425,
+    "end": 218.0228,
+    "scene": "18",
+    "acoustic_score": 0.9056,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "possible",
+    "start": 218.1029,
+    "end": 218.5034,
+    "scene": "18",
+    "acoustic_score": 0.9679,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "paths.",
+    "start": 218.5835,
+    "end": 218.9039,
+    "scene": "18",
+    "acoustic_score": 0.9343,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "Unknown",
+    "start": 219.5647,
+    "end": 219.9451,
+    "scene": "18",
+    "acoustic_score": 0.9541,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "facts",
+    "start": 220.0652,
+    "end": 220.3856,
+    "scene": "18",
+    "acoustic_score": 0.9832,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "remain",
+    "start": 220.4857,
+    "end": 220.746,
+    "scene": "18",
+    "acoustic_score": 0.9958,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "unknown.",
+    "start": 220.9062,
+    "end": 221.2466,
+    "scene": "18",
+    "acoustic_score": 0.9766,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "Version",
+    "start": 221.9875,
+    "end": 222.3279,
+    "scene": "18",
+    "acoustic_score": 0.9698,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "checks",
+    "start": 222.448,
+    "end": 222.6883,
+    "scene": "18",
+    "acoustic_score": 0.9899,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "guard",
+    "start": 222.7484,
+    "end": 222.9687,
+    "scene": "18",
+    "acoustic_score": 0.9786,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "changes,",
+    "start": 223.0688,
+    "end": 223.5293,
+    "scene": "18",
+    "acoustic_score": 0.9152,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "and",
+    "start": 223.9898,
+    "end": 224.0699,
+    "scene": "18",
+    "acoustic_score": 0.9998,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "recorded",
+    "start": 224.13,
+    "end": 224.5305,
+    "scene": "18",
+    "acoustic_score": 0.9998,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "operations",
+    "start": 224.6506,
+    "end": 225.2513,
+    "scene": "18",
+    "acoustic_score": 0.985,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "make",
+    "start": 225.3514,
+    "end": 225.5116,
+    "scene": "18",
+    "acoustic_score": 0.9949,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "the",
+    "start": 225.5717,
+    "end": 225.6318,
+    "scene": "18",
+    "acoustic_score": 0.9997,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "work",
+    "start": 225.6918,
+    "end": 225.832,
+    "scene": "18",
+    "acoustic_score": 1.0,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "inspectable.",
+    "start": 225.9722,
+    "end": 226.5929,
+    "scene": "18",
+    "acoustic_score": 0.9406,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "The",
+    "start": 227.2136,
+    "end": 227.2937,
+    "scene": "18",
+    "acoustic_score": 0.8772,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "result",
+    "start": 227.3338,
+    "end": 227.6942,
+    "scene": "18",
+    "acoustic_score": 0.9166,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "is",
+    "start": 227.8744,
+    "end": 227.9145,
+    "scene": "18",
+    "acoustic_score": 0.9999,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "preparation",
+    "start": 228.0146,
+    "end": 228.5953,
+    "scene": "18",
+    "acoustic_score": 0.9593,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "you",
+    "start": 228.6954,
+    "end": 228.7955,
+    "scene": "18",
+    "acoustic_score": 0.9993,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "can",
+    "start": 228.8956,
+    "end": 229.0157,
+    "scene": "18",
+    "acoustic_score": 0.9032,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "review,",
+    "start": 229.0958,
+    "end": 229.3962,
+    "scene": "18",
+    "acoustic_score": 0.9975,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "not",
+    "start": 229.8167,
+    "end": 229.9569,
+    "scene": "18",
+    "acoustic_score": 1.0,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "a",
+    "start": 230.0369,
+    "end": 230.057,
+    "scene": "18",
+    "acoustic_score": 0.9997,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "promised",
+    "start": 230.117,
+    "end": 230.5375,
+    "scene": "18",
+    "acoustic_score": 0.9513,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "resolution.",
+    "start": 230.6377,
+    "end": 231.1583,
+    "scene": "18",
+    "acoustic_score": 0.9815,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "From",
+    "start": 232.6804,
+    "end": 232.8009,
+    "scene": "19",
+    "acoustic_score": 0.9906,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "scattered",
+    "start": 232.8813,
+    "end": 233.243,
+    "scene": "19",
+    "acoustic_score": 0.9923,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "records",
+    "start": 233.3033,
+    "end": 233.6649,
+    "scene": "19",
+    "acoustic_score": 0.9796,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "to",
+    "start": 233.7654,
+    "end": 233.8458,
+    "scene": "19",
+    "acoustic_score": 0.9999,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "a",
+    "start": 233.9261,
+    "end": 233.9462,
+    "scene": "19",
+    "acoustic_score": 0.9967,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "clearer",
+    "start": 233.9864,
+    "end": 234.2677,
+    "scene": "19",
+    "acoustic_score": 0.9718,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "next",
+    "start": 234.3481,
+    "end": 234.5289,
+    "scene": "19",
+    "acoustic_score": 0.9988,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "step.",
+    "start": 234.5892,
+    "end": 234.8102,
+    "scene": "19",
+    "acoustic_score": 0.9999,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "Ebarki.",
+    "start": 235.4331,
+    "end": 235.7948,
+    "scene": "19",
+    "acoustic_score": 0.7135,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "Your",
+    "start": 235.8953,
+    "end": 236.0359,
+    "scene": "19",
+    "acoustic_score": 0.9992,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "evidence.",
+    "start": 236.1565,
+    "end": 236.5182,
+    "scene": "19",
+    "acoustic_score": 0.9991,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "Your",
+    "start": 236.8999,
+    "end": 237.0205,
+    "scene": "19",
+    "acoustic_score": 0.9927,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "next",
+    "start": 237.0808,
+    "end": 237.2817,
+    "scene": "19",
+    "acoustic_score": 0.9788,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  },
+  {
+    "word": "move.",
+    "start": 237.3621,
+    "end": 237.5831,
+    "scene": "19",
+    "acoustic_score": 1.0,
+    "method": "wav2vec2 CTC Viterbi forced alignment"
+  }
+]
