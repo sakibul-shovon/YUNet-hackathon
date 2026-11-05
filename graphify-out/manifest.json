@@ -1,8 +1,8 @@
 {
   ".agent/state.json": {
-    "mtime": 1793833835.0164723,
-    "seen": 1793833909.5204256,
-    "ast_hash": "2f55921dfa3e9cf2c46a78a3176c0274",
+    "mtime": 1793837956.1326315,
+    "seen": 1793838096.9645078,
+    "ast_hash": "5e9b9192690820591764f4100c4ae908",
     "semantic_hash": ""
   },
   ".github/workflows/ci.yaml": {
@@ -24,8 +24,8 @@
     "semantic_hash": ""
   },
   "apps/web/next-env.d.ts": {
-    "mtime": 1793837168.881327,
-    "seen": 1793837434.9126754,
+    "mtime": 1793837507.6933296,
+    "seen": 1793838096.9645078,
     "ast_hash": "ba64ff7d54714a8f64db89b1003207d8",
     "semantic_hash": ""
   },
@@ -354,9 +354,9 @@
     "semantic_hash": ""
   },
   "apps/web/tsconfig.json": {
-    "mtime": 1793837044.3525598,
-    "seen": 1793837434.9126754,
-    "ast_hash": "5c293413321cbaa2816213cbd48b0014",
+    "mtime": 1793837507.7402937,
+    "seen": 1793838096.9645078,
+    "ast_hash": "634f97ceb73cc966a7579219d6a1c0e7",
     "semantic_hash": ""
   },
   "demo/specs/synthetic_demo_case_ecommerce.json": {
@@ -870,9 +870,9 @@
     "semantic_hash": "91062a9bdaefc94f6cf4c11eb434a414"
   },
   "services/backend/app/knowledge/source_registry.py": {
-    "mtime": 1793835985.4948099,
-    "seen": 1793837434.9136758,
-    "ast_hash": "64ba0eaacb499ad53e91650ac50ea05f",
+    "mtime": 1793837909.6590302,
+    "seen": 1793838096.9645078,
+    "ast_hash": "504f607178bdbba5daae4d1d0c2643d1",
     "semantic_hash": ""
   },
   "services/backend/app/knowledge/watcher_service.py": {
@@ -1530,9 +1530,9 @@
     "semantic_hash": ""
   },
   ".agent/handoff.md": {
-    "mtime": 1793834156.3284357,
-    "seen": 1793834248.3472273,
-    "ast_hash": "afcbe9b133f4f640ad33fa3177a60e65",
+    "mtime": 1793837796.5625565,
+    "seen": 1793838096.9645078,
+    "ast_hash": "9ceb7f5daa7860cc142d33917d0cdeef",
     "semantic_hash": ""
   },
   ".github/copilot-instructions.md": {
@@ -1686,9 +1686,9 @@
     "semantic_hash": ""
   },
   "docs/pitch/deck_slides.md": {
-    "mtime": 1793832330.082986,
-    "seen": 1793833909.521426,
-    "ast_hash": "bbf9f68a9139a0f2ba76249dbc77167b",
+    "mtime": 1793837441.2684033,
+    "seen": 1793838096.9655073,
+    "ast_hash": "a2d6f9c58bbd15e21445454c5477b8b7",
     "semantic_hash": ""
   },
   "docs/pitch/demo_script.md": {
@@ -1974,9 +1974,9 @@
     "semantic_hash": ""
   },
   "services/backend/app/admin/service.py": {
-    "mtime": 1793836335.8313098,
-    "seen": 1793837434.9126754,
-    "ast_hash": "d77abd9b5796c7e93b9f2ff477671c07",
+    "mtime": 1793837657.2284207,
+    "seen": 1793838096.9645078,
+    "ast_hash": "f345552d1b567f5cb68ee666693539f5",
     "semantic_hash": ""
   },
   "docs/ADMIN_PORTAL_GUIDE.md": {
@@ -2568,8 +2568,8 @@
     "semantic_hash": ""
   },
   "docs/qa/evidence/api-route-inventory.json": {
-    "mtime": 1793837327.5918217,
-    "seen": 1793837434.9126754,
+    "mtime": 1793837932.8075843,
+    "seen": 1793838096.9645078,
     "ast_hash": "39b0495ad20715de4b01baab45956aa2",
     "semantic_hash": ""
   },
@@ -2664,9 +2664,9 @@
     "semantic_hash": ""
   },
   "docs/qa/EBARKI_FEATURE_TEST_MATRIX.md": {
-    "mtime": 1793833963.6946278,
-    "seen": 1793834248.3472273,
-    "ast_hash": "b1d1358d61e92a6ac056f7c225b5d3f7",
+    "mtime": 1793837830.9886165,
+    "seen": 1793838096.9655073,
+    "ast_hash": "817e977546b997d7349ed9f5df29d4d2",
     "semantic_hash": ""
   },
   "docs/qa/EBARKI_FINAL_SYSTEM_AUDIT.md": {
@@ -2676,15 +2676,15 @@
     "semantic_hash": ""
   },
   "docs/qa/EBARKI_ISSUE_LEDGER.md": {
-    "mtime": 1793837238.3768764,
-    "seen": 1793837434.9136758,
-    "ast_hash": "b05dd445b605035fa4f8de0bdf33ef8c",
+    "mtime": 1793837796.6154356,
+    "seen": 1793838096.9655073,
+    "ast_hash": "3af7777a62310ef4438754e40a73172e",
     "semantic_hash": ""
   },
   "docs/qa/evidence/README.md": {
-    "mtime": 1793834095.5380752,
-    "seen": 1793834248.3472273,
-    "ast_hash": "913fe4586d8f972c1e91870da9784d2a",
+    "mtime": 1793837796.5635698,
+    "seen": 1793838096.9655073,
+    "ast_hash": "93b26f6ffd9d41af53116447bf6697db",
     "semantic_hash": ""
   },
   "docs/qa/evidence/core-validation.txt": {
@@ -2994,9 +2994,9 @@
     "semantic_hash": ""
   },
   "docs/qa/evidence/followup-production-mode.json": {
-    "mtime": 1793836706.2231095,
-    "seen": 1793837434.9126754,
-    "ast_hash": "aa27207fbde1b3f0cf5e8f498cc610c1",
+    "mtime": 1793837676.6213565,
+    "seen": 1793838096.9645078,
+    "ast_hash": "60e79f5390bddf5da41d3f9791251901",
     "semantic_hash": ""
   },
   "docs/qa/evidence/followup-submission-requirements.json": {
@@ -3024,9 +3024,9 @@
     "semantic_hash": ""
   },
   "scripts/audit_production_mode.py": {
-    "mtime": 1793836692.8049252,
-    "seen": 1793837434.9126754,
-    "ast_hash": "1cc0623780d5b3f034e0555972deacb0",
+    "mtime": 1793837596.498042,
+    "seen": 1793838096.9645078,
+    "ast_hash": "48b87df6de46981e97ba9ad5855986c5",
     "semantic_hash": ""
   },
   "scripts/build_followup_scan_fixtures.py": {
@@ -3072,15 +3072,15 @@
     "semantic_hash": ""
   },
   "services/backend/tests/integration/test_stabilization_followup.py": {
-    "mtime": 1793836539.4043427,
-    "seen": 1793837434.9136758,
-    "ast_hash": "fe4959646c839d458e3576cf09819e74",
+    "mtime": 1793837596.4960353,
+    "seen": 1793838096.9645078,
+    "ast_hash": "dda75d230d9ab2c8eccfb65e9da42361",
     "semantic_hash": ""
   },
   "docs/qa/EBARKI_STABILIZATION_FOLLOWUP.md": {
-    "mtime": 1793837151.724746,
-    "seen": 1793837434.9136758,
-    "ast_hash": "0b0363a99c2d1748189f755a5bc67af3",
+    "mtime": 1793838058.746569,
+    "seen": 1793838096.9655073,
+    "ast_hash": "d1b18a3915a54ead97fad6b6c79f7bef",
     "semantic_hash": ""
   },
   "docs/qa/evidence/followup-contracts-validation.txt": {
@@ -3114,9 +3114,9 @@
     "semantic_hash": ""
   },
   "docs/qa/evidence/followup-graph-verified.txt": {
-    "mtime": 1793837430.5244148,
-    "seen": 1793837434.9136758,
-    "ast_hash": "c5e588f3a3ddacf25a85bc0a6b6d8c34",
+    "mtime": 1793837435.5597866,
+    "seen": 1793838096.9655073,
+    "ast_hash": "da30d3b178a64db79eae4650ea70be93",
     "semantic_hash": ""
   },
   "docs/qa/fixtures/followup/Bangla scan.pdf": {
@@ -3129,6 +3129,60 @@
     "mtime": 1793836795.3577833,
     "seen": 1793837434.9136758,
     "ast_hash": "f6a8cc51c4e134338b20d33d27bc7f1b",
+    "semantic_hash": ""
+  },
+  "docs/qa/evidence/followup-core-verified.json": {
+    "mtime": 1793837746.62272,
+    "seen": 1793838096.9645078,
+    "ast_hash": "2ac8c61e3369a9b055c6cc3edbdf85ea",
+    "semantic_hash": ""
+  },
+  "docs/qa/evidence/followup-environment-validation.json": {
+    "mtime": 1793837932.8145878,
+    "seen": 1793838096.9645078,
+    "ast_hash": "0b2da28fd2e1375ca966ec97e482bfe3",
+    "semantic_hash": ""
+  },
+  "docs/qa/evidence/followup-graph-verified.json": {
+    "mtime": 1793837435.8786097,
+    "seen": 1793838096.9645078,
+    "ast_hash": "ef70041bdb915593d7b7f62267796878",
+    "semantic_hash": ""
+  },
+  "docs/qa/evidence/followup-role-baseline.json": {
+    "mtime": 1793837623.099467,
+    "seen": 1793838096.9645078,
+    "ast_hash": "d0e4c860a07da29a32d588b61457f495",
+    "semantic_hash": ""
+  },
+  "docs/qa/evidence/followup-validation-summary.json": {
+    "mtime": 1793838058.7445657,
+    "seen": 1793838096.9645078,
+    "ast_hash": "2a7f73c536698f71920bae1b157b0597",
+    "semantic_hash": ""
+  },
+  "docs/adr/ADR-111-ebarki-sessions-admin-media-and-reference-integrity.md": {
+    "mtime": 1793837880.0575533,
+    "seen": 1793838096.9645078,
+    "ast_hash": "83c34636bf2aeab92da15b9411fd40ee",
+    "semantic_hash": ""
+  },
+  "docs/qa/evidence/followup-core-verified.txt": {
+    "mtime": 1793837746.6107228,
+    "seen": 1793838096.9655073,
+    "ast_hash": "dfe09d75d523a74af9e97878e69c94f9",
+    "semantic_hash": ""
+  },
+  "docs/qa/evidence/followup-bangla-scan-page1.png": {
+    "mtime": 1793837705.7217512,
+    "seen": 1793838096.9655073,
+    "ast_hash": "965ae22656e7d5743c99e6a85ba55955",
+    "semantic_hash": ""
+  },
+  "docs/qa/evidence/followup-hybrid-page2.png": {
+    "mtime": 1793837705.7622468,
+    "seen": 1793838096.9655073,
+    "ast_hash": "965ae22656e7d5743c99e6a85ba55955",
     "semantic_hash": ""
   },
   "pnpm-lock.yaml": {
