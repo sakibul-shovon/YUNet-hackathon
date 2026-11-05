@@ -4,10 +4,7 @@ status: draft
 jurisdiction: BD
 issue_type: insurance_claim_dispute
 date_basis: conduct_date
-statutory_limitation_days: 90
-statutory_citations:
-  - insurance_act_2010:sec:72
-  - idra:dispute_resolution_regulations:2019
+statutory_citations: []
 source_dependencies:
   - idra_insurance_guidelines
 supported_remedies:

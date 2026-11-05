@@ -1,6 +1,6 @@
 {
   "plan_version": "1.2",
-  "updated_at": "2026-11-04T23:10:02+00:00",
+  "updated_at": "2026-11-05T00:16:36.566085+00:00",
   "current_task": "P21.1",
   "last_completed_task": "P14.6",
   "tasks": {
@@ -2157,26 +2157,40 @@
       "completed_at": null,
       "dependencies": [],
       "changed_paths": [
+        ".agent",
         "apps/web/src/features",
-        "services/backend/app",
-        "services/backend/tests",
+        "docs/adr/ADR-110-ebarki-release-audit-integrity.md",
+        "docs/adr/ADR-111-ebarki-sessions-admin-media-and-reference-integrity.md",
+        "docs/pitch",
+        "docs/qa",
         "packages/contracts",
         "scripts",
-        "docs/qa",
-        "docs/adr/ADR-110-ebarki-release-audit-integrity.md",
-        "docs/pitch",
-        ".agent"
+        "services/backend/app",
+        "services/backend/app/admin",
+        "services/backend/app/core/security.py",
+        "services/backend/app/evidence/storage.py",
+        "services/backend/app/operations/visual_reader.py",
+        "services/backend/app/retrieval/provisions_data.py",
+        "services/backend/migrations",
+        "services/backend/tests",
+        "services/backend/tests/integration/test_stabilization_followup.py"
       ],
-      "acceptance_evidence": "Independent Ebarki final-system audit: 171 core tests passed (7 warnings); fresh-directory foundation passed; contracts match running API; live BFF 89 PASS / 1 rate-limited condition; separate Bangla provider retry executed but exact merchant OCR failed. Browser subset verified; full native acceptance blocked by Windows URL-confidence tool stop. Verdict NOT READY. See docs/qa/EBARKI_FINAL_SYSTEM_AUDIT.md.",
+      "acceptance_evidence": "See docs/qa/EBARKI_STABILIZATION_FOLLOWUP.md. 184 core tests pass (7 warnings); foundation production build/typecheck/lint/i18n passes with actual exit 0. Twenty-two local production-mode migration/restart/security checks pass; fresh migrated SQLite schema has no missing runtime tables/columns. Five unique OCR fixtures each have a successful real-provider run, including Bangla image, English/Bangla scans and hybrid page-2 attribution. Full run 2 PASS/3 quota BLOCKED, fresh paced retry 3 PASS; raw failures retained. Browser acceptance and qualified human legal review remain unverified. Deployment/final package deferred by user.",
       "validation_commands": [
         "python scripts/tasks.py check --scope core",
         "EBARKI_NEXT_DIST_DIR=.next-audit-check python scripts/tasks.py check --scope foundation",
         "python scripts/tasks.py contracts",
         "python scripts/tasks.py backend run python ../../scripts/audit_final_system.py final",
-        "python scripts/tasks.py backend run python ../../scripts/audit_bangla_reader.py"
+        "python scripts/tasks.py backend run python ../../scripts/audit_bangla_reader.py",
+        "python scripts/tasks.py check --scope foundation",
+        "python scripts/tasks.py backend run python ../../scripts/audit_production_mode.py",
+        "python scripts/tasks.py backend run python ../../scripts/audit_followup_ocr.py",
+        "python scripts/tasks.py backend run python ../../scripts/audit_followup_ocr.py --retry-blocked",
+        "python scripts/tasks.py backend run python ../../scripts/audit_migrations.py",
+        "python scripts/tasks.py graphify update"
       ],
-      "blocker": null,
-      "next_action": "Close documented hosted deployment, source/legal review, remaining browser acceptance and submission-artifact gates. Do not mark the release ready from the build alone."
+      "blocker": "Fresh rendered browser acceptance is unavailable; qualified human legal review unverified. Deployment and final package are explicitly deferred by user.",
+      "next_action": "Complete remaining normal-browser journeys when supported. Public deployment and final exported submission package deferred by user; do not claim release readiness or qualified legal approval."
     }
   },
   "phases": {
@@ -2369,33 +2383,44 @@
     }
   },
   "blockers": [],
-  "next_action": "Close documented hosted deployment, source/legal review, remaining browser acceptance and submission-artifact gates. Do not mark the release ready from the build alone.",
+  "next_action": "Complete remaining normal-browser journeys when supported. Public deployment and final exported submission package deferred by user; do not claim release readiness or qualified legal approval.",
   "last_validation": [
     {
       "scope": "core",
       "result": "PASS",
-      "passed": 171,
+      "passed": 184,
       "warnings": 7
     },
     {
-      "scope": "foundation_fresh_directory",
+      "scope": "foundation",
+      "result": "PASS",
+      "exit_code": 0,
+      "i18n_keys": 223
+    },
+    {
+      "scope": "local_production_mode",
+      "result": "PASS",
+      "checks": 22
+    },
+    {
+      "scope": "fresh_SQLite_migrations",
       "result": "PASS"
     },
     {
-      "scope": "live_BFF",
-      "result": "89 PASS; 1 rate-limit FAIL/BLOCKED"
+      "scope": "OCR_fresh_full",
+      "result": "2 PASS; 3 quota BLOCKED"
     },
     {
-      "scope": "Bangla OCR retry",
-      "result": "execution PASS; merchant accuracy FAIL"
+      "scope": "OCR_fresh_paced_retry",
+      "result": "3 PASS"
     },
     {
       "scope": "browser_remaining",
       "result": "BLOCKED"
     },
     {
-      "scope": "release",
-      "result": "NOT READY"
+      "scope": "hosted_deployment_and_final_package",
+      "result": "Deferred by user"
     }
   ],
   "environment": {
@@ -2406,7 +2431,7 @@
       "hacakthon details.txt": "65D607450DF631BEFAD35CF4D5A8A41DFA0ADF7A462AA46A7F32A4DA3608457B",
       "plan.md": "E998906D971726FC2656B0090EB398424F741B0844F4AD75DA345EECD6372636"
     },
-    "live_ai_verification_scope": "Groq summary, vision, English speech, copilot, replies on fictional localhost cases; output correctness and all provider/input combinations are not guaranteed."
+    "live_ai_verification_scope": "Actual Groq summary, image/scan OCR, English speech, copilot and replies on fictional localhost cases. Follow-up fixes Bangla fixture recognition and adds scan/hybrid PDF evidence. Provider quotas and wider accuracy remain limitations."
   },
   "release": {
     "application_commit": "facdc2537968e266f0361869097abce622b3c32a",
@@ -2417,6 +2442,8 @@
     "verdict": "NOT READY",
     "report": "docs/qa/EBARKI_FINAL_SYSTEM_AUDIT.md",
     "historical_signoff": "Prior P14.4 approval assertions withdrawn as unsupported; actual legal/source approval UNVERIFIED.",
-    "public_url": "UNVERIFIED"
+    "public_url": "Deferred by user",
+    "followup_report": "docs/qa/EBARKI_STABILIZATION_FOLLOWUP.md",
+    "qualified_legal_review": "UNVERIFIED; primary-page comparison is recorded separately"
   }
 }

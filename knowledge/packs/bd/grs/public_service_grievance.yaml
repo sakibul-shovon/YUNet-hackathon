@@ -4,10 +4,7 @@ status: draft
 jurisdiction: BD
 issue_type: public_service_grievance
 date_basis: conduct_date
-statutory_limitation_days: 90
-statutory_citations:
-  - cabinet_division:grs_guidelines_2015:sec:4
-  - citizen_charter_directive:2018
+statutory_citations: []
 source_dependencies:
   - cabinet_grs_portal
 supported_remedies:

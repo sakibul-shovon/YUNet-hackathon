@@ -69,7 +69,7 @@ async def validate_statutory_citations(req: CitationValidationRequest):
 async def lookup_provision_by_exact_section(
     q: str = Query(
         ...,
-        description="Exact section reference in Bengali or Latin (e.g. 'sec:45', 'ধারা ৪৫(২)', 'sec:60')",
+        description="Exact section reference in Bengali or Latin (e.g. 'sec:45', 'ধারা ৭৬(৪)', 'sec:60')",
     ),
 ):
     """T24: Exact Bengali/Latin section lookup.

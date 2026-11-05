@@ -39,12 +39,13 @@ async def auth_guest(
 @router.post("/auth/upgrade", response_model=UpgradeResponse)
 @router.post("/v1/auth/upgrade", response_model=UpgradeResponse)
 async def auth_upgrade(
+    request: Request,
     req: UpgradeRequest,
     principal: Principal = Depends(get_current_principal),
     db: AsyncSession = Depends(get_db_session),
 ):
     """Upgrades an anonymous guest account to a permanent verified account, retaining cases."""
-    return await IdentityService.upgrade_account(principal, req, db)
+    return await IdentityService.upgrade_account(principal, req, db, request)
 
 
 @router.post("/auth/register", response_model=AuthUserOut, status_code=status.HTTP_201_CREATED)
@@ -67,6 +68,13 @@ async def auth_login(
 ):
     """Logs in an existing user with email and password."""
     return await IdentityService.login_user(req, db, response)
+
+
+@router.post('/auth/admin-login', response_model=AuthUserOut)
+@router.post('/v1/auth/admin-login', response_model=AuthUserOut)
+async def auth_admin_login(req: UserLoginRequest, response: Response, db: AsyncSession = Depends(get_db_session)):
+    """Authenticate an authorized Ebarki administrative account before issuing a session."""
+    return await IdentityService.login_user(req, db, response, require_admin=True)
 
 
 @router.post("/auth/judge-demo", response_model=AuthUserOut)

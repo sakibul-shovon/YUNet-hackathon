@@ -44,6 +44,7 @@ async function handleProxy(req: NextRequest, { params }: { params: Promise<{ pat
 
     const responseHeaders = new Headers(backendRes.headers);
     responseHeaders.set('x-correlation-id', correlationId);
+    responseHeaders.delete('set-cookie'); // Forward each cookie exactly once below.
 
     const res = new NextResponse(body, {
       status: backendRes.status,

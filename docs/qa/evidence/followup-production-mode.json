@@ -1,0 +1,94 @@
+{
+  "product": "Ebarki",
+  "scope": "Local APP_ENV=production, SQLite and configured disk vault; real process restart. No public TLS/PostgreSQL/backup claims.",
+  "checks": [
+    {
+      "test": "production startup refuses an unmigrated database",
+      "result": "PASS"
+    },
+    {
+      "test": "production schema migration succeeds",
+      "result": "PASS"
+    },
+    {
+      "test": "production registration succeeds",
+      "result": "PASS"
+    },
+    {
+      "test": "production cookie Secure HttpOnly SameSite and path",
+      "result": "PASS"
+    },
+    {
+      "test": "authentication response is private no-store",
+      "result": "PASS"
+    },
+    {
+      "test": "consumer admin entry rejected before setting a session",
+      "result": "PASS"
+    },
+    {
+      "test": "configured synthetic administrator login",
+      "result": "PASS"
+    },
+    {
+      "test": "consumer admin API isolation",
+      "result": "PASS"
+    },
+    {
+      "test": "configured disk vault receives accepted evidence",
+      "result": "PASS"
+    },
+    {
+      "test": "authorized synthetic reviewer-role assignment",
+      "result": "PASS"
+    },
+    {
+      "test": "synthetic user ban committed",
+      "result": "PASS"
+    },
+    {
+      "test": "administrator session survives real process restart",
+      "result": "PASS"
+    },
+    {
+      "test": "public active alert survives restart",
+      "result": "PASS"
+    },
+    {
+      "test": "administrative audit survives restart",
+      "result": "PASS"
+    },
+    {
+      "test": "suspension survives restart and blocks login",
+      "result": "PASS"
+    },
+    {
+      "test": "old banned session remains rejected",
+      "result": "PASS"
+    },
+    {
+      "test": "unban requires a new login",
+      "result": "PASS"
+    },
+    {
+      "test": "assigned reviewer role persists across restart",
+      "result": "PASS"
+    },
+    {
+      "test": "private case survives restart",
+      "result": "PASS"
+    },
+    {
+      "test": "private evidence bytes survive restart",
+      "result": "PASS"
+    },
+    {
+      "test": "logout immediately revokes production bearer token",
+      "result": "PASS"
+    },
+    {
+      "test": "cross-origin login blocked",
+      "result": "PASS"
+    }
+  ]
+}

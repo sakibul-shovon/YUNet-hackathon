@@ -4,6 +4,8 @@ import uuid
 from abc import ABC, abstractmethod
 from pathlib import Path
 
+from app.core.config import settings
+
 
 class StorageBackend(ABC):
     """Abstract interface for evidence object storage."""
@@ -39,19 +41,29 @@ class StorageBackend(ABC):
 class LocalDiskStorageBackend(StorageBackend):
     """Local filesystem storage backend enforcing quarantine/accepted separation."""
 
-    def __init__(self, base_dir: Path | None = None):
+    def __init__(self, base_dir: Path | None = None, legacy_base: Path | None = None):
         if base_dir is None:
             # Default to a dedicated evidence vault directory under backend data
             base = Path(__file__).resolve().parent.parent.parent / "data" / "evidence_vault"
         else:
             base = base_dir
 
-        self.base_dir = base
+        self.base_dir = base.resolve()
+        self.legacy_base = legacy_base.resolve() if legacy_base else None
         self.quarantine_dir = self.base_dir / "quarantine"
         self.accepted_dir = self.base_dir / "accepted"
 
         self.quarantine_dir.mkdir(parents=True, exist_ok=True)
         self.accepted_dir.mkdir(parents=True, exist_ok=True)
+
+    def _checked_path(self, path: str, area: str) -> Path:
+        target = Path(path).resolve()
+        roots = [self.base_dir / area]
+        if self.legacy_base:
+            roots.append(self.legacy_base / area)
+        if not any(target.is_relative_to(root.resolve()) for root in roots):
+            raise PermissionError('Evidence path is outside the configured vault.')
+        return target
 
     def _sanitize_key(self, key: str) -> str:
         # Strip path traversal elements, purely alphanumeric and hyphens/underscores
@@ -71,13 +83,13 @@ class LocalDiskStorageBackend(StorageBackend):
         return str(target)
 
     def read_quarantine(self, path: str) -> bytes:
-        p = Path(path)
+        p = self._checked_path(path, 'quarantine')
         if not p.is_file():
             raise FileNotFoundError(f"Quarantine object not found at {path}")
         return p.read_bytes()
 
     def promote_to_accepted(self, quarantine_path: str, accepted_key: str) -> tuple[str, str, int]:
-        q_path = Path(quarantine_path)
+        q_path = self._checked_path(quarantine_path, 'quarantine')
         if not q_path.is_file():
             raise FileNotFoundError(f"Quarantine source not found: {quarantine_path}")
 
@@ -109,27 +121,33 @@ class LocalDiskStorageBackend(StorageBackend):
         return str(target), sha256_hash, total_bytes
 
     def read_accepted(self, path: str) -> bytes:
-        p = Path(path)
+        p = self._checked_path(path, 'accepted')
         if not p.is_file():
             raise FileNotFoundError(f"Accepted object not found at {path}")
         return p.read_bytes()
 
     def delete_quarantine(self, path: str) -> None:
+        target = self._checked_path(path, 'quarantine')
         try:
-            Path(path).unlink(missing_ok=True)
+            target.unlink(missing_ok=True)
         except OSError:
             pass
 
     def delete_accepted(self, path: str) -> None:
+        target = self._checked_path(path, 'accepted')
         try:
-            Path(path).unlink(missing_ok=True)
+            target.unlink(missing_ok=True)
         except OSError:
             pass
 
 
 # Global singleton storage backend
-default_storage: StorageBackend = LocalDiskStorageBackend()
+_legacy_vault = Path(__file__).resolve().parent.parent.parent / 'data' / 'evidence_vault'
+_configured_vault = Path(settings.LOCAL_STORAGE_DIR).resolve() if 'LOCAL_STORAGE_DIR' in settings.model_fields_set else _legacy_vault
+default_storage: StorageBackend = LocalDiskStorageBackend(_configured_vault, legacy_base=_legacy_vault)
 
 
 def get_storage_backend() -> StorageBackend:
+    if settings.STORAGE_BACKEND != 'local':
+        raise RuntimeError('Ebarki has no configured adapter for this storage backend.')
     return default_storage

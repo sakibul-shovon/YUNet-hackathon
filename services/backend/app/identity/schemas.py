@@ -84,6 +84,7 @@ class UserLoginRequest(BaseModel):
 
 
 class AuthUserOut(BaseModel):
+    csrf_token: str | None = None
     logged_in: bool
     principal_id: uuid.UUID
     email: str

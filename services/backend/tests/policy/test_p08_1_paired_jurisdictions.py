@@ -88,8 +88,9 @@ async def test_p08_1_date_limitation_and_uncertainty_t30(client: AsyncClient, db
     )).json()
 
     assess_recent = (await client.get(f"/v1/cases/{case_recent['id']}/assessment", headers=headers)).json()
-    assert assess_recent["is_deadline_uncertain"] is False
-    assert assess_recent["days_remaining_in_limitation"] == 25  # 30 - 5 = 25 days remaining
+    assert assess_recent["is_deadline_uncertain"] is True  # A date alone does not establish cause of action.
+    assert assess_recent["days_remaining_in_limitation"] is None
+    assert "legal trigger is unverified" in assess_recent["limitation_warning_en"]
 
 
 @pytest.mark.asyncio

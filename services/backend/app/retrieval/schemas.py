@@ -24,6 +24,10 @@ class ProvisionOut(BaseModel):
     effective_from: str | None = None
     effective_to: str | None = None
     parent_provision: dict[str, Any] | None = None
+    official_url: str | None = None
+    checked_at: str | None = None
+    review_status: str = 'qualified_legal_review_not_claimed'
+    text_kind: str = 'Bangla source excerpt; English is an unofficial summary. Procedure entries are summaries.'
 
 
 class ProvisionLookupResult(BaseModel):
@@ -31,9 +35,9 @@ class ProvisionLookupResult(BaseModel):
     normalized_query: str
     match_found: bool
     provision: ProvisionOut | None = None
-    preserves_qualification: bool = True
-    context_note_en: str = "Official statutory reference verified against enacted gazette."
-    context_note_bn: str = "গেজেটভুক্ত অফিসিয়াল সংবিধিবদ্ধ বিধানের সাথে যাচাইকৃত।"
+    preserves_qualification: bool = False
+    context_note_en: str = 'Source-page comparison is recorded per entry. English is an unofficial summary; qualified legal review is not claimed.'
+    context_note_bn: str = 'প্রতিটি অংশে মূল পাতার তথ্য আছে। English লেখা অনানুষ্ঠানিক সারাংশ; আইনজ্ঞের পর্যালোচনা দাবি করা হয়নি।'
 
 
 class ProvisionTreeItem(BaseModel):

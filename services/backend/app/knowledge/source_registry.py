@@ -9,6 +9,9 @@ from pydantic import BaseModel, Field
 OFFICIAL_HOST_ALLOWLIST = {
     "dncrp.gov.bd",
     "ccms.dncrp.com",
+    "dncrp.com",
+    "idra.org.bd",
+    "idra.portal.gov.bd",
     "bdlaws.minlaw.gov.bd",
     "bb.org.bd",
     "btrc.gov.bd",
@@ -93,7 +96,7 @@ class SourceRegistryEntry(BaseModel):
     fetch_cadence_hours: int = 24
     last_checked_at: datetime.datetime | None = None
     health_status: str = (
-        "current_check_passed"  # 'current_check_passed', 'check_overdue', 'temporarily_unavailable'
+        "check_overdue"  # 'current_check_passed', 'check_overdue', 'temporarily_unavailable'
     )
     procedural_scope: str = (
         "procedure_guidance"  # 'procedure_guidance' or 'reviewed_statutory_guidance'
@@ -109,11 +112,11 @@ INITIAL_SOURCE_REGISTRY: list[SourceRegistryEntry] = [
         title_bn="ভোক্তা-অধিকার সংরক্ষণ আইন, ২০০৯ (২০০৯ সনের ২৬ নং আইন)",
         issuer="Legislative and Parliamentary Affairs Division, Ministry of Law",
         issuer_bn="লেজিসলেটিভ ও সংসদ বিষয়ক বিভাগ, আইন মন্ত্রণালয়",
-        official_url="http://bdlaws.minlaw.gov.bd/act-1014.html",
+        official_url="https://bdlaws.minlaw.gov.bd/act-print-1014.html",
         document_type="statute",
         status="observed",
         applicable_domains=["consumer_ecommerce", "retail_goods", "product_safety"],
-        procedural_scope="reviewed_statutory_guidance",
+        procedural_scope="procedure_guidance",
         is_authoritative_for_penalties=True,
         notes="Primary statutory basis for consumer complaints, 30-day filing timeline, 25% reward for complainants.",
     ),
@@ -123,7 +126,7 @@ INITIAL_SOURCE_REGISTRY: list[SourceRegistryEntry] = [
         title_bn="জাতীয় ভোক্তা-অধিকার সংরক্ষণ অধিদপ্তর সিসিএমএস পোর্টাল",
         issuer="Directorate of National Consumer Rights Protection",
         issuer_bn="জাতীয় ভোক্তা-অধিকার সংরক্ষণ অধিদপ্তর",
-        official_url="https://ccms.dncrp.com/",
+        official_url="https://dncrp.com/",
         document_type="portal_map",
         status="observed",
         applicable_domains=["consumer_ecommerce", "retail_goods"],
@@ -145,16 +148,16 @@ INITIAL_SOURCE_REGISTRY: list[SourceRegistryEntry] = [
     ),
     SourceRegistryEntry(
         id="bb_cipc_procedure",
-        title_en="Bangladesh Bank Customer Interests Protection Centre (CIPC) Procedure",
+        title_en="Bangladesh Bank Customer Interest Protection Centre (CIPC) Procedure",
         title_bn="বাংলাদেশ ব্যাংক গ্রাহক স্বার্থ সংরক্ষণ কেন্দ্র (সিআইপিসি) পদ্ধতি",
-        issuer="Financial Integrity and Customer Services Department (FICSD), Bangladesh Bank",
-        issuer_bn="ফাইন্যান্সিয়াল ইন্টিগ্রিটি অ্যান্ড কাস্টমার সার্ভিসেস ডিপার্টমেন্ট, বাংলাদেশ ব্যাংক",
+        issuer="Technology Risk and Digital Banking Supervision Department (TRDS), Bangladesh Bank",
+        issuer_bn="বাংলাদেশ ব্যাংক - Technology Risk and Digital Banking Supervision Department (TRDS)",
         official_url="https://bb.org.bd/en/index.php/services/cipc_procedure",
         document_type="procedure_guide",
         status="observed",
         applicable_domains=["financial_services", "mfs_banking"],
         procedural_scope="procedure_guidance",
-        notes="Two-stage complaint procedure: mandatory first-level complaint to provider followed by CIPC escalation.",
+        notes="Official steps: contact provider, escalate to its complaint cell, then CIPC if unresolved or dissatisfied. No fixed ten-day waiting rule is asserted.",
     ),
     SourceRegistryEntry(
         id="bb_mfs_regulations_2022",
@@ -175,7 +178,7 @@ INITIAL_SOURCE_REGISTRY: list[SourceRegistryEntry] = [
         title_bn="বিটিআরসি টেলিযোগাযোগ ও ইন্টারনেট গ্রাহক অভিযোগ প্রতিকার ব্যবস্থা",
         issuer="Bangladesh Telecommunication Regulatory Commission",
         issuer_bn="বাংলাদেশ টেলিযোগাযোগ নিয়ন্ত্রণ কমিশন",
-        official_url="http://btrc.gov.bd/",
+        official_url="https://crm.btrc.gov.bd/",
         document_type="procedure_guide",
         status="candidate",
         applicable_domains=["telecom_isp"],
@@ -201,7 +204,7 @@ INITIAL_SOURCE_REGISTRY: list[SourceRegistryEntry] = [
         title_bn="বীমা উন্নয়ন ও নিয়ন্ত্রণ কর্তৃপক্ষ (আইডিআরএ) গ্রাহক অভিযোগ প্রতিকার কাঠামো",
         issuer="Insurance Development and Regulatory Authority, Ministry of Finance",
         issuer_bn="বীমা উন্নয়ন ও নিয়ন্ত্রণ কর্তৃপক্ষ, অর্থ মন্ত্রণালয়",
-        official_url="http://idra.gov.bd/",
+        official_url="https://cms.idra.org.bd/grievence-form",
         document_type="procedure_guide",
         status="candidate",
         applicable_domains=["insurance"],
@@ -214,7 +217,7 @@ INITIAL_SOURCE_REGISTRY: list[SourceRegistryEntry] = [
         title_bn="সরকারি অভিযোগ প্রতিকার ব্যবস্থা (জিআরএস) নির্দেশিকা",
         issuer="Cabinet Division, Government of the People's Republic of Bangladesh",
         issuer_bn="মন্ত্রিপরিষদ বিভাগ, গণপ্রজাতন্ত্রী বাংলাদেশ সরকার",
-        official_url="http://grs.gov.bd/",
+        official_url="https://www.grs.gov.bd/",
         document_type="procedure_guide",
         status="candidate",
         applicable_domains=["government_grs"],
@@ -224,14 +227,27 @@ INITIAL_SOURCE_REGISTRY: list[SourceRegistryEntry] = [
 ]
 
 
+# Dated primary-page observations, not human legal approval or permanent health.
+for _entry in INITIAL_SOURCE_REGISTRY:
+    if _entry.id in {'bd_crpa_2009', 'dncrp_ccms_portal', 'bb_cipc_procedure',
+                      'btrc_complaint_guidelines', 'idra_insurance_guidelines', 'cabinet_grs_portal'}:
+        _entry.last_checked_at = datetime.datetime.fromisoformat('2026-11-04T23:40:40+00:00')
+        _entry.health_status = 'current_check_passed'
+        _entry.status = 'observed'
+
+
 def get_source_registry() -> list[SourceRegistryEntry]:
-    """Returns the immutable registered source entries."""
-    return INITIAL_SOURCE_REGISTRY
+    """Return dated observations, with stale checks explicitly marked overdue."""
+    now = datetime.datetime.now(datetime.UTC)
+    return [entry.model_copy(update={'health_status': 'check_overdue'})
+            if entry.health_status == 'current_check_passed' and (
+                not entry.last_checked_at or now-entry.last_checked_at > datetime.timedelta(hours=entry.fetch_cadence_hours))
+            else entry.model_copy() for entry in INITIAL_SOURCE_REGISTRY]
 
 
 def get_source_by_id(source_id: str) -> SourceRegistryEntry | None:
     """Finds a source registry entry by unique ID."""
-    for s in INITIAL_SOURCE_REGISTRY:
+    for s in get_source_registry():
         if s.id == source_id:
             return s
     return None

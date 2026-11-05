@@ -411,6 +411,90 @@
         }
       }
     },
+    "/v1/auth/admin-login": {
+      "post": {
+        "tags": [
+          "Identity & Sessions"
+        ],
+        "summary": "Auth Admin Login",
+        "description": "Authenticate an authorized Ebarki administrative account before issuing a session.",
+        "operationId": "auth_admin_login_v1_auth_admin_login_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserLoginRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthUserOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/admin-login": {
+      "post": {
+        "tags": [
+          "Identity & Sessions"
+        ],
+        "summary": "Auth Admin Login",
+        "description": "Authenticate an authorized Ebarki administrative account before issuing a session.",
+        "operationId": "auth_admin_login_auth_admin_login_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserLoginRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthUserOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v1/auth/judge-demo": {
       "post": {
         "tags": [
@@ -4585,10 +4669,10 @@
             "required": true,
             "schema": {
               "type": "string",
-              "description": "Exact section reference in Bengali or Latin (e.g. 'sec:45', '\u09a7\u09be\u09b0\u09be \u09ea\u09eb(\u09e8)', 'sec:60')",
+              "description": "Exact section reference in Bengali or Latin (e.g. 'sec:45', '\u09a7\u09be\u09b0\u09be \u09ed\u09ec(\u09ea)', 'sec:60')",
               "title": "Q"
             },
-            "description": "Exact section reference in Bengali or Latin (e.g. 'sec:45', '\u09a7\u09be\u09b0\u09be \u09ea\u09eb(\u09e8)', 'sec:60')"
+            "description": "Exact section reference in Bengali or Latin (e.g. 'sec:45', '\u09a7\u09be\u09b0\u09be \u09ed\u09ec(\u09ea)', 'sec:60')"
           }
         ],
         "responses": {
@@ -6809,7 +6893,7 @@
           "Super Admin & Platform Operations"
         ],
         "summary": "Create Alert",
-        "description": "Creates a new broadcast alert banner across ClaimCraft BD.",
+        "description": "Creates a new broadcast alert banner across Ebarki.",
         "operationId": "create_alert_v1_admin_alerts_post",
         "requestBody": {
           "content": {
@@ -6848,13 +6932,92 @@
         ]
       }
     },
+    "/v1/admin/alerts/manage": {
+      "get": {
+        "tags": [
+          "Super Admin & Platform Operations"
+        ],
+        "summary": "Manage Alerts",
+        "operationId": "manage_alerts_v1_admin_alerts_manage_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/v1/admin/alerts/{alert_id}/update": {
+      "post": {
+        "tags": [
+          "Super Admin & Platform Operations"
+        ],
+        "summary": "Update Alert",
+        "operationId": "update_alert_v1_admin_alerts__alert_id__update_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "alert_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Alert Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AlertCreateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v1/admin/audit-logs": {
       "get": {
         "tags": [
           "Super Admin & Platform Operations"
         ],
         "summary": "Get Audit Logs",
-        "description": "Returns immutable log of all administrative actions with SHA-256 hashes.",
+        "description": "Returns database-backed administrative action receipts with SHA-256 content hashes.",
         "operationId": "get_audit_logs_v1_admin_audit_logs_get",
         "responses": {
           "200": {
@@ -7210,6 +7373,90 @@
         "summary": "Auth Login",
         "description": "Logs in an existing user with email and password.",
         "operationId": "auth_login_api_auth_login_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserLoginRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthUserOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/admin-login": {
+      "post": {
+        "tags": [
+          "Identity & Sessions"
+        ],
+        "summary": "Auth Admin Login",
+        "description": "Authenticate an authorized Ebarki administrative account before issuing a session.",
+        "operationId": "auth_admin_login_api_v1_auth_admin_login_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserLoginRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthUserOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/admin-login": {
+      "post": {
+        "tags": [
+          "Identity & Sessions"
+        ],
+        "summary": "Auth Admin Login",
+        "description": "Authenticate an authorized Ebarki administrative account before issuing a session.",
+        "operationId": "auth_admin_login_api_auth_admin_login_post",
         "requestBody": {
           "content": {
             "application/json": {
@@ -11418,10 +11665,10 @@
             "required": true,
             "schema": {
               "type": "string",
-              "description": "Exact section reference in Bengali or Latin (e.g. 'sec:45', '\u09a7\u09be\u09b0\u09be \u09ea\u09eb(\u09e8)', 'sec:60')",
+              "description": "Exact section reference in Bengali or Latin (e.g. 'sec:45', '\u09a7\u09be\u09b0\u09be \u09ed\u09ec(\u09ea)', 'sec:60')",
               "title": "Q"
             },
-            "description": "Exact section reference in Bengali or Latin (e.g. 'sec:45', '\u09a7\u09be\u09b0\u09be \u09ea\u09eb(\u09e8)', 'sec:60')"
+            "description": "Exact section reference in Bengali or Latin (e.g. 'sec:45', '\u09a7\u09be\u09b0\u09be \u09ed\u09ec(\u09ea)', 'sec:60')"
           }
         ],
         "responses": {
@@ -13642,7 +13889,7 @@
           "Super Admin & Platform Operations"
         ],
         "summary": "Create Alert",
-        "description": "Creates a new broadcast alert banner across ClaimCraft BD.",
+        "description": "Creates a new broadcast alert banner across Ebarki.",
         "operationId": "create_alert_api_v1_admin_alerts_post",
         "requestBody": {
           "content": {
@@ -13681,13 +13928,92 @@
         ]
       }
     },
+    "/api/v1/admin/alerts/manage": {
+      "get": {
+        "tags": [
+          "Super Admin & Platform Operations"
+        ],
+        "summary": "Manage Alerts",
+        "operationId": "manage_alerts_api_v1_admin_alerts_manage_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/admin/alerts/{alert_id}/update": {
+      "post": {
+        "tags": [
+          "Super Admin & Platform Operations"
+        ],
+        "summary": "Update Alert",
+        "operationId": "update_alert_api_v1_admin_alerts__alert_id__update_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "alert_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Alert Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AlertCreateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/admin/audit-logs": {
       "get": {
         "tags": [
           "Super Admin & Platform Operations"
         ],
         "summary": "Get Audit Logs",
-        "description": "Returns immutable log of all administrative actions with SHA-256 hashes.",
+        "description": "Returns database-backed administrative action receipts with SHA-256 content hashes.",
         "operationId": "get_audit_logs_api_v1_admin_audit_logs_get",
         "responses": {
           "200": {
@@ -13853,19 +14179,30 @@
         "properties": {
           "title": {
             "type": "string",
+            "maxLength": 240,
+            "minLength": 1,
             "title": "Title"
           },
           "title_en": {
             "type": "string",
+            "maxLength": 240,
+            "minLength": 1,
             "title": "Title En"
           },
           "severity": {
             "type": "string",
+            "enum": [
+              "info",
+              "warning",
+              "critical"
+            ],
             "title": "Severity",
             "default": "warning"
           },
           "message": {
             "type": "string",
+            "maxLength": 2000,
+            "minLength": 1,
             "title": "Message"
           },
           "active": {
@@ -14060,6 +14397,17 @@
       },
       "AuthUserOut": {
         "properties": {
+          "csrf_token": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Csrf Token"
+          },
           "logged_in": {
             "type": "boolean",
             "title": "Logged In"
@@ -14716,8 +15064,14 @@
         "properties": {
           "new_status": {
             "type": "string",
-            "title": "New Status",
-            "description": "active, resolved, escalated, dismissed, fraudulent"
+            "enum": [
+              "active",
+              "resolved",
+              "escalated",
+              "dismissed",
+              "fraudulent"
+            ],
+            "title": "New Status"
           },
           "admin_notes": {
             "type": "string",
@@ -15095,8 +15449,14 @@
         "properties": {
           "action": {
             "type": "string",
-            "title": "Action",
-            "description": "pin, unpin, hide, unhide, dismiss_reports"
+            "enum": [
+              "pin",
+              "unpin",
+              "hide",
+              "unhide",
+              "dismiss_reports"
+            ],
+            "title": "Action"
           }
         },
         "type": "object",
@@ -15255,7 +15615,23 @@
           "link_health": {
             "type": "string",
             "title": "Link Health",
-            "default": "healthy"
+            "default": "linked_unconfirmed"
+          },
+          "checked_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Checked At"
+          },
+          "verification_note": {
+            "type": "string",
+            "title": "Verification Note",
+            "default": "Read-only destination information; filing is completed by the user."
           },
           "fallback_instructions_en": {
             "type": "string",
@@ -17315,6 +17691,8 @@
           },
           "risk_percent": {
             "type": "integer",
+            "maximum": 100.0,
+            "minimum": 0.0,
             "title": "Risk Percent"
           },
           "admin_note": {
@@ -17941,6 +18319,22 @@
             "type": "string",
             "title": "Official Destination Url"
           },
+          "procedure_guide_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Procedure Guide Url"
+          },
+          "destination_link_health": {
+            "type": "string",
+            "title": "Destination Link Health",
+            "default": "linked_unconfirmed"
+          },
           "map_version": {
             "type": "string",
             "title": "Map Version"
@@ -17971,7 +18365,7 @@
           "disclaimer_en": {
             "type": "string",
             "title": "Disclaimer En",
-            "default": "Copy values per field into the verified official government portal. Ebarki never asks for, enters, or stores portal credentials (T33)."
+            "default": "Review the authority's current form before copying prepared values yourself. Ebarki never asks for, enters, or stores portal credentials (T33)."
           },
           "disclaimer_bn": {
             "type": "string",
@@ -18169,17 +18563,17 @@
           "preserves_qualification": {
             "type": "boolean",
             "title": "Preserves Qualification",
-            "default": true
+            "default": false
           },
           "context_note_en": {
             "type": "string",
             "title": "Context Note En",
-            "default": "Official statutory reference verified against enacted gazette."
+            "default": "Source-page comparison is recorded per entry. English is an unofficial summary; qualified legal review is not claimed."
           },
           "context_note_bn": {
             "type": "string",
             "title": "Context Note Bn",
-            "default": "\u0997\u09c7\u099c\u09c7\u099f\u09ad\u09c1\u0995\u09cd\u09a4 \u0985\u09ab\u09bf\u09b8\u09bf\u09af\u09bc\u09be\u09b2 \u09b8\u0982\u09ac\u09bf\u09a7\u09bf\u09ac\u09a6\u09cd\u09a7 \u09ac\u09bf\u09a7\u09be\u09a8\u09c7\u09b0 \u09b8\u09be\u09a5\u09c7 \u09af\u09be\u099a\u09be\u0987\u0995\u09c3\u09a4\u0964"
+            "default": "\u09aa\u09cd\u09b0\u09a4\u09bf\u099f\u09bf \u0985\u0982\u09b6\u09c7 \u09ae\u09c2\u09b2 \u09aa\u09be\u09a4\u09be\u09b0 \u09a4\u09a5\u09cd\u09af \u0986\u099b\u09c7\u0964 English \u09b2\u09c7\u0996\u09be \u0985\u09a8\u09be\u09a8\u09c1\u09b7\u09cd\u09a0\u09be\u09a8\u09bf\u0995 \u09b8\u09be\u09b0\u09be\u0982\u09b6; \u0986\u0987\u09a8\u099c\u09cd\u099e\u09c7\u09b0 \u09aa\u09b0\u09cd\u09af\u09be\u09b2\u09cb\u099a\u09a8\u09be \u09a6\u09be\u09ac\u09bf \u0995\u09b0\u09be \u09b9\u09df\u09a8\u09bf\u0964"
           }
         },
         "type": "object",
@@ -18309,6 +18703,38 @@
               }
             ],
             "title": "Parent Provision"
+          },
+          "official_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Official Url"
+          },
+          "checked_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Checked At"
+          },
+          "review_status": {
+            "type": "string",
+            "title": "Review Status",
+            "default": "qualified_legal_review_not_claimed"
+          },
+          "text_kind": {
+            "type": "string",
+            "title": "Text Kind",
+            "default": "Bangla source excerpt; English is an unofficial summary. Procedure entries are summaries."
           }
         },
         "type": "object",
@@ -19807,11 +20233,19 @@
         "properties": {
           "roles": {
             "items": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "admin",
+                "reviewer",
+                "publisher",
+                "operator",
+                "consumer"
+              ]
             },
             "type": "array",
-            "title": "Roles",
-            "description": "List of roles: admin, reviewer, publisher, operator, consumer"
+            "maxItems": 5,
+            "minItems": 1,
+            "title": "Roles"
           }
         },
         "type": "object",

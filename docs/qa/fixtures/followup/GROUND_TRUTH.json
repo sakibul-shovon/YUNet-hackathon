@@ -1,0 +1,30 @@
+{
+  "product": "Ebarki",
+  "classification": "FICTIONAL QA ONLY; no real person or transaction",
+  "files": {
+    "Bangla scan.pdf": {
+      "sha256": "e5a39359972f64f872c44986016d109445ce2e41c7e4eb17cae21a34f01383be",
+      "bytes": 48010,
+      "page_count": 1,
+      "scan_page": 1,
+      "merchant": "কাল্পনিক পদ্মা টেস্ট শপ",
+      "amount_minor_units": 700000,
+      "reference": "PADMA-QA-BN24",
+      "date": "2026-10-24",
+      "native_page_1": null,
+      "note": "The two representations are not automatically treated as separate payments; explicit review is required."
+    },
+    "Native and Bangla scan.pdf": {
+      "sha256": "d98749cab7e02c51bf227a8cd1379aa209f95983c3932f2d72000495cb52f399",
+      "bytes": 48472,
+      "page_count": 2,
+      "scan_page": 2,
+      "merchant": "কাল্পনিক পদ্মা টেস্ট শপ",
+      "amount_minor_units": 700000,
+      "reference": "PADMA-QA-BN24",
+      "date": "2026-10-24",
+      "native_page_1": "Fictional Padma Test Shop; PADMA-QA-A24; BDT 7,000.00",
+      "note": "The two representations are not automatically treated as separate payments; explicit review is required."
+    }
+  }
+}

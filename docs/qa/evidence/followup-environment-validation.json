@@ -1,0 +1,60 @@
+[
+  {
+    "test": "configured secrets absent from tracked files, QA artifacts and built client assets",
+    "result": "PASS",
+    "matches": [],
+    "files_checked": 800
+  },
+  {
+    "test": "fixture files match recorded ground-truth hashes",
+    "result": "PASS",
+    "mismatches": [],
+    "files_checked": 22
+  },
+  {
+    "test": "Git preserves indexed fixture bytes without newline conversion",
+    "result": "PASS",
+    "mismatches": [],
+    "files_checked": 21,
+    "note": "Oversized PCM recording is intentionally ignored by Git."
+  },
+  {
+    "test": "en/login access choices in server-rendered HTML",
+    "result": "PASS",
+    "note": "HTML structure only; native rendered interaction remains BLOCKED."
+  },
+  {
+    "test": "en/admin/login access choices in server-rendered HTML",
+    "result": "PASS",
+    "note": "HTML structure only; native rendered interaction remains BLOCKED."
+  },
+  {
+    "test": "en workspace near-top sticker in HTML",
+    "result": "PASS",
+    "note": "Source/HTML positioning; fresh rendered mobile/desktop verification remains BLOCKED."
+  },
+  {
+    "test": "bn/login access choices in server-rendered HTML",
+    "result": "PASS",
+    "note": "HTML structure only; native rendered interaction remains BLOCKED."
+  },
+  {
+    "test": "bn/admin/login access choices in server-rendered HTML",
+    "result": "PASS",
+    "note": "HTML structure only; native rendered interaction remains BLOCKED."
+  },
+  {
+    "test": "bn workspace near-top sticker in HTML",
+    "result": "PASS",
+    "note": "Source/HTML positioning; fresh rendered mobile/desktop verification remains BLOCKED."
+  },
+  {
+    "test": "generated OpenAPI matches running API",
+    "result": "PASS"
+  },
+  {
+    "test": "public HTTPS deployment",
+    "result": "UNVERIFIED",
+    "reason": "Deferred by user for the follow-up; not tested here."
+  }
+]

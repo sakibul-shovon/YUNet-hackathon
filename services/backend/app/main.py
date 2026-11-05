@@ -4,6 +4,9 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
+from sqlalchemy import inspect, text
+from sqlalchemy.exc import SQLAlchemyError
+from starlette.concurrency import run_in_threadpool
 
 from app.actions.router import router as actions_router
 from app.admin.router import router as admin_router
@@ -32,7 +35,17 @@ from app.scenarios.router import router as scenarios_router
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
+        if settings.APP_ENV == 'production':
+            def schema_ready(connection):
+                inspector = inspect(connection)
+                tables = set(inspector.get_table_names())
+                return all(name in tables and set(table.columns.keys()) <= {
+                    column['name'] for column in inspector.get_columns(name)}
+                    for name, table in Base.metadata.tables.items())
+            if not await conn.run_sync(schema_ready):
+                raise RuntimeError('Ebarki production database migrations must be applied before startup.')
+        else:
+            await conn.run_sync(Base.metadata.create_all)
     yield
 
 
@@ -58,12 +71,24 @@ app.add_middleware(
 
 @app.middleware("http")
 async def request_logging_and_correlation(request: Request, call_next):
+    # CORS is not a CSRF authorization check. Reject cross-origin browser writes,
+    # including login/session bootstrap, before any handler can alter a cookie.
+    if request.method not in {'GET', 'HEAD', 'OPTIONS'}:
+        origin = request.headers.get('origin')
+        if (origin and origin.rstrip('/') not in settings.ALLOWED_ORIGINS) or (
+            not origin and request.headers.get('sec-fetch-site') == 'cross-site'
+        ):
+            from fastapi.responses import JSONResponse
+            return JSONResponse({'detail': 'This request origin is not permitted.'}, status_code=403,
+                                headers={'Cache-Control': 'private, no-store'})
     correlation_id = request.headers.get("x-correlation-id", str(uuid.uuid4()))
     start_time = time.time()
     response: Response = await call_next(request)
     duration_ms = (time.time() - start_time) * 1000
     response.headers["x-correlation-id"] = correlation_id
     response.headers["x-response-time-ms"] = f"{duration_ms:.2f}"
+    if '/auth/' in request.url.path:
+        response.headers['Cache-Control'] = 'private, no-store'
     return response
 
 
@@ -81,6 +106,26 @@ async def health_live():
 @app.get("/health/ready", tags=["Health"])
 async def health_ready():
     """Readiness probe: reports readiness of database, storage, and models."""
+    def probe_storage():
+        import tempfile
+
+        from app.evidence.storage import get_storage_backend
+        storage = get_storage_backend()
+        with tempfile.TemporaryFile(dir=storage.accepted_dir) as probe:
+            probe.write(b'Ebarki readiness probe')
+            probe.seek(0)
+            return probe.read() == b'Ebarki readiness probe'
+
+    try:
+        async with engine.connect() as connection:
+            await connection.execute(text('SELECT 1'))
+        storage_ready = await run_in_threadpool(probe_storage)
+        if not storage_ready:
+            raise OSError('Storage probe failed')
+    except (SQLAlchemyError, OSError, RuntimeError):
+        from fastapi.responses import JSONResponse
+        return JSONResponse({'status': 'not_ready', 'app': 'Ebarki',
+                             'reason': 'Database or configured evidence storage is unavailable.'}, status_code=503)
     return {
         "status": "ready",
         "app": "claimcraft-bd",
@@ -89,10 +134,10 @@ async def health_ready():
             "ai_provider": "groq" if settings.GROQ_API_KEY else "gemini" if settings.GEMINI_API_KEY else "manual_workflow",
             "image_reading_configured": bool((settings.GROQ_API_KEY and settings.GROQ_VISION_MODEL) or (settings.GEMINI_API_KEY and settings.GEMINI_RECORD_READER_MODEL)),
             "speech_transcription_configured": bool(settings.GROQ_API_KEY),
-            "stt_provider": "google_stt"
-            if settings.GOOGLE_APPLICATION_CREDENTIALS
-            else "browser_fallback",
+            "stt_provider": "groq" if settings.GROQ_API_KEY else "manual",
             "storage_backend": settings.STORAGE_BACKEND,
+            "database_probe": "passed",
+            "storage_read_write_probe": "passed",
         },
     }
 

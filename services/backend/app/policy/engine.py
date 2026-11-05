@@ -103,7 +103,7 @@ class ProceduralAssessmentEngine:
             prompt_bn="পণ্যটি কি তাৎক্ষণিক শারীরিক বিপদ, রাসায়নিক বিষক্রিয়া বা অগ্নিকাণ্ডের ঝুঁকি তৈরি করছে?",
             question_type="boolean",
             priority="safety",
-            relevance_rationale="Emergency product hazards trigger immediate 16121 hotline escalation.",
+            relevance_rationale="Prioritize immediate safety. Consumer hotline 16121 provides complaint guidance, not emergency rescue.",
         ),
         "goods_delivered": NextBestQuestion(
             question_key="nbq_goods_delivered",
@@ -297,8 +297,8 @@ class ProceduralAssessmentEngine:
             for uo in user_outcomes:
                 if uo in rule.unsupported_remedies:
                     unsupported_warnings.append(
-                        f"Remedy '{uo}' is not statutorily available for {rule.issue_type}. "
-                        f"Supported remedies are: {', '.join(rule.supported_remedies)}."
+                        f"Ebarki does not prepare remedy '{uo}' in this workflow. "
+                        f"Available preparation topics are: {', '.join(rule.supported_remedies)}. This is not a determination of legal entitlement."
                     )
 
             routes_out.append(
@@ -360,19 +360,17 @@ class ProceduralAssessmentEngine:
                     True,
                 )
 
-            days_remaining = max(0, statutory_limitation_days - elapsed_days)
-            if elapsed_days > statutory_limitation_days:
-                warning_en = (
-                    f"Statutory 30-day limitation window under Section 60 has elapsed ({elapsed_days} days since incident). "
-                    "A formal condonation of delay explanation will be required by DNCRP."
-                )
-                warning_bn = (
-                    f"ভোক্তা অধিকার আইনের ৬০ ধারা অনুযায়ী ৩০ দিনের সময়সীমা পার হয়ে গেছে (ঘটনাটি {elapsed_days} দিন আগের)। "
-                    "অভিযোগ দাখিলের সময় বিলম্বের যৌক্তিক কারণ ব্যাখ্যা করতে হবে।"
-                )
-                return warning_en, warning_bn, 0, False
-            else:
-                return None, None, days_remaining, False
+            warning_en = (
+                f'The recorded date is {elapsed_days} days ago. Section 60 refers to 30 days from the cause of action; '
+                'the legal trigger is unverified, so Ebarki does not show a definitive cutoff or assume an extension. '
+                'Check the original provision and obtain prompt guidance from the authority or a qualified adviser.'
+            )
+            warning_bn = (
+                f'দেওয়া তারিখটি {elapsed_days} দিন আগের। ৬০ ধারায় কারণ উদ্ভব থেকে ৩০ দিনের কথা আছে। '
+                'আইনি হিসাবের শুরুর তারিখ যাচাই হয়নি, তাই Ebarki নিশ্চিত শেষ তারিখ বা সময় বাড়ানোর সুযোগ ধরে নেয়নি। '
+                'মূল ধারা মিলিয়ে অধিদপ্তর বা যোগ্য পরামর্শকের কাছ থেকে দ্রুত নির্দেশনা নিন।'
+            )
+            return warning_en, warning_bn, None, True
 
         except (ValueError, TypeError):
             warning_en = "Incident date format is uncertain; exact statutory cutoff cannot be safely verified. Prompt action advised."
@@ -522,11 +520,12 @@ class ProceduralAssessmentEngine:
                 break
 
         # 5. T30 Limitation Calculation
-        warn_en, warn_bn, days_rem, is_uncert = cls.calculate_statutory_limitation(
-            facts_dict,
-            case.incident_date,
-            statutory_limitation_days=30,
-        )
+        non_consumer_route = any(facts_dict.get(key) for key in (
+            'transaction_unauthorized', 'alleged_provider_service_failure', 'telecom_provider_ticket_filed',
+            'insurance_policy_documented', 'formal_claim_submitted_to_insurer', 'public_service_application_filed'))
+        warn_en, warn_bn, days_rem, is_uncert = (None, None, None, False) if non_consumer_route else cls.calculate_statutory_limitation(
+            facts_dict, case.incident_date, statutory_limitation_days=30)
+
 
         # 6. Collect Source Cards
         referenced_sources = set()

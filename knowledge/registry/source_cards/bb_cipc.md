@@ -1,35 +1,27 @@
-# Source Card: Bangladesh Bank CIPC Procedure
+# Ebarki reference card: Bangladesh Bank CIPC procedure
 
 ## Metadata
-- **Source ID:** `bb_cipc_procedure`
-- **Title (English):** Bangladesh Bank Customer Interests Protection Centre (CIPC) Procedure
-- **Title (Bangla):** বাংলাদেশ ব্যাংক গ্রাহক স্বার্থ সংরক্ষণ কেন্দ্র (সিআইপিসি) পদ্ধতি
-- **Issuer:** Financial Integrity and Customer Services Department (FICSD), Bangladesh Bank
-- **Official URL:** https://bb.org.bd/en/index.php/services/cipc_procedure
-- **Document Type:** `procedure_guide`
-- **Status:** `observed`
-- **Procedural Scope:** `procedure_guidance`
-- **Is Authoritative For Penalties:** No (Regulatory procedure guidance)
-- **Last Checked:** 2026-11-01T00:00:00Z
-- **Health Status:** `current_check_passed`
 
----
+- Source ID: `bb_cipc_procedure`
+- Official URL: https://www.bb.org.bd/en/index.php/services/cipc_procedure
+- Procedural Scope: source-linked educational guidance; qualified human legal review unverified
+- Observation date: 5 November 2026, Asia/Dhaka
 
-## Two-Stage Complaint Escalation Hierarchy
 
-### Stage 1: Mandatory Provider-Level Grievance
-- Aggrieved customers **must first** register a formal complaint with the concerned scheduled bank, financial institution, or Mobile Financial Service (MFS) provider (e.g., bKash, Nagad, Rocket).
-- The customer must retain:
-  - Official Ticket / Complaint Reference Number.
-  - Date and time of grievance submission.
-  - Written or SMS acknowledgment from the provider.
-- Regulatory Standard: Provider must resolve or provide formal written determination within **10 business days** (extended to 30 days for cross-border/complex disputes).
+Primary source: https://www.bb.org.bd/en/index.php/services/cipc_procedure
 
-### Stage 2: Escalation to Bangladesh Bank CIPC
-- If the provider fails to respond within the stipulated window, or issues an unsatisfactory determination, the customer may escalate directly to CIPC.
-- Submission Channels:
-  - Online Grievance Portal: bb.org.bd
-  - Email: `cipc.ficsd@bb.org.bd`
-  - Toll-Free Hotline: 16236
-  - Physical Letter: Addressed to The General Manager, FICSD, Bangladesh Bank, Motijheel, Dhaka.
-- Mandatory Prerequisites: Proof of Stage 1 grievance submission and ticket number. Unverified direct submissions to BB without provider ticket are typically redirected to the provider first.
+Compared with the current primary page on 5 November 2026. This records an agent source comparison, not qualified human legal approval. Bangla statutory paragraphs below are source excerpts; English and procedure text are unofficial summaries. No automatic entitlement, deadline extension or successful filing is asserted.
+
+## bb_cipc:stage:provider_grievance
+
+সরকারি সিআইপিসি নির্দেশনা অনুযায়ী আগে ব্যাংক, আর্থিক প্রতিষ্ঠান বা এমএফএস সেবাদাতার শাখায় যোগাযোগ করুন। সমাধান না হলে তাদের অভিযোগ সেলে বিষয়টি জানান। যোগাযোগ ও পাওয়া জবাবের নথি রাখুন। এখানে নির্দিষ্ট দশ কার্যদিবস অপেক্ষা বা অবশ্যই টিকিট পাওয়ার শর্ত ধরে নেওয়া হয়নি।
+
+The official CIPC procedure advises first contacting the bank, finance company or MFS provider at branch level, then escalating an unresolved issue to its complaint cell. Keep records and any response. No fixed ten-business-day wait or compulsory issued ticket is asserted here.
+
+## bb_cipc:stage:cipc_escalation
+
+অভিযোগের সমাধান না হলে বা জবাবে সন্তুষ্ট না হলে বাংলাদেশ ব্যাংকের সিআইপিসিতে বিষয়টি জানানো যায়। ঘটনার বিবরণ, যোগাযোগের তথ্য, সেবাদাতার চূড়ান্ত জবাব পাওয়া গেলে সেটি এবং সহায়ক নথি দিন। সরকারি নির্দেশনায় ১৬২৩৬, bb.cipc@bb.org.bd এবং অভিযোগের ফর্মের লিংক আছে।
+
+If the complaint remains unresolved or the customer is dissatisfied, the official procedure allows escalation to Bangladesh Bank CIPC. Include complaint details, contact information, the provider final response if received and supporting records. The guide lists hotline 16236, bb.cipc@bb.org.bd and its linked complaint form.
+
+Evidence: `docs/qa/evidence/followup-laws.json` and `followup-official-links.json`. Source health observations expire; check the original before use.

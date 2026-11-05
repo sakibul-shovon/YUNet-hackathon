@@ -6,3 +6,5 @@ graphify-out/graph.json merge=graphify
 *.ttf binary
 # Fixture hashes include the original CRLF bytes on Windows.
 docs/qa/fixtures/* -text whitespace=cr-at-eol
+# Captured CLI logs retain their original whitespace and line endings.
+docs/qa/evidence/*.txt -text whitespace=-blank-at-eol,-space-before-tab

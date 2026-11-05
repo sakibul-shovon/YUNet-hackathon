@@ -4,7 +4,7 @@ from types import SimpleNamespace
 
 import httpx
 import pytest
-from PIL import Image
+from PIL import Image, ImageDraw
 
 from app.core.config import settings
 from app.operations.connected_records import chronology, source_date
@@ -185,13 +185,17 @@ async def test_visual_reading_requires_consent_and_keeps_proposed_coordinates(mo
     item = SimpleNamespace(id=uuid.uuid4(), detected_mime_type='image/png', original_filename='untrusted_999999.png', declared_mime_type='image/png', accepted_path='test', sha256_hash='actual-digest')
     monkeypatch.setattr(settings, 'GEMINI_API_KEY', 'test-key')
     monkeypatch.setattr(settings, 'GEMINI_RECORD_READER_MODEL', 'test-vision-model')
-    monkeypatch.setattr(record_reader, 'get_storage_backend', lambda: SimpleNamespace(read_accepted=lambda path: b'real-image-bytes-in-provider-contract-test'))
+    buffer = io.BytesIO()
+    image = Image.new('RGB', (400, 400), 'white')
+    ImageDraw.Draw(image).rectangle((80, 100, 319, 299), fill='black')
+    image.save(buffer, format='PNG')
+    monkeypatch.setattr(record_reader, 'get_storage_backend', lambda: SimpleNamespace(read_accepted=lambda path: buffer.getvalue()))
     monkeypatch.setattr(record_reader.httpx, 'AsyncClient', Client)
     denied = await read_evidence(item, False)
     assert denied['method'] == 'manual_required' and not calls
     result = await read_evidence(item, True)
     assert result['model_executed'] and result['text'] == 'BDT 5,000'
-    assert result['lines'][0]['box'] == [.1, .2, .5, .26]
+    assert result['lines'][0]['box'] == pytest.approx([.212, .314, .5, .3512])
     assert '999999' not in result['text']
     assert calls[0]['json']['contents'][0]['parts'][1]['inline_data']['mime_type'] == 'image/png'
 
@@ -218,7 +222,7 @@ async def test_reading_reuse_preserves_review_and_removal_purges_derivatives(cli
         assert consent
         calls.append(item.id)
         return {'id': str(item.id), 'sha256': item.sha256_hash, 'filename': item.original_filename,
-            'mime_type': 'image/png', 'method': 'groq_vision', 'model_executed': True,
+            'mime_type': 'image/png', 'method': 'groq_vision', 'model_executed': True, 'reader_version': 2,
             'text': 'Paid BDT 5,000.25', 'lines': [{'text': 'Paid BDT 5,000.25', 'page': 1, 'box': [.1, .2, .8, .3]}]}
     monkeypatch.setattr(runs, 'read_evidence', mock_read)
     await client.post(base+'/runs', headers=headers, json={'operation': 'resolve'})

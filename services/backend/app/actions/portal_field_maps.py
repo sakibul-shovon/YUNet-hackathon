@@ -2,6 +2,8 @@ from typing import Any
 
 from pydantic import BaseModel, ConfigDict
 
+from app.actions.destinations import ComplaintDestinationService
+
 
 class PortalFieldDef(BaseModel):
     model_config = ConfigDict(from_attributes=True)
@@ -23,12 +25,14 @@ class PortalFieldMapOut(BaseModel):
     portal_name_en: str
     portal_name_bn: str
     official_destination_url: str
+    procedure_guide_url: str | None = None
+    destination_link_health: str = 'linked_unconfirmed'
     map_version: str
     is_stale: bool = False
     stale_reason: str | None = None
     fields: list[PortalFieldDef]
     disclaimer_en: str = (
-        "Copy values per field into the verified official government portal. "
+        "Review the authority's current form before copying prepared values yourself. "
         "Ebarki never asks for, enters, or stores portal credentials (T33)."
     )
     disclaimer_bn: str = (
@@ -137,7 +141,7 @@ PORTAL_MAP_REGISTRY: dict[str, dict[str, Any]] = {
         "portal_id": "btrc_complaint",
         "portal_name_en": "BTRC Telecom & Internet Consumer Grievance Portal",
         "portal_name_bn": "বিটিআরসি টেলিযোগাযোগ ও ইন্টারনেট অভিযোগ প্রতিকার পোর্টাল",
-        "official_destination_url": "http://btrc.gov.bd/",
+        "official_destination_url": "https://crm.btrc.gov.bd/",
         "map_version": "2026.1",
         "is_stale": False,
         "stale_reason": None,
@@ -177,7 +181,7 @@ PORTAL_MAP_REGISTRY: dict[str, dict[str, Any]] = {
         "portal_id": "idra_grievance",
         "portal_name_en": "IDRA Insurance Grievance Cell",
         "portal_name_bn": "আইডিআরএ বীমা অভিযোগ সেল",
-        "official_destination_url": "http://idra.gov.bd/",
+        "official_destination_url": "https://cms.idra.org.bd/grievence-form",
         "map_version": "2026.1",
         "is_stale": False,
         "stale_reason": None,
@@ -209,7 +213,7 @@ PORTAL_MAP_REGISTRY: dict[str, dict[str, Any]] = {
         "portal_id": "cabinet_grs",
         "portal_name_en": "Cabinet Division Central Grievance Redress System (GRS)",
         "portal_name_bn": "মন্ত্রিপরিষদ বিভাগ কেন্দ্রীয় অভিযোগ প্রতিকার ব্যবস্থা (জিআরএস)",
-        "official_destination_url": "http://grs.gov.bd/",
+        "official_destination_url": "https://www.grs.gov.bd/",
         "map_version": "2026.1",
         "is_stale": False,
         "stale_reason": None,
@@ -248,15 +252,18 @@ class PortalFieldMapService:
     ) -> PortalFieldMapOut:
         raw_map = PORTAL_MAP_REGISTRY.get(portal_id)
         if not raw_map:
-            # Fallback to DNCRP CCMS
-            raw_map = PORTAL_MAP_REGISTRY["dncrp_ccms"]
+            raise ValueError('Unknown filing preparation channel.')
+        destination_id = {'dncrp_ccms': 'dncrp_ccms_portal', 'bb_cipc': 'bb_cipc_portal',
+                          'btrc_complaint': 'btrc_consumer_cell', 'idra_grievance': 'idra_grievance_cell',
+                          'cabinet_grs': 'cabinet_grs_portal'}[portal_id]
+        destination = ComplaintDestinationService.get_destination(destination_id)
 
         fields_out: list[PortalFieldDef] = []
         is_stale = raw_map.get("is_stale", False)
 
         for f in raw_map["fields"]:
             fact_src = f["fact_source"]
-            val = facts.get(fact_src) or case_data.get(fact_src)
+            val = facts[fact_src] if fact_src in facts else case_data.get(fact_src)
 
             prep_val = None
             if not is_stale and val is not None:
@@ -284,7 +291,9 @@ class PortalFieldMapService:
             portal_id=raw_map["portal_id"],
             portal_name_en=raw_map["portal_name_en"],
             portal_name_bn=raw_map["portal_name_bn"],
-            official_destination_url=raw_map["official_destination_url"],
+            official_destination_url=destination.official_portal_url,
+            procedure_guide_url=destination.procedure_guide_url,
+            destination_link_health=destination.link_health,
             map_version=raw_map["map_version"],
             is_stale=is_stale,
             stale_reason=raw_map.get("stale_reason"),

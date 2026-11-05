@@ -14,6 +14,9 @@ import app.cases.models  # noqa: F401
 import app.knowledge.models  # noqa: F401
 import app.facts.models  # noqa: F401
 import app.evidence.models  # noqa: F401
+import app.admin.models  # noqa: F401
+import app.operations.models  # noqa: F401
+import app.actions.document_store  # noqa: F401
 
 config = context.config
 

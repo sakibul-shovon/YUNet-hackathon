@@ -7,9 +7,16 @@ from fastapi import HTTPException, Request, Response, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.admin.models import AdminRecord
 from app.cases.models import Case, OutboxMessage
 from app.core.config import settings
-from app.core.security import create_access_jwt, generate_session_token, hash_session_token
+from app.core.security import (
+    create_access_jwt,
+    csrf_for_session,
+    decode_and_verify_jwt,
+    generate_session_token,
+    hash_session_token,
+)
 from app.identity.models import (
     ActorRole,
     Consent,
@@ -77,6 +84,9 @@ class IdentityService:
                 res_p = await db.execute(stmt_p)
                 principal = res_p.scalar_one_or_none()
                 if principal:
+                    ban = await db.get(AdminRecord, 'ban:'+str(principal.id))
+                    if ban and ban.payload.get('banned'):
+                        raise HTTPException(403, 'This account is suspended.')
                     web_session.last_seen_at = now
                     await db.commit()
 
@@ -128,8 +138,8 @@ class IdentityService:
             path="/",
         )
 
-        csrf_token = secrets.token_hex(16)
-        access_jwt = create_access_jwt(principal_id=principal.id, kind=principal.kind)
+        csrf_token = csrf_for_session(raw_session_token)
+        access_jwt = create_access_jwt(principal_id=principal.id, kind=principal.kind, session_id=session_record.id)
 
         return GuestSessionResponse(
             principal_id=principal.id,
@@ -144,16 +154,26 @@ class IdentityService:
         principal: Principal,
         req: UpgradeRequest,
         db: AsyncSession,
+        request: Request,
     ) -> UpgradeResponse:
         """Upgrades anonymous principal to permanent verified status while preserving cases."""
         principal.kind = "permanent"
         principal.updated_at = datetime.datetime.now(datetime.UTC)
         await db.commit()
 
+        cookie = request.cookies.get(settings.SESSION_COOKIE_NAME)
+        bearer = request.headers.get('authorization', '')
+        session_id = None
+        if bearer.lower().startswith('bearer '):
+            session_id = decode_and_verify_jwt(bearer.split(' ', 1)[1]).get('sid')
+        elif cookie:
+            session_id = await db.scalar(select(WebSession.id).where(
+                WebSession.session_token_hash == hash_session_token(cookie), WebSession.principal_id == principal.id))
         new_token = create_access_jwt(
             principal_id=principal.id,
             kind="permanent",
             roles=["consumer"],
+            session_id=session_id,
         )
         return UpgradeResponse(
             principal_id=principal.id,
@@ -178,6 +198,18 @@ class IdentityService:
             if web_session:
                 web_session.revoked_at = datetime.datetime.now(datetime.UTC)
                 await db.commit()
+
+        authorization = request.headers.get('authorization', '')
+        if authorization.lower().startswith('bearer '):
+            try:
+                claims = decode_and_verify_jwt(authorization.split(' ', 1)[1])
+                if claims.get('sid'):
+                    session = await db.get(WebSession, uuid.UUID(claims['sid']))
+                    if session and str(session.principal_id) == claims['sub']:
+                        session.revoked_at = datetime.datetime.now(datetime.UTC)
+                        await db.commit()
+            except (HTTPException, ValueError, KeyError):
+                pass  # Expired credentials can still clear a local cookie.
 
         response.delete_cookie(
             key=settings.SESSION_COOKIE_NAME,
@@ -358,7 +390,7 @@ class IdentityService:
             path="/",
         )
 
-        access_jwt = create_access_jwt(principal_id=principal.id, kind="permanent")
+        access_jwt = create_access_jwt(principal_id=principal.id, kind="permanent", session_id=session_record.id)
         return AuthUserOut(
             logged_in=True,
             principal_id=principal.id,
@@ -367,6 +399,7 @@ class IdentityService:
             phone=user.phone,
             is_demo_judge=False,
             access_token=access_jwt,
+            csrf_token=csrf_for_session(raw_session_token),
         )
 
     @staticmethod
@@ -374,6 +407,7 @@ class IdentityService:
         req: UserLoginRequest,
         db: AsyncSession,
         response: Response,
+        require_admin: bool = False,
     ) -> AuthUserOut:
         """Logs in an existing user with email and password."""
         now = datetime.datetime.now(datetime.UTC)
@@ -388,7 +422,7 @@ class IdentityService:
             and settings.BOOTSTRAP_ADMIN_EMAIL
             and settings.BOOTSTRAP_ADMIN_PASSWORD
             and email_clean == settings.BOOTSTRAP_ADMIN_EMAIL.strip().lower()
-            and req.password == settings.BOOTSTRAP_ADMIN_PASSWORD
+            and secrets.compare_digest(req.password, settings.BOOTSTRAP_ADMIN_PASSWORD)
         ):
             admin_principal = Principal(
                 id=uuid.uuid4(),
@@ -431,6 +465,12 @@ class IdentityService:
         role_res = await db.execute(role_stmt)
         user_roles = [r for r in role_res.scalars().all()]
 
+        ban = await db.get(AdminRecord, 'ban:'+str(user.principal_id))
+        if ban and ban.payload.get('banned'):
+            raise HTTPException(403, 'This account is suspended.')
+        if require_admin and not set(user_roles) & {'admin', 'reviewer', 'publisher', 'operator'}:
+            raise HTTPException(403, 'This account does not have administrative access.')
+
         raw_session_token = generate_session_token()
         session_hash = hash_session_token(raw_session_token)
         expires_at = now + datetime.timedelta(seconds=settings.SESSION_MAX_AGE_SECONDS)
@@ -455,7 +495,7 @@ class IdentityService:
             path="/",
         )
 
-        access_jwt = create_access_jwt(principal_id=user.principal_id, kind="permanent")
+        access_jwt = create_access_jwt(principal_id=user.principal_id, kind="permanent", session_id=session_record.id)
         return AuthUserOut(
             logged_in=True,
             principal_id=user.principal_id,
@@ -465,6 +505,7 @@ class IdentityService:
             is_demo_judge=user.is_demo_judge,
             roles=user_roles,
             access_token=access_jwt,
+            csrf_token=csrf_for_session(raw_session_token),
         )
 
     @staticmethod
@@ -540,7 +581,7 @@ class IdentityService:
             path="/",
         )
 
-        access_jwt = create_access_jwt(principal_id=user.principal_id, kind="permanent")
+        access_jwt = create_access_jwt(principal_id=user.principal_id, kind="permanent", session_id=session_record.id)
         return AuthUserOut(
             logged_in=True,
             principal_id=user.principal_id,
@@ -551,6 +592,7 @@ class IdentityService:
             roles=["consumer"],
             demo_case_id=case.id,
             access_token=access_jwt,
+            csrf_token=csrf_for_session(raw_session_token),
         )
 
     @staticmethod

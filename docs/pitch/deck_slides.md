@@ -20,4 +20,4 @@ Explore procedural conditions and what-if changes. Prepare and edit a reply or a
 
 ## Slide 5 - Solo builder and evidence
 
-Sakibul Islam Shovon - solo builder. Next.js, FastAPI, SQLAlchemy and owner-scoped evidence storage. Independent release-audit reports, synthetic fixtures and provider receipts are in `docs/qa/`. Current verdict: **NOT READY** until the recorded deployment, source-review and browser acceptance gaps are closed. Public merchant data is empty; community publishing and scanned-PDF OCR are unavailable.
+Sakibul Islam Shovon - solo builder. Next.js, FastAPI, SQLAlchemy and owner-scoped evidence storage. Independent release-audit reports, synthetic fixtures and provider receipts are in `docs/qa/`. Current verdict: **NOT READY** until the recorded deployment, source-review and browser acceptance gaps are closed. Public merchant data is empty; community publishing is unavailable. Consented scanned-PDF reading is bounded to five image-only pages per attempt; provider quotas and human review apply.

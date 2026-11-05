@@ -4,11 +4,7 @@ status: draft
 jurisdiction: BD
 issue_type: telecom_billing_and_outage
 date_basis: conduct_date
-statutory_limitation_days: 60
-statutory_citations:
-  - btrc:directive:2021:qos
-  - btrc:consumer_grievance:stage1
-  - btrc:consumer_grievance:stage2
+statutory_citations: []
 source_dependencies:
   - btrc_complaint_guidelines
 supported_remedies:

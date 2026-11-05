@@ -1,0 +1,85 @@
+============================= test session starts =============================
+platform win32 -- Python 3.12.15, pytest-9.2.0, pluggy-1.7.0
+rootdir: C:\Users\sakib\OneDrive\Desktop\ostad hacakathon\services\backend
+configfile: pyproject.toml
+testpaths: tests
+plugins: anyio-4.16.0, asyncio-1.4.1.post1
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=function, asyncio_default_test_loop_scope=function
+collected 184 items
+
+tests\actions\test_p09_action_studio_and_filing.py .......               [  3%]
+tests\cases\test_p10_living_case_and_decision_changes.py ....            [  5%]
+tests\integration\test_agentic_v2.py .......                             [  9%]
+tests\integration\test_connected_experience.py .........                 [ 14%]
+tests\integration\test_ebarki_workspace.py .....                         [ 17%]
+tests\integration\test_final_audit_regressions.py ................       [ 26%]
+tests\integration\test_p04_6_e2e_m1_vertical_slice.py .                  [ 26%]
+tests\integration\test_p06_6_multimodal_downstream_e2e.py .              [ 27%]
+tests\integration\test_p14_2_judge_scenarios_and_isolation.py ..         [ 28%]
+tests\integration\test_p14_6_judge_smoke_and_capabilities.py ......      [ 31%]
+tests\integration\test_stabilization_followup.py .............           [ 38%]
+tests\integration\test_t51_multimodal_matrix_and_pipeline.py ......      [ 41%]
+tests\knowledge\test_p11_official_watchers_and_safe_releases.py .....    [ 44%]
+tests\multimodal\test_p06_multimodal_benchmark.py ....                   [ 46%]
+tests\policy\test_p08_1_paired_jurisdictions.py ...                      [ 48%]
+tests\policy\test_p08_2_issue_split_merge.py ...                         [ 50%]
+tests\policy\test_p08_4_what_if_simulation.py .                          [ 50%]
+tests\policy\test_p08_5_nbq_and_safety_priority.py ...                   [ 52%]
+tests\policy\test_p08_6_pipeline_runs.py .                               [ 52%]
+tests\policy\test_p12_domain_packs_and_cross_domain_coherence.py .....   [ 55%]
+tests\policy\test_t17_t18_policy_evaluator.py ....                       [ 57%]
+tests\policy\test_t19_t20_procedural_assessment.py ..                    [ 58%]
+tests\retrieval\test_t24_hierarchical_provisions.py .....                [ 61%]
+tests\retrieval\test_t25_hybrid_retrieval_and_rrf.py ......              [ 64%]
+tests\security\test_p13_security_redteam_privacy_suite.py .....          [ 67%]
+tests\security\test_t01_t02_t03_tenancy_and_auth.py ...                  [ 69%]
+tests\security\test_t44_admin_review_authorization.py .                  [ 69%]
+tests\security\test_upgrade_and_deletion.py ..                           [ 70%]
+tests\unit\test_doctor_readiness.py .                                    [ 71%]
+tests\unit\test_health.py ...                                            [ 72%]
+tests\unit\test_p03_1_source_registry.py ....                            [ 75%]
+tests\unit\test_p03_5_starter_rules_and_cards.py ....                    [ 77%]
+tests\unit\test_p06_4_multimodal_fact_integration.py ..                  [ 78%]
+tests\unit\test_t04_case_crud_concurrency.py .                           [ 78%]
+tests\unit\test_t05_t06_t07_normalization.py ....                        [ 80%]
+tests\unit\test_t08_text_extraction.py ....                              [ 83%]
+tests\unit\test_t09_review_and_verification.py .                         [ 83%]
+tests\unit\test_t10_t11_evidence_upload.py .....                         [ 86%]
+tests\unit\test_t12_parser_probe_and_bombs.py ....                       [ 88%]
+tests\unit\test_t13_t14_pdf_parsing_and_coordinates.py ...               [ 90%]
+tests\unit\test_t15_evidence_preview_and_privacy.py ..                   [ 91%]
+tests\unit\test_t16_source_governance.py .                               [ 91%]
+tests\unit\test_t21_payment_reconciliation.py ..                         [ 92%]
+tests\unit\test_t22_audio_transcription_and_codecs.py ...                [ 94%]
+tests\unit\test_t23_screenshot_vlm_and_ocr_reconciliation.py ...         [ 96%]
+tests\unit\test_t26_draft_request.py ...                                 [ 97%]
+tests\unit\test_t36_evidence_cascading_deletion.py .                     [ 98%]
+tests\unit\test_t49_t50_bilingual_themes.py ...                          [100%]
+
+============================== warnings summary ===============================
+..\..\..\..\..\AppData\Local\claimcraft-venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\sakib\AppData\Local\claimcraft-venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+tests/integration/test_t51_multimodal_matrix_and_pipeline.py::test_t51_matrix_row7_unsupported_file_safe_rejection
+  C:\Users\sakib\OneDrive\Desktop\ostad hacakathon\services\backend\app\multimodal\audio\router.py:80: StarletteDeprecationWarning: 'HTTP_422_UNPROCESSABLE_ENTITY' is deprecated. Use 'HTTP_422_UNPROCESSABLE_CONTENT' instead.
+    result = await STTAdapter.transcribe_audio_bytes(
+
+tests/security/test_t44_admin_review_authorization.py::test_t44_admin_reviewer_authorization_and_release_build
+  C:\Users\sakib\OneDrive\Desktop\ostad hacakathon\services\backend\app\knowledge\router.py:218: StarletteDeprecationWarning: 'HTTP_422_UNPROCESSABLE_ENTITY' is deprecated. Use 'HTTP_422_UNPROCESSABLE_CONTENT' instead.
+    return await AdminKnowledgeService.build_release(req, publisher, db)
+
+tests/unit/test_t10_t11_evidence_upload.py::test_t10_mime_spoofing_and_binary_validation
+tests/unit/test_t12_parser_probe_and_bombs.py::test_t12_pixel_bomb_rejection
+tests/unit/test_t12_parser_probe_and_bombs.py::test_t12_pdf_page_bomb_rejection
+tests/unit/test_t12_parser_probe_and_bombs.py::test_t12_encrypted_pdf_and_active_javascript_rejection
+  C:\Users\sakib\OneDrive\Desktop\ostad hacakathon\services\backend\app\evidence\router.py:74: StarletteDeprecationWarning: 'HTTP_422_UNPROCESSABLE_ENTITY' is deprecated. Use 'HTTP_422_UNPROCESSABLE_CONTENT' instead.
+    return await EvidenceService.complete_upload(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+====================== 184 passed, 7 warnings in 36.22s =======================
+Running checks for scope: core...
+
+--- Backend Pytest Suites ---
+
+[SUCCESS] Core test checks passed completely.

@@ -1,0 +1,7 @@
+{
+  "product": "Ebarki",
+  "scope": "graph",
+  "exit_code": 0,
+  "result": "PASS",
+  "log": "followup-graph-verified.txt"
+}

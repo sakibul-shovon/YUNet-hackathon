@@ -1,0 +1,435 @@
+{
+  "product": "Ebarki",
+  "transport": "Actual Next.js BFF; browser acceptance remains blocked",
+  "tests": [
+    {
+      "filename": "receipt plausible low quality.jpg",
+      "upload_status": 200,
+      "case_id": "e6f9af87-fd70-4509-a0ce-653047961965",
+      "result": "PASS",
+      "content_checks": {
+        "Fictional Padma Test Shop": "PASS",
+        "PADMA-QA-A24": "PASS",
+        "7,000.00": "PASS"
+      },
+      "reading": {
+        "id": "1e0ffabf-59a4-4fa9-ad71-71dd97b73cb7",
+        "filename": "receipt plausible low quality.jpg",
+        "mime_type": "image/jpeg",
+        "sha256": "2ce768117735ba180f890a7ba6096fc5499e86633d98320b4956b82f4da20236",
+        "text": "EBARKI - FICTIONAL QA ONLY\nNO REAL PURCHASE\nFictional Padma Test Shop\nDate: 2026-10-24\nReference: PADMA-QA-A24\nItem: Electric kettle\nPaid BDT 7,000.00\nBuyer: Fictional QA Consumer",
+        "lines": [
+          {
+            "text": "EBARKI - FICTIONAL QA ONLY",
+            "page": 1,
+            "box": [
+              0.036958083832335335,
+              0.08150557620817843,
+              0.4517664670658683,
+              0.11328996282527883
+            ]
+          },
+          {
+            "text": "NO REAL PURCHASE",
+            "page": 1,
+            "box": [
+              0.036958083832335335,
+              0.16944237918215616,
+              0.3306467065868264,
+              0.2012267657992565
+            ]
+          },
+          {
+            "text": "Fictional Padma Test Shop",
+            "page": 1,
+            "box": [
+              0.036958083832335335,
+              0.25102230483271376,
+              0.39067065868263473,
+              0.28598513011152416
+            ]
+          },
+          {
+            "text": "Date: 2026-10-24",
+            "page": 1,
+            "box": [
+              0.036958083832335335,
+              0.3389591078066914,
+              0.27491017964071857,
+              0.37074349442379184
+            ]
+          },
+          {
+            "text": "Reference: PADMA-QA-A24",
+            "page": 1,
+            "box": [
+              0.036958083832335335,
+              0.4258364312267658,
+              0.4196107784431138,
+              0.4576208178438662
+            ]
+          },
+          {
+            "text": "Item: Electric kettle",
+            "page": 1,
+            "box": [
+              0.036958083832335335,
+              0.5127137546468401,
+              0.29420359281437125,
+              0.5444981412639406
+            ]
+          },
+          {
+            "text": "Paid BDT 7,000.00",
+            "page": 1,
+            "box": [
+              0.036958083832335335,
+              0.6006505576208178,
+              0.29420359281437125,
+              0.6356133828996283
+            ]
+          },
+          {
+            "text": "Buyer: Fictional QA Consumer",
+            "page": 1,
+            "box": [
+              0.036958083832335335,
+              0.6885873605947956,
+              0.4517664670658683,
+              0.7246096654275093
+            ]
+          }
+        ],
+        "model_executed": true,
+        "method": "groq_vision",
+        "reason": null,
+        "reader_version": 2,
+        "execution_receipt": {
+          "provider": "groq",
+          "model": "qwen/qwen3.8-27b",
+          "request_id": "req_01m6mge5w6eygae09kv6t22agg",
+          "response_status": 200
+        },
+        "model": "qwen/qwen3.8-27b"
+      }
+    },
+    {
+      "filename": "followup/Bangla scan.pdf",
+      "upload_status": 200,
+      "case_id": "8aa31ef7-4f86-4968-be7d-c234ca2b13d0",
+      "result": "PASS",
+      "content_checks": {
+        "কাল্পনিক পদ্মা টেস্ট শপ": "PASS",
+        "PADMA-QA-BN24": "PASS",
+        "৭,০০০.০০": "PASS"
+      },
+      "reading": {
+        "id": "43725a77-193d-46db-b2c1-44af7d213273",
+        "filename": "Bangla scan.pdf",
+        "mime_type": "application/pdf",
+        "sha256": "e5a39359972f64f872c44986016d109445ce2e41c7e4eb17cae21a34f01383be",
+        "text": "Ebarki / FICTIONAL QA ONLY\nসম্পূর্ণ কাল্পনিক রসিদ\nকাল্পনিক পদ্মা টেস্ট শপ\nতারিখ: ২৪ অক্টোবর ২০২৬\nReference: PADMA-QA-BN24\nপণ্য: বৈদ্যুতিক কেটলি\nপরিশোধ: ৭,০০০.০০ টাকা",
+        "lines": [
+          {
+            "text": "Ebarki / FICTIONAL QA ONLY",
+            "page": 1,
+            "box": [
+              0.14977266666666667,
+              0.0787948717948718,
+              0.35873,
+              0.10318358974358974
+            ]
+          },
+          {
+            "text": "সম্পূর্ণ কাল্পনিক রসিদ",
+            "page": 1,
+            "box": [
+              0.14977266666666667,
+              0.14969230769230768,
+              0.32088733333333336,
+              0.18655897435897434
+            ]
+          },
+          {
+            "text": "কাল্পনিক পদ্মা টেস্ট শপ",
+            "page": 1,
+            "box": [
+              0.14977266666666667,
+              0.23476923076923079,
+              0.3443333333333333,
+              0.27163589743589744
+            ]
+          },
+          {
+            "text": "তারিখ: ২৪ অক্টোবর ২০২৬",
+            "page": 1,
+            "box": [
+              0.14977266666666667,
+              0.3187117948717949,
+              0.3657226666666667,
+              0.35557846153846157
+            ]
+          },
+          {
+            "text": "Reference: PADMA-QA-BN24",
+            "page": 1,
+            "box": [
+              0.14977266666666667,
+              0.4134307692307692,
+              0.35873,
+              0.4378194871794872
+            ]
+          },
+          {
+            "text": "পণ্য: বৈদ্যুতিক কেটলি",
+            "page": 1,
+            "box": [
+              0.14977266666666667,
+              0.49737333333333333,
+              0.3262346666666667,
+              0.53424
+            ]
+          },
+          {
+            "text": "পরিশোধ: ৭,০০০.০০ টাকা",
+            "page": 1,
+            "box": [
+              0.14977266666666667,
+              0.580748717948718,
+              0.35543933333333333,
+              0.6176153846153846
+            ]
+          }
+        ],
+        "model_executed": true,
+        "method": "groq_pdf_vision",
+        "reason": null,
+        "reader_version": 2,
+        "partial": false,
+        "page_count": 1,
+        "pages_read": [
+          1
+        ],
+        "unread_pages": [],
+        "model": "qwen/qwen3.8-27b",
+        "execution_receipt": {
+          "provider": "groq",
+          "model": "qwen/qwen3.8-27b",
+          "request_id": "req_01m6mgg0fgep99n5ndnrt0cbts",
+          "response_status": 200,
+          "page": 1
+        },
+        "execution_receipts": [
+          {
+            "provider": "groq",
+            "model": "qwen/qwen3.8-27b",
+            "request_id": "req_01m6mgg0fgep99n5ndnrt0cbts",
+            "response_status": 200,
+            "page": 1
+          }
+        ]
+      }
+    },
+    {
+      "filename": "followup/Native and Bangla scan.pdf",
+      "upload_status": 200,
+      "case_id": "e1478ef8-5f5e-48ab-9e6a-5da83cbea816",
+      "result": "PASS",
+      "content_checks": {
+        "PADMA-QA-A24": "PASS",
+        "কাল্পনিক পদ্মা টেস্ট শপ": "PASS",
+        "PADMA-QA-BN24": "PASS",
+        "both pages read": "PASS",
+        "Bangla scan attributed to page 2": "PASS",
+        "private page-2 preview": "PASS"
+      },
+      "reading": {
+        "id": "214b7685-2caa-4a3d-b1d3-9046e7ed06c2",
+        "filename": "Native and Bangla scan.pdf",
+        "mime_type": "application/pdf",
+        "sha256": "d98749cab7e02c51bf227a8cd1379aa209f95983c3932f2d72000495cb52f399",
+        "text": "EBARKI / FICTIONAL TEST RECEIPT\nNO REAL PURCHASE OR PERSON\nFictional Padma Test Shop\nDate: 2026-10-24\nReference: PADMA-QA-A24\nItem: Electric kettle\nPaid BDT 7,000.00\nBuyer: Fictional QA Consumer\nEbarki / FICTIONAL QA ONLY\nসম্পূর্ণ কাল্পনিক রসিদ\nকাল্পনিক পদ্মা টেস্ট শপ\nতারিখ: ২৪ অক্টোবর ২০২৬\nReference: PADMA-QA-BN24\nপণ্য: বৈদ্যুতিক কেটলি\nপরিশোধ: ৭,০০০.০০ টাকা",
+        "lines": [
+          {
+            "text": "EBARKI / FICTIONAL TEST RECEIPT",
+            "page": 1,
+            "box": [
+              0.07,
+              0.0627,
+              0.6882,
+              0.0903
+            ]
+          },
+          {
+            "text": "NO REAL PURCHASE OR PERSON",
+            "page": 1,
+            "box": [
+              0.07,
+              0.1417,
+              0.5651,
+              0.1648
+            ]
+          },
+          {
+            "text": "Fictional Padma Test Shop",
+            "page": 1,
+            "box": [
+              0.07,
+              0.2171,
+              0.4301,
+              0.2402
+            ]
+          },
+          {
+            "text": "Date: 2026-10-24",
+            "page": 1,
+            "box": [
+              0.07,
+              0.2925,
+              0.3035,
+              0.3155
+            ]
+          },
+          {
+            "text": "Reference: PADMA-QA-A24",
+            "page": 1,
+            "box": [
+              0.07,
+              0.3679,
+              0.4485,
+              0.3909
+            ]
+          },
+          {
+            "text": "Item: Electric kettle",
+            "page": 1,
+            "box": [
+              0.07,
+              0.4432,
+              0.3234,
+              0.4663
+            ]
+          },
+          {
+            "text": "Paid BDT 7,000.00",
+            "page": 1,
+            "box": [
+              0.07,
+              0.5186,
+              0.3235,
+              0.5417
+            ]
+          },
+          {
+            "text": "Buyer: Fictional QA Consumer",
+            "page": 1,
+            "box": [
+              0.07,
+              0.594,
+              0.4751,
+              0.6171
+            ]
+          },
+          {
+            "text": "Ebarki / FICTIONAL QA ONLY",
+            "page": 2,
+            "box": [
+              0.14977266666666667,
+              0.0787948717948718,
+              0.35873,
+              0.10318358974358974
+            ]
+          },
+          {
+            "text": "সম্পূর্ণ কাল্পনিক রসিদ",
+            "page": 2,
+            "box": [
+              0.14977266666666667,
+              0.14969230769230768,
+              0.32088733333333336,
+              0.18655897435897434
+            ]
+          },
+          {
+            "text": "কাল্পনিক পদ্মা টেস্ট শপ",
+            "page": 2,
+            "box": [
+              0.14977266666666667,
+              0.23476923076923079,
+              0.3443333333333333,
+              0.27163589743589744
+            ]
+          },
+          {
+            "text": "তারিখ: ২৪ অক্টোবর ২০২৬",
+            "page": 2,
+            "box": [
+              0.14977266666666667,
+              0.3187117948717949,
+              0.3657226666666667,
+              0.35557846153846157
+            ]
+          },
+          {
+            "text": "Reference: PADMA-QA-BN24",
+            "page": 2,
+            "box": [
+              0.14977266666666667,
+              0.4134307692307692,
+              0.35873,
+              0.4378194871794872
+            ]
+          },
+          {
+            "text": "পণ্য: বৈদ্যুতিক কেটলি",
+            "page": 2,
+            "box": [
+              0.14977266666666667,
+              0.49737333333333333,
+              0.3262346666666667,
+              0.53424
+            ]
+          },
+          {
+            "text": "পরিশোধ: ৭,০০০.০০ টাকা",
+            "page": 2,
+            "box": [
+              0.14977266666666667,
+              0.580748717948718,
+              0.35543933333333333,
+              0.6176153846153846
+            ]
+          }
+        ],
+        "model_executed": true,
+        "method": "groq_pdf_vision",
+        "reason": null,
+        "reader_version": 2,
+        "partial": false,
+        "page_count": 2,
+        "pages_read": [
+          1,
+          2
+        ],
+        "unread_pages": [],
+        "model": "qwen/qwen3.8-27b",
+        "execution_receipt": {
+          "provider": "groq",
+          "model": "qwen/qwen3.8-27b",
+          "request_id": "req_01m6mght9nen2afw7180f4ywc3",
+          "response_status": 200,
+          "page": 2
+        },
+        "execution_receipts": [
+          {
+            "provider": "groq",
+            "model": "qwen/qwen3.8-27b",
+            "request_id": "req_01m6mght9nen2afw7180f4ywc3",
+            "response_status": 200,
+            "page": 2
+          }
+        ]
+      }
+    }
+  ]
+}

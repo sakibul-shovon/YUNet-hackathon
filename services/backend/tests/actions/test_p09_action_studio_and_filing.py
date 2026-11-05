@@ -411,7 +411,7 @@ async def test_p09_7_destination_registry_and_link_health_t54(client: AsyncClien
     # Check BB CIPC portal link health degradation & fallback
     cipc = dest_by_id["bb_cipc_portal"]
     assert cipc["link_health"] == "linked_unconfirmed"
-    assert "cipc@bb.org.bd" in cipc["fallback_instructions_en"]
+    assert "bb.cipc@bb.org.bd" in cipc["fallback_instructions_en"]
     assert "16236" in cipc["fallback_instructions_en"]
 
     # 2. Get single destination
@@ -419,4 +419,5 @@ async def test_p09_7_destination_registry_and_link_health_t54(client: AsyncClien
     assert single_res.status_code == 200
     hotline = single_res.json()
     assert hotline["official_portal_url"] == "tel:16121"
-    assert "+8802223381655" in hotline["fallback_instructions_en"]
+    assert "emergency rescue" in " ".join(hotline["prerequisites_en"])
+    assert "+8802223381655" not in hotline["fallback_instructions_en"]

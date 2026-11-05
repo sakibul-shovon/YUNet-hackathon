@@ -1,0 +1,24 @@
+{
+  "product": "Ebarki",
+  "checked_on": "2026-11-05",
+  "primary_rules_url": "https://yunet-aignite26.devpost.com/rules",
+  "method": "Read-only official Devpost page through web tool; no submission action",
+  "observed_requirements": {
+    "deck_slide_limit": 5,
+    "public_app_required": true,
+    "individual_student_submission": true,
+    "sticker_near_top_required": true,
+    "demo_video_optional_and_English_if_supplied": true
+  },
+  "markdown_slide_count": 5,
+  "exported_deck": "DEFERRED by user",
+  "public_deployment": "DEFERRED by user",
+  "sticker_visual_inspection": "PASS: local image depicts the named event and Built For wording",
+  "sticker_dimensions": [
+    2105,
+    747
+  ],
+  "sticker_sha256": "e8eb99c3edf7c1fe943c25dcbb06299b07fb348b3dcc5c69502f4d1f3a290899",
+  "sticker_provenance": "UNVERIFIED: protected local rules source has a truncated Drive link; the current public rules page specifies the sticker but exposes no downloadable sticker link. Visual match alone is not source-file proof.",
+  "deadline_conflict": "UNRESOLVED: official page header shows 22:00 +06; body shows 23:59 Bangladesh time on 5 November 2026."
+}

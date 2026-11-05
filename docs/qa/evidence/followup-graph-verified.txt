@@ -1,0 +1,14 @@
+  warning: skill at C:\Users\sakib\.copilot\skills\graphify is from graphify 0.9.95, package is 0.9.99. Run 'graphify install --platform copilot' to update it (a plain 'graphify install' refreshes only the detected platform).
+[graphify] WARNING: PDF text extraction skipped: 'pypdf' is not installed. Install the pdf extra: uv tool install 'graphifyy[pdf]'
+Re-extracting code files in C:\Users\sakib\OneDrive\Desktop\ostad hacakathon (no LLM needed)...
+[graphify watch] 30 file(s) not classified (no supported extension or shebang), skipped: .cursorrules, .env.example, .gitattributes, .gitignore, Dockerfile.backend, Dockerfile.web (+24 more)
+  AST cache: 242/440 files served from cache (55%); 198 to extract
+  AST extraction: 100/198 uncached files (50%)
+  AST extraction: 198/198 uncached files (100%)
+  warning: 19 code file(s) yielded no symbols (0.00 MB) — a data file, or source this extractor models no symbols for: apps/web/src/features/agent/TryChange.tsx, apps/web/src/lib/i18n/request.ts, evaluation/harness/__init__.py, services/backend/app/actions/__init__.py, services/backend/app/activity/__init__.py (+14 more)
+[graphify watch] community set changed since labeling (54 saved labels, 255 communities now; renamed 44 community(ies) by their hub). Run `graphify label` to refresh names with the LLM.
+[graphify] backed up curated graph (5 files) -> 2026-11-05/
+[graphify watch] Rebuilt: 3874 nodes, 9975 edges, 255 communities
+[graphify watch] graph.json, graph.html and GRAPH_REPORT.md updated in C:\Users\sakib\OneDrive\Desktop\ostad hacakathon\graphify-out
+Code graph updated. For doc/paper/image changes run /graphify --update in your AI assistant.
+Tip: set GEMINI_API_KEY or GOOGLE_API_KEY to use Gemini for semantic extraction.

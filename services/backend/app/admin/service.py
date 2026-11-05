@@ -1,42 +1,41 @@
 import datetime
 import hashlib
+import json
 import uuid
 from typing import Any
 
-from sqlalchemy import func, select
+from fastapi import HTTPException
+from sqlalchemy import func, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.admin.models import AdminAuditEntry, AdminRecord
 from app.cases.models import Case, CaseEvent
 from app.community.service import COMMUNITY_POSTS_STORE
-from app.identity.models import ActorRole, UserAccount
+from app.identity.models import ActorRole, UserAccount, WebSession
 from app.knowledge.models import SourceCandidate
-from app.merchants.service import KNOWN_OFFENDER_REGISTRY
 
-# Runtime-only administrative views start empty; no invented bootstrap receipts.
-ADMIN_AUDIT_LOGS: list[dict[str, Any]] = []
-MERCHANT_OVERRIDES: dict[str, dict[str, Any]] = {}
-PLATFORM_ALERTS: list[dict[str, Any]] = []
-
-BANNED_USERS_SET: set[str] = set()
-COMMUNITY_POST_OVERRIDES: dict[str, dict[str, Any]] = {}
 
 class AdminService:
-    @classmethod
-    def record_audit(cls, admin_email: str, action: str, target: str, details: str):
-        raw = f"{datetime.datetime.now(datetime.UTC).isoformat()}:{admin_email}:{action}:{target}:{details}"
-        h = hashlib.sha256(raw.encode("utf-8")).hexdigest()[:16]
-        entry = {
-            "id": f"log-{uuid.uuid4().hex[:8]}",
-            "timestamp": datetime.datetime.now(datetime.UTC).isoformat(),
-            "admin_email": admin_email,
-            "action": action,
-            "target": target,
-            "details": details,
-            "hash": h,
-        }
-        ADMIN_AUDIT_LOGS.insert(0, entry)
-        if len(ADMIN_AUDIT_LOGS) > 100:
-            ADMIN_AUDIT_LOGS.pop()
+    @staticmethod
+    async def state(db, key, default=None):
+        record = await db.get(AdminRecord, key)
+        return record.payload if record else (default or {})
+
+    @staticmethod
+    async def save_state(db, key, payload):
+        record = await db.get(AdminRecord, key)
+        if record is None:
+            db.add(AdminRecord(key=key, payload=payload))
+        else:
+            record.payload = payload
+            record.updated_at = datetime.datetime.now(datetime.UTC)
+
+    @staticmethod
+    async def record_audit(db, admin_email, action, target, details):
+        entry = {'id': str(uuid.uuid4()), 'timestamp': datetime.datetime.now(datetime.UTC).isoformat(),
+                 'admin_email': admin_email, 'action': action, 'target': target, 'details': details}
+        entry['hash'] = hashlib.sha256(json.dumps(entry, sort_keys=True).encode()).hexdigest()
+        db.add(AdminAuditEntry(id=entry['id'], payload=entry))
 
     @classmethod
     async def get_overview_stats(cls, db: AsyncSession) -> dict[str, Any]:
@@ -84,9 +83,9 @@ class AdminService:
                 "total_disputed_bdt": total_disputed_bdt,
                 "total_recovered_bdt": total_recovered_bdt,
                 "total_registered_users": len(users),
-                "banned_users": len(BANNED_USERS_SET),
+                "banned_users": sum(bool(record.payload.get('banned')) for record in (await db.scalars(select(AdminRecord).where(AdminRecord.key.like('ban:%')))).all()),
                 "pending_statutory_reviews": pending_statutory,
-                "total_merchants_tracked": len(KNOWN_OFFENDER_REGISTRY) + len(MERCHANT_OVERRIDES),
+                "total_merchants_tracked": len(await cls.list_merchants(db)),
                 "community_grievances_count": len(COMMUNITY_POSTS_STORE),
             },
             "resolution_paths_distribution": {},
@@ -96,7 +95,7 @@ class AdminService:
                 "multimodal_ocr": "Consent-scoped reader; check per-run receipt",
                 "voice_stt": "Consent-scoped reader; check per-run receipt",
                 "active_statutory_release": "Not verified by this endpoint",
-                "runtime_admin_state": "Alerts, overrides and audit display are process-local and reset on restart",
+                "admin_persistence": "Database-backed alerts, overrides, bans and action receipts",
             },
         }
 
@@ -169,14 +168,14 @@ class AdminService:
             },
         )
         db.add(evt)
-        await db.commit()
 
-        cls.record_audit(
+        await cls.record_audit(db,
             admin_email=admin_email,
             action="OVERRIDE_CASE_STATUS",
             target=f"Case {case.display_reference or str(case.id)[:8]}",
             details=f"Changed status from '{old_status}' to '{new_status}'. Note: {admin_notes}",
         )
+        await db.commit()
         return {"success": True, "case_id": str(case.id), "new_status": new_status}
 
     @classmethod
@@ -191,7 +190,7 @@ class AdminService:
             res_roles = await db.execute(stmt_roles)
             roles = list(res_roles.scalars().all())
 
-            is_banned = str(u.id) in BANNED_USERS_SET or u.email in BANNED_USERS_SET
+            is_banned = bool((await cls.state(db, 'ban:'+str(u.principal_id))).get('banned'))
             out.append({
                 "id": str(u.id),
                 "principal_id": str(u.principal_id),
@@ -213,23 +212,23 @@ class AdminService:
         if not user:
             return {"error": "User not found"}
 
-        if user_id in BANNED_USERS_SET or user.email in BANNED_USERS_SET:
-            BANNED_USERS_SET.discard(user_id)
-            BANNED_USERS_SET.discard(user.email)
-            action = "UNBAN_USER"
-            is_banned = False
-        else:
-            BANNED_USERS_SET.add(user_id)
-            BANNED_USERS_SET.add(user.email)
-            action = "BAN_USER"
-            is_banned = True
+        if str(user.principal_id) == admin_email:
+            raise HTTPException(400, 'You cannot ban your current administrative account.')
+        state = await cls.state(db, 'ban:'+str(user.principal_id))
+        is_banned = not bool(state.get('banned'))
+        await cls.save_state(db, 'ban:'+str(user.principal_id), {'banned': is_banned})
+        action = 'BAN_USER' if is_banned else 'UNBAN_USER'
+        if is_banned:
+            await db.execute(update(WebSession).where(WebSession.principal_id == user.principal_id,
+                WebSession.revoked_at.is_(None)).values(revoked_at=datetime.datetime.now(datetime.UTC)))
 
-        cls.record_audit(
+        await cls.record_audit(db,
             admin_email=admin_email,
             action=action,
             target=f"User {user.email}",
             details=f"Administrative account status changed to {'BANNED' if is_banned else 'ACTIVE'}",
         )
+        await db.commit()
         return {"success": True, "user_id": user_id, "is_banned": is_banned}
 
     @classmethod
@@ -242,11 +241,22 @@ class AdminService:
         if not user:
             return {"error": "User not found"}
 
+        permitted = {'admin', 'reviewer', 'publisher', 'operator', 'consumer'}
+        if not new_roles or len(set(new_roles)) != len(new_roles) or not set(new_roles) <= permitted:
+            raise HTTPException(422, 'Choose unique supported roles.')
+        if user.is_demo_judge and set(new_roles) != {'consumer'}:
+            raise HTTPException(400, 'Judge demo accounts retain consumer-only access.')
+        if str(user.principal_id) == admin_email and 'admin' not in new_roles:
+            raise HTTPException(400, 'You cannot remove your own administrative access.')
+
         # Delete existing roles
         stmt_del = select(ActorRole).where(ActorRole.principal_id == user.principal_id)
         res_del = await db.execute(stmt_del)
         for r in res_del.scalars().all():
             await db.delete(r)
+        # Flush removals before inserting overlapping roles; SQLAlchemy can
+        # otherwise insert first and violate the principal/role/scope key.
+        await db.flush()
 
         # Add new roles
         for r_name in new_roles:
@@ -258,128 +268,71 @@ class AdminService:
                 scope="global",
             )
             db.add(role)
-        await db.commit()
 
-        cls.record_audit(
+        await cls.record_audit(db,
             admin_email=admin_email,
             action="UPDATE_USER_ROLES",
             target=f"User {user.email}",
             details=f"Assigned roles: {', '.join(new_roles)}",
         )
+        await db.commit()
         return {"success": True, "user_id": user_id, "roles": new_roles}
 
     @classmethod
-    def list_merchants(cls) -> list[dict[str, Any]]:
-        results = []
-        for key, reg in KNOWN_OFFENDER_REGISTRY.items():
-            override = MERCHANT_OVERRIDES.get(key, {})
-            results.append({
-                "slug": key,
-                "canonical_name": reg.get("canonical_name", key),
-                "platform": reg.get("platform", "E-Commerce"),
-                "category": reg.get("category", "General"),
-                "base_complaints": reg.get("base_complaints", 0),
-                "base_disputed_bdt": reg.get("base_disputed_bdt", 0.0),
-                "risk_level": reg.get("risk_level", "MODERATE"),
-                "risk_percent": override.get("risk_percent", 92 if "HIGH" in reg.get("risk_level", "") else 35),
-                "is_blacklisted": override.get("is_blacklisted", "HIGH" in reg.get("risk_level", "")),
-                "is_verified": override.get("is_verified", "REGULATED" in reg.get("risk_level", "")),
-                "admin_note": override.get("admin_note", reg.get("primary_allegation", "")),
-            })
-        return results
+    async def list_merchants(cls, db):
+        records = list((await db.scalars(select(AdminRecord).where(AdminRecord.key.like('merchant:%')))).all())
+        return [{'slug': record.key.removeprefix('merchant:'),
+                 'canonical_name': record.key.removeprefix('merchant:'),
+                 'source': 'administrative_record', **record.payload} for record in records]
 
     @classmethod
-    def update_merchant_risk(
-        cls, slug: str, is_blacklisted: bool, is_verified: bool, risk_percent: int, admin_note: str, admin_email: str
-    ) -> dict[str, Any]:
-        MERCHANT_OVERRIDES[slug] = {
-            "is_blacklisted": is_blacklisted,
-            "is_verified": is_verified,
-            "risk_percent": risk_percent,
-            "admin_note": admin_note,
-        }
-        cls.record_audit(
-            admin_email=admin_email,
-            action="UPDATE_MERCHANT_RISK",
-            target=f"Merchant {slug}",
-            details=f"Blacklisted: {is_blacklisted}, Verified: {is_verified}, Risk: {risk_percent}%. Note: {admin_note}",
-        )
-        return {"success": True, "slug": slug, "override": MERCHANT_OVERRIDES[slug]}
+    async def update_merchant_risk(cls, slug, is_blacklisted, is_verified, risk_percent, admin_note, admin_email, db):
+        payload = {'is_blacklisted': is_blacklisted, 'is_verified': is_verified,
+                   'risk_percent': risk_percent, 'admin_note': admin_note}
+        await cls.save_state(db, 'merchant:'+slug, payload)
+        await cls.record_audit(db, admin_email, 'UPDATE_MERCHANT_RISK', slug, admin_note)
+        await db.commit()
+        return {'success': True, 'slug': slug, 'override': payload}
 
     @classmethod
-    def list_community_posts(cls) -> list[dict[str, Any]]:
-        out = []
-        for p in COMMUNITY_POSTS_STORE:
-            p_id = p["id"]
-            over = COMMUNITY_POST_OVERRIDES.get(p_id, {})
-            out.append({
-                "id": p_id,
-                "title": p.get("title", ""),
-                "story": p.get("story", "")[:140] + "...",
-                "author_name": p.get("author_name", ""),
-                "category": p.get("category", "General"),
-                "merchant_name": p.get("merchant_name", ""),
-                "disputed_amount_bdt": p.get("disputed_amount_bdt", 0.0),
-                "me_too_count": p.get("me_too_count", 0),
-                "created_at": p.get("created_at", ""),
-                "is_pinned": over.get("is_pinned", False),
-                "is_hidden": over.get("is_hidden", False),
-                "report_count": over.get("report_count", 0),
-            })
-        return out
+    async def list_community_posts(cls, db):
+        return []  # Public publishing is unavailable; do not manufacture moderation targets.
 
     @classmethod
-    def moderate_community_post(
-        cls, post_id: str, action: str, admin_email: str
-    ) -> dict[str, Any]:
-        if post_id not in COMMUNITY_POST_OVERRIDES:
-            COMMUNITY_POST_OVERRIDES[post_id] = {"is_pinned": False, "is_hidden": False, "report_count": 0}
-
-        if action == "pin":
-            COMMUNITY_POST_OVERRIDES[post_id]["is_pinned"] = True
-        elif action == "unpin":
-            COMMUNITY_POST_OVERRIDES[post_id]["is_pinned"] = False
-        elif action == "hide":
-            COMMUNITY_POST_OVERRIDES[post_id]["is_hidden"] = True
-        elif action == "unhide":
-            COMMUNITY_POST_OVERRIDES[post_id]["is_hidden"] = False
-        elif action == "dismiss_reports":
-            COMMUNITY_POST_OVERRIDES[post_id]["report_count"] = 0
-
-        cls.record_audit(
-            admin_email=admin_email,
-            action="MODERATE_COMMUNITY_POST",
-            target=f"Post {post_id}",
-            details=f"Action executed: {action}",
-        )
-        return {"success": True, "post_id": post_id, "action": action, "state": COMMUNITY_POST_OVERRIDES[post_id]}
+    async def moderate_community_post(cls, post_id, action, admin_email, db):
+        raise HTTPException(404, 'No persisted community post exists to moderate.')
 
     @classmethod
-    def list_alerts(cls) -> list[dict[str, Any]]:
-        return PLATFORM_ALERTS
+    async def list_alerts(cls, db, active_only=True):
+        records = list((await db.scalars(select(AdminRecord).where(AdminRecord.key.like('alert:%'))
+                                        .order_by(AdminRecord.updated_at.desc()))).all())
+        return [record.payload for record in records if not active_only or record.payload.get('active')]
 
     @classmethod
-    def create_or_toggle_alert(
-        cls, title: str, title_en: str, severity: str, message: str, active: bool, admin_email: str
-    ) -> dict[str, Any]:
-        new_alert = {
-            "id": f"alert-{uuid.uuid4().hex[:6]}",
-            "title": title,
-            "title_en": title_en,
-            "severity": severity,
-            "active": active,
-            "message": message,
-            "created_at": datetime.datetime.now(datetime.UTC).isoformat(),
-        }
-        PLATFORM_ALERTS.insert(0, new_alert)
-        cls.record_audit(
-            admin_email=admin_email,
-            action="CREATE_PLATFORM_ALERT",
-            target=f"Alert {title}",
-            details=f"Severity: {severity}, Active: {active}",
-        )
-        return {"success": True, "alert": new_alert}
+    async def create_or_toggle_alert(cls, title, title_en, severity, message, active, admin_email, db):
+        alert = {'id': 'alert-'+uuid.uuid4().hex, 'title': title, 'title_en': title_en,
+                 'severity': severity, 'active': active, 'message': message,
+                 'created_at': datetime.datetime.now(datetime.UTC).isoformat()}
+        await cls.save_state(db, alert['id'].replace('alert-', 'alert:', 1), alert)
+        await cls.record_audit(db, admin_email, 'CREATE_PLATFORM_ALERT', alert['id'],
+                               f'Severity: {severity}; active: {active}')
+        await db.commit()
+        return {'success': True, 'alert': alert}
 
     @classmethod
-    def get_audit_logs(cls) -> list[dict[str, Any]]:
-        return ADMIN_AUDIT_LOGS
+    async def update_alert(cls, alert_id, payload, admin_email, db):
+        key = alert_id.replace('alert-', 'alert:', 1)
+        existing = await cls.state(db, key)
+        if not existing or existing.get('id') != alert_id:
+            raise HTTPException(404, 'Notice not found.')
+        alert = {**existing, **payload}
+        await cls.save_state(db, key, alert)
+        await cls.record_audit(db, admin_email, 'UPDATE_PLATFORM_ALERT', alert_id,
+                               f"Active: {alert['active']}")
+        await db.commit()
+        return {'success': True, 'alert': alert}
+
+    @classmethod
+    async def get_audit_logs(cls, db):
+        records = (await db.scalars(select(AdminAuditEntry).order_by(AdminAuditEntry.created_at.desc()).limit(200))).all()
+        return [{**record.payload, 'id': record.id} for record in records]

@@ -1,4 +1,5 @@
 import uuid
+from typing import Literal
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 from pydantic import BaseModel, Field
@@ -14,26 +15,26 @@ router = APIRouter(prefix="/v1/admin", tags=["Super Admin & Platform Operations"
 
 # --- Request Schemas ---
 class CaseOverrideRequest(BaseModel):
-    new_status: str = Field(..., description="active, resolved, escalated, dismissed, fraudulent")
+    new_status: Literal['active', 'resolved', 'escalated', 'dismissed', 'fraudulent']
     admin_notes: str = Field("", description="Reason and administrative justification")
 
 class UserRoleUpdateRequest(BaseModel):
-    roles: list[str] = Field(..., description="List of roles: admin, reviewer, publisher, operator, consumer")
+    roles: list[Literal['admin', 'reviewer', 'publisher', 'operator', 'consumer']] = Field(min_length=1, max_length=5)
 
 class MerchantOverrideRequest(BaseModel):
     is_blacklisted: bool
     is_verified: bool
-    risk_percent: int
+    risk_percent: int = Field(ge=0, le=100)
     admin_note: str
 
 class CommunityModerateRequest(BaseModel):
-    action: str = Field(..., description="pin, unpin, hide, unhide, dismiss_reports")
+    action: Literal['pin', 'unpin', 'hide', 'unhide', 'dismiss_reports']
 
 class AlertCreateRequest(BaseModel):
-    title: str
-    title_en: str
-    severity: str = "warning"
-    message: str
+    title: str = Field(min_length=1, max_length=240)
+    title_en: str = Field(min_length=1, max_length=240)
+    severity: Literal['info', 'warning', 'critical'] = 'warning'
+    message: str = Field(min_length=1, max_length=2000)
     active: bool = True
 
 
@@ -120,9 +121,10 @@ async def update_roles(
 @router.get("/merchants")
 async def list_admin_merchants(
     admin: Principal = Depends(require_role("admin")),
+    db: AsyncSession = Depends(get_db_session),
 ):
     """Returns all tracked merchants, scam probabilities, and blacklist statuses."""
-    return AdminService.list_merchants()
+    return await AdminService.list_merchants(db)
 
 
 @router.post("/merchants/{slug}/override")
@@ -130,9 +132,11 @@ async def override_merchant(
     slug: str,
     req: MerchantOverrideRequest,
     admin: Principal = Depends(require_role("admin")),
+    db: AsyncSession = Depends(get_db_session),
 ):
     """Overrides merchant scam risk, blacklist status, and verification badge."""
-    return AdminService.update_merchant_risk(
+    return await AdminService.update_merchant_risk(
+        db=db,
         slug=slug,
         is_blacklisted=req.is_blacklisted,
         is_verified=req.is_verified,
@@ -145,9 +149,10 @@ async def override_merchant(
 @router.get("/community/posts")
 async def list_admin_community_posts(
     admin: Principal = Depends(require_role("admin")),
+    db: AsyncSession = Depends(get_db_session),
 ):
     """Returns community grievances with moderation flags and report counts."""
-    return AdminService.list_community_posts()
+    return await AdminService.list_community_posts(db)
 
 
 @router.post("/community/posts/{post_id}/moderate")
@@ -155,26 +160,30 @@ async def moderate_post(
     post_id: str,
     req: CommunityModerateRequest,
     admin: Principal = Depends(require_role("admin")),
+    db: AsyncSession = Depends(get_db_session),
 ):
     """Moderates community post: pin, hide, unhide, or dismiss reports."""
-    return AdminService.moderate_community_post(
+    return await AdminService.moderate_community_post(
+        db=db,
         post_id=post_id, action=req.action, admin_email=str(admin.id)
     )
 
 
 @router.get("/alerts")
-async def get_alerts():
+async def get_alerts(db: AsyncSession = Depends(get_db_session)):
     """Public endpoint to fetch active consumer warning banners."""
-    return AdminService.list_alerts()
+    return await AdminService.list_alerts(db)
 
 
 @router.post("/alerts")
 async def create_alert(
     req: AlertCreateRequest,
     admin: Principal = Depends(require_role("admin")),
+    db: AsyncSession = Depends(get_db_session),
 ):
-    """Creates a new broadcast alert banner across ClaimCraft BD."""
-    return AdminService.create_or_toggle_alert(
+    """Creates a new broadcast alert banner across Ebarki."""
+    return await AdminService.create_or_toggle_alert(
+        db=db,
         title=req.title,
         title_en=req.title_en,
         severity=req.severity,
@@ -184,12 +193,26 @@ async def create_alert(
     )
 
 
+@router.get('/alerts/manage')
+async def manage_alerts(admin: Principal = Depends(require_role('admin')),
+                        db: AsyncSession = Depends(get_db_session)):
+    return await AdminService.list_alerts(db, active_only=False)
+
+
+@router.post('/alerts/{alert_id}/update')
+async def update_alert(alert_id: str, req: AlertCreateRequest,
+                       admin: Principal = Depends(require_role('admin')),
+                       db: AsyncSession = Depends(get_db_session)):
+    return await AdminService.update_alert(alert_id, req.model_dump(), str(admin.id), db)
+
+
 @router.get("/audit-logs")
 async def get_audit_logs(
     admin: Principal = Depends(require_role("admin")),
+    db: AsyncSession = Depends(get_db_session),
 ):
-    """Returns immutable log of all administrative actions with SHA-256 hashes."""
-    return AdminService.get_audit_logs()
+    """Returns database-backed administrative action receipts with SHA-256 content hashes."""
+    return await AdminService.get_audit_logs(db)
 
 
 # --- Statutory Candidate Endpoints for Admin UI ---

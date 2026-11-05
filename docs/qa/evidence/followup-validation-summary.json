@@ -1,0 +1,62 @@
+{
+  "product": "Ebarki",
+  "phase": "stabilization_followup",
+  "core": {
+    "result": "PASS",
+    "passed": 184,
+    "warnings": 7,
+    "exit_code": 0
+  },
+  "foundation": {
+    "result": "PASS",
+    "exit_code": 0,
+    "i18n_keys": 223
+  },
+  "local_production_mode": {
+    "PASS": 22,
+    "scope": "Real local process restart with migrated SQLite/configured disk vault, no public TLS/PostgreSQL claims"
+  },
+  "migration_schema": {
+    "result": "PASS",
+    "missing_tables": [],
+    "missing_columns": {}
+  },
+  "ocr_full": {
+    "PASS": 2,
+    "BLOCKED": 3
+  },
+  "ocr_paced_retry": {
+    "PASS": 3
+  },
+  "ocr_unique_fixtures_successfully_executed": 5,
+  "official_links": {
+    "PASS": 8,
+    "BLOCKED": 3
+  },
+  "browser_remaining": "BLOCKED",
+  "qualified_legal_review": "UNVERIFIED",
+  "public_deployment": "DEFERRED by user",
+  "final_exported_package": "DEFERRED by user",
+  "sticker_file_provenance": "UNVERIFIED",
+  "graph": {
+    "result": "PASS",
+    "nodes": 3874,
+    "edges": 9975,
+    "communities": 255,
+    "limitation": "Code/AST refresh; graphify PDF semantic extra unavailable"
+  },
+  "initial_audit_evidence": "Retained; subsequent findings/fixes are detailed in the follow-up report.",
+  "secret_value_scan": {
+    "matches": 0,
+    "files_checked": 800
+  },
+  "fixtures": {
+    "ground_truth_hashes_PASS": 22,
+    "indexed_byte_comparisons_PASS": 21
+  },
+  "server_rendered_HTML": {
+    "PASS": 6,
+    "scope": "Four login pages and two sidebar marker checks; not rendered browser acceptance"
+  },
+  "running_OpenAPI_parity": "PASS"
+}

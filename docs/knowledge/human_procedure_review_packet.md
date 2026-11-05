@@ -1,3 +1,5 @@
+> Ebarki audit update, 5 November 2026: this historical packet is not approval evidence. The source comparison found an invented Section 45 refund proviso and Section 45(2), plus unsupported procedural waiting periods. Current corrected references and remaining review requirements are documented in docs/qa/EBARKI_STABILIZATION_FOLLOWUP.md. Qualified human review remains unverified.
+
 # ClaimCraft BD — Human Procedure-Review Packet
 
 > **Notice:** In compliance with ClaimCraft BD core architectural principles (Section 12.5 & Section 17 P03.5), all automated rule candidates and statutory citations must undergo formal human procedural review by designated legal reviewers before active promotion into a production knowledge release. **No statutory rule is ever auto-promoted without explicit reviewer approval.**

@@ -2,6 +2,8 @@
 
 Audit date: 5 November 2026, Asia/Dhaka. **Release verdict: NOT READY.**
 
+This is the initial audit checkpoint. Read the [stabilization follow-up](EBARKI_STABILIZATION_FOLLOWUP.md) for subsequent fixes and current validation. It found an additional fabricated legal subsection and migration gaps that this initial checkpoint missed. Earlier failed results remain historical evidence, not current capability claims.
+
 This is an independent examination of the current local implementation, with fixes and regression evidence. It is not a certification of the hosted product, legal correctness, universal accessibility, or every input path. Prior completion statuses and live-check summaries were treated as leads, not proof.
 
 ## Scope and evidence

@@ -203,7 +203,7 @@ async def execute_run(run_id: uuid.UUID, factory: async_sessionmaker[AsyncSessio
                 if run.operation == 'extract':
                     run.status = "needs_review"
             if run.operation == 'resolve':
-                started = await stage_start('evidence_review', 'native_document_parsing')
+                started = await stage_start('evidence_review', 'native_text_or_consent_scoped_media_reader')
                 accepted = list((await db.scalars(select(EvidenceItem).where(
                     EvidenceItem.case_id == case.id, EvidenceItem.principal_id == principal.id,
                     EvidenceItem.status == 'accepted',
@@ -221,7 +221,8 @@ async def execute_run(run_id: uuid.UUID, factory: async_sessionmaker[AsyncSessio
                         for source in old.result.get('readings', [])
                         if source.get('id') == str(evidence.id)
                         and source.get('sha256') == evidence.sha256_hash and source.get('text')
-                        and source.get('method') != 'manual_required'), None)
+                        and source.get('method') != 'manual_required'
+                        and not source.get('partial') and source.get('reader_version') == 2), None)
                     reading = ({**cached[1], 'reused_from_run': str(cached[0].id)} if cached
                                else await read_evidence(evidence, bool(external_consent)))
                     await checkpoint()
@@ -249,7 +250,7 @@ async def execute_run(run_id: uuid.UUID, factory: async_sessionmaker[AsyncSessio
                 run.result = {**run.result, 'evidence_findings': findings}
                 await stage_end(started, {'files_reviewed': len(findings),
                                          'native_text_files': sum(f['method']=='native_pdf_text' for f in findings),
-                                         'provider_calls': sum(bool(f.get('model_executed')) and not f.get('reused_from_run') for f in run.result.get('readings', [])),
+                                         'provider_calls': sum(len(f.get('execution_receipts') or []) or int(bool(f.get('model_executed'))) for f in run.result.get('readings', []) if not f.get('reused_from_run')),
                                          'cached_readings': sum(bool(f.get('reused_from_run')) for f in run.result.get('readings', [])),
                                          'providers': sorted({f['execution_receipt']['provider'] for f in run.result.get('readings', []) if f.get('execution_receipt') and not f.get('reused_from_run')}),
                                          'readable_records': sum(bool(f.get('text')) for f in run.result.get('readings', []))})

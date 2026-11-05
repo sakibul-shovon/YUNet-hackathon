@@ -7,10 +7,12 @@ import { Button, ErrorPanel, Glyph, Loading, Modal, Notice, words } from '@/feat
 import type { ConnectedRecords, ConnectedSource, RecordLocator } from './experience-types';
 
 export function sourceMethod(source: ConnectedSource, locale: string) {
+  if (source.partial) return words(locale, 'Partially read · review remaining pages', 'কিছু অংশ পড়া হয়েছে · বাকি পাতা দেখুন');
   if (source.reused_from_run) return words(locale, 'Previous reading · no new model call', 'আগের পড়া তথ্য · নতুন করে মডেল চলেনি');
   if (source.is_demo) return words(locale, 'Fictional conversation · demo only', 'নমুনার কথোপকথন');
   const labels: Record<string, [string, string]> = {
     native_pdf: ['Read from the PDF', 'PDF থেকে পড়া'], gemini_vision: ['AI reading · review needed', 'AI দিয়ে পড়া · মিলিয়ে দেখুন'], groq_vision: ['AI reading · review needed', 'AI দিয়ে পড়া · মিলিয়ে দেখুন'],
+    groq_pdf_vision: ['AI reading of scanned pages · review needed', 'স্ক্যান করা পাতা AI দিয়ে পড়া · মিলিয়ে দেখুন'], gemini_pdf_vision: ['AI reading of scanned pages · review needed', 'স্ক্যান করা পাতা AI দিয়ে পড়া · মিলিয়ে দেখুন'],
     groq_transcription: ['AI transcript · review needed', 'AI-এর transcript · মিলিয়ে দেখুন'], user_account: ['Your original account', 'আপনার মূল বক্তব্য'],
     pasted_text: ['Text you provided', 'আপনার দেওয়া লেখা'], pasted_message: ['Message you provided', 'আপনার দেওয়া মেসেজ'],
     voice_dictation: ['Your spoken account', 'আপনার মুখে বলা ঘটনা'], manual_transcript: ['Transcript you provided', 'আপনার দেওয়া transcript'],

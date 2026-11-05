@@ -1,0 +1,16 @@
+{
+  "product": "Ebarki",
+  "scope": "Fresh local SQLite Alembic upgrade vs runtime table/column presence; not PostgreSQL RLS or backup verification.",
+  "migration_exit_code": 0,
+  "missing_tables": [
+    "case_processing_runs",
+    "prepared_document_versions",
+    "user_accounts"
+  ],
+  "missing_columns": {
+    "cases": [
+      "consent_status"
+    ]
+  },
+  "result": "FAIL"
+}

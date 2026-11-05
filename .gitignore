@@ -7,6 +7,8 @@ node_modules/
 .next/
 .next-check/
 .next-audit-check/
+.next-followup-check/
+.next-followup-verify/
 out/
 build/
 dist/

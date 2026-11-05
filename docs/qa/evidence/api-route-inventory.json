@@ -54,6 +54,15 @@
     ]
   },
   {
+    "path": "/v1/auth/admin-login",
+    "methods": [
+      "post"
+    ],
+    "tags": [
+      "Identity & Sessions"
+    ]
+  },
+  {
     "path": "/v1/auth/judge-demo",
     "methods": [
       "post"
@@ -1083,6 +1092,24 @@
     "path": "/v1/admin/alerts",
     "methods": [
       "get",
+      "post"
+    ],
+    "tags": [
+      "Super Admin & Platform Operations"
+    ]
+  },
+  {
+    "path": "/v1/admin/alerts/manage",
+    "methods": [
+      "get"
+    ],
+    "tags": [
+      "Super Admin & Platform Operations"
+    ]
+  },
+  {
+    "path": "/v1/admin/alerts/{alert_id}/update",
+    "methods": [
       "post"
     ],
     "tags": [

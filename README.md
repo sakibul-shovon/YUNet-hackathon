@@ -98,3 +98,5 @@ Private case records must remain isolated by owner and separate from public refe
 Historic source specifications and internal compatibility identifiers are retained for traceability. The current interface uses the Ebarki name and shared light/dark design tokens.
 
 The independent [final system audit](docs/qa/EBARKI_FINAL_SYSTEM_AUDIT.md) supersedes historical readiness claims. The release verdict is **NOT READY** until the documented deployment, browser acceptance, and source-review gaps are closed. Provider acknowledgements verify actual calls, not output correctness. Complaint templates express the consumer's account and request; they do not establish fault or legal entitlement.
+
+The [stabilization follow-up](docs/qa/EBARKI_STABILIZATION_FOLLOWUP.md) records prominent login choices, improved Bangla reading, bounded scanned-PDF reading, primary-text corrections, durable administration and local production-mode restart checks. Public deployment and final submission packaging are deferred. Browser acceptance and qualified legal approval remain separate gates.

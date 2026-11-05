@@ -24,7 +24,7 @@ def test_t25_e5_embedding_format_and_dense_allowed_id_mask():
     assert len(vec) == 384
 
     # 2. Invariant T25: Allowed-ID filter MUST precede top-k selection
-    allowed_ids = {"crpa2009:sec:45", "crpa2009:sec:45(2)"}
+    allowed_ids = {"crpa2009:sec:45", "crpa2009:sec:76(4)"}
     dense_res = E5EmbeddingAdapter.dense_search(
         query="পণ্য না পেয়ে টাকা ফেরত পাওয়ার নিয়ম",
         corpus=CANONICAL_PROVISIONS,
@@ -100,7 +100,7 @@ def test_t25_bengali_bm25s_tokenization_and_snapshot_roundtrip():
         search_res = loaded_adapter.search("প্রতিশ্রুত পণ্য সরবরাহ না করা এবং মূল্য ফেরত", top_k=3)
         assert len(search_res) > 0
         returned_handles = [r["citation_handle"] for r in search_res]
-        assert any(h in ("crpa2009:sec:45", "crpa2009:sec:45(2)") for h in returned_handles)
+        assert any(h in ("crpa2009:sec:45", "crpa2009:sec:76(4)") for h in returned_handles)
     finally:
         shutil.rmtree(temp_dir, ignore_errors=True)
 
@@ -146,7 +146,7 @@ def test_t25_channel_ablations_and_degraded_reporting():
 def test_t28_t29_citation_validator():
     """T28 / T29: Citation validator blocks non-existent or outdated citations."""
     # 1. Valid citations
-    v_res = CitationValidator.validate_citations(["crpa2009:sec:45", "crpa2009:sec:45(2)"])
+    v_res = CitationValidator.validate_citations(["crpa2009:sec:45", "crpa2009:sec:76(4)"])
     assert v_res.is_valid is True
     assert len(v_res.invalid_citations) == 0
 

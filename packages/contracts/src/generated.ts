@@ -96,6 +96,7 @@ export interface AudioTranscriptOut {
 }
 
 export interface AuthUserOut {
+  csrf_token?: unknown;
   logged_in: boolean;
   principal_id: string;
   email: string;
@@ -321,6 +322,8 @@ export interface ComplaintDestinationOut {
   prerequisites_en?: unknown[];
   prerequisites_bn?: unknown[];
   link_health?: string;
+  checked_at?: unknown;
+  verification_note?: string;
   fallback_instructions_en: string;
   fallback_instructions_bn: string;
 }
@@ -820,6 +823,8 @@ export interface PortalFieldMapOut {
   portal_name_en: string;
   portal_name_bn: string;
   official_destination_url: string;
+  procedure_guide_url?: unknown;
+  destination_link_health?: string;
   map_version: string;
   is_stale?: boolean;
   stale_reason?: unknown;
@@ -882,6 +887,10 @@ export interface ProvisionOut {
   effective_from?: unknown;
   effective_to?: unknown;
   parent_provision?: unknown;
+  official_url?: unknown;
+  checked_at?: unknown;
+  review_status?: string;
+  text_kind?: string;
 }
 
 export interface ProvisionTreeItem {

@@ -105,11 +105,8 @@ async def test_cascading_privacy_cleanup_t37(client: AsyncClient, db_session):
     # 3. Create audio evidence item
     evidence_id = uuid.uuid4()
     quarantine_file = f"quarantine_{evidence_id.hex}.webm"
-    storage_dir = os.path.abspath("storage/evidence/quarantine")
-    os.makedirs(storage_dir, exist_ok=True)
-    full_path = os.path.join(storage_dir, quarantine_file)
-    with open(full_path, "wb") as f:
-        f.write(b"\x1a\x45\xdf\xa3dummy_audio_data")
+    from app.evidence.storage import get_storage_backend
+    full_path = get_storage_backend().save_quarantine(quarantine_file, b'\x1a\x45\xdf\xa3dummy_audio_data')
 
     now = datetime.datetime.now(datetime.UTC)
     evidence = EvidenceItem(

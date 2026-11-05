@@ -1,5 +1,6 @@
 import datetime
 import hashlib
+import hmac
 import secrets
 import uuid
 from typing import Any
@@ -10,6 +11,7 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.admin.models import AdminRecord
 from app.core.config import settings
 from app.core.database import get_db_session
 from app.identity.models import ActorRole, Principal, WebSession
@@ -27,11 +29,16 @@ def generate_session_token() -> str:
     return secrets.token_urlsafe(32)
 
 
+def csrf_for_session(token: str) -> str:
+    return hmac.new(settings.APP_SECRET_KEY.encode(), ('csrf:'+token).encode(), hashlib.sha256).hexdigest()
+
+
 def create_access_jwt(
     principal_id: uuid.UUID | str,
     kind: str = "anonymous",
     roles: list[str] | None = None,
     expires_delta: datetime.timedelta | None = None,
+    session_id: uuid.UUID | str | None = None,
 ) -> str:
     """Generates a signed short-lived access JWT for BFF and API authorization."""
     if expires_delta is None:
@@ -48,6 +55,8 @@ def create_access_jwt(
         "exp": int((now + expires_delta).timestamp()),
         "jti": str(uuid.uuid4()),
     }
+    if session_id:
+        payload['sid'] = str(session_id)
     return jwt.encode(payload, settings.JWT_SECRET_KEY, algorithm=settings.JWT_ALGORITHM)
 
 
@@ -122,12 +131,12 @@ def verify_csrf_protection(request: Request) -> None:
     cookie_session = request.cookies.get(settings.SESSION_COOKIE_NAME)
     if cookie_session:
         csrf_header = request.headers.get("x-csrf-token")
-        if not csrf_header:
+        if not csrf_header or not secrets.compare_digest(csrf_header, csrf_for_session(cookie_session)):
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
                 detail={
                     "error": {
-                        "code": "CSRF_TOKEN_MISSING",
+                        "code": "CSRF_TOKEN_INVALID",
                         "message_key": "auth.csrf_missing",
                         "details": {},
                     }
@@ -157,6 +166,18 @@ async def get_current_principal(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail={"error": {"code": "AUTH_INVALID_SUB", "message_key": "auth.invalid_token"}},
             )
+        if claims.get('sid'):
+            try:
+                session_id = uuid.UUID(claims['sid'])
+            except (ValueError, TypeError):
+                raise HTTPException(401, 'Invalid session.')
+            active = await db.scalar(select(WebSession.id).where(
+                WebSession.id == session_id, WebSession.principal_id == principal_id,
+                WebSession.revoked_at.is_(None), WebSession.expires_at > datetime.datetime.now(datetime.UTC)))
+            if not active:
+                raise HTTPException(401, 'Session expired or revoked. Sign in again.')
+        elif settings.APP_ENV == 'production':
+            raise HTTPException(401, 'A current session is required. Sign in again.')
     else:
         # 2. Check opaque session cookie
         session_token = request.cookies.get(settings.SESSION_COOKIE_NAME)
@@ -205,6 +226,10 @@ async def get_current_principal(
                 }
             },
         )
+
+    ban = await db.get(AdminRecord, 'ban:'+str(principal.id))
+    if ban and ban.payload.get('banned'):
+        raise HTTPException(403, 'This account is suspended.')
 
     # Bind tenant context to current session for RLS / tenant checking
     db.info["current_principal_id"] = str(principal.id)

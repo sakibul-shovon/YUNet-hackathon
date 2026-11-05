@@ -15,7 +15,7 @@ export function JudgeDemoButton({ locale, primary = false, view }: { locale: str
     try {
       const profile = await send<Profile & { demo_case_id?: string }>('auth/judge-demo');
       rememberSession(profile);
-      window.location.assign(profile.demo_case_id ? `/en/cases/${profile.demo_case_id}?start=1${view ? `&view=${view}` : ''}` : '/en/scenarios');
+      window.location.assign(profile.demo_case_id ? `/${locale}/cases/${profile.demo_case_id}?start=1${view ? `&view=${view}` : ''}` : `/${locale}/scenarios`);
     } catch { setError(true); setBusy(false); }
   }} disabled={busy} aria-busy={busy || undefined}><AgentMark small state={busy ? 'working' : 'ready'} /><span>{words(locale, busy ? 'Opening your demo…' : 'Judge demo', busy ? 'আপনার ডেমো খোলা হচ্ছে…' : 'Judge demo')}</span>{!busy && <Glyph name="arrow" size={15} />}</button>{error && <span className="ag-entry-error" role="alert">{words(locale, 'Could not open the demo. Please try again.', 'ডেমো খোলা যায়নি। আবার চেষ্টা করুন।')}</span>}</span>;
 }
